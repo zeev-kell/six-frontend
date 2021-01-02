@@ -1,40 +1,50 @@
 <template>
-  <div class="register-container">
-    <div class="register-box">
-      <h1 class="text-center">six o'clock</h1>
-      <el-form ref="form" :model="form" :rules="rules">
-        <el-form-item prop="username">
-          <el-input v-model="form.username" placeholder="请输入账号"></el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
-        </el-form-item>
-        <el-form-item prop="surepassword">
-          <el-input v-model="form.surepassword" placeholder="再次输入密码" type="password"></el-input>
-        </el-form-item>
-        <el-form-item prop="phone">
-          <el-input v-model="form.phone" placeholder="请输入手机号"></el-input>
-        </el-form-item>
-        <el-form-item prop="email">
-          <el-input v-model="form.email" placeholder="请输入邮箱"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button class="el-button-block" round type="primary" @click="register">立即注册</el-button>
-        </el-form-item>
-        <el-form-item>
-          <div class="text-right">
-            <span class="text-muted">已有账号，</span>
-            <router-link to="login">立即登录</router-link>
-          </div>
-        </el-form-item>
-      </el-form>
+  <div class="container-fluid">
+    <div class="register-container">
+      <div class="register-box">
+        <h1 class="text-center">six o'clock</h1>
+        <el-form ref="form" :model="form" :rules="rules">
+          <el-form-item prop="username">
+            <el-input v-model="form.username" placeholder="请输入账号"></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
+          </el-form-item>
+          <el-form-item prop="surepassword">
+            <el-input v-model="form.surepassword" placeholder="再次输入密码" type="password"></el-input>
+          </el-form-item>
+          <el-form-item prop="phone">
+            <el-input v-model="form.phone" placeholder="请输入手机号"></el-input>
+          </el-form-item>
+          <el-form-item prop="email">
+            <el-input v-model="form.email" placeholder="请输入邮箱"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button :loading="isLoading" class="el-button-block" round type="primary" @click="register">
+              立即注册
+            </el-button>
+          </el-form-item>
+          <el-form-item>
+            <div class="text-right">
+              <span class="text-muted">已有账号，</span>
+              <router-link to="login">立即登录</router-link>
+            </div>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div class="text-center mt-30">© 2020 Six O'Clock. All Rights Reserved.</div>
     </div>
-    <div class="text-center mt-30">© 2020 Six O'Clock. All Rights Reserved.</div>
+    <canvas-particle></canvas-particle>
   </div>
 </template>
 <script>
+  import CanvasParticle from '@/components/canvas-particle'
+
   export default {
     name: 'Register',
+    components: {
+      CanvasParticle,
+    },
     data() {
       const validatePass = (rule, value, callback) => {
         if (value === '') {
@@ -53,6 +63,7 @@
           phone: '',
           email: '',
         },
+        isLoading: false,
         rules: {
           username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
           password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
@@ -78,15 +89,24 @@
       register() {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            this.$api
-              .post('register', {
+            this.isLoading = true
+            this.$axios
+              .post('/register', {
                 username: this.form.username,
                 password: this.form.password,
                 phone: this.form.phone,
                 email: this.form.email,
                 extra: 'extra',
               })
-              .then((e) => {})
+              .then(() => {
+                this.$router.push('/login')
+              })
+              .catch((e) => {
+                this.$message.error(e)
+              })
+              .finally(() => {
+                this.isLoading = false
+              })
           }
         })
       },
@@ -103,5 +123,8 @@
     border: 1px solid #eceff1;
     border-radius: 2px;
     padding: 30px 50px;
+    background: #ffffff;
+    position: relative;
+    z-index: 1;
   }
 </style>

@@ -11,7 +11,9 @@
             <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button class="el-button-block" round type="primary" @click="login">登 录</el-button>
+            <el-button :loading="isLoading" class="el-button-block" round type="primary" @click="login">
+              登 录
+            </el-button>
           </el-form-item>
           <el-form-item>
             <div class="text-right">
@@ -39,6 +41,7 @@
           username: '',
           password: '',
         },
+        isLoading: false,
         rules: {
           username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
           password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
@@ -47,14 +50,24 @@
     },
     methods: {
       login() {
-        this.$refs.form.validate(async (valid) => {
+        this.$refs.form.validate((valid) => {
           if (valid) {
-            const response = await this.$axios.$post('/login', {
-              username: this.form.username,
-              password: this.form.password,
-            })
-            console.log(response)
-            this.$store.commit('RECORD_USER_INFO', response)
+            this.isLoading = true
+            this.$axios
+              .$post('/login', {
+                username: this.form.username,
+                password: this.form.password,
+              })
+              .then((token) => {
+                this.$store.commit('RECORD_USER_INFO', token)
+                this.$router.push('/')
+              })
+              .catch((e) => {
+                this.$message.error(e)
+              })
+              .finally(() => {
+                this.isLoading = false
+              })
           }
         })
       },

@@ -18,6 +18,7 @@ export default {
     { src: '@/plugins/element-ui', ssr: true },
     { src: '@/plugins/axios', ssr: true },
     { src: '@/plugins/components' },
+    { src: '@/plugins/persistedState.js' },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -44,7 +45,10 @@ export default {
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    progress: true,
+    debug: process.env.NODE_ENV === 'development',
+  },
 
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {},
