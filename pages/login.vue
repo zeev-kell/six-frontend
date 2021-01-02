@@ -1,97 +1,82 @@
 <template>
-  <div class="login">
-    <el-card class="card">
-      <div class="title">sixoclock</div>
-      <el-form ref="form" :model="form" :rules="rules">
-        <el-form-item prop="username">
-          <el-input v-model="form.username" placeholder="请输入账号"></el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-            v-model="form.password"
-            type="password"
-            placeholder="请输入密码"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button class="login-bt" type="primary" round @click="login"
-            >登 录</el-button
-          >
-        </el-form-item>
-        <el-form-item>
-          <el-button class="left-bt" type="text" @click="register"
-            >立即注册</el-button
-          >
-          <!-- <el-button class="right-bt" type="text" >忘记密码</el-button> -->
-        </el-form-item>
-      </el-form>
-    </el-card>
+  <div class="container-fluid">
+    <div class="login-container">
+      <div class="login-box">
+        <h1 class="text-center">six o'clock</h1>
+        <el-form ref="form" :model="form" :rules="rules">
+          <el-form-item prop="username">
+            <el-input v-model="form.username" placeholder="请输入账号"></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button class="el-button-block" round type="primary" @click="login">登 录</el-button>
+          </el-form-item>
+          <el-form-item>
+            <div class="text-right">
+              <span class="text-muted">没有账号？</span>
+              <router-link to="register">立即注册</router-link>
+            </div>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+    <canvas-particle></canvas-particle>
   </div>
 </template>
-<script>
-export default {
-  name: 'Login',
-  data() {
-    return {
-      form: {
-        username: '',
-        password: '',
-      },
-      rules: {
-        username: [
-          { required: true, message: '账号不能为空', trigger: 'blur' },
-        ],
-        password: [
-          { required: true, message: '密码不能为空', trigger: 'blur' },
-        ],
-      },
-    }
-  },
-  methods: {
-    login() {
-      this.$refs.form.validate((valid) => {
-        console.log(valid)
-        if (valid) {
-          this.$api
-            .post('login', {
+<script type="text/babel">
+  import CanvasParticle from '@/components/canvas-particle'
+
+  export default {
+    name: 'Login',
+    components: {
+      CanvasParticle,
+    },
+    data() {
+      return {
+        form: {
+          username: '',
+          password: '',
+        },
+        rules: {
+          username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
+          password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
+        },
+      }
+    },
+    methods: {
+      login() {
+        this.$refs.form.validate(async (valid) => {
+          if (valid) {
+            const response = await this.$axios.$post('/login', {
               username: this.form.username,
               password: this.form.password,
             })
-            .then((res) => {
-              console.log(res)
-            })
-        }
-      })
+            console.log(response)
+            this.$store.commit('RECORD_USER_INFO', response)
+          }
+        })
+      },
     },
-    register() {
-      this.$router.push('/register')
-    },
-  },
-}
+  }
 </script>
 <style scoped>
-.card {
-  width: 360px;
-  position: absolute;
-  bottom: 10%;
-  right: 100px;
-  padding: 0 40px;
-  box-sizing: border-box;
-}
-.title {
-  font-size: 42px;
-  font-weight: 400;
-  margin-bottom: 60px;
-}
-.login-bt {
-  width: 100%;
-}
-.left-bt {
-  float: left;
-  color: #666;
-}
-.right-bt {
-  float: right;
-  color: #666;
-}
+  .container-fluid {
+    padding: 1px;
+  }
+
+  .login-container {
+    width: 400px;
+    margin: 50px auto 0;
+  }
+
+  .login-box {
+    border: 1px solid #eceff1;
+    border-radius: 2px;
+    padding: 30px 50px;
+    background: #ffffff;
+    position: relative;
+    z-index: 1;
+  }
 </style>

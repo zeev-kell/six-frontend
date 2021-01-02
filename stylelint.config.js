@@ -1,6 +1,23 @@
 module.exports = {
-  extends: ['stylelint-config-standard', 'stylelint-config-prettier'],
+  plugins: [
+    // add this plugin here:
+    'stylelint-scss',
+  ],
+  extends: ['stylelint-config-standard', 'stylelint-order'],
   // add your custom config here
   // https://stylelint.io/user-guide/configuration
-  rules: {},
+  rules: {
+    'no-empty-source': null,
+    'color-hex-case': null,
+    'declaration-colon-newline-after': null,
+    'value-list-comma-newline-after': null,
+    'at-rule-no-unknown': null,
+    'color-hex-length': null,
+    indentation: [
+      2,
+      {
+        severity: 'warning',
+      },
+    ],
+  },
 }

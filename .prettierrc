@@ -1,4 +1,10 @@
 {
+  "printWidth": 120,
   "semi": false,
-  "singleQuote": true
+  "arrowParens": "always",
+  "singleQuote": true,
+  "endOfLine": "auto",
+  "bracketSpacing": true,
+  "vueIndentScriptAndStyle": true,
+  "jsxBracketSameLine": true
 }
