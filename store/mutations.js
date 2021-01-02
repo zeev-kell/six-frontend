@@ -8,4 +8,7 @@ export default {
     state[TokenKey] = token.accessToken
     setStore('token', token)
   },
+  SET_BODY_CLASS(state, bodyClass) {
+    state.bodyClass = bodyClass
+  },
 }

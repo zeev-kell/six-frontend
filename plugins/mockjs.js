@@ -1,3 +1,4 @@
+import { Tools } from '@/plugins/mock/tool'
 import Mock from 'better-mock'
 import { Paper, Papers } from '../plugins/mock/paper'
 // NOTE 增加接口需要同步修改 modules 至 mock
@@ -17,3 +18,4 @@ Mock.mock(/\/login/, 'post', function (options) {
 Mock.mock(/\/register/, 'post', function (options) {
   // eslint-disable-next-line no-console
 })
+Mock.mock(/\/tools/, Tools)

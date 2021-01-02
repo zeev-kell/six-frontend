@@ -13,6 +13,8 @@ module.exports = {
     'value-list-comma-newline-after': null,
     'at-rule-no-unknown': null,
     'color-hex-length': null,
+    'declaration-block-trailing-semicolon': null,
+    'rule-empty-line-before': null,
     indentation: [
       2,
       {

@@ -2,6 +2,7 @@
  * Created by keziyuan on 2020/4/16 17:16.
  */
 import path from 'path'
+import { Tools } from '@/plugins/mock/tool'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import Mock from 'better-mock'
@@ -14,6 +15,7 @@ export default function () {
   // arguments for reply are (status, data, headers)
   mock.onGet(/\/papers/).reply(200, Mock.mock(Papers))
   mock.onGet(/\/paper\/PMC[0-9]{7}/).reply(200, Mock.mock(Paper))
+  mock.onGet(/\/tools/).reply(200, Mock.mock(Tools))
   /** @function addPlugin */
   this.addPlugin(path.resolve(__dirname, '..', 'plugins', 'mockjs.js'))
 }

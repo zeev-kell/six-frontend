@@ -1,55 +1,22 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">six-frontend</h1>
-      <div class="links">
-        <a class="button--green" href="https://nuxtjs.org/" rel="noopener noreferrer" target="_blank">
-          Documentation
-        </a>
-        <a class="button--grey" href="https://github.com/nuxt/nuxt.js" rel="noopener noreferrer" target="_blank">
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+  <el-container class="full-body">
+    <el-header style="padding: 0">
+      <header-navigation></header-navigation>
+    </el-header>
+    <el-main class="main">
+      <router-view></router-view>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
+  import HeaderNavigation from '@/components/HeaderNavigation'
   export default {
-    middleware: 'auth',
+    components: { HeaderNavigation },
   }
 </script>
-
-<style>
-  .container {
-    margin: 0 auto;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  .title {
-    font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
-      Arial, sans-serif;
-    display: block;
-    font-weight: 300;
-    font-size: 100px;
-    color: #35495e;
-    letter-spacing: 1px;
-  }
-
-  .subtitle {
-    font-weight: 300;
-    font-size: 42px;
-    color: #526488;
-    word-spacing: 5px;
-    padding-bottom: 15px;
-  }
-
-  .links {
-    padding-top: 15px;
+<style lang="scss">
+  .main {
+    flex: 1 1 100%;
   }
 </style>

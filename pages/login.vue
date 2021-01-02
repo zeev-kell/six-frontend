@@ -28,10 +28,9 @@
   </div>
 </template>
 <script type="text/babel">
-  import CanvasParticle from '@/components/canvas-particle'
+  import CanvasParticle from '@/components/CanvasParticle'
 
   export default {
-    name: 'Login',
     components: {
       CanvasParticle,
     },

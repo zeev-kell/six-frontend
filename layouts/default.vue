@@ -1,5 +1,5 @@
 <template>
-  <div class="full-body">
+  <div :class="[`body-${$store.state.bodyClass}`]">
     <Nuxt />
   </div>
 </template>

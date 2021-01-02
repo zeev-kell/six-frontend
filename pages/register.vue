@@ -24,9 +24,15 @@
               立即注册
             </el-button>
           </el-form-item>
+          <el-form-item class="text-center" style="margin-bottom: 0">
+            <el-checkbox v-model="form.checked">
+              注册即代表同意
+              <a>《产品使用协议》</a>
+            </el-checkbox>
+          </el-form-item>
           <el-form-item>
             <div class="text-right">
-              <span class="text-muted">已有账号，</span>
+              <span class="text-muted">已有账号？</span>
               <router-link to="login">立即登录</router-link>
             </div>
           </el-form-item>
@@ -38,10 +44,9 @@
   </div>
 </template>
 <script>
-  import CanvasParticle from '@/components/canvas-particle'
+  import CanvasParticle from '@/components/CanvasParticle'
 
   export default {
-    name: 'Register',
     components: {
       CanvasParticle,
     },
@@ -62,6 +67,7 @@
           surepassword: '',
           phone: '',
           email: '',
+          checked: false,
         },
         isLoading: false,
         rules: {
@@ -70,18 +76,14 @@
           surepassword: [{ validator: validatePass, trigger: 'blur' }],
           phone: [
             {
+              required: true,
               pattern: /^0{0,1}(13[0-9]|14[0-9]|15[0-9]|16[0-9]|17[0-9]|18[0-9]|19[0-9])[0-9]{8}$/,
               message: '手机号格式不正确',
               trigger: ['change', 'blur'],
             },
           ],
-          email: [
-            {
-              type: 'email',
-              message: '请输入正确的邮箱地址',
-              trigger: ['blur', 'change'],
-            },
-          ],
+          email: [{ required: true, type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }],
+          checked: [{ required: true, message: '请同意产品使用协议' }],
         },
       }
     },
@@ -114,6 +116,10 @@
   }
 </script>
 <style>
+  .container-fluid {
+    padding: 1px;
+  }
+
   .register-container {
     width: 400px;
     margin: 50px auto 0;
