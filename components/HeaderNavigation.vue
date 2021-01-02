@@ -6,8 +6,8 @@
     <el-menu :default-active="$route.name" :router="true" mode="horizontal">
       <el-menu-item index="/support-center">帮助中心</el-menu-item>
       <el-menu-item index="/about-us">关于我们</el-menu-item>
-      <el-menu-item index="/about-us">注册</el-menu-item>
-      <el-menu-item index="/about-us">登录</el-menu-item>
+      <el-menu-item index="/register">注册</el-menu-item>
+      <el-menu-item index="/login">登录</el-menu-item>
     </el-menu>
   </div>
 </template>

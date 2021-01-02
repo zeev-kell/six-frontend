@@ -1,5 +1,5 @@
-import { Tools } from '@/plugins/mock/tool'
 import Mock from 'better-mock'
+import { Tools } from '../plugins/mock/tool'
 import { Paper, Papers } from '../plugins/mock/paper'
 // NOTE 增加接口需要同步修改 modules 至 mock
 Mock.mock(/\/papers/, Papers)

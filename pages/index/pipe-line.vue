@@ -32,9 +32,4 @@
   }
 </script>
 
-<style scoped lang="scss">
-  .panel {
-    border: 1px solid #eeeeee;
-    padding: 15px;
-  }
-</style>
+<style scoped lang="scss"></style>

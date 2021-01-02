@@ -2,10 +2,10 @@
  * Created by keziyuan on 2020/4/16 17:16.
  */
 import path from 'path'
-import { Tools } from '@/plugins/mock/tool'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import Mock from 'better-mock'
+import { Tools } from '../plugins/mock/tool'
 import { Paper, Papers } from '../plugins/mock/paper'
 
 export default function () {
