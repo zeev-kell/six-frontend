@@ -10,7 +10,7 @@
           </div>
         </el-col>
         <el-col :span="4">
-          <div class="box-card" onclick="$nuxt.$router.push('tool')">
+          <div class="box-card" onclick="$nuxt.$router.push('pipes')">
             <h4>软件工具</h4>
             工具设置与下载
           </div>

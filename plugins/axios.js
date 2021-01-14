@@ -8,7 +8,7 @@ export default function ({ $axios, redirect }) {
   })
   $axios.onResponse((response) => {
     // eslint-disable-next-line no-console
-    return response
+    return response && response.data
   })
   $axios.onError((error) => {
     const code = parseInt(error.response && error.response.status)

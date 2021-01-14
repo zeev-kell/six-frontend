@@ -4,7 +4,7 @@
       <header-navigation></header-navigation>
     </el-header>
     <el-main class="main">
-      <router-view></router-view>
+      <nuxt-child></nuxt-child>
     </el-main>
   </el-container>
 </template>

@@ -38,7 +38,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="text-center mt-30">© 2020 Six O'Clock. All Rights Reserved.</div>
+      <div class="text-center mt-30">© 2021 Six O'Clock. All Rights Reserved.</div>
     </div>
     <canvas-particle></canvas-particle>
   </div>

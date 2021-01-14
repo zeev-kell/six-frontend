@@ -1,7 +1,7 @@
 <template>
   <div class="navbar-header el-row--flex">
     <div class="navbar navbar__left">
-      <div class="navbar-logo"><nuxt-link to="/" class="logo">Six O'clock</nuxt-link>></div>
+      <div class="navbar-logo"><nuxt-link to="/" class="logo">Six O'clock</nuxt-link></div>
     </div>
     <el-menu :default-active="$route.name" :router="true" mode="horizontal">
       <el-menu-item index="/support-center">帮助中心</el-menu-item>
@@ -58,7 +58,7 @@
     .el-menu.el-menu--horizontal {
       border-bottom: none;
     }
-    .el-menu-item {
+    .el-menu--horizontal > .el-menu-item {
       color: white;
       &.is-active {
         color: rgb(255, 208, 75) !important;
