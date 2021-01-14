@@ -11,12 +11,12 @@
             </el-autocomplete>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="params.type" placeholder="按类型筛选" clearable>
+            <el-select v-model="params.category" placeholder="按类型筛选" clearable>
               <el-option v-for="item in categoryList" :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="params.category" placeholder="按类别筛选">
+            <el-select v-model="params.type" placeholder="按类别筛选">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
@@ -24,8 +24,8 @@
         </el-form>
       </div>
       <div class="tool-table">
-        <el-table :data="items" style="width: 100%">
-          <el-table-column label="软件名称" prop="tool_name" width="120"></el-table-column>
+        <el-table :data="tableDate" style="width: 100%">
+          <el-table-column label="软件名称" prop="tool_name" sortable width="120"></el-table-column>
           <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
           <el-table-column label="最近版本" prop="version" width="120"></el-table-column>
           <el-table-column label="软件配置" prop="configuration" width="120"> 配置<i></i> </el-table-column>
@@ -39,7 +39,7 @@
 <script type="text/babel">
   export default {
     async asyncData({ app }) {
-      const items = await app.$axios.get('/pipes')
+      const items = await app.$axios.$get('/pipes')
       return { items }
     },
     data() {
@@ -68,6 +68,20 @@
           }
           return list
         }, [])
+      },
+      tableDate() {
+        let data = this.items
+        if (this.params.category) {
+          data = data.filter((item) => {
+            return item.category === this.params.category
+          })
+        }
+        if (this.params.name) {
+          data = data.filter((item) => {
+            return item.tool_name.includes(this.params.name)
+          })
+        }
+        return data
       },
     },
     methods: {

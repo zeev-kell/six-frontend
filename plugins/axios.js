@@ -7,8 +7,8 @@ export default function ({ $axios, redirect }) {
     // eslint-disable-next-line no-console
   })
   $axios.onResponse((response) => {
-    // eslint-disable-next-line no-console
-    return response && response.data
+    // $get $post 等，直接返回 data 对象
+    return response
   })
   $axios.onError((error) => {
     const code = parseInt(error.response && error.response.status)
