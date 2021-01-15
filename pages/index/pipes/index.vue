@@ -23,14 +23,64 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="tool-table">
+      <div class="table-box">
         <el-table :data="tableDate" style="width: 100%">
           <el-table-column label="软件名称" prop="tool_name" sortable width="120"></el-table-column>
           <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
           <el-table-column label="最近版本" prop="version" width="120"></el-table-column>
-          <el-table-column label="软件配置" prop="configuration" width="120"> 配置<i></i> </el-table-column>
+          <el-table-column label="软件配置" prop="configuration" width="120">
+            <template slot-scope="{ row }">
+              <el-button type="normal" size="small" @click="showConfig(row)">
+                配置<i class="iconfont icon-ellipsis-vertical"></i>
+              </el-button>
+            </template>
+          </el-table-column>
           <el-table-column label="软件介绍" prop="description"></el-table-column>
         </el-table>
+      </div>
+      <div class="dialog-box">
+        <el-dialog :title="temp.tool_name" :visible.sync="dialogFormVisible" center modal-append-to-body>
+          <div class="dialog-body">
+            <el-row>
+              <el-col :span="12">
+                <div class="panel no-border">
+                  <div><strong>功能描述：</strong></div>
+                  {{ temp.description }}
+                </div>
+                <div class="panel no-border">
+                  <div><strong>输入文件：</strong></div>
+                  <ol>
+                    <li>参考基因fasta文件</li>
+                    <li>测序fastq文件</li>
+                  </ol>
+                </div>
+                <div class="panel no-border">
+                  <div><strong>输出文件：</strong></div>
+                  <ol>
+                    <li>Sam文件</li>
+                    <li>Bam文件</li>
+                  </ol>
+                </div>
+                <div class="panel no-border">
+                  <div><strong>帮助文档：</strong></div>
+                  {{ temp.tutorial }}
+                </div>
+              </el-col>
+              <el-col :span="12">
+                <div class="panel no-border">
+                  <div><strong>参数设置：</strong></div>
+                  <el-select v-model="tempSub" placeholder="请选择">
+                    <el-option v-for="item in tempSubs" :key="item" :label="item" :value="item"> </el-option>
+                  </el-select>
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
     </div>
   </div>
@@ -50,6 +100,10 @@
           category: '',
         },
         items: [],
+        temp: {},
+        tempSub: undefined,
+        tempSubs: [],
+        dialogFormVisible: false,
       }
     },
     computed: {
@@ -95,8 +149,11 @@
         const results = str ? nameList.filter(this.createFilter(str)) : nameList
         cb(results)
       },
+      showConfig(temp) {
+        this.temp = Object.assign({}, temp)
+        this.tempSub = Object.keys(this.temp?.settings || {})
+        this.dialogFormVisible = true
+      },
     },
   }
 </script>
-
-<style lang="scss" scoped></style>

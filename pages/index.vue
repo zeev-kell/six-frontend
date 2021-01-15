@@ -10,10 +10,7 @@
 </template>
 
 <script>
-  import HeaderNavigation from '@/components/HeaderNavigation'
-  export default {
-    components: { HeaderNavigation },
-  }
+  export default {}
 </script>
 <style lang="scss">
   .main {

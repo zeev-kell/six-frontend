@@ -54,4 +54,12 @@ html {
 .panel {
   border: 1px solid #eeeeee;
   padding: 15px;
+
+  &.no-border {
+    border: none;
+  }
+
+  & + .panel {
+    margin-top: 15px;
+  }
 }

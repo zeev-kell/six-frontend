@@ -13,4 +13,19 @@ module.exports = {
   rules: {
     'nuxt/no-cjs-in-config': 'off',
   },
+  overrides: [
+    {
+      files: ['./assets/iconfont/*.*'],
+      rules: {
+        'no-unused-expressions': 0,
+        'one-var': 0,
+        'no-var': 0,
+        'no-use-before-define': 0,
+        'no-console': 0,
+        'no-sequences': 0,
+        yoda: 0,
+        'no-void': 0,
+      },
+    },
+  ],
 }
