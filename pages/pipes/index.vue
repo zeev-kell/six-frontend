@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div class="panel">
+    <div class="panel panel-body">
       <div class="search-box">
         <el-form :inline="true" :model="params">
           <el-form-item>
@@ -39,55 +39,19 @@
         </el-table>
       </div>
       <div class="dialog-box">
-        <el-dialog :title="temp.tool_name" :visible.sync="dialogFormVisible" center modal-append-to-body>
-          <div class="dialog-body">
-            <el-row>
-              <el-col :span="12">
-                <div class="panel no-border">
-                  <div><strong>功能描述：</strong></div>
-                  {{ temp.description }}
-                </div>
-                <div class="panel no-border">
-                  <div><strong>输入文件：</strong></div>
-                  <ol>
-                    <li>参考基因fasta文件</li>
-                    <li>测序fastq文件</li>
-                  </ol>
-                </div>
-                <div class="panel no-border">
-                  <div><strong>输出文件：</strong></div>
-                  <ol>
-                    <li>Sam文件</li>
-                    <li>Bam文件</li>
-                  </ol>
-                </div>
-                <div class="panel no-border">
-                  <div><strong>帮助文档：</strong></div>
-                  {{ temp.tutorial }}
-                </div>
-              </el-col>
-              <el-col :span="12">
-                <div class="panel no-border">
-                  <div><strong>参数设置：</strong></div>
-                  <el-select v-model="tempSub" placeholder="请选择">
-                    <el-option v-for="item in tempSubs" :key="item" :label="item" :value="item"> </el-option>
-                  </el-select>
-                </div>
-              </el-col>
-            </el-row>
-          </div>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-          </div>
-        </el-dialog>
+        <pipe-info-dialog ref="info-dialog"></pipe-info-dialog>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/babel">
+  import PipeInfoDialog from '@/components/pages/pipe/PipeInfoDialog'
   export default {
+    components: {
+      PipeInfoDialog,
+    },
+    layout: 'nav-bar-auth',
     async asyncData({ app }) {
       const items = await app.$axios.$get('/pipes')
       return { items }
@@ -100,10 +64,6 @@
           category: '',
         },
         items: [],
-        temp: {},
-        tempSub: undefined,
-        tempSubs: [],
-        dialogFormVisible: false,
       }
     },
     computed: {
@@ -149,10 +109,8 @@
         const results = str ? nameList.filter(this.createFilter(str)) : nameList
         cb(results)
       },
-      showConfig(temp) {
-        this.temp = Object.assign({}, temp)
-        this.tempSub = Object.keys(this.temp?.settings || {})
-        this.dialogFormVisible = true
+      showConfig(row) {
+        this.$refs['info-dialog'].show(Object.assign({}, row))
       },
     },
   }

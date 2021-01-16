@@ -6,15 +6,27 @@
     <el-menu :default-active="$route.name" :router="true" mode="horizontal">
       <el-menu-item index="/support-center">帮助中心</el-menu-item>
       <el-menu-item index="/about-us">关于我们</el-menu-item>
-      <el-menu-item index="/register">注册</el-menu-item>
-      <el-menu-item index="/login">登录</el-menu-item>
+      <template v-if="username">
+        <el-menu-item @click="logout"> {{ username }} </el-menu-item>
+      </template>
+      <template v-else>
+        <el-menu-item index="/register">注册</el-menu-item>
+        <el-menu-item index="/login">登录</el-menu-item>
+      </template>
     </el-menu>
   </div>
 </template>
 
 <script type="text/babel">
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     name: 'HeaderNavigation',
+    computed: {
+      ...mapGetters(['username']),
+    },
+    methods: {
+      ...mapActions(['logout']),
+    },
   }
 </script>
 

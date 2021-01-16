@@ -50,7 +50,7 @@ export default {
     debug: process.env.NODE_ENV === 'development',
   },
   router: {
-    middleware: ['auth', 'class'],
+    middleware: ['class'],
   },
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {},

@@ -14,3 +14,7 @@ $--border-radius-base: 0;
   border-bottom: 1px solid #dcdfe6;
   text-align: left;
 }
+
+.el-input__inner[type='number'] {
+  padding-right: 1px !important;
+}

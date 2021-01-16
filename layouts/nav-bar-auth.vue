@@ -4,7 +4,7 @@
       <el-header style="padding: 0">
         <header-navigation></header-navigation>
       </el-header>
-      <el-main class="main">
+      <el-main class="layout-main">
         <Nuxt />
       </el-main>
     </el-container>
@@ -12,6 +12,14 @@
 </template>
 <style lang="scss">
   @import '../node_modules/normalize.css/normalize.css';
+  @import '../assets/scss/element.scss';
   @import '../assets/scss/theme.scss';
-  @import '../assets/scss/layout.scss';
+  @import '../assets/iconfont/iconfont.css';
 </style>
+<script>
+  import HeaderNavigation from '@/components/HeaderNavigation'
+  export default {
+    components: { HeaderNavigation },
+    middleware: ['auth'],
+  }
+</script>

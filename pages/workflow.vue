@@ -20,9 +20,10 @@
 
 <script type="text/babel">
   export default {
-    async asyncData({ $axios, params }) {
-      const tools = await $axios.get('/tools')
-      return { tools }
+    layout: 'nav-bar-auth',
+    async asyncData({ app }) {
+      const items = await app.$axios.get('/pipes')
+      return { items }
     },
     data() {
       return {
