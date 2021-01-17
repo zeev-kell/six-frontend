@@ -1,7 +1,7 @@
 import Mock from 'better-mock'
 import { Pipes, PipesUrl } from '../plugins/mock/pipe'
 // NOTE 由 Node.js 发起请求需要同步修改 modules 至 mock
-Mock.mock(/\/login/, 'post', function (options) {
+Mock.mock(/\/api\/login/, 'post', function (options) {
   const body = JSON.parse(options.body)
   return Mock.mock({
     username: body.username,
@@ -10,7 +10,7 @@ Mock.mock(/\/login/, 'post', function (options) {
     status: 1,
   })
 })
-Mock.mock(/\/register/, 'post', function (options) {
+Mock.mock(/\/api\/register/, 'post', function (options) {
   // eslint-disable-next-line no-console
 })
 Mock.mock(PipesUrl, function () {

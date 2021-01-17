@@ -34,24 +34,15 @@
             </el-select>
             <p class="mb-0">{{ tempSubObj.description }}</p>
           </div>
-          <el-form ref="form" class="panel-body" size="small">
-            <el-form-item v-for="(param, key) of tempSubObj.params" :key="key">
-              <div class="sub-name">
-                <span v-if="param.optional === false">*</span>
-                <strong>{{ key }}</strong>
-                <el-tooltip :content="param.help" placement="top" effect="light">
-                  <i class="el-icon-question"></i>
-                </el-tooltip>
-              </div>
-              <pipe-param-input :param="param"></pipe-param-input>
-            </el-form-item>
+          <el-form ref="form" :model="tempSubObj.params" class="panel-body" size="small" label-position="top">
+            <pipe-param-input v-for="(param, key) of tempSubObj.params" :key="key" :param="param"></pipe-param-input>
           </el-form>
         </el-col>
       </el-row>
     </div>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      <el-button type="primary" @click="onConfirm">确 定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -77,10 +68,29 @@
     methods: {
       show(temp) {
         this.temp = temp
+        this.tempSub = undefined
+        this.tempSubObj = {}
         this.dialogVisible = true
       },
       changeSub(value) {
         this.tempSubObj = this.temp.settings[value]
+      },
+      onConfirm() {
+        this.$refs.form.validate((valid) => {
+          if (valid) {
+            const h = this.$createElement
+
+            this.$notify({
+              title: '提交成功',
+              message: h('div', { style: 'color: teal' }, JSON.stringify(this.tempSubObj)),
+              duration: 0,
+            })
+          } else {
+            // eslint-disable-next-line no-console
+            alert('error submit!!')
+            return false
+          }
+        })
       },
     },
   }

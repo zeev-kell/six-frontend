@@ -110,7 +110,9 @@
         cb(results)
       },
       showConfig(row) {
-        this.$refs['info-dialog'].show(Object.assign({}, row))
+        // 转成字符代替深拷贝
+        const _row = JSON.stringify(row)
+        this.$refs['info-dialog'].show(JSON.parse(_row))
       },
     },
   }

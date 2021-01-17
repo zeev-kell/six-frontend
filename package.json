@@ -31,8 +31,10 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
     "js-cookie": "^2.2.1",
+    "marked": "^1.2.7",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.14.6",
+    "vue-cwl": "^1.0.4",
     "vuex-persistedstate": "^4.0.0-beta.1"
   },
   "devDependencies": {

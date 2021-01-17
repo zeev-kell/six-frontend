@@ -18,3 +18,16 @@ $--border-radius-base: 0;
 .el-input__inner[type='number'] {
   padding-right: 1px !important;
 }
+
+.el-tooltip__popper.is-light {
+  border-color: $--border-color-base;
+  border-radius: 2px;
+
+  &[x-placement^='top'] .popper__arrow {
+    border-top-color: $--border-color-base;
+  }
+}
+
+.el-success {
+  color: $--color-success;
+}

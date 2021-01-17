@@ -92,6 +92,6 @@ export const Pipe = {
   download: 'docker push 6oclock/bwa:v0.7.12-r1044',
   tutorial: 'http://39.100.115.170:5000/tutorials/bwa.md',
 }
-export const PipeUrl = /\/pipe\/[0-9]*/
+export const PipeUrl = /\/api\/pipe\/[0-9]*/
 export const Pipes = { 'items|10': [Pipe] }
-export const PipesUrl = /\/pipes/
+export const PipesUrl = /\/api\/pipes/
