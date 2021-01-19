@@ -4,9 +4,6 @@
 
 <script type="text/babel">
   export default {
-    name: '',
-    layout: 'nav-bar',
+    layout: 'IndexLayout',
   }
 </script>
-
-<style scoped lang="scss" rel="stylesheet"></style>

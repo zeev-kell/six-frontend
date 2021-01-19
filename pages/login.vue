@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" style="padding: 1px">
     <div class="login-container">
       <div class="login-box">
         <h1 class="text-center">six o'clock</h1>
@@ -59,7 +59,7 @@
               })
               .then((token) => {
                 this.$store.commit('RECORD_USER_INFO', token)
-                this.$router.push('/')
+                this.$router.push('application')
               })
               .catch((e) => {
                 this.$message.error(e)
@@ -71,13 +71,10 @@
         })
       },
     },
+    middleware: ['auth-login'],
   }
 </script>
-<style scoped>
-  .container-fluid {
-    padding: 1px;
-  }
-
+<style scoped lang="scss">
   .login-container {
     width: 400px;
     margin: 50px auto 0;

@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" style="padding: 1px">
     <div class="register-container">
       <div class="register-box">
         <h1 class="text-center">six o'clock</h1>
@@ -115,11 +115,7 @@
     },
   }
 </script>
-<style>
-  .container-fluid {
-    padding: 1px;
-  }
-
+<style lang="scss">
   .register-container {
     width: 400px;
     margin: 50px auto 0;

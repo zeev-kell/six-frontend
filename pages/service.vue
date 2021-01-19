@@ -1,5 +1,5 @@
 <template>
-  <div>index</div>
+  <div>service</div>
 </template>
 
 <script type="text/babel">

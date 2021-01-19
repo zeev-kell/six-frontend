@@ -1,9 +1,9 @@
 <template>
-  <div>index</div>
+  <nuxt-child />
 </template>
 
 <script type="text/babel">
   export default {
-    layout: 'IndexLayout',
+    layout: 'AppLayout',
   }
 </script>

@@ -1,6 +1,7 @@
 /* 改变 icon 字体路径变量，必需 */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 $--border-radius-base: 0;
+$--card-border-radius: 0;
 
 @import '~element-ui/packages/theme-chalk/src/index';
 
@@ -30,4 +31,30 @@ $--border-radius-base: 0;
 
 .el-success {
   color: $--color-success;
+}
+
+// 按实际大小显示
+.el-col-auto {
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+}
+
+// 平分剩下的空间
+.el-col-equal {
+  flex-basis: 0;
+  flex-grow: 1;
+  min-width: 0;
+  max-width: 100%;
+}
+
+// 占满一行，其他会换行
+.el-col-full {
+  flex: 1 1 100%;
+}
+
+// 这个可以使平分的换行
+.col-100 {
+  width: 100%;
 }

@@ -49,7 +49,7 @@
       },
       rules() {
         const rules = []
-        if (this.param.optional !== false) {
+        if (this.param.optional === false) {
           rules.push({
             required: true,
             message: '不能为空',

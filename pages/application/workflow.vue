@@ -1,8 +1,8 @@
 <template>
-  <div class="container-fluid full-height">
+  <div class="container-fluid">
     <el-row :gutter="20">
       <el-col :span="6">
-        <div class="tool-container panel">
+        <div class="panel panel-body">
           <el-form label-position="top">
             <el-form-item label="搜索工具">
               <el-input v-model="keyWords" placeholder="请输入内容" suffix-icon="el-icon-search"> </el-input>
@@ -13,14 +13,15 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="18"><div class="pipe-container panel"></div></el-col>
+      <el-col :span="18">
+        <div class="panel panel-body"></div>
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script type="text/babel">
   export default {
-    layout: 'nav-bar-auth',
     async asyncData({ app }) {
       const items = await app.$axios.get('/pipes')
       return { items }

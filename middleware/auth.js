@@ -11,7 +11,7 @@ export default function ({ store, route, req, redirect }) {
     const token = store.state[TokenKey]
     // 需要进行权限判断的页面开头
     if (!token) {
-      redirect(redirectURL)
+      redirect(301, redirectURL)
     }
   }
 }

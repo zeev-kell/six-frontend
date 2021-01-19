@@ -51,7 +51,6 @@
     components: {
       PipeInfoDialog,
     },
-    layout: 'nav-bar-auth',
     async asyncData({ app }) {
       const items = await app.$axios.$get('/pipes')
       return { items }
