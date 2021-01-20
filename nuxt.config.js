@@ -60,5 +60,9 @@ export default {
     transpile: [/^element-ui/],
     cache: true,
     parallel: true,
+    buildModules: ['@nuxtjs/style-resources'],
+    styleResources: {
+      scss: './assets/scss/variables.scss',
+    },
   },
 }

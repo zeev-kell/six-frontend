@@ -1,16 +1,14 @@
 <template>
   <div :class="[`body-${$store.state.bodyClass}`]">
-    <el-container class="is-vertical">
-      <index-navigation />
-      <el-main>
-        <Nuxt />
-      </el-main>
-    </el-container>
+    <index-navigation />
+    <Nuxt />
+    <index-footer />
   </div>
 </template>
 <script>
+  import IndexFooter from '@/components/IndexFooter'
   import IndexNavigation from '@/components/IndexNavigation'
   export default {
-    components: { IndexNavigation },
+    components: { IndexFooter, IndexNavigation },
   }
 </script>

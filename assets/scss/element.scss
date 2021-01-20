@@ -11,6 +11,10 @@ $--card-border-radius: 0;
   color: #666666;
 }
 
+.el-button.pass {
+  background-color: transparent;
+}
+
 .el-dialog__header {
   border-bottom: 1px solid #dcdfe6;
   text-align: left;

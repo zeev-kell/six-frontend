@@ -1,9 +1,11 @@
 <template>
   <el-header>
-    <div class="navbar-header el-row--flex app-header-menu">
+    <div class="navbar-header el-row--flex nav-darken">
       <div class="navbar el-col-equal">
         <div class="navbar-logo">
-          <nuxt-link to="/application" class="logo">Six O'clock</nuxt-link>
+          <nuxt-link to="/application" class="logo">
+            <logo-svg class="logo-svg" />
+          </nuxt-link>
         </div>
       </div>
       <el-menu
@@ -17,7 +19,7 @@
           <a href="/support-center" target="_blank">帮助中心</a>
         </li>
         <template v-if="username">
-          <el-submenu index="1" popper-class="app-header-menu">
+          <el-submenu index="1" popper-class="nav-darken">
             <template slot="title">{{ username }}</template>
             <el-menu-item index="/application/u-center">用户中心</el-menu-item>
             <el-menu-item hidden index="/application/u-center/change-password">修改密码</el-menu-item>
@@ -36,8 +38,12 @@
 
 <script type="text/babel">
   import { mapGetters, mapActions } from 'vuex'
+  import LogoSvg from '@/components/LogoSvg'
   export default {
     name: 'AppNavigation',
+    components: {
+      LogoSvg,
+    },
     computed: {
       ...mapGetters(['username']),
     },
