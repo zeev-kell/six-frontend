@@ -30,11 +30,33 @@
   padding-bottom: 2rem;
 }
 
+.pt-2r {
+  padding-top: 2rem;
+}
+
 //
 // Button
 //
 .el-button-block {
   width: 100%;
+}
+
+//
+// a
+//
+a {
+  text-decoration: none;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+a:focus,
+a:hover {
+  color: #23527c;
+  text-decoration: underline;
 }
 
 //

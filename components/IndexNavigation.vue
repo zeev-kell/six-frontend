@@ -30,6 +30,7 @@
       LogoSvg,
     },
     mounted() {
+      this.onWindowScroll()
       window.addEventListener('scroll', this.onWindowScroll, true)
     },
     beforeDestroy() {

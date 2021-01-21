@@ -1,7 +1,7 @@
 import path from 'path'
 import axios from 'axios'
-import MockAdapter from 'axios-mock-adapter'
 import Mock from 'better-mock'
+import MockAdapter from 'axios-mock-adapter'
 import { Pipe, PipeUrl, Pipes, PipesUrl } from '../plugins/mock/pipe'
 
 export default function () {
@@ -12,6 +12,22 @@ export default function () {
   mock.onGet(PipeUrl).reply(200, Mock.mock(Pipe))
   mock.onGet(PipesUrl).reply(() => {
     return [200, Mock.mock(Pipes).items]
+  })
+  mock.onGet(/\/README.md/).reply(() => {
+    const randomBody = () => {
+      const subTitle = `<h3>${Mock.Random.title()}</h3>`
+      const subBody = `<div>${Mock.Random.cparagraph(30)}</div>`
+      return subTitle + subBody
+    }
+    return [
+      200,
+      {
+        title: Mock.Random.title(),
+        body: Array.from({ length: Math.ceil(Math.random() * 3 + 3) })
+          .map(randomBody)
+          .join(''),
+      },
+    ]
   })
   /** @function addPlugin */
   this.addPlugin(path.resolve(__dirname, '..', 'plugins', 'mockjs.js'))

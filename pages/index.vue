@@ -34,7 +34,7 @@
         </el-carousel>
       </div>
     </section>
-    <section class="section-product bg">
+    <section class="section-product bg inset">
       <div class="section-title">
         <h1>解决方案</h1>
       </div>
@@ -54,7 +54,7 @@
         </div>
       </div>
     </section>
-    <section class="section-cooperation shadow">
+    <section class="section-cooperation">
       <div class="section-title">
         <h1>合作案例</h1>
       </div>
@@ -65,11 +65,16 @@
           </div>
           <div class="el-col el-col-12">
             <div class="custom-right">
-              <h2>深圳华大基因科技服务有限公司</h2>
+              <h2>深圳市盐田街道办人民医院</h2>
               <p class="text-justify">
-                基因组解码计划是践行华大“基因科技造福人类”愿景的重要举措，我们要集合业内优秀力量，共同推进基因科技在医疗健康领域落地和应用。GeneDock作为行业领先的组学数据技术提供商，具有高效稳定数据处理能力和切合客户场景的完整解决方案，是我们强有力的支持者和伙伴。双方优势互补，在短短3个月内构建起了连接多个地域测序中心的智能云端测序数据生产线，相信双方此次合作将产生行业最具性价比的解决方案，加速实现人人了解自己基因组序列的目标。
+                基因组解码计划是践行造福人类愿景的重要举措，
+                我们要集合业内优秀力量，共同推进基因科技在医疗健康领域落地和应用。
+                基因组解码计划是践行造福人类愿景的重要举措，
+                我们要集合业内优秀力量，共同推进基因科技在医疗健康领域落地和应用。
+                基因组解码计划是践行造福人类愿景的重要举措，
+                我们要集合业内优秀力量，共同推进基因科技在医疗健康领域落地和应用。
               </p>
-              <p class="text-right">——华大科技总经理 高强 博士</p>
+              <p class="text-right">—— 基因科技总经理 刘 博士</p>
             </div>
           </div>
         </div>

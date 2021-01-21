@@ -1,6 +1,6 @@
 <template>
-  <footer class="footer">
-    <div class="bg py-2r text-center">
+  <footer class="footer text-center">
+    <div class="py-2r bg inset">
       <div class="container">
         <h2><span>Six<span>O</span>'clock</span> 电子报刊</h2>
         <p>将最新的新闻发送到您的收件箱，这由 Six O'clock 团队策划。</p>
@@ -13,36 +13,16 @@
         </el-form>
       </div>
     </div>
-    <div class="shadow">
+    <div class="pt-2r">
       <div class="container">
-        <div class="el-row el-row--flex">
-          <nav class="el-col-equal">
-            <h3>发现</h3>
-            <ul class="list-unstyled">
-              <li class="py-2"><a>我们团队</a></li>
-              <li class="py-2"><a>设计套件</a></li>
-              <li class="py-2"><a>联系我们</a></li>
-            </ul>
-          </nav>
-          <nav class="el-col-equal text-center">
-            <h3>发现</h3>
-            <ul class="list-unstyled">
-              <li class="py-2"><a>我们团队</a></li>
-              <li class="py-2"><a>设计套件</a></li>
-              <li class="py-2"><a>联系我们</a></li>
-            </ul>
-          </nav>
-          <nav class="el-col-equal text-right">
-            <h3>发现</h3>
-            <ul class="list-unstyled">
-              <li class="py-2"><a>我们团队</a></li>
-              <li class="py-2"><a>设计套件</a></li>
-              <li class="py-2"><a>联系我们</a></li>
-            </ul>
-          </nav>
-        </div>
+        <ul class="list-unstyled">
+          <li><a>GitHub 仓库</a></li>
+          <li><a>实例</a></li>
+          <li><a>优站精选</a></li>
+          <li><nuxt-link to="/about-us" tag="a">关于我们</nuxt-link></li>
+        </ul>
+        <p id="copyright" class="copyright">©2021 Six O'clock <a>粤ICP 备1500xxxx号-1</a></p>
       </div>
-      <p id="copyright" class="copyright">©2021 Six O'clock <a>粤ICP 备1500xxxx号-1</a></p>
     </div>
   </footer>
 </template>
@@ -57,13 +37,18 @@
   footer .bg {
     background: rgba(248, 250, 252, 1);
   }
-
+  footer .list-unstyled li {
+    display: inline-block;
+    & + li {
+      margin-left: 1rem;
+    }
+  }
   footer .copyright {
     text-align: center;
     font-size: 14px;
     font-weight: 100;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
     margin: 0;
   }
 </style>
