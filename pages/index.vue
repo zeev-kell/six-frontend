@@ -1,6 +1,6 @@
 <template>
   <div class="index-container">
-    <section class="section-banner el-row is-align-middle el-row--flex">
+    <section class="index-banner el-row is-align-middle el-row--flex">
       <div class="el-col-8 el-col-offset-4">
         <h1>生物医疗大数据服务</h1>
         <p>
@@ -40,11 +40,13 @@
       </div>
       <div class="container">
         <div class="el-row el-row--flex is-justify-space-around">
-          <div v-for="item in 4" :key="item" class="el-col el-col-6 pro-panel">
+          <div v-for="item in 4" :key="item" class="el-col el-col-6 mb-2r text-center pro-panel">
             <div class="pro-icon">
               <i class="el-icon-files"></i>
             </div>
-            <h3 class="pro-title">云计算协助工具</h3>
+            <h3 class="pro-title mx-1r">
+              <strong>云计算协助工具</strong>
+            </h3>
             <div class="pro-content">
               多种生物信息分析加速方案<br />
               高通量分布式计算框架<br />
@@ -89,7 +91,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  .section-banner {
+  .index-banner {
     background: url('/images/banner.jpg') no-repeat;
     background-size: cover;
     min-height: 100vh;
@@ -111,19 +113,9 @@
     }
   }
 
-  .pro-panel {
-    text-align: center;
-    margin-bottom: 50px;
-  }
-
   .pro-icon {
     font-size: 80px;
     color: $theme-color;
-  }
-
-  .pro-title {
-    margin: 1rem 0;
-    font-weight: 700;
   }
 
   .cooperation-image {

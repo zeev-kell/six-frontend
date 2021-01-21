@@ -1,6 +1,6 @@
 <template>
   <div class="s-center-container">
-    <section class="section-banner el-row is-align-middle el-row--flex">
+    <section class="header-banner el-row el-row--flex">
       <div class="el-col-8 el-col-offset-4">
         <h1>帮助中心</h1>
         <p>
@@ -59,11 +59,8 @@
 </script>
 
 <style lang="scss" scoped>
-  .section-banner {
-    padding: 3rem 0;
+  .header-banner {
     background-color: #2f5c8a;
-    min-height: 20vh;
-    height: 240px;
     color: var(--light_grey);
   }
 
