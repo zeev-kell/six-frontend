@@ -30,7 +30,13 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
+    // https://github.com/nuxt-community/style-resources-module
+    '@nuxtjs/style-resources',
   ],
+
+  styleResources: {
+    scss: ['./assets/scss/variables.scss', './assets/scss/mixins.scss'],
+  },
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
@@ -60,9 +66,5 @@ export default {
     transpile: [/^element-ui/],
     cache: true,
     parallel: true,
-    buildModules: ['@nuxtjs/style-resources'],
-    styleResources: {
-      scss: './assets/scss/variables.scss',
-    },
   },
 }

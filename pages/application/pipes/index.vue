@@ -25,7 +25,7 @@
       </div>
       <div class="table-box">
         <el-table :data="tableDate" style="width: 100%">
-          <el-table-column label="软件名称" prop="tool_name" sortable width="120"></el-table-column>
+          <el-table-column label="软件名称" prop="pipe_name" sortable width="120"></el-table-column>
           <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
           <el-table-column label="最近版本" prop="version" width="120"></el-table-column>
           <el-table-column label="软件配置" prop="configuration" width="120">
@@ -76,8 +76,8 @@
       },
       nameList() {
         return this.items.reduce((list, item) => {
-          if (!list.includes(item.tool_name)) {
-            list.push({ value: item.tool_name })
+          if (!list.includes(item.pipe_name)) {
+            list.push({ value: item.pipe_name })
           }
           return list
         }, [])
@@ -91,7 +91,7 @@
         }
         if (this.params.name) {
           data = data.filter((item) => {
-            return item.tool_name.includes(this.params.name)
+            return item.pipe_name.includes(this.params.name)
           })
         }
         return data

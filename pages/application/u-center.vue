@@ -6,11 +6,11 @@
           <i class="el-icon-menu"></i>
           <span slot="title">基本信息</span>
         </el-menu-item>
-        <el-menu-item index="/application/u-center/change-password">
+        <el-menu-item index="/application/u-center/security">
           <i class="el-icon-document"></i>
-          <span slot="title">修改密码</span>
+          <span slot="title">账户安全</span>
         </el-menu-item>
-        <el-menu-item index="/application/u-center/authorization">
+        <el-menu-item index="/application/u-center/authorize">
           <i class="el-icon-setting"></i>
           <span slot="title">授权管理</span>
         </el-menu-item>

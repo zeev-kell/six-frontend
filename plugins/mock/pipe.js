@@ -1,7 +1,7 @@
 // import Mock from 'better-mock'
 export const Pipe = {
-  'tool_id|+1': /[0-9]{7}/,
-  tool_name: '@name',
+  'pipe_id|+1': /[0-9]{7}/,
+  pipe_name: '@name',
   version: /v[0-9]{1}\.[0-9]{1}\.[0-9]{1}-r1044/,
   provider: '@name',
   'description|1': [
