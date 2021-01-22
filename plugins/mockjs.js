@@ -1,5 +1,6 @@
 import Mock from 'better-mock'
 import { Pipes, PipesUrl } from '../plugins/mock/pipe'
+import { Workflow, WorkflowUrl, WorkflowList, WorkflowListUrl } from '../plugins/mock/workflow'
 // NOTE 由 Node.js 发起请求需要同步修改 modules 至 mock
 Mock.mock(/\/api\/login/, 'post', function (options) {
   const body = JSON.parse(options.body)
@@ -15,6 +16,12 @@ Mock.mock(/\/api\/register/, 'post', function (options) {
 })
 Mock.mock(PipesUrl, function () {
   return Mock.mock(Pipes).items
+})
+Mock.mock(WorkflowListUrl, function () {
+  return Mock.mock(WorkflowList).items
+})
+Mock.mock(WorkflowUrl, function () {
+  return Mock.mock(Workflow)
 })
 Mock.mock(/\/README.md/, function () {
   const randomBody = () => {

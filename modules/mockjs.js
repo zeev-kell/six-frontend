@@ -3,6 +3,7 @@ import axios from 'axios'
 import Mock from 'better-mock'
 import MockAdapter from 'axios-mock-adapter'
 import { Pipe, PipeUrl, Pipes, PipesUrl } from '../plugins/mock/pipe'
+import { Workflow, WorkflowUrl, WorkflowList, WorkflowListUrl } from '../plugins/mock/workflow'
 
 export default function () {
   // 这个是配置服务器的拦截，一般都在 asyncData 函数里面起效，由 Node.js 发起请求
@@ -12,6 +13,10 @@ export default function () {
   mock.onGet(PipeUrl).reply(200, Mock.mock(Pipe))
   mock.onGet(PipesUrl).reply(() => {
     return [200, Mock.mock(Pipes).items]
+  })
+  mock.onGet(WorkflowUrl).reply(200, Mock.mock(Workflow))
+  mock.onGet(WorkflowListUrl).reply(() => {
+    return [200, Mock.mock(WorkflowList).items]
   })
   mock.onGet(/\/README.md/).reply(() => {
     const randomBody = () => {

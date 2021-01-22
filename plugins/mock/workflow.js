@@ -1,7 +1,7 @@
 // import Mock from 'better-mock'
-export const Pipe = {
-  'pipe_id|+1': /[0-9]{7}/,
-  pipe_name: '@name',
+export const Workflow = {
+  'workflow_id|+1': /[0-9]{7}/,
+  workflow_name: '@PARAGRAPH',
   version: /v[0-9]{1}\.[0-9]{1}\.[0-9]{1}-r1044/,
   provider: '@name',
   public_time: '@datetime',
@@ -93,6 +93,6 @@ export const Pipe = {
   download: 'docker push 6oclock/bwa:v0.7.12-r1044',
   tutorial: 'http://39.100.115.170:5000/tutorials/bwa.md',
 }
-export const PipeUrl = /\/api\/pipe\/[0-9]*/
-export const Pipes = { 'items|10': [Pipe] }
-export const PipesUrl = /\/api\/pipes/
+export const WorkflowUrl = /\/api\/workflow\/[0-9]*/
+export const WorkflowList = { 'items|10': [Workflow] }
+export const WorkflowListUrl = /\/api\/workflowList/

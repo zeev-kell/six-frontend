@@ -21,9 +21,24 @@
   margin-bottom: 0;
 }
 
+.mb-10 {
+  margin-bottom: 10px;
+}
+
 .mx-1r {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.mx-0 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+hr {
+  border-color: #eee;
+  border-width: 1px 0 0 0;
+  border-style: dashed;
 }
 
 //
@@ -55,6 +70,7 @@
 //
 a {
   text-decoration: none;
+  color: $theme-a-color;
 }
 
 a:active,
@@ -64,7 +80,7 @@ a:hover {
 
 a:focus,
 a:hover {
-  color: #23527c;
+  color: lighten($theme-a-color, 20%);
   text-decoration: underline;
 }
 

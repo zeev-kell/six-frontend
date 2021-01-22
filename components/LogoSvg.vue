@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 0 257.92 69.1" xmlns="http://www.w3.org/2000/svg">
+  <svg v-once viewBox="0 0 257.92 69.1" xmlns="http://www.w3.org/2000/svg">
     <rect class="rect" height="69.1" width="69.12" />
     <path
       class="edge-1"

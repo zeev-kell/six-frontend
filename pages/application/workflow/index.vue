@@ -19,34 +19,30 @@
       </div>
       <div class="table-box">
         <el-table :data="tableDate" style="width: 100%">
-          <el-table-column label="软件名称" prop="pipe_name" sortable width="200"></el-table-column>
-          <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
-          <el-table-column label="最近版本" prop="version" width="120"></el-table-column>
-          <el-table-column label="软件配置" prop="configuration" width="120">
+          <el-table-column label="流程名称" prop="workflow_name" sortable width="240">
             <template slot-scope="{ row }">
-              <el-button type="normal" size="small" @click="showConfig(row)">
-                配置<i class="iconfont icon-ellipsis-vertical"></i>
-              </el-button>
+              <nuxt-link
+                class="text-truncate"
+                :to="{ path: '/application/workflow/' + row['workflow_id'] }"
+                :title="row.workflow_name"
+              >
+                {{ row.workflow_name }}
+              </nuxt-link>
             </template>
           </el-table-column>
-          <el-table-column label="软件介绍" prop="description"></el-table-column>
+          <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
+          <el-table-column label="最近版本" prop="version" width="120"></el-table-column>
+          <el-table-column label="流程介绍" prop="description"></el-table-column>
         </el-table>
-      </div>
-      <div class="dialog-box">
-        <pipe-info-dialog ref="info-dialog"></pipe-info-dialog>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/babel">
-  import PipeInfoDialog from '@/components/pages/pipe/PipeInfoDialog'
   export default {
-    components: {
-      PipeInfoDialog,
-    },
     async asyncData({ app }) {
-      const items = await app.$axios.$get('/pipes')
+      const items = await app.$axios.$get('/workflowList')
       return { items }
     },
     data() {
@@ -69,8 +65,8 @@
       },
       nameList() {
         return this.items.reduce((list, item) => {
-          if (!list.includes(item.pipe_name)) {
-            list.push({ value: item.pipe_name })
+          if (!list.includes(item.workflow_name)) {
+            list.push({ value: item.workflow_name })
           }
           return list
         }, [])
@@ -84,7 +80,7 @@
         }
         if (this.params.name) {
           data = data.filter((item) => {
-            return item.pipe_name.includes(this.params.name)
+            return item.workflow_name.includes(this.params.name)
           })
         }
         return data
@@ -100,11 +96,6 @@
         const nameList = this.nameList
         const results = str ? nameList.filter(this.createFilter(str)) : nameList
         cb(results)
-      },
-      showConfig(row) {
-        // 转成字符代替深拷贝
-        const _row = JSON.stringify(row)
-        this.$refs['info-dialog'].show(JSON.parse(_row))
       },
     },
   }

@@ -79,7 +79,7 @@
 
 <style lang="scss" scoped>
   .header-banner {
-    background-color: #14611a;
+    background-color: #146161;
     color: var(--light_grey);
   }
 </style>
