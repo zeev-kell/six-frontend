@@ -39,10 +39,7 @@
     </div>
     <div class="panel">
       <div class="panel-body w-cwl">
-        <workflow-cwl
-          cwl-url="https://unpkg.com/cwl-svg@2.1.5/cwl-samples/rna-seq-alignment.json"
-          :plugins="plugins"
-        ></workflow-cwl>
+        <workflow-cwl cwl-url="/rna-seq-alignment.json" :plugins="plugins"></workflow-cwl>
       </div>
     </div>
   </div>
