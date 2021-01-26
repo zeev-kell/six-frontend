@@ -15,6 +15,7 @@ module.exports = {
     'color-hex-length': null,
     'declaration-block-trailing-semicolon': null,
     'rule-empty-line-before': null,
+    'comment-whitespace-inside': null,
     indentation: [
       2,
       {

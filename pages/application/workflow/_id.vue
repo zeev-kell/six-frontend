@@ -39,20 +39,20 @@
     </div>
     <div class="panel">
       <div class="panel-body w-cwl">
-        <workflow-cwl cwl-url="/rna-seq-alignment.json" :plugins="plugins"></workflow-cwl>
+        <workflow-cwl cwl-url="/rna-seq-alignment.json" :plugins="plugins" :editing-enabled="true"></workflow-cwl>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/babel">
-  import WorkflowCwl from '@/components/WorkflowCwl'
   import { SVGArrangePlugin } from 'cwl-svg/compiled/src/plugins/arrange/arrange'
   import { SVGNodeMovePlugin } from 'cwl-svg/compiled/src/plugins/node-move/node-move'
   import { SVGPortDragPlugin } from 'cwl-svg/compiled/src/plugins/port-drag/port-drag'
   import { SelectionPlugin } from 'cwl-svg/compiled/src/plugins/selection/selection'
   import { SVGEdgeHoverPlugin } from 'cwl-svg/compiled/src/plugins/edge-hover/edge-hover'
   import { ZoomPlugin } from 'cwl-svg/compiled/src/plugins/zoom/zoom'
+  import WorkflowCwl from './components/WorkflowCwl'
 
   export default {
     components: {

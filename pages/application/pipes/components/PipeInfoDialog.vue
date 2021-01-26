@@ -48,7 +48,7 @@
 </template>
 
 <script type="text/babel">
-  import PipeParamInput from '@/components/pages/pipe/PipeParamInput'
+  import PipeParamInput from './PipeParamInput'
   export default {
     name: 'PipeInfoDialog',
     components: { PipeParamInput },

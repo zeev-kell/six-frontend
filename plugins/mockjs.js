@@ -17,11 +17,11 @@ Mock.mock(/\/api\/register/, 'post', function (options) {
 Mock.mock(PipesUrl, function () {
   return Mock.mock(Pipes).items
 })
-Mock.mock(WorkflowListUrl, function () {
-  return Mock.mock(WorkflowList).items
-})
 Mock.mock(WorkflowUrl, function () {
   return Mock.mock(Workflow)
+})
+Mock.mock(WorkflowListUrl, function () {
+  return Mock.mock(WorkflowList).items
 })
 Mock.mock(/\/README.md/, function () {
   const randomBody = () => {

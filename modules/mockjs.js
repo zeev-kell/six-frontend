@@ -10,15 +10,15 @@ export default function () {
   // This sets the mock adapter on the default instance
   const mock = new MockAdapter(axios)
   // arguments for reply are (status, data, headers)
-  mock.onGet(PipeUrl).reply(200, () => Mock.mock(Pipe))
-  mock.onGet(PipesUrl).reply(200, () => {
+  mock.onGet(PipeUrl).reply(200, Mock.mock(Pipe))
+  mock.onGet(PipesUrl).reply(() => {
     return [200, Mock.mock(Pipes).items]
   })
-  mock.onGet(WorkflowUrl).reply(200, () => Mock.mock(Workflow))
-  mock.onGet(WorkflowListUrl).reply(200, () => {
+  mock.onGet(WorkflowUrl).reply(200, Mock.mock(Workflow))
+  mock.onGet(WorkflowListUrl).reply(() => {
     return [200, Mock.mock(WorkflowList).items]
   })
-  mock.onGet(/\/README.md/).reply(200, () => {
+  mock.onGet(/\/README.md/).reply(() => {
     const randomBody = () => {
       const subTitle = `<h3>${Mock.Random.title()}</h3>`
       const subBody = `<div>${Mock.Random.cparagraph(30)}</div>`
