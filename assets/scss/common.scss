@@ -41,6 +41,10 @@ hr {
   border-style: dashed;
 }
 
+.h-100 {
+  height: 100%;
+}
+
 //
 // padding
 //
@@ -49,9 +53,18 @@ hr {
   padding-right: 20px;
 }
 
+.p-20 {
+  padding: 20px;
+}
+
 .py-2r {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.py-5 {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .pt-2r {
@@ -165,14 +178,18 @@ ul {
 //
 // position
 //
-.ps-rl {
+.p-r {
   position: relative;
-  z-index: 2;
 }
 
 //
 // image
 //
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+
 .img-fluid {
   max-width: 100%;
   height: auto;

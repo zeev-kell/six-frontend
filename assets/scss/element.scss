@@ -10,8 +10,24 @@
 
 .el-button--normal {
   //@extend .el-button--text;
-
+  border-color: transparent;
+  background: 0 0;
+  padding-left: 0;
+  padding-right: 0;
   color: #666666;
+
+  &:focus,
+  &:active,
+  &:hover {
+    color: #666666;
+    border-color: transparent;
+    background-color: transparent;
+  }
+}
+
+.el-button.block {
+  display: block;
+  width: 100%;
 }
 
 .el-button.pass {

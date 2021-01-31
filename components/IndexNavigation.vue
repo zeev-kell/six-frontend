@@ -8,13 +8,14 @@
           </nuxt-link>
         </div>
       </div>
-      <el-menu :default-active="$route.name" :router="true" mode="horizontal">
+      <el-menu :default-active="$route.path" :router="true" mode="horizontal">
+        <el-menu-item index="/download-center">相关下载</el-menu-item>
         <el-menu-item index="/support-center">帮助中心</el-menu-item>
         <el-menu-item index="/about-us">关于我们</el-menu-item>
-        <li class="el-menu-item menu-link" role="menuitem" tabindex="-1">
+        <li class="el-menu-item menu-link" role="menuitem">
           <a href="/register" target="_blank">注册</a>
         </li>
-        <li class="el-menu-item menu-link" role="menuitem" tabindex="-1">
+        <li class="el-menu-item menu-link" role="menuitem">
           <a href="/login" target="_blank">登录</a>
         </li>
       </el-menu>
@@ -24,6 +25,7 @@
 
 <script type="text/babel">
   import LogoSvg from '@/components/LogoSvg'
+
   const SCROLL_TRANSPORT = 100
   export default {
     components: {
@@ -34,7 +36,7 @@
       window.addEventListener('scroll', this.onWindowScroll, true)
     },
     beforeDestroy() {
-      window.removeEventListener('scroll', this.onWindowScroll)
+      window.removeEventListener('scroll', this.onWindowScroll, true)
     },
     methods: {
       onWindowScroll() {

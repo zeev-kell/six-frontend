@@ -1,10 +1,13 @@
 <template>
   <div class="container-fluid">
     <div class="panel">
-      <div class="panel-header el-row">
-        <h2 class="el-col el-col-12 text-truncate mx-0">
+      <div class="panel-header el-row el-row--flex is-align-middle py-5">
+        <h2 class="el-col el-col-16 text-truncate mx-0" :title="item['workflow_name']">
           {{ item['workflow_name'] }}
         </h2>
+        <div class="el-col el-col-8 text-right">
+          <el-button type="primary" icon="el-icon-download">添加至本地</el-button>
+        </div>
       </div>
       <div class="panel-body w-info">
         <div class="el-row">
@@ -42,17 +45,23 @@
         <workflow-cwl cwl-url="/rna-seq-alignment.json" :plugins="plugins" :editing-enabled="true"></workflow-cwl>
       </div>
     </div>
+    <div class="panel">
+      <div class="panel-body">
+        <h2>示例教程</h2>
+        <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
+        <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
+        <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
+        <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
+        <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
+        <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script type="text/babel">
-  import { SVGArrangePlugin } from 'cwl-svg/compiled/src/plugins/arrange/arrange'
-  import { SVGNodeMovePlugin } from 'cwl-svg/compiled/src/plugins/node-move/node-move'
-  import { SVGPortDragPlugin } from 'cwl-svg/compiled/src/plugins/port-drag/port-drag'
-  import { SelectionPlugin } from 'cwl-svg/compiled/src/plugins/selection/selection'
-  import { SVGEdgeHoverPlugin } from 'cwl-svg/compiled/src/plugins/edge-hover/edge-hover'
-  import { ZoomPlugin } from 'cwl-svg/compiled/src/plugins/zoom/zoom'
-  import WorkflowCwl from './components/WorkflowCwl'
+  import { SVGArrangePlugin } from 'cwl-svg'
+  import WorkflowCwl from './_components/WorkflowCwl'
 
   export default {
     components: {
@@ -65,16 +74,7 @@
     data() {
       return {
         item: {},
-        plugins: [
-          new SVGArrangePlugin(),
-          new SVGEdgeHoverPlugin(),
-          new SVGNodeMovePlugin({
-            movementSpeed: 10,
-          }),
-          new SVGPortDragPlugin(),
-          new SelectionPlugin(),
-          new ZoomPlugin(),
-        ],
+        plugins: [new SVGArrangePlugin()],
       }
     },
   }

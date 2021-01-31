@@ -40,7 +40,7 @@
 </template>
 
 <script type="text/babel">
-  import PipeInfoDialog from './components/PipeInfoDialog'
+  import PipeInfoDialog from './_components/PipeInfoDialog'
   export default {
     components: {
       PipeInfoDialog,

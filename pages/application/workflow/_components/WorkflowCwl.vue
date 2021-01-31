@@ -1,15 +1,20 @@
 <template>
-  <svg ref="svg" class="cwl-workflow"></svg>
+  <div class="cwl-box h-100 p-r">
+    <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
+    <tool-box class="tool-box" :workflow="workflow"></tool-box>
+  </div>
 </template>
 
 <script>
-  import { SelectionPlugin, SVGArrangePlugin, Workflow } from 'cwl-svg'
+  import ToolBox from '@/pages/application/workflow/_components/ToolBox'
+  import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, Workflow, ZoomPlugin } from 'cwl-svg'
   import 'cwl-svg/src/assets/styles/themes/rabix-dark/theme.scss'
   import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
   import 'cwl-svg/src/plugins/selection/theme.dark.scss'
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
 
   export default {
+    components: { ToolBox },
     props: {
       cwlUrl: {
         type: String,
@@ -41,13 +46,11 @@
         cwlState: null,
       }
     },
-
     computed: {
       cwlModel() {
         return WorkflowFactory.from(this.cwlState)
       },
     },
-
     watch: {
       /**
        * If the cwl prop ever changes, update the internal workflow object to that
@@ -61,11 +64,13 @@
       },
 
       cwlState() {
+        // 默认可以放缩，选择节点，线条悬浮
+        const plugins = [new SVGEdgeHoverPlugin(), new SelectionPlugin(), new ZoomPlugin(), ...this.plugins]
         this.workflow = new Workflow({
           editingEnabled: this.editingEnabled,
           model: this.cwlModel,
           svgRoot: this.$refs.svg,
-          plugins: this.plugins,
+          plugins,
         })
 
         // Hack to force ArrangePlugin to rearrange
@@ -85,7 +90,6 @@
         }
       },
     },
-
     /**
      * If the cwlUrl prop was set, send a request for the CWL object, and set it to the internal
      * state
@@ -104,13 +108,27 @@
             this.cwlState = json
           })
       }
+      this.$refs.svg.addEventListener(
+        'wheel',
+        (event) => {
+          event.preventDefault()
+        },
+        true
+      )
     },
   }
 </script>
 
 <style lang="css">
-  .cwl-workflow {
-    height: 100%;
-    width: 100%;
+  .tool-box {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    z-index: 10;
+    color: white;
+    display: none;
+  }
+  .cwl-box:hover .tool-box {
+    display: block;
   }
 </style>
