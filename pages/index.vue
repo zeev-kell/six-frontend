@@ -11,30 +11,7 @@
         <el-button plain type="primary pass">云计算协作</el-button>
       </div>
     </section>
-    <section class="section-challenge">
-      <div class="section-title">
-        <h1>精准医疗时代下制药行业的挑战和机遇</h1>
-      </div>
-      <div class="container">
-        <el-carousel :interval="4000" arrow="never" height="480px" indicator-position="outside">
-          <el-carousel-item v-for="item in 4" :key="item">
-            <div class="el-row el-row--flex is-align-middle">
-              <div class="el-col el-col-12">
-                <img src="/images/coop-01.png" />
-              </div>
-              <div class="el-col el-col-6 el-col-offset-1">
-                <h2>生物医疗大数据服务</h2>
-                <p style="line-height: 1.5">
-                  专业的生物信息知识库，提供系统的生物信息知识检索与学习途径， 在这里，你可以
-                  尽情查阅NGS，医学统计学，科研绘图等技术文档与教程。 速查速得。
-                </p>
-              </div>
-            </div>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-    </section>
-    <section class="section-product bg inset">
+    <section class="section-product">
       <div class="section-title">
         <h1>解决方案</h1>
       </div>
@@ -117,32 +94,6 @@
         </div>
       </div>
     </section>
-    <section class="section-cooperation">
-      <div class="section-title">
-        <h1>合作案例</h1>
-      </div>
-      <div class="container">
-        <div v-for="item in 4" :key="item" class="el-row el-row--flex">
-          <div class="el-col el-col-12" :class="item % 2 ? '' : 'order-2'">
-            <div class="cooperation-image"></div>
-          </div>
-          <div class="el-col el-col-12">
-            <div class="custom-right">
-              <h2>深圳市盐田街道办人民医院</h2>
-              <p class="text-justify">
-                基因组解码计划是践行造福人类愿景的重要举措，
-                我们要集合业内优秀力量，共同推进基因科技在医疗健康领域落地和应用。
-                基因组解码计划是践行造福人类愿景的重要举措，
-                我们要集合业内优秀力量，共同推进基因科技在医疗健康领域落地和应用。
-                基因组解码计划是践行造福人类愿景的重要举措，
-                我们要集合业内优秀力量，共同推进基因科技在医疗健康领域落地和应用。
-              </p>
-              <p class="text-right">—— 基因科技总经理 刘 博士</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
 </template>
 
@@ -160,23 +111,9 @@
     color: var(--light_grey);
   }
 
-  .el-carousel {
-    img {
-      height: 360px;
-      width: auto;
-      margin: 60px 0 0 auto;
-      display: block;
-    }
-
-    /deep/ .el-carousel__button {
-      height: 4px;
-      background-color: var(--s-theme-color);
-    }
-  }
-
   .pro-card {
     background-color: transparent;
-    border: none;
+    border: 1px solid transparent;
     transition: transform 0.2s;
     cursor: pointer;
     width: 240px;
@@ -189,19 +126,5 @@
   .pro-icon {
     font-size: 80px;
     color: $theme-color;
-  }
-
-  .cooperation-image {
-    height: 100%;
-    background: url('/images/banner.jpg') no-repeat;
-  }
-
-  .section-cooperation .el-row + .el-row {
-    margin-top: 50px;
-  }
-
-  .custom-right {
-    padding: 30px;
-    line-height: 1.5;
   }
 </style>

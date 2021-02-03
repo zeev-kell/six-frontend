@@ -1,4 +1,5 @@
 // import Mock from 'better-mock'
+import cwl from './cwl.json'
 export const Workflow = {
   'workflow_id|+1': /[0-9]{7}/,
   workflow_name: '@PARAGRAPH',
@@ -92,6 +93,7 @@ export const Workflow = {
   'category|1': ['序列比对', '去重', '分割'],
   download: 'docker push 6oclock/bwa:v0.7.12-r1044',
   tutorial: 'http://39.100.115.170:5000/tutorials/bwa.md',
+  cwl_json: cwl,
 }
 export const WorkflowUrl = /\/api\/workflow\/[0-9]*/
 export const WorkflowList = { 'items|10': [Workflow] }

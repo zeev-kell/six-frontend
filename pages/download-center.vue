@@ -31,8 +31,8 @@
       <div class="section-title" style="padding: 20px 0">
         <h2>开始体验 sixoclock</h2>
       </div>
-      <div class="container" style="width: 800px">
-        <el-row :gutter="20">
+      <div class="container" style="width: 800px; padding-bottom: 60px">
+        <el-row :gutter="30">
           <el-col v-for="item in 3" :key="item" :span="8">
             <el-card class="d-card">
               <div slot="header">

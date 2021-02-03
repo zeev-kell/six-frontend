@@ -11,7 +11,7 @@
       <el-menu :default-active="$route.path" :router="true" mode="horizontal">
         <el-menu-item index="/download-center">相关下载</el-menu-item>
         <el-menu-item index="/support-center">帮助中心</el-menu-item>
-        <el-menu-item index="/about-us">关于我们</el-menu-item>
+        <!--        <el-menu-item index="/about-us">关于我们</el-menu-item>-->
         <li class="el-menu-item menu-link" role="menuitem">
           <a href="/register" target="_blank">注册</a>
         </li>

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="temp.tool_name" :visible.sync="dialogVisible" center width="75%">
+  <el-dialog :title="temp.pipe_name" :visible.sync="dialogVisible" center width="75%">
     <div class="dialog-body">
       <el-row>
         <el-col :span="12">

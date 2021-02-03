@@ -10,75 +10,52 @@
   "outputs": [
     {
       "required": true,
-      "type": [
-        "File"
-      ],
+      "type": ["File"],
       "sbg:includeInPorts": true,
       "sbg:y": -28.333281119662406,
       "label": "summary_metrics",
       "sbg:x": 1198.3335845338063,
-      "source": [
-        "#Picard_CollectAlignmentSummaryMetrics.summary_metrics"
-      ],
+      "source": ["#Picard_CollectAlignmentSummaryMetrics.summary_metrics"],
       "id": "#summary_metrics"
     },
     {
       "required": true,
-      "type": [
-        "File"
-      ],
+      "type": ["File"],
       "sbg:includeInPorts": true,
       "sbg:y": 228.3333525790114,
       "label": "alignment_file",
       "sbg:x": 1203.3336255550487,
-      "source": [
-        "#HISAT2.out_align"
-      ],
+      "source": ["#HISAT2.out_align"],
       "id": "#alignment_file"
     },
     {
       "required": false,
-      "type": [
-        "null",
-        "File"
-      ],
+      "type": ["null", "File"],
       "sbg:includeInPorts": true,
       "sbg:y": 364.99422567397556,
       "label": "novel_ss_out",
       "sbg:x": 1208.333579169388,
-      "source": [
-        "#HISAT2.novel_ss_out"
-      ],
+      "source": ["#HISAT2.novel_ss_out"],
       "id": "#novel_ss_out"
     },
     {
       "required": false,
-      "type": [
-        "null",
-        "File"
-      ],
+      "type": ["null", "File"],
       "sbg:includeInPorts": true,
       "sbg:y": 501.66093912366733,
       "label": "metrics_file",
       "sbg:x": 1211.666755570308,
-      "source": [
-        "#HISAT2.metrics_file"
-      ],
+      "source": ["#HISAT2.metrics_file"],
       "id": "#metrics_file"
     },
     {
       "required": false,
-      "type": [
-        "null",
-        "File"
-      ],
+      "type": ["null", "File"],
       "sbg:includeInPorts": true,
       "sbg:y": 103.32757216006794,
       "label": "sorted_bam",
       "sbg:x": 1200.0004140933506,
-      "source": [
-        "#Picard_SortSam.sorted_bam"
-      ],
+      "source": ["#Picard_SortSam.sorted_bam"],
       "id": "#sorted_bam"
     }
   ],
@@ -92,16 +69,12 @@
           {
             "outputBinding": {
               "sbg:inheritMetadataFrom": "#input_bam",
-              "secondaryFiles": [
-                ""
-              ],
+              "secondaryFiles": [""],
               "sbg:metadata": {},
               "glob": "*.summary_metrics.txt"
             },
             "sbg:fileTypes": "TXT",
-            "type": [
-              "File"
-            ],
+            "type": ["File"],
             "label": "Summary metrics",
             "description": "File to which the output will be written.",
             "id": "#summary_metrics"
@@ -186,9 +159,7 @@
             "position": 3
           }
         ],
-        "sbg:contributors": [
-          "bix-demo"
-        ],
+        "sbg:contributors": ["bix-demo"],
         "sbg:image_url": null,
         "class": "CommandLineTool",
         "stdout": "",
@@ -234,12 +205,7 @@
             "type": [
               "null",
               {
-                "symbols": [
-                  "ERROR",
-                  "WARNING",
-                  "INFO",
-                  "DEBUG"
-                ],
+                "symbols": ["ERROR", "WARNING", "INFO", "DEBUG"],
                 "type": "enum",
                 "name": "verbosity"
               }
@@ -266,11 +232,7 @@
             "type": [
               "null",
               {
-                "symbols": [
-                  "STRICT",
-                  "LENIENT",
-                  "SILENT"
-                ],
+                "symbols": ["STRICT", "LENIENT", "SILENT"],
                 "type": "enum",
                 "name": "validation_stringency"
               }
@@ -288,10 +250,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Stop after",
             "sbg:toolDefaultValue": "0",
             "description": "Stop after processing N reads, mainly for debugging. Default value: 0. This option can be set to 'null' to clear the default value.",
@@ -307,10 +266,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "File"
-            ],
+            "type": ["null", "File"],
             "label": "Reference sequence",
             "sbg:altPrefix": "R",
             "description": "Reference sequence file. Note that while this argument is not required, without it only a small subset of the metrics will be calculated.  Default value: null.",
@@ -328,10 +284,7 @@
             "type": [
               "null",
               {
-                "symbols": [
-                  "true",
-                  "false"
-                ],
+                "symbols": ["true", "false"],
                 "type": "enum",
                 "name": "quiet"
               }
@@ -357,12 +310,7 @@
               {
                 "type": "array",
                 "items": {
-                  "symbols": [
-                    "ALL_READS",
-                    "SAMPLE",
-                    "LIBRARY",
-                    "READ_GROUP"
-                  ],
+                  "symbols": ["ALL_READS", "SAMPLE", "LIBRARY", "READ_GROUP"],
                   "type": "enum",
                   "name": "metric_accumulation_level"
                 }
@@ -376,10 +324,7 @@
           },
           {
             "required": false,
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Memory per job",
             "sbg:toolDefaultValue": "2048",
             "description": "Amount of RAM memory to be used per job. Defaults to 2048 MB for single threaded jobs.",
@@ -393,10 +338,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Max records in RAM",
             "sbg:toolDefaultValue": "500000",
             "description": "When writing SAM files that need to be sorted, this parameter will specify the number of records stored in RAM before spilling to disk. Increasing this number reduces the number of file handles needed to sort a SAM file, and increases the amount of RAM needed. Default value: 500000. This option can be set to 'null' to clear the default value.",
@@ -411,10 +353,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Max insert size",
             "sbg:toolDefaultValue": "100000",
             "description": "Paired end reads above this insert size will be considered chimeric along with inter-chromosomal pairs. Default value: 100000. This option can be set to 'null' to clear the default value.",
@@ -433,10 +372,7 @@
             "type": [
               "null",
               {
-                "symbols": [
-                  "true",
-                  "false"
-                ],
+                "symbols": ["true", "false"],
                 "type": "enum",
                 "name": "is_bisulfite_sequenced"
               }
@@ -456,9 +392,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "File"
-            ],
+            "type": ["File"],
             "label": "Input file",
             "sbg:altPrefix": "I",
             "description": "Input SAM or BAM file.  Required.",
@@ -473,10 +407,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Compression level",
             "sbg:toolDefaultValue": "5",
             "description": "Compression level for all compressed files created (e.g. BAM and GELI). Default value: 5. This option can be set to 'null' to clear the default value.",
@@ -494,10 +425,7 @@
             "type": [
               "null",
               {
-                "symbols": [
-                  "true",
-                  "false"
-                ],
+                "symbols": ["true", "false"],
                 "type": "enum",
                 "name": "assume_sorted"
               }
@@ -543,11 +471,7 @@
           "CollectAlignmentSummaryMetrics"
         ],
         "sbg:validationErrors": [],
-        "sbg:categories": [
-          "SAM/BAM-Processing",
-          "Quality-Control",
-          "Quantification"
-        ],
+        "sbg:categories": ["SAM/BAM-Processing", "Quality-Control", "Quantification"],
         "sbg:project": "bix-demo/picard-1-140-demo",
         "description": "Picard CollectAlignmentSummaryMetrics assesses the quality of alignment by analyzing a SAM or BAM file. It compares it with the reference file (FASTA) and provides alignment statistics, such as the number of input reads and the percent of reads that are mapped. It produces a file which contains summary alignment metrics from a SAM or BAM file.\n\nNote: This tool requires the exact same FASTA file as the one to which raw reads were aligned.",
         "sbg:revision": 3,
@@ -566,9 +490,7 @@
             "reference": {
               "path": "/root/directory/example.fasta"
             },
-            "metric_accumulation_level": [
-              "ALL_READS"
-            ]
+            "metric_accumulation_level": ["ALL_READS"]
           }
         },
         "y": -27.887751261393245
@@ -592,9 +514,7 @@
         },
         {
           "id": "#Picard_CollectAlignmentSummaryMetrics.reference",
-          "source": [
-            "#reference"
-          ]
+          "source": ["#reference"]
         },
         {
           "id": "#Picard_CollectAlignmentSummaryMetrics.quiet"
@@ -616,9 +536,7 @@
         },
         {
           "id": "#Picard_CollectAlignmentSummaryMetrics.input_bam",
-          "source": [
-            "#Picard_SortSam.sorted_bam"
-          ]
+          "source": ["#Picard_SortSam.sorted_bam"]
         },
         {
           "id": "#Picard_CollectAlignmentSummaryMetrics.compression_level"
@@ -646,10 +564,7 @@
               }
             },
             "sbg:fileTypes": "FA, FASTA, FASTQ, FQ",
-            "type": [
-              "null",
-              "File"
-            ],
+            "type": ["null", "File"],
             "label": "Unpaired unaligned reads",
             "description": "Unpaired reads that fail to align.",
             "id": "#unpaired_unal"
@@ -664,10 +579,7 @@
               }
             },
             "sbg:fileTypes": "FA, FASTA, FQ, FASTQ",
-            "type": [
-              "null",
-              "File"
-            ],
+            "type": ["null", "File"],
             "label": "Unpaired aligned reads",
             "description": "Unpaired reads that align at least once.",
             "id": "#unpaired_align"
@@ -697,9 +609,7 @@
               "glob": "*aligned.sam"
             },
             "sbg:fileTypes": "SAM",
-            "type": [
-              "File"
-            ],
+            "type": ["File"],
             "label": "Output alignment",
             "description": "Alignment SAM file.",
             "id": "#out_align"
@@ -710,10 +620,7 @@
               "glob": "novel_splice_sites.txt"
             },
             "sbg:fileTypes": "TXT",
-            "type": [
-              "null",
-              "File"
-            ],
+            "type": ["null", "File"],
             "label": "Novel splice sites",
             "description": "HISAT2 reports a list of splice sites in the file : chromosome name `` genomic position of the flanking base on the left side of an intron `` genomic position of the flanking base on the right `` strand.",
             "id": "#novel_ss_out"
@@ -724,10 +631,7 @@
               "glob": "metrics.txt"
             },
             "sbg:fileTypes": "TXT",
-            "type": [
-              "null",
-              "File"
-            ],
+            "type": ["null", "File"],
             "label": "Metrics file",
             "description": "HISAT2 alignment metrics.",
             "id": "#metrics_file"
@@ -816,9 +720,7 @@
         ],
         "description": "__HISAT2__ is a fast and sensitive alignment program for mapping next-generation sequencing reads (whole-genome, transcriptome, and exome sequencing data) against the general human population (as well as against a single reference genome). Based on GCSA (an extension of BWT for a graph), we designed and implemented a graph FM index (GFM), an original approach and its first implementation to the best of our knowledge. In addition to using one global GFM index that represents the general population, HISAT2 uses a large set of small GFM indexes that collectively cover the whole genome (each index representing a genomic region of 56 Kbp, with 55,000 indexes needed to cover human population). These small indexes (called local indexes) combined with several alignment strategies enable effective alignment of sequencing reads. This new indexing scheme is called Hierarchical Graph FM index (HGFM). We have developed HISAT2 based on the HISAT and Bowtie2 implementations. HISAT2 outputs alignments in SAM format, enabling interoperation with a large number of other tools (e.g. SAMtools, GATK) that use SAM. If BAM output is preferred, it is suggested to use one of the SAMtools/BAMtools/Picard tools to convert SAM file to BAM. \n\n__Common issues__\n\n- Paired-end metadata fields have to be set to 1/2 for paired end alignment.\n- HISAT2 can have problems when working with large index files.",
         "sbg:cmdPreview": "tar -xf /path/to/hg38.tar && /opt/hisat2/hisat2  -f -p 8 -x index/hg38 -1 /path/to/reads-1.fa.gz -2 /path/to/reads-2.fa.gz -S reads-1.HISAT-2.0.1.aligned.sam",
-        "sbg:contributors": [
-          "jexnaex"
-        ],
+        "sbg:contributors": ["jexnaex"],
         "sbg:image_url": null,
         "class": "CommandLineTool",
         "stdout": "",
@@ -847,10 +749,7 @@
         "sbg:toolAuthor": "Johns Hopkins University",
         "inputs": [
           {
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "inputBinding": {
               "prefix": "--upto",
               "position": 0,
@@ -875,10 +774,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Write unpaired unaligned",
             "sbg:toolDefaultValue": "false",
             "description": "Write unpaired reads that fail to align to a file. These reads correspond to the SAM records with the FLAGS `0x4` bit set and neither the `0x40` nor `0x80` bits set.",
@@ -896,10 +792,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Write unpaired aligned",
             "sbg:toolDefaultValue": "false",
             "description": "Write unpaired reads that align at least once to a file. These reads correspond to the SAM records with the FLAGS `0x4`, `0x40`, and `0x80` bits unset.",
@@ -917,10 +810,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Write unaligned concordantly",
             "sbg:toolDefaultValue": "false",
             "description": "Write paired-end reads that fail to align concordantly to file(s). These reads correspond to the SAM records with the FLAGS `0x4` bit set and either the `0x40` or `0x80` bit set (depending on whether it's mate #1 or #2).",
@@ -928,10 +818,7 @@
             "sbg:category": "Output options"
           },
           {
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "inputBinding": {
               "prefix": "--trim5",
               "position": 0,
@@ -946,10 +833,7 @@
             "sbg:category": "Input options"
           },
           {
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "inputBinding": {
               "prefix": "--trim3",
               "position": 0,
@@ -964,10 +848,7 @@
             "sbg:category": "Input options"
           },
           {
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "sbg:stageInput": null,
             "inputBinding": {
               "prefix": "--tmo",
@@ -1003,10 +884,7 @@
                       "separate": true,
                       "sbg:cmdInclude": "true"
                     },
-                    "type": [
-                      "null",
-                      "int"
-                    ],
+                    "type": ["null", "int"],
                     "label": "MIN",
                     "sbg:toolDefaultValue": "1",
                     "name": "sp_min"
@@ -1016,10 +894,7 @@
                     "sbg:toolDefaultValue": "2",
                     "sbg:stageInput": null,
                     "name": "sp_max",
-                    "type": [
-                      "null",
-                      "int"
-                    ]
+                    "type": ["null", "int"]
                   }
                 ]
               }
@@ -1032,10 +907,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Solexa quals",
             "sbg:toolDefaultValue": "false",
             "description": "Convert input qualities from [Solexa][Phred quality] (which can be negative) to [Phred][Phred quality] (which can't). This scheme was used in older Illumina GA Pipeline versions (prior to 1.3).",
@@ -1049,10 +921,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Skip first <n> reads",
             "sbg:toolDefaultValue": "0",
             "description": "Skip the first <int> reads/pairs in the input.",
@@ -1066,10 +935,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Seed",
             "sbg:toolDefaultValue": "0",
             "description": "Use `` as the seed for pseudo-random number generator.",
@@ -1083,10 +949,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Report secondary",
             "sbg:toolDefaultValue": "false",
             "description": "Report secondary alignments.",
@@ -1100,10 +963,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "string"
-            ],
+            "type": ["null", "string"],
             "label": "Minimum alignment score",
             "sbg:toolDefaultValue": "L,0,-0.2",
             "description": "Sets a function governing the minimum alignment score needed for an alignment to be considered \"valid\" (i.e. good enough to report). This is a function of read length. For instance, specifying `L,0,-0.6` sets the minimum-score function `f` to `f(x) = 0 + -0.6 * x`, where `x` is the read length. See also: [setting function options].",
@@ -1120,12 +980,7 @@
             "type": [
               "null",
               {
-                "symbols": [
-                  "F",
-                  "R",
-                  "FR",
-                  "RF"
-                ],
+                "symbols": ["F", "R", "FR", "RF"],
                 "type": "enum",
                 "name": "rna_strandness"
               }
@@ -1142,10 +997,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "string"
-            ],
+            "type": ["null", "string"],
             "label": "Read group ID",
             "description": "Set the read group ID to ``. This causes the SAM `@RG` header line to be printed, with `` as the value associated with the `ID:` tag. It also causes the `RG:Z:` extra field to be attached to each SAM output record, with value set to ``.",
             "id": "#rg_id",
@@ -1191,10 +1043,7 @@
                       "separate": true,
                       "sbg:cmdInclude": "true"
                     },
-                    "type": [
-                      "null",
-                      "int"
-                    ],
+                    "type": ["null", "int"],
                     "label": "Open penalty",
                     "sbg:toolDefaultValue": "5",
                     "name": "rfg_open"
@@ -1204,10 +1053,7 @@
                     "sbg:toolDefaultValue": "3",
                     "sbg:stageInput": null,
                     "name": "rfg_extend",
-                    "type": [
-                      "null",
-                      "int"
-                    ]
+                    "type": ["null", "int"]
                   }
                 ]
               }
@@ -1225,10 +1071,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Reorder reads",
             "sbg:toolDefaultValue": "false",
             "description": "Guarantees that output SAM records are printed in an order corresponding to the order of the reads in the original input file. Causes HISAT2 to run somewhat slower and use somewhat more memory.",
@@ -1281,10 +1124,7 @@
                       "separate": true,
                       "sbg:cmdInclude": "true"
                     },
-                    "type": [
-                      "null",
-                      "int"
-                    ],
+                    "type": ["null", "int"],
                     "label": "Gap open penalty",
                     "sbg:toolDefaultValue": "5",
                     "name": "rdg_open"
@@ -1294,10 +1134,7 @@
                     "sbg:toolDefaultValue": "3",
                     "sbg:stageInput": null,
                     "name": "rdg_extend",
-                    "type": [
-                      "null",
-                      "int"
-                    ]
+                    "type": ["null", "int"]
                   }
                 ]
               }
@@ -1308,10 +1145,7 @@
             "sbg:category": "Scoring options"
           },
           {
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Raw sequences",
             "sbg:toolDefaultValue": "false",
             "description": "Query input files are raw one-sequence-per-line.",
@@ -1320,10 +1154,7 @@
           },
           {
             "sbg:stageInput": null,
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Qseq reads",
             "sbg:toolDefaultValue": "false",
             "description": "Query input files are in Illumina's qseq format.",
@@ -1337,10 +1168,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "QC filter",
             "sbg:toolDefaultValue": "false",
             "description": "Filter out reads for which the QSEQ filter field is non-zero.  Only has an effect when read format is `--qseq`.  Default: off.",
@@ -1358,10 +1186,7 @@
               "position": 0,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Phred 64 quality scale",
             "sbg:toolDefaultValue": "false",
             "description": "Qualities are Phred+64.",
@@ -1375,10 +1200,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Non canonical splice site penalty",
             "sbg:toolDefaultValue": "12",
             "description": "Sets the penalty for each pair of non-canonical splice sites (e.g. non-GT/AG).",
@@ -1392,10 +1214,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "string"
-            ],
+            "type": ["null", "string"],
             "label": "Long introns w/ noncanonical splice sites penalty",
             "sbg:toolDefaultValue": "G,-8,1",
             "description": "Sets the penalty for long introns with noncanonical splice sites so that alignments with shorter introns are preferred to those with longer ones.",
@@ -1409,10 +1228,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Canonical splice site penalty",
             "sbg:toolDefaultValue": "0",
             "description": "Sets the penalty for each pair of canonical splice sites (e.g. GT/AG).",
@@ -1426,10 +1242,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "string"
-            ],
+            "type": ["null", "string"],
             "label": "Long introns w/ canonical splice site penalty",
             "sbg:toolDefaultValue": "G,-8,1",
             "description": "Sets the penalty for long introns with canonical splice sites so that alignments with shorter introns are preferred to those with longer ones.",
@@ -1443,10 +1256,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Omit secondary sequence",
             "sbg:toolDefaultValue": "false",
             "description": "When printing secondary alignments, HISAT2 by default will write out the `SEQ` and `QUAL` strings. Specifying this option causes HISAT2 to print an asterix in those fields instead.",
@@ -1460,10 +1270,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "'N' penalty",
             "sbg:toolDefaultValue": "1",
             "description": "Sets penalty for positions where the read, reference, or both, contain an ambiguous character such as `N`. Default: 1.",
@@ -1478,10 +1285,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "File"
-            ],
+            "type": ["null", "File"],
             "label": "Novel splice sites",
             "description": "With this mode, you can provide a list of novel splice sites that were generated from the option \"--novel-splicesite-outfile\".",
             "id": "#novel_ss_in",
@@ -1498,10 +1302,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Novel splice sites out",
             "sbg:toolDefaultValue": "false",
             "description": "In this mode, HISAT2 reports a list of splice sites in the file : chromosome name `` genomic position of the flanking base on the left side of an intron `` genomic position of the flanking base on the right `` strand.",
@@ -1514,10 +1315,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "No reverse complement",
             "sbg:toolDefaultValue": "false",
             "description": "If `--norc` is specified, `hisat2` will not attempt to align unpaired reads against the reverse-complement (Crick) reference strand. In paired-end mode, `--norc` pertain to the fragments.",
@@ -1531,10 +1329,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Non deterministic",
             "sbg:toolDefaultValue": "false",
             "description": "Normally, HISAT2 re-initializes its pseudo-random generator for each read. It seeds the generator with a number derived from (a) the read name, (b) the nucleotide sequence, (c) the quality sequence, (d) the value of the [`--seed`] option. This means that if two reads are identical (same name, same nucleotides, same qualities) HISAT2 will find and report the same alignment(s) for both, even if there was ambiguity. When `--non-deterministic` is specified, HISAT2 re-initializes its pseudo-random generator for each read using the current time. This means that HISAT2 will not necessarily report the same alignment for two identical reads. This is counter-intuitive for some users, but might be more appropriate in situations where the input consists of many identical reads.",
@@ -1548,10 +1343,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "No forward",
             "sbg:toolDefaultValue": "false",
             "description": "If `--nofw` is specified, `hisat2` will not attempt to align unpaired reads to the forward (Watson) reference strand.",
@@ -1565,10 +1357,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Dismiss unaligned reads",
             "sbg:toolDefaultValue": "false",
             "description": "Suppress SAM records for reads that failed to align.",
@@ -1582,10 +1371,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "No temp splice sites",
             "sbg:toolDefaultValue": "false",
             "description": "HISAT2, by default, makes use of splice sites found by earlier reads to align later reads in the same run, in particular, reads with small anchors (<= 15 bp). The option disables this default alignment strategy.",
@@ -1599,10 +1385,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "No @SQ lines",
             "sbg:toolDefaultValue": "false",
             "description": "Suppress `@SQ` SAM header lines.",
@@ -1616,10 +1399,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "No spliced alignment",
             "sbg:toolDefaultValue": "false",
             "description": "Disable spliced alignment.",
@@ -1633,10 +1413,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "No overlap",
             "sbg:toolDefaultValue": "false",
             "description": "If one mate alignment overlaps the other at all, consider that to be non-concordant.  See also: [Mates can overlap, contain or dovetail each other].  Default: mates can overlap in a concordant alignment.",
@@ -1650,10 +1427,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "No individual alignment",
             "sbg:toolDefaultValue": "false",
             "description": "By default, when `hisat2` cannot find a concordant or discordant alignment for a pair, it then tries to find alignments for the individual mates. This option disables that behavior.",
@@ -1667,10 +1441,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "No header",
             "sbg:toolDefaultValue": "false",
             "description": "Suppress SAM header lines (starting with `@`).",
@@ -1684,10 +1455,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Disable dicordant alinments",
             "sbg:toolDefaultValue": "false",
             "description": "By default, `hisat2` looks for discordant alignments if it cannot find any concordant alignments. A discordant alignment is an alignment where both mates align uniquely, but that does not satisfy the paired-end constraints ([`--fr`/`--rf`/`--ff`], [`-I`], [`-X`]). This option disables that behavior.",
@@ -1701,10 +1469,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "No contain",
             "description": "If one mate alignment contains the other, consider that to be non-concordant. See also: [Mates can overlap, contain or dovetail each other].  Default: a mate can contain the other in a concordant alignment.",
             "id": "#no_contain",
@@ -1717,10 +1482,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "string"
-            ],
+            "type": ["null", "string"],
             "label": "N ceil",
             "sbg:toolDefaultValue": "L,0,0.15",
             "description": "Sets a function governing the maximum number of ambiguous characters (usually `N`s and/or `.`s) allowed in a read as a function of read length. For instance, specifying `-L,0,0.15` sets the N-ceiling function `f` to `f(x) = 0 + 0.15 * x`, where x is the read length. See also: [setting function options]. Reads exceeding this ceiling are [filtered out].",
@@ -1751,19 +1513,13 @@
                       "separate": true,
                       "sbg:cmdInclude": "true"
                     },
-                    "type": [
-                      "null",
-                      "int"
-                    ]
+                    "type": ["null", "int"]
                   },
                   {
                     "label": "MAX",
                     "sbg:toolDefaultValue": "6",
                     "name": "mp_max",
-                    "type": [
-                      "null",
-                      "int"
-                    ]
+                    "type": ["null", "int"]
                   }
                 ]
               }
@@ -1771,10 +1527,7 @@
             "sbg:category": "Scoring options"
           },
           {
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "inputBinding": {
               "prefix": "--minins",
               "position": 0,
@@ -1795,10 +1548,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Minimum intron length",
             "sbg:toolDefaultValue": "20",
             "description": "Sets minimum intron length.",
@@ -1817,10 +1567,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Output metrics file",
             "sbg:toolDefaultValue": "false",
             "description": "Write `hisat2` metrics to file ``. Having alignment metric can be useful for debugging certain problems, especially performance issues.",
@@ -1828,10 +1575,7 @@
             "sbg:category": "Output options"
           },
           {
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "inputBinding": {
               "prefix": "--maxins",
               "position": 0,
@@ -1852,10 +1596,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Maximum intron length",
             "sbg:toolDefaultValue": "500000",
             "description": "Sets maximum intron length.",
@@ -1875,11 +1616,7 @@
             "type": [
               "null",
               {
-                "symbols": [
-                  "Forward-reverse",
-                  "Reverse-forward",
-                  "Forward-forward"
-                ],
+                "symbols": ["Forward-reverse", "Reverse-forward", "Forward-forward"],
                 "type": "enum",
                 "name": "mate_orientations"
               }
@@ -1898,20 +1635,14 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "File"
-            ],
+            "type": ["null", "File"],
             "label": "Know splice sites",
             "description": "With this mode, you can provide a list of known splice sites, which HISAT2 makes use of to align reads with small anchors. You can create such a list using `HISAT2 Extract Splice Sites genes.gtf > splicesites.txt`, where  `genes.gtf` is a gene annotation file, and `splicesites.txt` is a list of splice sites with which you provide HISAT2 in this mode. Note that it is better to use indexes built using annotated transcripts (such asgenome_tran or genome_snp_tran), which works better than using this option. It has no effect to provide splice sites that are already included in the indexes.",
             "id": "#known_ss",
             "sbg:category": "Spliced alignment options"
           },
           {
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Ingteger qualities",
             "sbg:toolDefaultValue": "false",
             "description": "Qualities encoded as space-delimited integers.",
@@ -1932,9 +1663,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "File"
-            ],
+            "type": ["File"],
             "label": "Indexed reference",
             "description": "TAR containing index files as providid by HISAT2 Build 2.0.4.",
             "id": "#indexed_reference",
@@ -1947,10 +1676,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Ignore qualities",
             "sbg:toolDefaultValue": "false",
             "description": "When calculating a mismatch penalty, always consider the quality value at the mismatched position to be the highest possible, regardless of the actual value. I.e. input is treated as though all quality values are high. This is also the default behavior when the input doesn't specify quality values.",
@@ -1964,10 +1690,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "End-to-end",
             "sbg:toolDefaultValue": "false",
             "description": "In this mode, HISAT2 requires that the entire read align from one end to the other, without any trimming (or \"soft clipping\") of characters from either end. The match bonus `--ma` always equals 0 in this mode, so all alignment scores are less than or equal to 0, and the greatest possible alignment score is 0. This is mutually exclusive with `--local`.  `end_to_end` is the default mode.",
@@ -1981,10 +1704,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Alignment tailored for cufflinks",
             "sbg:toolDefaultValue": "false",
             "description": "Report alignments tailored specifically for Cufflinks. In addition to what HISAT2 does with the above option (--dta), With this option, HISAT2 looks for novel splice sites with three signals (GT/AG, GC/AG, AT/AC), but all user-provided splice sites are used irrespective of their signals. HISAT2 produces an optional field, XS:A:[+-], for every spliced alignment.",
@@ -1992,10 +1712,7 @@
             "sbg:category": "Spliced alignment options"
           },
           {
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "sbg:stageInput": null,
             "inputBinding": {
               "prefix": "--dta",
@@ -2017,10 +1734,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Dovetail",
             "sbg:toolDefaultValue": "false",
             "description": "If the mates \"dovetail\", that is if one mate alignment extends past the beginning of the other such that the wrong mate begins upstream, consider that to be concordant.  See also: [Mates can overlap, contain or dovetail each other].  Default: mates cannot dovetail in a concordant alignment.",
@@ -2034,10 +1748,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Max distinct alignments",
             "sbg:toolDefaultValue": "5(HFM)/10(HGFM)",
             "description": "It searches for at most `` distinct, primary alignments for each read. Primary alignments mean alignments whose alignment score is equal or higher than any other alignments. The search terminates when it can't find more distinct valid alignments, or when it finds ``, whichever happens first. The alignment score for a paired-end alignment equals the sum of the alignment scores of the individual mates. Each reported read or pair alignment beyond the first has the SAM 'secondary' bit (which equals 256) set in its FLAGS field. For reads that have more than `` distinct, valid alignments, `hisat2` does not gaurantee that the `` alignments reported are the best possible in terms of alignment score. Default: 5 (HFM) or 10 (HGFM) Note: HISAT2 is not designed with large values for `-k` in mind, and when aligning reads to long, repetitive genomes large `-k` can be very, very slow.",
@@ -2055,10 +1766,7 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Write concordantly aligned",
             "sbg:toolDefaultValue": "false",
             "description": "Write paired-end reads that align concordantly at least once to file(s). These reads correspond to the SAM records with the FLAGS `0x4` bit unset and either the `0x40` or `0x80` bit set (depending on whether it's mate #1 or #2).",
@@ -2074,10 +1782,7 @@
           }
         ],
         "sbg:validationErrors": [],
-        "sbg:categories": [
-          "Indexing",
-          "Alignment"
-        ],
+        "sbg:categories": ["Indexing", "Alignment"],
         "sbg:project": "jexnaex/hisat2-2-0-1-demo",
         "sbg:revision": 2,
         "sbg:sbgMaintained": false,
@@ -2308,9 +2013,7 @@
         },
         {
           "id": "#HISAT2.reads",
-          "source": [
-            "#SBG_FASTQ_Quality_Detector.result"
-          ]
+          "source": ["#SBG_FASTQ_Quality_Detector.result"]
         },
         {
           "id": "#HISAT2.rdg"
@@ -2419,9 +2122,7 @@
         },
         {
           "id": "#HISAT2.indexed_reference",
-          "source": [
-            "#HISAT2_Build.tar_out"
-          ]
+          "source": ["#HISAT2_Build.tar_out"]
         },
         {
           "id": "#HISAT2.ignore_quals"
@@ -2457,9 +2158,7 @@
               "glob": "*HISAT2-2.0.1.tar"
             },
             "sbg:fileTypes": "TAR",
-            "type": [
-              "File"
-            ],
+            "type": ["File"],
             "label": "Index",
             "description": "Compressed reference and index files.",
             "id": "#tar_out"
@@ -2565,9 +2264,7 @@
             "position": 3
           }
         ],
-        "sbg:contributors": [
-          "jexnaex"
-        ],
+        "sbg:contributors": ["jexnaex"],
         "sbg:image_url": null,
         "class": "CommandLineTool",
         "stdout": "",
@@ -2614,10 +2311,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "File"
-            ],
+            "type": ["null", "File"],
             "label": "Splice sites file",
             "description": "Splice site file produced by HISAT2 Extract Splice Sites.",
             "id": "#ss",
@@ -2635,10 +2329,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "File"
-            ],
+            "type": ["null", "File"],
             "label": "SNP file",
             "description": "SNP file produced by HISAT2 Extract SNPs-Haplotypes UCSC/VCF.",
             "id": "#snp",
@@ -2655,10 +2346,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Seed",
             "description": "Seed for rundom number generator.",
             "id": "#seed",
@@ -2703,10 +2391,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Sampling rate",
             "sbg:toolDefaultValue": "5",
             "description": "SA is sampled every 2^offRate BWT chars (default: 5).",
@@ -2725,10 +2410,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Disable building packed reference",
             "sbg:toolDefaultValue": "false",
             "description": "Don't build .3/.4.bt2 (packed reference) portion.",
@@ -2746,10 +2428,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "No diff-cover",
             "sbg:toolDefaultValue": "false",
             "description": "Disable diff-cover (algorithm becomes quadratic).",
@@ -2768,10 +2447,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Disable automatic memory fitting",
             "sbg:toolDefaultValue": "false",
             "description": "Disable automatic -p/--bmax/--dcv memory-fitting.",
@@ -2789,10 +2465,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Local sample rate",
             "sbg:toolDefaultValue": "3",
             "description": "SA (local) is sampled every 2^offRate BWT chars (default: 3).",
@@ -2810,10 +2483,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Number of chars in lookup (local)",
             "sbg:toolDefaultValue": "6",
             "description": "# of chars consumed in initial lookup in a local index (default: 6).",
@@ -2831,10 +2501,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Force large index",
             "sbg:toolDefaultValue": "false",
             "description": "Force generated index to be 'large', even if ref has fewer than 4 billion nucleotides.",
@@ -2852,10 +2519,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "boolean"
-            ],
+            "type": ["null", "boolean"],
             "label": "Build only packed portion",
             "sbg:toolDefaultValue": "false",
             "description": "Just build .3/.4.bt2 (packed reference) portion.",
@@ -2874,10 +2538,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Number of chars in lookup",
             "sbg:toolDefaultValue": "10",
             "description": "# of chars consumed in initial lookup (default: 10).",
@@ -2896,10 +2557,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "File"
-            ],
+            "type": ["null", "File"],
             "label": "Exon file",
             "description": "Exon file produced by HISAT2 Extract Exons.",
             "id": "#exon",
@@ -2916,10 +2574,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Diff-cover period",
             "sbg:toolDefaultValue": "1024",
             "description": "Diff-cover period for blockwise (default: 1024).",
@@ -2937,10 +2592,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Max bucket size (as divisior)",
             "sbg:toolDefaultValue": "4",
             "description": "Max bucket size as divisor of reference length (default: 4).",
@@ -2958,10 +2610,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Max bucket size",
             "description": "Max bucket size for blockwise suffix-array builder.",
             "id": "#bmax",
@@ -2976,10 +2625,7 @@
           }
         ],
         "sbg:validationErrors": [],
-        "sbg:categories": [
-          "Indexing",
-          "Alignment"
-        ],
+        "sbg:categories": ["Indexing", "Alignment"],
         "sbg:project": "jexnaex/hisat2-2-0-1-demo",
         "sbg:revision": 3,
         "sbg:sbgMaintained": false,
@@ -3049,24 +2695,18 @@
       "inputs": [
         {
           "id": "#HISAT2_Build.ss",
-          "source": [
-            "#ss"
-          ]
+          "source": ["#ss"]
         },
         {
           "id": "#HISAT2_Build.snp",
-          "source": [
-            "#snp"
-          ]
+          "source": ["#snp"]
         },
         {
           "id": "#HISAT2_Build.seed"
         },
         {
           "id": "#HISAT2_Build.references",
-          "source": [
-            "#reference_files"
-          ]
+          "source": ["#reference_files"]
         },
         {
           "id": "#HISAT2_Build.offrate"
@@ -3097,9 +2737,7 @@
         },
         {
           "id": "#HISAT2_Build.exon",
-          "source": [
-            "#exon"
-          ]
+          "source": ["#exon"]
         },
         {
           "id": "#HISAT2_Build.dcv"
@@ -3120,20 +2758,14 @@
           {
             "outputBinding": {
               "sbg:inheritMetadataFrom": "#input_bam",
-              "secondaryFiles": [
-                "^.bai",
-                ".bai"
-              ],
+              "secondaryFiles": ["^.bai", ".bai"],
               "sbg:metadata": {
                 "__inherit__": "input_bam"
               },
               "glob": "*.sorted.?am"
             },
             "sbg:fileTypes": "BAM, SAM",
-            "type": [
-              "null",
-              "File"
-            ],
+            "type": ["null", "File"],
             "label": "Sorted BAM/SAM",
             "description": "Sorted BAM or SAM file.",
             "id": "#sorted_bam"
@@ -3228,10 +2860,7 @@
             "position": 1000
           }
         ],
-        "sbg:contributors": [
-          "bix-demo",
-          "mladenlSBG"
-        ],
+        "sbg:contributors": ["bix-demo", "mladenlSBG"],
         "sbg:image_url": null,
         "class": "CommandLineTool",
         "stdout": "",
@@ -3281,11 +2910,7 @@
             "type": [
               "null",
               {
-                "symbols": [
-                  "STRICT",
-                  "LENIENT",
-                  "SILENT"
-                ],
+                "symbols": ["STRICT", "LENIENT", "SILENT"],
                 "type": "enum",
                 "name": "validation_stringency"
               }
@@ -3311,11 +2936,7 @@
             },
             "type": [
               {
-                "symbols": [
-                  "Unsorted",
-                  "Queryname",
-                  "Coordinate"
-                ],
+                "symbols": ["Unsorted", "Queryname", "Coordinate"],
                 "type": "enum",
                 "name": "sort_order"
               }
@@ -3336,10 +2957,7 @@
             "type": [
               "null",
               {
-                "symbols": [
-                  "True",
-                  "False"
-                ],
+                "symbols": ["True", "False"],
                 "type": "enum",
                 "name": "quiet"
               }
@@ -3355,11 +2973,7 @@
             "type": [
               "null",
               {
-                "symbols": [
-                  "BAM",
-                  "SAM",
-                  "SAME AS INPUT"
-                ],
+                "symbols": ["BAM", "SAM", "SAME AS INPUT"],
                 "type": "enum",
                 "name": "output_type"
               }
@@ -3372,10 +2986,7 @@
           },
           {
             "required": false,
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Memory per job",
             "sbg:toolDefaultValue": "2048",
             "description": "Amount of RAM memory to be used per job. Defaults to 2048 MB for single threaded jobs.",
@@ -3388,10 +2999,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Max records in RAM",
             "sbg:toolDefaultValue": "500000",
             "description": "When writing SAM files that need to be sorted, this parameter will specify the number of records stored in RAM before spilling to disk. Increasing this number reduces the number of file handles needed to sort a SAM file, and increases the amount of RAM needed. This option can be set to 'null' to clear the default value.",
@@ -3407,9 +3015,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "File"
-            ],
+            "type": ["File"],
             "label": "Input BAM",
             "sbg:altPrefix": "I",
             "description": "The BAM or SAM file to sort.",
@@ -3427,10 +3033,7 @@
             "type": [
               "null",
               {
-                "symbols": [
-                  "True",
-                  "False"
-                ],
+                "symbols": ["True", "False"],
                 "type": "enum",
                 "name": "create_index"
               }
@@ -3448,10 +3051,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "null",
-              "int"
-            ],
+            "type": ["null", "int"],
             "label": "Compression level",
             "sbg:toolDefaultValue": "5",
             "description": "Compression level for all compressed files created (e.g. BAM and GELI). This option can be set to 'null' to clear the default value.",
@@ -3471,9 +3071,7 @@
           "SortSam"
         ],
         "sbg:validationErrors": [],
-        "sbg:categories": [
-          "SAM/BAM-Processing"
-        ],
+        "sbg:categories": ["SAM/BAM-Processing"],
         "sbg:project": "bix-demo/picard-1-140-demo",
         "description": "Picard SortSam sorts the input SAM or BAM. Input and output formats are determined by the file extension.",
         "sbg:revision": 3,
@@ -3526,9 +3124,7 @@
         },
         {
           "id": "#Picard_SortSam.input_bam",
-          "source": [
-            "#HISAT2.out_align"
-          ]
+          "source": ["#HISAT2.out_align"]
         },
         {
           "default": "True",
@@ -3550,10 +3146,7 @@
               "glob": "*.fastq"
             },
             "sbg:fileTypes": "FASTQ",
-            "type": [
-              "null",
-              "File"
-            ],
+            "type": ["null", "File"],
             "label": "Result",
             "description": "Source FASTQ file with updated metadata.",
             "id": "#result"
@@ -3604,11 +3197,7 @@
         ],
         "sbg:modifiedOn": 1475246089,
         "arguments": [],
-        "sbg:contributors": [
-          "vladimirk",
-          "milan.domazet.sudo",
-          "bix-demo"
-        ],
+        "sbg:contributors": ["vladimirk", "milan.domazet.sudo", "bix-demo"],
         "sbg:image_url": null,
         "class": "CommandLineTool",
         "stdout": "",
@@ -3680,23 +3269,16 @@
               "separate": true,
               "sbg:cmdInclude": true
             },
-            "type": [
-              "File"
-            ],
+            "type": ["File"],
             "label": "Fastq",
             "description": "FASTQ file.",
             "id": "#fastq",
             "sbg:category": "Input"
           }
         ],
-        "baseCommand": [
-          "python",
-          "sbg_fastq_quality_scale_detector.py"
-        ],
+        "baseCommand": ["python", "sbg_fastq_quality_scale_detector.py"],
         "sbg:validationErrors": [],
-        "sbg:categories": [
-          "FASTQ-Processing"
-        ],
+        "sbg:categories": ["FASTQ-Processing"],
         "sbg:project": "bix-demo/sbgtools-demo",
         "description": "FASTQ Quality Scale Detector detects which quality encoding scheme was used in your reads and automatically enters the proper value in the \"Quality Scale\" metadata field.",
         "sbg:revision": 8,
@@ -3729,18 +3311,14 @@
       "inputs": [
         {
           "id": "#SBG_FASTQ_Quality_Detector.fastq",
-          "source": [
-            "#fastq"
-          ]
+          "source": ["#fastq"]
         }
       ],
       "id": "#SBG_FASTQ_Quality_Detector"
     }
   ],
   "description": "This pipeline performs the first step of RNA-Seq analysis - alignment to a reference genome and transcriptome. HISAT2 is a fast and sensitive alignment program for mapping next-generation sequencing reads (whole-genome, transcriptome, and exome sequencing data) against the general human population (as well as against a single reference genome). Based on GCSA (an extension of BWT for a graph), we designed and implemented a graph FM index (GFM), an original approach and its first implementation to the best of our knowledge. In addition to using one global GFM index that represents general population, HISAT2 uses a large set of small GFM indexes that collectively cover the whole genome (each index representing a genomic region of 56 Kbp, with 55,000 indexes needed to cover human population). These small indexes (called local indexes) combined with several alignment strategies enable effective alignment of sequencing reads. This new indexing scheme is called Hierarchical Graph FM index (HGFM). We have developed HISAT 2 based on the HISAT and Bowtie2 implementations. HISAT2 outputs alignments in SAM format, enabling interoperation with a large number of other tools (e.g. SAMtools, GATK) that use SAM.\n\n__Required inputs__\n\nThis workflow has two required inputs:\n\nInput fastq reads (ID: reads) - HISAT2 accepts one fastq file per sample for single-end data, or two files per sample for paired-end data. NOTE: For paired-end reads it is crucial to set the metadata 'paired-end' field as 1 for one input file, as 2 for the other input file.\n\nGenome fasta files (ID: reference_files) - reference sequence to which to align the reads.\n\n__Optional inputs__\n\nSplice sites file (generated by HISAT2 ExtractSpliceSites),\nExons file (generated by HISAT2 ExtractExons),\nSNP file (generated by HISAT2 ExtractSNPs).\n\n__Outputs__\n\nThis workflow generates six output files:\n\nIndex files (ID: output_indexed),\nAligned reads in SAM format (ID: alignment_file),\nAligned reads in sorted BAM format (ID: sorted_bam),\nNovel splice sited detected by HISAT2 (ID: novel_ss_out),\nHISAT2 metrics file (ID: metrics_file), \nAlignment summary metrics reported by Picard CollectAlignmentSummaryMetrics (ID: summary_metrics).\n\n__Common issues__\n\nFor paired-end alignments it is crucial to set the metadata 'paired-end' field as 1 and 2 respectively for the two input fastq files, otherwise the task will fail.",
-  "sbg:contributors": [
-    "admin"
-  ],
+  "sbg:contributors": ["admin"],
   "sbg:validationErrors": [],
   "sbg:image_url": "https://brood.sbgenomics.com/static/admin/sbg-public-data/rna-seq-alignment-hisat2-2-0-1/6.png",
   "class": "Workflow",
@@ -3770,10 +3348,7 @@
       "id": "#reference_files"
     },
     {
-      "type": [
-        "null",
-        "File"
-      ],
+      "type": ["null", "File"],
       "sbg:y": -51.67252307491257,
       "sbg:x": -68.33341260751395,
       "label": "Reference file",
@@ -3790,10 +3365,7 @@
       "sbg:y": 214.9942209056039,
       "sbg:x": -71.66668490568863,
       "label": "ss",
-      "type": [
-        "null",
-        "File"
-      ],
+      "type": ["null", "File"],
       "id": "#ss"
     },
     {
@@ -3801,10 +3373,7 @@
       "sbg:y": 343.32755880862675,
       "sbg:x": -71.666687581275,
       "label": "snp",
-      "type": [
-        "null",
-        "File"
-      ],
+      "type": ["null", "File"],
       "id": "#snp"
     },
     {
@@ -3812,10 +3381,7 @@
       "sbg:y": 609.994266721709,
       "sbg:x": -65.00001556343557,
       "label": "exon",
-      "type": [
-        "null",
-        "File"
-      ],
+      "type": ["null", "File"],
       "id": "#exon"
     },
     {
@@ -3877,10 +3443,7 @@
       "sbg:revision": 6
     }
   ],
-  "sbg:categories": [
-    "Indexing",
-    "Alignment"
-  ],
+  "sbg:categories": ["Indexing", "Alignment"],
   "sbg:canvas_zoom": 0.5999999999999996,
   "sbg:project": "admin/sbg-public-data",
   "sbg:toolkit": "",

@@ -19,15 +19,25 @@
       </div>
       <div class="table-box">
         <el-table :data="tableDate" style="width: 100%">
-          <el-table-column label="流程名称" prop="workflow_name" sortable width="240">
+          <el-table-column label="流程名称" prop="workflow_name" sortable width="280">
             <template slot-scope="{ row }">
-              <nuxt-link
-                class="text-truncate"
-                :to="{ path: '/application/workflow/' + row['workflow_id'] }"
-                :title="row.workflow_name"
-              >
-                {{ row.workflow_name }}
-              </nuxt-link>
+              <div class="el-row--flex is-align-middle">
+                <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
+                  <el-button
+                    type="text"
+                    icon="el-icon-search"
+                    class="px-5 py-0"
+                    @click.stop="showVisualModal(row['workflow_id'])"
+                  ></el-button>
+                </el-tooltip>
+                <nuxt-link
+                  class="text-truncate"
+                  :to="{ path: '/application/workflow/' + row['workflow_id'] }"
+                  :title="row.workflow_name"
+                >
+                  {{ row.workflow_name }}
+                </nuxt-link>
+              </div>
             </template>
           </el-table-column>
           <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
@@ -96,6 +106,9 @@
         const nameList = this.nameList
         const results = str ? nameList.filter(this.createFilter(str)) : nameList
         cb(results)
+      },
+      showVisualModal(workflowId) {
+        window.open(`/graph-info/${workflowId}`, '_blank', 'toolbar=0,location=0,menubar=0')
       },
     },
   }

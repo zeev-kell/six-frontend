@@ -1,12 +1,8 @@
 <template>
-  <div class="cwl-box h-100 p-r">
-    <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
-    <tool-box class="tool-box" :workflow="workflow"></tool-box>
-  </div>
+  <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
 </template>
 
 <script>
-  import ToolBox from '@/pages/application/workflow/_components/ToolBox'
   import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, Workflow, ZoomPlugin } from 'cwl-svg'
   import 'cwl-svg/src/assets/styles/themes/rabix-dark/theme.scss'
   import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
@@ -14,7 +10,6 @@
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
 
   export default {
-    components: { ToolBox },
     props: {
       cwlUrl: {
         type: String,
@@ -27,7 +22,6 @@
         default: null,
         note: `The JSON object representing the CWL workflow to render`,
       },
-
       editingEnabled: {
         type: Boolean,
         default: false,
@@ -64,8 +58,14 @@
       },
 
       cwlState() {
-        // 默认可以放缩，选择节点，线条悬浮
-        const plugins = [new SVGEdgeHoverPlugin(), new SelectionPlugin(), new ZoomPlugin(), ...this.plugins]
+        // 默认可以放缩，选择节点，线条悬浮，自动放缩
+        const plugins = [
+          new SVGEdgeHoverPlugin(),
+          new SelectionPlugin(),
+          new ZoomPlugin(),
+          new SVGArrangePlugin(),
+          ...this.plugins,
+        ]
         this.workflow = new Workflow({
           editingEnabled: this.editingEnabled,
           model: this.cwlModel,
@@ -108,6 +108,10 @@
             this.cwlState = json
           })
       }
+      // 第一次没有监听到变化
+      if (this.cwl && this.cwlState === null) {
+        this.cwlState = this.cwl
+      }
       this.$refs.svg.addEventListener(
         'wheel',
         (event) => {
@@ -118,17 +122,3 @@
     },
   }
 </script>
-
-<style lang="css">
-  .tool-box {
-    position: absolute;
-    right: 30px;
-    top: 10px;
-    z-index: 10;
-    color: white;
-    display: none;
-  }
-  .cwl-box:hover .tool-box {
-    display: block;
-  }
-</style>

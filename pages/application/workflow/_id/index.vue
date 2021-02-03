@@ -6,7 +6,8 @@
           {{ item['workflow_name'] }}
         </h2>
         <div class="el-col el-col-8 text-right">
-          <el-button type="primary" icon="el-icon-download">添加至本地</el-button>
+          <el-button type="primary" icon="el-icon-document-copy" size="medium">复制</el-button>
+          <el-button type="info" icon="el-icon-download" size="medium">下载</el-button>
         </div>
       </div>
       <div class="panel-body w-info">
@@ -31,18 +32,14 @@
           <label class="el-col el-col-2 mb-10">描述</label>
           <div class="col-100"></div>
           <div class="el-col el-col-24">
-            {{
-              Array.from({ length: 30 })
-                .map(() => item.description)
-                .join(' ')
-            }}
+            {{ item.description }}
           </div>
         </div>
       </div>
     </div>
     <div class="panel">
-      <div class="panel-body w-cwl">
-        <workflow-cwl cwl-url="/rna-seq-alignment.json" :plugins="plugins" :editing-enabled="true"></workflow-cwl>
+      <div class="panel-body workflow-box">
+        <workflow-cwl :cwl="item.cwl_json"></workflow-cwl>
       </div>
     </div>
     <div class="panel">
@@ -60,8 +57,7 @@
 </template>
 
 <script type="text/babel">
-  import { SVGArrangePlugin } from 'cwl-svg'
-  import WorkflowCwl from './_components/WorkflowCwl'
+  import WorkflowCwl from '@/pages/application/workflow/_components/WorkflowCwl'
 
   export default {
     components: {
@@ -73,8 +69,7 @@
     },
     data() {
       return {
-        item: {},
-        plugins: [new SVGArrangePlugin()],
+        item: undefined,
       }
     },
   }
@@ -89,8 +84,8 @@
       font-weight: bold;
     }
   }
-  .w-cwl {
-    min-height: 400px;
-    height: 400px;
+  .workflow-box {
+    min-height: 450px;
+    height: 450px;
   }
 </style>
