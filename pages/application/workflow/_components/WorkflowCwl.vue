@@ -11,12 +11,6 @@
 
   export default {
     props: {
-      cwlUrl: {
-        type: String,
-        default: null,
-        note: `A URL to request for the initial CWL object from. Used as an alternative to
-                the "cwl" prop`,
-      },
       cwl: {
         type: Object,
         default: null,
@@ -90,28 +84,12 @@
         }
       },
     },
-    /**
-     * If the cwlUrl prop was set, send a request for the CWL object, and set it to the internal
-     * state
-     */
     mounted() {
-      if (this.cwlUrl) {
-        fetch(this.cwlUrl, {
-          headers: new Headers({
-            Accept: 'application/json',
-          }),
-        })
-          .then((response) => {
-            return response.json()
-          })
-          .then((json) => {
-            this.cwlState = json
-          })
-      }
-      // 第一次没有监听到变化
+      // FIX 第一次没有监听到变化
       if (this.cwl && this.cwlState === null) {
         this.cwlState = this.cwl
       }
+      // FIX 鼠标滚动事件捕抓
       this.$refs.svg.addEventListener(
         'wheel',
         (event) => {
@@ -119,6 +97,10 @@
         },
         true
       )
+    },
+    beforeDestroy() {
+      // 销毁流程图
+      this.workflow.destroy()
     },
   }
 </script>

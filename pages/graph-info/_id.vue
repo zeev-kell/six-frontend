@@ -19,6 +19,11 @@
         item: undefined,
       }
     },
+    computed: {
+      workflow() {
+        return this.$refs.cwl.workflow
+      },
+    },
     mounted() {
       window.addEventListener('resize', this.onResize)
     },
@@ -27,7 +32,7 @@
     },
     methods: {
       onResize() {
-        this.$refs.cwl.workflow.getPlugin(SVGArrangePlugin).arrange()
+        this.workflow.getPlugin(SVGArrangePlugin).arrange()
       },
     },
   }
