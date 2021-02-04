@@ -7,6 +7,12 @@
 
 @import '../element-variables';
 @import '../theme/index.css';
+@import './node_modules/element-theme-chalk/src/mixins/mixins';
+@import './node_modules/element-theme-chalk/src/mixins/_button';
+
+$--button-dark-font-color: $--color-white !default;
+$--button-dark-background-color: #303030 !default;
+$--button-dark-border-color: #111 !default;
 
 .el-button--normal {
   //@extend .el-button--text;
@@ -22,6 +28,12 @@
     color: #666666;
     border-color: transparent;
     background-color: transparent;
+  }
+}
+
+.el-button {
+  @include m(dark) {
+    @include button-variant($--button-dark-font-color, $--button-dark-background-color, $--button-dark-border-color);
   }
 }
 
