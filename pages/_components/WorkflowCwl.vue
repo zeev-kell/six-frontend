@@ -29,7 +29,6 @@
     },
     data() {
       return {
-        selectedNode: null,
         workflow: null,
         cwlState: null,
       }

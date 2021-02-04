@@ -1,5 +1,5 @@
 <template>
-  <div class="tool-box">
+  <div class="workflow-tool">
     <el-button size="mini" icon="el-icon-magic-stick" title="全屏编辑" @click="autoLayout"></el-button>
     <el-button size="mini" icon="el-icon-magic-stick" title="自动排版" @click="autoLayout"></el-button>
   </div>
@@ -9,7 +9,7 @@
   import { SVGArrangePlugin, Workflow } from 'cwl-svg'
 
   export default {
-    name: 'ToolBox',
+    name: 'WorkflowTool',
     props: {
       workflow: {
         type: Workflow,
@@ -29,13 +29,12 @@
 </script>
 
 <style scoped lang="scss" rel="stylesheet">
-  .tool-box {
+  .workflow-tool {
     position: absolute;
     right: 30px;
     top: 10px;
     z-index: 10;
     color: white;
-    display: none;
   }
   .el-button--mini {
     padding: 8px;

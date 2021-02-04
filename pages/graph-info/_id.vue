@@ -5,7 +5,7 @@
 </template>
 
 <script type="text/babel">
-  import WorkflowCwl from '@/pages/application/workflow/_components/WorkflowCwl'
+  import WorkflowCwl from '@/pages/_components/WorkflowCwl'
   import { SVGArrangePlugin } from 'cwl-svg'
   export default {
     name: 'GraphInfo',
