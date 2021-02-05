@@ -9,10 +9,7 @@
 @import '../theme/index.css';
 @import './node_modules/element-theme-chalk/src/mixins/mixins';
 @import './node_modules/element-theme-chalk/src/mixins/_button';
-
-$--button-dark-font-color: $--color-white !default;
-$--button-dark-background-color: #303030 !default;
-$--button-dark-border-color: #111 !default;
+@import './variables';
 
 .el-button--normal {
   //@extend .el-button--text;

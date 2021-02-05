@@ -108,7 +108,8 @@
         cb(results)
       },
       showVisualModal(workflowId) {
-        window.open(`/graph-info/${workflowId}`, '_blank', 'toolbar=0,location=0,menubar=0')
+        // window.open(`/graph-info/${workflowId}`, '_blank', 'toolbar=0,location=0,menubar=0')
+        window.open(`/graph-info/${workflowId}`, '_blank')
       },
     },
   }

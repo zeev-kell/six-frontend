@@ -1,19 +1,25 @@
 <template>
-  <div class="workflow-box h-100">
-    <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
-    <div class="workflow-tool">
-      <el-button type="dark" size="mini" icon="el-icon-magic-stick" title="自动排版" @click="autoLayout"></el-button>
+  <div class="workflow-box h-100 el-row el-row--flex">
+    <div class="h-100 el-col-full p-r">
+      <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
+      <div class="workflow-tool">
+        <el-button type="dark" size="mini" icon="el-icon-magic-stick" title="自动排版" @click="autoLayout"></el-button>
+      </div>
     </div>
+    <workflow-panel ref="panel"></workflow-panel>
   </div>
 </template>
 
 <script type="text/babel">
+  import WorkflowPanel from '@/pages/application/_components/WorkflowPanel'
   import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, Workflow, ZoomPlugin } from 'cwl-svg'
   import 'cwl-svg/src/assets/styles/themes/rabix-dark/theme.scss'
   import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
   import 'cwl-svg/src/plugins/selection/theme.dark.scss'
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
+
   export default {
+    components: { WorkflowPanel },
     props: {
       cwl: {
         type: Object,
@@ -79,9 +85,16 @@
         if (selection) {
           selection.registerOnSelectionChange((element) => {
             if (element) {
-              const id = element.getAttribute('data-connection-id')
-              const selected = this.workflow.model.findById(id)
-              this.$emit('selection-changed', selected)
+              // const $selection = selection.getSelection()
+              if (typeof element !== 'string') {
+                // 选择了节点 node
+                const id = element.getAttribute('data-connection-id')
+                const selected = this.workflow.model.findById(id)
+                this.$refs.panel.showNodeInfo(selected)
+                this.$emit('selection-node', selected)
+              } else {
+                this.$emit('selection-edge', element)
+              }
             }
           })
         }
@@ -103,7 +116,7 @@
     },
     beforeDestroy() {
       // 销毁流程图
-      this.workflow.destroy()
+      this.workflow?.destroy()
     },
     methods: {
       /**

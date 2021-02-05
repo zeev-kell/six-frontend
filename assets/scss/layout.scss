@@ -282,3 +282,10 @@ section {
   height: 240px;
   align-items: center;
 }
+
+//
+// marked
+//
+.marked-p > p:first-child {
+  margin-top: 4px;
+}
