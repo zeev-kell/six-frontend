@@ -1,12 +1,13 @@
 <template>
-  <div class="workflow-box h-100 el-row el-row--flex">
+  <div class="workflow-graph h-100 el-row el-row--flex">
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
       <div class="workflow-tool">
         <el-button type="dark" size="mini" icon="el-icon-magic-stick" title="自动排版" @click="autoLayout"></el-button>
+        <el-button type="dark" size="mini" icon="el-icon-magic-stick" title="自动排版" @click="autoLayout"></el-button>
       </div>
     </div>
-    <workflow-panel ref="panel"></workflow-panel>
+    <workflow-panel ref="panel" :workflow="workflow"></workflow-panel>
   </div>
 </template>
 
@@ -17,6 +18,7 @@
   import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
   import 'cwl-svg/src/plugins/selection/theme.dark.scss'
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
+  import { DblclickPlugin } from './plugins/dblclick-plugin'
 
   export default {
     components: { WorkflowPanel },
@@ -49,24 +51,20 @@
       },
     },
     watch: {
-      /**
-       * If the cwl prop ever changes, update the internal workflow object to that
-       */
       cwl() {
         this.cwlState = this.cwl
       },
-
       workflow() {
         this.$emit('workflow-changed', this.workflow)
       },
-
       cwlState() {
         // 默认可以放缩，选择节点，线条悬浮，自动放缩
         const plugins = [
+          new SVGArrangePlugin(),
           new SVGEdgeHoverPlugin(),
           new SelectionPlugin(),
+          new DblclickPlugin(),
           new ZoomPlugin(),
-          new SVGArrangePlugin(),
           ...this.plugins,
         ]
         this.workflow = new Workflow({
@@ -76,28 +74,13 @@
           plugins,
         })
 
-        // Hack to force ArrangePlugin to rearrange
-        const arranger = this.workflow.getPlugin(SVGArrangePlugin)
-        if (arranger) arranger.arrange()
+        // 自动放缩 并且 调整排版
+        // const arranger = this.workflow.getPlugin(SVGArrangePlugin)
+        // if (arranger) arranger.arrange()
 
-        // Emit a selectionChanged event when selection changes
-        const selection = this.workflow.getPlugin(SelectionPlugin)
-        if (selection) {
-          selection.registerOnSelectionChange((element) => {
-            if (element) {
-              // const $selection = selection.getSelection()
-              if (typeof element !== 'string') {
-                // 选择了节点 node
-                const id = element.getAttribute('data-connection-id')
-                const selected = this.workflow.model.findById(id)
-                this.$refs.panel.showNodeInfo(selected)
-                this.$emit('selection-node', selected)
-              } else {
-                this.$emit('selection-edge', element)
-              }
-            }
-          })
-        }
+        // 自动放缩到窗口大小
+        // NOTE 如果这时候宽度高度不存在，会发生异常
+        this.workflow.fitToViewport()
       },
     },
     mounted() {

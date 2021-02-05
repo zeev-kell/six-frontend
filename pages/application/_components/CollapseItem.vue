@@ -1,0 +1,34 @@
+<template>
+  <div class="el-collapse-item">
+    <div role="tab" aria-expanded="true" @click="collapsed = !collapsed">
+      <div role="button" tabindex="0" class="el-collapse-item__header" :class="[!collapsed && 'is-active']">
+        {{ title }}
+        <i class="el-collapse-item__arrow el-icon-arrow-right" :class="[!collapsed && 'is-active']"></i>
+      </div>
+    </div>
+    <el-collapse-transition>
+      <div v-show="!collapsed" role="tabpanel" class="el-collapse-item__wrap">
+        <div class="el-collapse-item__content">
+          <slot></slot>
+        </div>
+      </div>
+    </el-collapse-transition>
+  </div>
+</template>
+
+<script type="text/babel">
+  export default {
+    name: 'CollapseItem',
+    props: {
+      title: {
+        type: String,
+        default: '',
+      },
+    },
+    data() {
+      return {
+        collapsed: false,
+      }
+    },
+  }
+</script>

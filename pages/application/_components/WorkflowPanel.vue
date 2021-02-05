@@ -1,15 +1,15 @@
 <template>
   <div v-if="showPanel" class="workflow-panel">
     <div class="panel-header">
-      <div class="f-b text-truncate" :title="selectionNode.label">
-        {{ selectionNode.label }}
+      <div class="f-b text-truncate" :title="labelName">
+        {{ labelName }}
       </div>
       <button type="button" class="el-dialog__headerbtn" style="top: 15px" @click="showPanel = false">
         <i class="el-dialog__close el-icon el-icon-close"></i>
       </button>
     </div>
-    <div v-if="isStep" class="panel-body">
-      <el-tabs v-model="activeTabName">
+    <div class="panel-body">
+      <el-tabs v-if="isStep" v-model="activeTabName">
         <el-tab-pane label="详情" name="info" class="info-wrap">
           <div><label>TYPE:</label>{{ run.class }}</div>
           <div><label>CWL VERSION:</label>{{ run.cwlVersion }}</div>
@@ -23,17 +23,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="输入" name="input">
-          <el-collapse :value="['1', '2']">
-            <el-collapse-item title="Files" name="1">
-              <div v-for="i of selectionNode.in" :key="i.id" style="padding: 5px">
-                {{ i.type }}
-              </div>
-            </el-collapse-item>
-            <el-collapse-item title="APP PARAMETERS" name="2">
-              <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
-              <div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>
-            </el-collapse-item>
-          </el-collapse>
+          <selection-step-inputs :step="selectionNode"></selection-step-inputs>
         </el-tab-pane>
         <el-tab-pane label="步骤" name="step" class="step-wrap">
           <div>
@@ -50,19 +40,30 @@
           </div>
         </el-tab-pane>
       </el-tabs>
+      <div v-else></div>
     </div>
   </div>
 </template>
 
 <script type="text/babel">
   import marked from '@/directives/marked'
-  import { SBDraft2WorkflowInputParameterModel } from 'cwlts/models/d2sb/SBDraft2WorkflowInputParameterModel.js'
-  import { SBDraft2WorkflowOutputParameterModel } from 'cwlts/models/d2sb/SBDraft2WorkflowOutputParameterModel.js'
+  import { DblclickPlugin } from '@/pages/application/_components/plugins/dblclick-plugin'
+  import SelectionStepInputs from '@/pages/application/_components/SelectionStepInputs'
+  import { Workflow } from 'cwl-svg'
+  import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
+  import { StepModel } from 'cwlts/models/generic/StepModel'
 
   export default {
     name: 'WorkflowPanel',
+    components: { SelectionStepInputs },
     directives: {
       ...marked,
+    },
+    props: {
+      workflow: {
+        type: Workflow,
+        default: null,
+      },
     },
     data() {
       return {
@@ -78,14 +79,35 @@
       customProps() {
         return this.run?.customProps
       },
-      isInput() {
-        return this.selectionNode instanceof SBDraft2WorkflowInputParameterModel
-      },
-      isOutput() {
-        return this.selectionNode instanceof SBDraft2WorkflowOutputParameterModel
-      },
       isStep() {
-        return this.selectionNode?.constructor.name === 'SBDraft2StepModel'
+        return this.selectionNode instanceof StepModel
+      },
+      typeOfSelectionNode() {
+        if (this.selectionNode instanceof StepModel) {
+          return 'Step'
+        } else if (this.selectionNode instanceof WorkflowInputParameterModel) {
+          return 'Input'
+        } else {
+          return 'Output'
+        }
+      },
+      labelName() {
+        return this.selectionNode.label || this.selectionNode.id || this.selectionNode.loc || this.typeOfSelectionNode
+      },
+    },
+    watch: {
+      workflow() {
+        const selection = this.workflow?.getPlugin(DblclickPlugin)
+        if (selection) {
+          selection.registerOnDblClick((element) => {
+            if (element && typeof element !== 'string') {
+              // 选择了节点 node
+              const id = element.getAttribute('data-connection-id')
+              const selected = this.workflow.model.findById(id)
+              this.showNodeInfo(selected)
+            }
+          })
+        }
       },
     },
     methods: {
@@ -97,6 +119,8 @@
         this.showPanel = true
         // eslint-disable-next-line no-console
         console.log(selectionNode)
+        // eslint-disable-next-line no-console
+        console.log(this.workflow.model)
       },
     },
   }
@@ -108,7 +132,7 @@
   $b-color: #222;
   .workflow-panel {
     width: 360px;
-    background: #383838;
+    background: #3c3c3c;
     border-left: 1px solid $b-color;
     padding-left: 5px;
     padding-right: 5px;

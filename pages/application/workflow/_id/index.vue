@@ -50,18 +50,18 @@
     </div>
     <div class="panel">
       <div class="panel-body workflow-box">
-        <WorkflowBox :cwl="item.cwl_json"></WorkflowBox>
+        <workflow-graph :cwl="item.cwl_json"></workflow-graph>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/babel">
-  import WorkflowBox from '@/pages/application/_components/WorkflowBox'
+  import WorkflowGraph from '@/pages/application/_components/WorkflowGraph'
 
   export default {
     components: {
-      WorkflowBox,
+      WorkflowGraph,
     },
     async asyncData({ app, params }) {
       const item = await app.$axios.$get(`/workflow/${params.id}`)
@@ -87,5 +87,8 @@
   .workflow-box {
     min-height: 450px;
     height: 100vh;
+    /deep/ .workflow-panel .panel-body {
+      height: calc(100vh - 162px);
+    }
   }
 </style>

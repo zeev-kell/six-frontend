@@ -1,15 +1,14 @@
 <template>
   <div class="h-100v">
-    <workflow-box ref="cwl" :cwl="item.cwl_json"></workflow-box>
+    <workflow-graph ref="cwl" :cwl="item.cwl_json"></workflow-graph>
   </div>
 </template>
 
 <script type="text/babel">
-  import WorkflowBox from '@/pages/application/_components/WorkflowBox'
-  import { SVGArrangePlugin } from 'cwl-svg'
+  import WorkflowGraph from '@/pages/application/_components/WorkflowGraph'
   export default {
     name: 'GraphInfo',
-    components: { WorkflowBox },
+    components: { WorkflowGraph },
     async asyncData({ app, params }) {
       const item = await app.$axios.$get(`/workflow/${params.id}`)
       return { item }
@@ -25,14 +24,14 @@
       },
     },
     mounted() {
-      window.addEventListener('resize', this.onResize)
+      // window.addEventListener('resize', this.onResize)
     },
     beforeDestroy() {
       window.removeEventListener('resize', this.onResize)
     },
     methods: {
       onResize() {
-        this.workflow.getPlugin(SVGArrangePlugin).arrange()
+        this.workflow.fitToViewport()
       },
     },
   }

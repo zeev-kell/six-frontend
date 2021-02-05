@@ -75,9 +75,16 @@
         if (selection) {
           selection.registerOnSelectionChange((element) => {
             if (element) {
-              const id = element.getAttribute('data-connection-id')
-              const selected = this.workflow.model.findById(id)
-              this.$emit('selection-changed', selected)
+              // const $selection = selection.getSelection()
+              if (typeof element !== 'string') {
+                // 选择了节点 node
+                const id = element.getAttribute('data-connection-id')
+                const selected = this.workflow.model.findById(id)
+                this.$refs.panel.showNodeInfo(selected)
+                this.$emit('selection-node', selected)
+              } else {
+                this.$emit('selection-edge', element)
+              }
             }
           })
         }
