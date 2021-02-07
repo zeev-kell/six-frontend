@@ -1,7 +1,7 @@
 <template>
   <div class="workflow-tool">
-    <el-button size="mini" icon="el-icon-magic-stick" title="全屏编辑" @click="autoLayout"></el-button>
-    <el-button size="mini" icon="el-icon-magic-stick" title="自动排版" @click="autoLayout"></el-button>
+    <el-button type="dark" size="mini" icon="el-icon-magic-stick" title="自动排版" @click="autoLayout"></el-button>
+    <el-button type="dark" size="mini" icon="el-icon-magic-stick" title="自动排版" @click="autoLayout"></el-button>
   </div>
 </template>
 
@@ -14,6 +14,10 @@
       workflow: {
         type: Workflow,
         default: null,
+      },
+      tool: {
+        type: String,
+        default: '',
       },
     },
     methods: {

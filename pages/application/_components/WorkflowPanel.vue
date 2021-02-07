@@ -23,7 +23,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="输入" name="input">
-          <selection-step-inputs :step="selectionNode"></selection-step-inputs>
+          <selection-step-inputs :step="selectionNode" @update="updateWorkflow"></selection-step-inputs>
         </el-tab-pane>
         <el-tab-pane label="步骤" name="step" class="step-wrap">
           <div>
@@ -122,6 +122,9 @@
         // eslint-disable-next-line no-console
         console.log(this.workflow.model)
       },
+      updateWorkflow() {
+        // TODO redraw Workflow
+      },
     },
   }
 </script>
@@ -201,10 +204,11 @@
     }
     .el-collapse-item__wrap {
       background-color: transparent;
-      border-bottom: 1px solid $b-color;
+      border-bottom: none;
     }
     .el-collapse-item__content {
-      color: #bbbbbb;
+      color: inherit;
+      padding-bottom: 0;
     }
   }
 

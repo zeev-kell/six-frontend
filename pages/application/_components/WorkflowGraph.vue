@@ -2,10 +2,7 @@
   <div class="workflow-graph h-100 el-row el-row--flex">
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
-      <div class="workflow-tool">
-        <el-button type="dark" size="mini" icon="el-icon-magic-stick" title="自动排版" @click="autoLayout"></el-button>
-        <el-button type="dark" size="mini" icon="el-icon-magic-stick" title="自动排版" @click="autoLayout"></el-button>
-      </div>
+      <workflow-tool :workflow="workflow"></workflow-tool>
     </div>
     <workflow-panel ref="panel" :workflow="workflow"></workflow-panel>
   </div>
@@ -13,6 +10,7 @@
 
 <script type="text/babel">
   import WorkflowPanel from '@/pages/application/_components/WorkflowPanel'
+  import WorkflowTool from '@/pages/application/_components/WorkflowTool'
   import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, Workflow, ZoomPlugin } from 'cwl-svg'
   import 'cwl-svg/src/assets/styles/themes/rabix-dark/theme.scss'
   import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
@@ -21,7 +19,7 @@
   import { DblclickPlugin } from './plugins/dblclick-plugin'
 
   export default {
-    components: { WorkflowPanel },
+    components: { WorkflowTool, WorkflowPanel },
     props: {
       cwl: {
         type: Object,

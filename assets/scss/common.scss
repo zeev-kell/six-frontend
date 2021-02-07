@@ -1,4 +1,5 @@
 // stylelint-disable declaration-no-important
+@import '../element-variables';
 
 @mixin text-truncate() {
   overflow: hidden;
@@ -13,26 +14,42 @@
   margin-top: 30px !important;
 }
 
-.mb-2r {
-  margin-bottom: 2rem;
-}
-
 .mb-0 {
   margin-bottom: 0;
+}
+
+.mb-05r {
+  margin-bottom: 0.5rem;
+}
+
+.mb-1r {
+  margin-bottom: 1rem;
+}
+
+.mb-2r {
+  margin-bottom: 2rem;
 }
 
 .mb-10 {
   margin-bottom: 10px;
 }
 
-.mx-1r {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 .mx-0 {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.ml-05r {
+  margin-left: 0.5rem;
+}
+
+.ml-1r {
+  margin-left: 1rem;
+}
+
+.mx-1r {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 hr {
@@ -178,6 +195,14 @@ a:hover {
   color: #909399;
 }
 
+.text-danger {
+  color: $--color-danger;
+}
+
+.text-warning {
+  color: $--color-warning;
+}
+
 //
 // List
 //
@@ -225,4 +250,12 @@ img {
 //
 .f-b {
   font-weight: bold;
+}
+
+//
+// h title
+//
+.small {
+  font-size: 80%;
+  font-weight: normal;
 }
