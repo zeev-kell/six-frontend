@@ -1,6 +1,6 @@
 <template>
   <div class="h-100v">
-    <workflow-graph ref="cwl" :cwl="item.cwl_json"></workflow-graph>
+    <workflow-graph ref="cwl" :cwl="item.cwl_json" @workflow-changed="onWorkflowChanged"></workflow-graph>
   </div>
 </template>
 
@@ -16,22 +16,21 @@
     data() {
       return {
         item: undefined,
+        workflow: null,
       }
     },
-    computed: {
-      workflow() {
-        return this.$refs.cwl.workflow
-      },
-    },
     mounted() {
-      // window.addEventListener('resize', this.onResize)
-    },
-    beforeDestroy() {
-      window.removeEventListener('resize', this.onResize)
+      // const onResize = () => {
+      //   this.workflow.fitToViewport()
+      // }
+      // window.addEventListener('resize', onResize)
+      // this.$once('hook:beforeDestroy', function () {
+      //   window.removeEventListener('resize', onResize)
+      // })
     },
     methods: {
-      onResize() {
-        this.workflow.fitToViewport()
+      onWorkflowChanged(workflow) {
+        this.workflow = workflow
       },
     },
   }

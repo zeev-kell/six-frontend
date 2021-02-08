@@ -10,34 +10,20 @@
     </div>
     <div class="panel-body">
       <el-tabs v-if="isStep" v-model="activeTabName">
-        <el-tab-pane label="详情" name="info" class="info-wrap">
-          <div><label>TYPE:</label>{{ run.class }}</div>
-          <div><label>CWL VERSION:</label>{{ run.cwlVersion }}</div>
-          <div><label>REVISION:</label>{{ customProps['sbg:latestRevision'] }}</div>
-          <div><label>TOOLKIT:</label>{{ customProps['sbg:toolkit'] + ' ' + customProps['sbg:toolkitVersion'] }}</div>
-          <div><label>AUTHOR:</label>{{ customProps['sbg:createdBy'] }}</div>
-          <div><label>SOURCE:</label>{{ customProps['sbg:project'] }}</div>
-          <div>
-            <label>DESCRIPTION:</label>
-            <div v-marked="run.description"></div>
-          </div>
+        <el-tab-pane label="详情" name="info">
+          <selection-step-info :step="selectionNode"></selection-step-info>
         </el-tab-pane>
         <el-tab-pane label="输入" name="input">
-          <selection-step-inputs :step="selectionNode" @update="updateWorkflow"></selection-step-inputs>
+          <selection-step-inputs :step="selectionNode" @onUpdate="onUpdateWorkflow"></selection-step-inputs>
         </el-tab-pane>
-        <el-tab-pane label="步骤" name="step" class="step-wrap">
-          <div>
-            <label>ID</label>
-            <div class="el-form-item__content">{{ selectionNode.id }}</div>
-          </div>
-          <div>
-            <label>Label</label>
-            <div class="el-form-item__content">{{ selectionNode.label }}</div>
-          </div>
-          <div>
-            <label>Description</label>
-            <div class="el-form-item__content">{{ selectionNode.description }}</div>
-          </div>
+        <el-tab-pane label="步骤" name="step">
+          <selection-step
+            :step="selectionNode"
+            :workflow="workflow"
+            :workflow-model="workflow.model"
+            :readonly="readonly"
+            @onUpdate="onUpdateStep()"
+          ></selection-step>
         </el-tab-pane>
       </el-tabs>
       <div v-else></div>
@@ -46,8 +32,9 @@
 </template>
 
 <script type="text/babel">
-  import marked from '@/directives/marked'
   import { DblclickPlugin } from '@/pages/application/_components/plugins/dblclick-plugin'
+  import SelectionStep from '@/pages/application/_components/SelectionStep'
+  import SelectionStepInfo from '@/pages/application/_components/SelectionStepInfo'
   import SelectionStepInputs from '@/pages/application/_components/SelectionStepInputs'
   import { Workflow } from 'cwl-svg'
   import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
@@ -55,14 +42,15 @@
 
   export default {
     name: 'WorkflowPanel',
-    components: { SelectionStepInputs },
-    directives: {
-      ...marked,
-    },
+    components: { SelectionStep, SelectionStepInfo, SelectionStepInputs },
     props: {
       workflow: {
         type: Workflow,
         default: null,
+      },
+      readonly: {
+        type: Boolean,
+        default: false,
       },
     },
     data() {
@@ -122,17 +110,18 @@
         // eslint-disable-next-line no-console
         console.log(this.workflow.model)
       },
-      updateWorkflow() {
+      onUpdateWorkflow() {
         // TODO redraw Workflow
+      },
+      onUpdateStep() {
+        console.log(arguments)
       },
     },
   }
 </script>
 
 <style scoped lang="scss" rel="stylesheet">
-  $color1: #ddd;
-  $color2: #999;
-  $b-color: #222;
+  @import 'theme';
   .workflow-panel {
     width: 360px;
     background: #3c3c3c;
@@ -142,10 +131,6 @@
     color: $color2;
     overflow: hidden;
     flex: 0 0 auto;
-  }
-
-  .cl-hl {
-    color: #ddd;
   }
 
   .panel-header {
@@ -211,17 +196,71 @@
       padding-bottom: 0;
     }
   }
+</style>
 
-  .info-wrap > div {
-    margin-bottom: 10px;
-    color: $color1;
+<style lang="scss" rel="stylesheet">
+  @import '_theme';
+  .workflow-panel {
     label {
-      font-weight: bold;
-      color: $color2;
-      margin-right: 4px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      padding: 0 !important;
+      height: 20px;
+      line-height: 1;
+      color: #eee;
     }
-  }
-  .step-wrap > div {
-    margin-bottom: 10px;
+    .form-control {
+      display: block;
+      width: 100%;
+      padding: 0.4rem 0.55rem;
+      font-size: 12px;
+      line-height: 1rem;
+      color: #eee;
+      background-color: #333333;
+      background-image: none;
+      background-clip: padding-box;
+      border: 1px solid $black;
+      border-radius: 0;
+      &:focus {
+        color: #eee;
+        background-color: #333333;
+        border-color: #66afe9;
+        outline: none;
+      }
+    }
+    select.form-control,
+    input.form-control {
+      &:not([size]):not([multiple]) {
+        height: calc(2.5rem - 2px);
+      }
+    }
+    .el-form-item {
+      margin-bottom: 1rem;
+      &.is-error .form-control-feedback,
+      &.is-error .el-form-item__label,
+      &.is-error .form-check-label,
+      &.is-error .form-check-inline,
+      &.is-error .custom-control {
+        color: #dd4a38;
+      }
+      &.is-error .form-control {
+        border-color: #dd4a38;
+      }
+      .el-form-item__error {
+        position: relative;
+        top: 0;
+      }
+    }
+    .el-switch__core {
+      border-color: $black !important;
+    }
+    .input-box {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid $black;
+    }
+    .selection-step-inputs {
+      color: #eee;
+    }
   }
 </style>

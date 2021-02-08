@@ -86,7 +86,7 @@
             :type="input.type"
             :value="value ? value[entry.id] : undefined"
             :readonly="readonly"
-            @update="updateRecord($event, entry.id)"
+            @onUpdate="onUpdateRecord($event, entry.id)"
           ></selection-input-entry>
         </div>
       </template>
@@ -102,7 +102,7 @@
               :input="arrayModifiedInput"
               :value="entry"
               :readonly="readonly"
-              @update="updateArray($event, i)"
+              @onUpdate="onUpdateArray($event, i)"
             >
             </selection-input-entry>
           </div>
@@ -120,7 +120,7 @@
 </template>
 
 <script type="text/babel">
-  import { ObjectHelper } from '@/pages/application/_components/ObjectHelper'
+  import { ObjectHelper } from '@/pages/application/_components/helps/ObjectHelper'
   import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 
   export default {
@@ -171,7 +171,7 @@
           return this.value
         },
         set(value) {
-          this.$emit('update', value)
+          this.$emit('onUpdate', value)
         },
       },
       actualString: {
@@ -179,7 +179,7 @@
           return this.value === null || this.value === undefined ? '' : this.value
         },
         set(value) {
-          this.$emit('update', value)
+          this.$emit('onUpdate', value)
         },
       },
       actualBoolean: {
@@ -187,7 +187,7 @@
           return this.value === '' ? false : this.value
         },
         set(value) {
-          this.$emit('update', value)
+          this.$emit('onUpdate', value)
         },
       },
       arrayModifiedInput() {
@@ -213,16 +213,16 @@
         return this.inputType === type
       },
       deleteFromArray() {
-        this.updateJob(undefined)
+        this.onUpdateJob(undefined)
       },
-      updateJob(data) {
-        this.$emit('update', data)
+      onUpdateJob(data) {
+        this.$emit('onUpdate', data)
       },
-      updateArray(data, index) {
+      onUpdateArray(data, index) {
         // We need some kind of convention to broadcast information
         // that an array element should be deleted
         if (data === undefined) {
-          this.updateJob(this.value.filter((e, i) => i !== index))
+          this.onUpdateJob(this.value.filter((e, i) => i !== index))
           return
         }
 
@@ -233,21 +233,21 @@
         Object.keys(this.value[index]).forEach((item) => delete this.value[index][item])
         this.value[index] = Object.assign(this.value[index], data)
 
-        this.updateJob(this.value.slice())
+        this.onUpdateJob(this.value.slice())
       },
       addArrayEntry(input) {
         this.warning = undefined
         const generatedEntry = JobHelper.generateMockJobData(input)
-        this.updateJob((this.value || []).concat(generatedEntry.slice(0, 1)))
+        this.onUpdateJob((this.value || []).concat(generatedEntry.slice(0, 1)))
       },
-      updateRecord(event, entryId) {
+      onUpdateRecord(event, entryId) {
         const data = { ...(this.value || {}) }
         ObjectHelper.addProperty(data, entryId, event)
         const d = {
           ...data,
           [entryId]: Array.isArray(event) || ObjectHelper.isPrimitiveValue(event) ? event : { ...event },
         }
-        this.updateJob(d)
+        this.onUpdateJob(d)
       },
     },
   }

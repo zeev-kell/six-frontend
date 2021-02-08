@@ -25,11 +25,9 @@
           return this.value === null || this.value === undefined ? '' : this.value
         },
         set(value) {
-          this.$emit('update', value)
+          this.$emit('onUpdate', value)
         },
       },
     },
   }
 </script>
-
-<style scoped lang="scss" rel="stylesheet"></style>

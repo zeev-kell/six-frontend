@@ -78,7 +78,7 @@
             :value="input.default"
             :type="input.type"
             :readonly="readonly"
-            @update="stepValueUpdate($event, input.id + '.default')"
+            @onUpdate="stepValueUpdate($event, input.id + '.default')"
           ></selection-input-entry>
           <!--Link Merge Method Group-->
           <div class="el-form-item">
@@ -86,7 +86,7 @@
             <link-merge-select
               :readonly="readonly"
               :value="input.linkMerge.value"
-              @update="input.linkMerge.value = $event"
+              @onUpdate="input.linkMerge.value = $event"
             ></link-merge-select>
           </div>
           <!--Connections-->
@@ -113,7 +113,7 @@
 <script type="text/babel">
   import CollapseItem from '@/pages/application/_components/CollapseItem'
   import LinkMergeSelect from '@/pages/application/_components/LinkMergeSelect'
-  import { ObjectHelper } from '@/pages/application/_components/ObjectHelper'
+  import { ObjectHelper } from '@/pages/application/_components/helps/ObjectHelper'
   import SelectionInputEntry from '@/pages/application/_components/SelectionInputEntry'
 
   export default {
@@ -197,7 +197,7 @@
         input.default = input.default || {}
         // Assign the given value to the step key
         ObjectHelper.addProperty(this.step.inAsMap, prefix, value)
-        this.$emit('update')
+        this.$emit('onUpdate')
       },
       onPortOptionChange(value, input) {
         switch (value) {
@@ -217,8 +217,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet">
-  $black: #232323;
-  $dark-gray: #303030;
+  @import '_theme';
   .el-tooltip__popper.input-popper {
     background: rgba(0, 0, 0, 0.8);
     border-radius: 2px;
