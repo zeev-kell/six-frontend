@@ -73,12 +73,12 @@
         })
 
         // 自动放缩 并且 调整排版
-        // const arranger = this.workflow.getPlugin(SVGArrangePlugin)
-        // if (arranger) arranger.arrange()
+        const arranger = this.workflow.getPlugin(SVGArrangePlugin)
+        if (arranger) arranger.arrange()
 
         // 自动放缩到窗口大小
         // NOTE 如果这时候宽度高度不存在，会发生异常
-        this.workflow.fitToViewport()
+        // this.workflow.fitToViewport()
       },
     },
     mounted() {
@@ -111,15 +111,25 @@
   }
 </script>
 
-<style scoped lang="scss" rel="stylesheet">
-  .workflow-tool {
-    position: absolute;
-    right: 30px;
-    top: 10px;
-    z-index: 10;
-    color: white;
-  }
-  .el-button--mini {
-    padding: 8px;
+<style lang="scss" rel="stylesheet">
+  .scrollbar,
+  .el-tabs__content {
+    overflow-y: auto;
+    &::-webkit-scrollbar-track {
+      border-radius: 8px;
+      background-color: #454545;
+    }
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: #555;
+    }
+    &::-webkit-scrollbar-corner {
+      background-color: #454545;
+    }
   }
 </style>

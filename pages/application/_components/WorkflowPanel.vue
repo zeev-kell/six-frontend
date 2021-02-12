@@ -8,7 +8,7 @@
         <i class="el-dialog__close el-icon el-icon-close"></i>
       </button>
     </div>
-    <div class="panel-body">
+    <div class="panel-body scrollbar">
       <el-tabs v-if="isStep" v-model="activeTabName">
         <el-tab-pane label="详情" name="info">
           <selection-step-info :step="selectionNode"></selection-step-info>
@@ -26,7 +26,15 @@
           ></selection-step>
         </el-tab-pane>
       </el-tabs>
-      <div v-else></div>
+      <div v-else>
+        <workflow-step-io
+          :step="selectionNode"
+          :workflow-model="workflow.model"
+          :workflow="workflow"
+          :readonly="readonly"
+          @onUpdate="onUpdateWorkflow"
+        ></workflow-step-io>
+      </div>
     </div>
   </div>
 </template>
@@ -36,13 +44,14 @@
   import SelectionStep from '@/pages/application/_components/SelectionStep'
   import SelectionStepInfo from '@/pages/application/_components/SelectionStepInfo'
   import SelectionStepInputs from '@/pages/application/_components/SelectionStepInputs'
+  import WorkflowStepIo from '@/pages/application/_components/WorkflowStepIo'
   import { Workflow } from 'cwl-svg'
   import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
   import { StepModel } from 'cwlts/models/generic/StepModel'
 
   export default {
     name: 'WorkflowPanel',
-    components: { SelectionStep, SelectionStepInfo, SelectionStepInputs },
+    components: { WorkflowStepIo, SelectionStep, SelectionStepInfo, SelectionStepInputs },
     props: {
       workflow: {
         type: Workflow,
@@ -105,15 +114,12 @@
           this.activeTabName = 'input'
         }
         this.showPanel = true
-        // eslint-disable-next-line no-console
-        console.log(selectionNode)
-        // eslint-disable-next-line no-console
-        console.log(this.workflow.model)
       },
       onUpdateWorkflow() {
-        // TODO redraw Workflow
+        this.workflow.draw()
       },
       onUpdateStep() {
+        // eslint-disable-next-line no-console
         console.log(arguments)
       },
     },
@@ -132,18 +138,18 @@
     overflow: hidden;
     flex: 0 0 auto;
   }
-
   .panel-header {
     border-color: $b-color;
     color: $color1;
   }
-
+  .panel-body {
+    height: calc(100vh - 47px);
+  }
   .el-tabs /deep/ {
     .el-tabs__nav {
       width: 100%;
       display: flex;
     }
-
     .el-tabs__item {
       flex: 1;
       color: #bbbbbb;
@@ -160,25 +166,10 @@
     .el-tabs__active-bar {
       height: 1px;
     }
-
     .el-tabs__content {
-      height: calc(100vh - 132px);
-      overflow-y: auto;
-      &::-webkit-scrollbar-track {
-        border-radius: 8px;
-        background-color: #454545;
-      }
-      &::-webkit-scrollbar {
-        width: 8px;
-        background-color: transparent;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 8px;
-        background-color: #555;
-      }
+      height: calc(100vh - 47px - 30px - 40px - 15px);
     }
   }
-
   .el-collapse /deep/ {
     border: none;
 
@@ -216,10 +207,10 @@
       font-size: 12px;
       line-height: 1rem;
       color: #eee;
-      background-color: #333333;
+      background-color: $black2;
       background-image: none;
       background-clip: padding-box;
-      border: 1px solid $black;
+      border: 1px solid $black1;
       border-radius: 0;
       &:focus {
         color: #eee;
@@ -252,15 +243,36 @@
       }
     }
     .el-switch__core {
-      border-color: $black !important;
+      border-color: $black1 !important;
     }
     .input-box {
       padding-top: 1rem;
       padding-bottom: 1rem;
-      border-bottom: 1px solid $black;
+      border-bottom: 1px solid $black1;
     }
     .selection-step-inputs {
       color: #eee;
+    }
+    .el-input__inner {
+      height: 33px !important;
+      background: $black2;
+      border-color: $black1;
+    }
+    .el-select {
+      background: transparent;
+      width: 100%;
+      &:hover .el-input__inner {
+        border-color: $t-color;
+      }
+    }
+    .el-tag {
+      background: #337cb9;
+      border-color: #296394;
+      color: #ffffff;
+    }
+    .el-tag__close {
+      background: transparent !important;
+      color: white !important;
     }
   }
 </style>

@@ -158,8 +158,6 @@
           const group = this.isType(item, 'File') ? 'Files' : 'App parameters'
           return Object.assign(acc, group ? { [group]: (acc[group] || []).concat(item) } : null)
         }, {})
-        // eslint-disable-next-line no-console
-        console.log(grouped)
         // Order groups
         return Object.keys(grouped)
           .sort((a, b) => b.localeCompare(a))
@@ -248,7 +246,7 @@
     background-color: #333333;
     background-image: none;
     background-clip: padding-box;
-    border: 1px solid $black;
+    border: 1px solid $black1;
     border-radius: 0;
     &:focus {
       color: #eee;
@@ -273,12 +271,12 @@
       margin-bottom: 0.5rem;
     }
     .el-switch__core {
-      border-color: $black !important;
+      border-color: $black1 !important;
     }
     .input-box {
       padding-top: 1rem;
       padding-bottom: 1rem;
-      border-bottom: 1px solid $black;
+      border-bottom: 1px solid $black1;
     }
   }
 </style>
