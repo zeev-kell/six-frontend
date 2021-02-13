@@ -4,7 +4,7 @@
       <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
       <workflow-tool :workflow="workflow"></workflow-tool>
     </div>
-    <workflow-panel ref="panel" :workflow="workflow"></workflow-panel>
+    <workflow-panel ref="panel" :workflow="workflow" :readonly="readonly"></workflow-panel>
   </div>
 </template>
 
@@ -26,7 +26,7 @@
         default: null,
         note: `The JSON object representing the CWL workflow to render`,
       },
-      editingEnabled: {
+      readonly: {
         type: Boolean,
         default: false,
         note: `True if the workflow is editable`,
@@ -66,7 +66,7 @@
           ...this.plugins,
         ]
         this.workflow = new Workflow({
-          editingEnabled: this.editingEnabled,
+          editingEnabled: !this.readonly,
           model: this.cwlModel,
           svgRoot: this.$refs.svg,
           plugins,

@@ -14,7 +14,11 @@
           <selection-step-info :step="selectionNode"></selection-step-info>
         </el-tab-pane>
         <el-tab-pane label="输入" name="input">
-          <selection-step-inputs :step="selectionNode" @onUpdate="onUpdateWorkflow"></selection-step-inputs>
+          <selection-step-inputs
+            :step="selectionNode"
+            :readonly="readonly"
+            @onUpdate="onUpdateWorkflow"
+          ></selection-step-inputs>
         </el-tab-pane>
         <el-tab-pane label="步骤" name="step">
           <selection-step
@@ -257,6 +261,10 @@
       height: 33px !important;
       background: $black2;
       border-color: $black1;
+    }
+    .is-disabled .el-input__inner {
+      background: $black2 !important;
+      border-color: $black1 !important;
     }
     .el-select {
       background: transparent;

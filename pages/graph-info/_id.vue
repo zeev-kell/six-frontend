@@ -1,6 +1,11 @@
 <template>
   <div class="h-100v">
-    <workflow-graph ref="cwl" :cwl="item.cwl_json" @workflow-changed="onWorkflowChanged"></workflow-graph>
+    <workflow-graph
+      ref="cwl"
+      :cwl="item.cwl_json"
+      :readonly="false"
+      @workflow-changed="onWorkflowChanged"
+    ></workflow-graph>
   </div>
 </template>
 

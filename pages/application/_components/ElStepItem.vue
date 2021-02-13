@@ -8,7 +8,7 @@
   import emitter from 'element-ui/src/mixins/emitter'
 
   export default {
-    name: 'SelectionStepItem',
+    name: 'ElStepItem',
     mixins: [emitter],
     inject: {
       elForm: {

@@ -3,21 +3,21 @@
     <el-form ref="ruleForm" label-position="top" :model="ruleForm" :rules="rules">
       <!--ID-->
       <el-form-item label="ID" prop="id">
-        <selection-step-item v-slot="{ onBlur }" :value="ruleForm.id">
-          <input v-model="ruleForm.id" type="text" class="form-control" @blur="onBlur()" />
-        </selection-step-item>
+        <el-step-item v-slot="{ onBlur }" :value="ruleForm.id">
+          <input v-model="ruleForm.id" :disabled="readonly" type="text" class="form-control" @blur="onBlur()" />
+        </el-step-item>
       </el-form-item>
 
       <!--Label-->
       <el-form-item label="Label" prop="label">
-        <input v-model="ruleForm.label" type="text" class="form-control" />
+        <input v-model="ruleForm.label" :disabled="readonly" type="text" class="form-control" />
       </el-form-item>
 
       <!--Scatter Method-->
       <el-form-item v-if="step.hasScatterMethod" label="Scatter Method" prop="label">
-        <select v-model="ruleForm.scatterMethod" class="form-control">
-          <option value="" :disabled="readonly">-- none --</option>
-          <option v-for="method of scatterMethodOptions" :key="method.value" :disabled="readonly" :value="method.value">
+        <select v-model="ruleForm.scatterMethod" class="form-control" :disabled="readonly">
+          <option value="">-- none --</option>
+          <option v-for="method of scatterMethodOptions" :key="method.value" :value="method.value">
             {{ method.caption }}
           </option>
         </select>
@@ -26,16 +26,22 @@
       <!--Scatter-->
       <el-form-item label="Scatter">
         <!--Single Scatter-->
-        <select v-if="!step.hasMultipleScatter" v-model="ruleForm.scatter" class="form-control">
-          <option value="" :disabled="readonly">-- none --</option>
-          <option v-for="input of step.in" :key="input.id" :disabled="readonly" :value="input.id">
+        <select v-if="!step.hasMultipleScatter" v-model="ruleForm.scatter" class="form-control" :disabled="readonly">
+          <option value="">-- none --</option>
+          <option v-for="input of step.in" :key="input.id" :value="input.id">
             {{ input.label }} (#{{ input.id }})
           </option>
         </select>
 
         <!--Multiple Scatter-->
-        <select v-if="step.hasMultipleScatter" v-model="ruleForm.scatter" class="form-control" multiple>
-          <option v-for="opt of step.in" :key="opt.id" :disabled="readonly" :value="opt.id">
+        <select
+          v-if="step.hasMultipleScatter"
+          v-model="ruleForm.scatter"
+          class="form-control"
+          multiple
+          :disabled="readonly"
+        >
+          <option v-for="opt of step.in" :key="opt.id" :value="opt.id">
             {{ opt.id }}
           </option>
         </select>
@@ -43,22 +49,24 @@
 
       <!--Description-->
       <el-form-item label="Description">
-        <textarea v-model="ruleForm.description" class="form-control" rows="4"></textarea>
+        <textarea v-model="ruleForm.description" class="form-control" rows="4" :disabled="readonly"></textarea>
       </el-form-item>
 
       <!--TODO Set Hints-->
-      <el-button type="dark" size="mini" @click="setHints()"> {{ readonly ? 'View' : 'Set' }} Hints </el-button>
+      <el-button type="dark" size="mini" :disabled="readonly" @click="setHints()">
+        {{ readonly ? 'View' : 'Set' }} Hints
+      </el-button>
     </el-form>
   </div>
 </template>
 
 <script type="text/babel">
-  import SelectionStepItem from '@/pages/application/_components/SelectionStepItem'
+  import ElStepItem from '@/pages/application/_components/ElStepItem'
   import debounce from '@/utils/debounce'
 
   export default {
     name: 'SelectionStep',
-    components: { SelectionStepItem },
+    components: { ElStepItem },
     props: {
       step: {
         type: Object,

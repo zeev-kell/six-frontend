@@ -4,12 +4,16 @@
     <div v-if="isInput" class="el-form-item el-row--flex">
       <label class="el-col-full">Required</label>
       <div class="el-col-auto">
-        <el-switch v-model="ruleForm.isRequired" @change="step.type.isNullable = $event"></el-switch>
+        <el-switch
+          v-model="ruleForm.isRequired"
+          :disabled="readonly"
+          @change="step.type.isNullable = $event"
+        ></el-switch>
       </div>
     </div>
     <!--ID-->
     <el-form-item label="ID" prop="id">
-      <input v-model="ruleForm.id" type="text" class="form-control" />
+      <input v-model="ruleForm.id" type="text" class="form-control" :disabled="readonly" />
     </el-form-item>
     <!--Connections-->
     <div v-if="!isInput" class="mb-05r">
@@ -22,10 +26,16 @@
     </div>
     <!--Label-->
     <el-form-item label="Label" prop="label">
-      <input v-model="ruleForm.label" type="text" class="form-control" @blur="labelUpdate($event)" />
+      <input
+        v-model="ruleForm.label"
+        type="text"
+        class="form-control"
+        :disabled="readonly"
+        @blur="labelUpdate($event)"
+      />
     </el-form-item>
     <!--Input Type -->
-    <type-select :param-type="ruleForm.typeForm" @onUpdate="onParamTypeChange"></type-select>
+    <type-select :param-type="ruleForm.typeForm" :readonly="readonly" @onUpdate="onParamTypeChange"></type-select>
     <!--Symbols-->
     <el-form-item v-if="isEnumType" label="Symbols" prop="symbols">
       <el-select
@@ -69,18 +79,19 @@
         </el-tooltip>
       </label>
       <!--Batch select-->
-      <select v-if="isBatch" v-model="ruleForm.batchType" class="form-control" @change="onBatchTypeChange">
-        <option
-          v-for="(propertyType, index) of batchByList"
-          :key="index"
-          :disabled="readonly"
-          :value="propertyType.value"
-        >
+      <select
+        v-if="isBatch"
+        v-model="ruleForm.batchType"
+        class="form-control"
+        :disabled="readonly"
+        @change="onBatchTypeChange"
+      >
+        <option v-for="(propertyType, index) of batchByList" :key="index" :value="propertyType.value">
           {{ propertyType.label }}
         </option>
       </select>
       <!--Warning when some other input is already configured as batch-->
-      <div v-else class="text-warning small">
+      <div v-else class="text-warning small" style="line-height: 1">
         <i class="el-icon-warning"></i>
         Only one input per workflow can be configured as batch. Grouping criteria has already been set on #
         {{ workflowModel['batchInput'] }}.
@@ -92,6 +103,7 @@
         v-model="ruleForm.description"
         class="form-control"
         rows="4"
+        :disabled="readonly"
         @change="onChange('description')"
       ></textarea>
     </el-form-item>
@@ -267,6 +279,7 @@
             this.ruleForm.batchType = this.selectedBatchByOption
           }
         },
+        deep: true,
       },
     },
     methods: {
@@ -323,9 +336,9 @@
       onChange(key) {
         this.step[key] = this.ruleForm[key]
       },
-      onBatchTypeChange(batchType) {
-        this.selectedBatchByOption = batchType
-        this.workflowModel.setBatch(this.step.id, batchType)
+      onBatchTypeChange() {
+        this.selectedBatchByOption = this.ruleForm.batchType
+        this.workflowModel.setBatch(this.step.id, this.ruleForm.batchType)
       },
     },
   }

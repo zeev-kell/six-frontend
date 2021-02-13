@@ -30,7 +30,7 @@
 
         <!--Numbers-->
         <template v-else-if="isInputType('int')">
-          <input v-model="actualValue" type="number" :readonly="readonly" class="form-control" />
+          <input v-model="actualValue" type="number" :disabled="readonly" class="form-control" />
         </template>
         <template v-else-if="isInputType('float')">
           <el-input v-model="actualValue" type="number" :readonly="readonly" class="form-control"></el-input>
@@ -38,7 +38,7 @@
 
         <!--Strings-->
         <template v-else-if="isInputType('string')">
-          <input v-model="actualValue" class="form-control" :readonly="readonly" />
+          <input v-model="actualValue" class="form-control" :disabled="readonly" />
         </template>
 
         <!--Booleans-->
