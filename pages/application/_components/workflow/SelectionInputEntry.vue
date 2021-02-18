@@ -19,7 +19,7 @@
       <!--Each leaf field will be wrapped as an input group-->
       <!--Nested fields below should not be wrapped into other container elements-->
       <!--because it will break size and positioning-->
-      <div v-if="isSingleInputTypes()" class="input-group el-row el-row--flex is-align-middle">
+      <div v-if="isSingleInputTypes()" class="el-row el-row--flex is-align-middle">
         <!--Enums-->
         <template v-if="isInputType('enum')">
           <select v-model="actualValue" class="form-control" :disabled="readonly">
@@ -45,12 +45,14 @@
         <template v-else-if="isInputType('boolean')">
           <label class="clickable">
             <span>{{ actualBoolean ? 'Yes' : 'No' }}</span>
-            <el-switch v-model="actualBoolean" :disabled="readonly"></el-switch>
+            <el-switch v-model="actualBoolean" :disabled="readonly" />
           </label>
         </template>
 
         <!--Maps-->
-        <template v-else-if="isInputType('map')"> todo </template>
+        <template v-else-if="isInputType('map')">
+          <selection-input-entry-map :value="value" :readonly="readonly" @onUpdate="onUpdateJob" />
+        </template>
 
         <!--Files and array of Files-->
         <template v-else-if="isInputType('File')">
@@ -120,11 +122,13 @@
 </template>
 
 <script type="text/babel">
-  import { ObjectHelper } from '@/pages/application/_components/helps/ObjectHelper'
+  import { ObjectHelper } from '@/pages/application/_components/workflow/helps/ObjectHelper'
+  import SelectionInputEntryMap from '@/pages/application/_components/workflow/SelectionInputEntryMap'
   import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 
   export default {
     name: 'SelectionInputEntry',
+    components: { SelectionInputEntryMap },
     props: {
       input: {
         type: [Object, Array],

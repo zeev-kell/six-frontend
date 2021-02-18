@@ -203,6 +203,12 @@ a:hover {
   color: $--color-warning;
 }
 
+.input-group-btn {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
 //
 // List
 //
@@ -258,4 +264,11 @@ img {
 .small {
   font-size: 80%;
   font-weight: normal;
+}
+
+//
+// cursor
+//
+.pointer {
+  cursor: pointer;
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form-item label="Type" prop="type">
-      <select v-model="ruleForm.type" class="form-control" @change="onFormChange" :disabled="readonly">
+      <select v-model="ruleForm.type" class="form-control" :disabled="readonly" @change="onFormChange">
         <option v-for="type of types" :key="type" :value="type">
           {{ type }}
         </option>
@@ -12,12 +12,12 @@
       <label class="el-col-full">Allow array as well as a single item</label>
       <div class="el-col-auto">
         {{ ruleForm.isItemOrArray ? 'Yes' : 'No' }}
-        <el-switch v-model="ruleForm.isItemOrArray" @change="onFormChange" :disabled="readonly"></el-switch>
+        <el-switch v-model="ruleForm.isItemOrArray" :disabled="readonly" @change="onFormChange"></el-switch>
       </div>
     </div>
     <!--Item type-->
     <el-form-item v-show="!(paramType ? isParamTypeArray : undefined)" label="Items Type">
-      <select v-model="ruleForm.items" class="form-control" @change="onFormChange" :disabled="readonly">
+      <select v-model="ruleForm.items" class="form-control" :disabled="readonly" @change="onFormChange">
         <option v-for="item of itemTypes" :key="item" :value="item">
           {{ item }}
         </option>

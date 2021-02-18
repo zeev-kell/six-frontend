@@ -13,7 +13,7 @@
     </div>
     <!--ID-->
     <el-form-item label="ID" prop="id">
-      <input v-model="ruleForm.id" type="text" class="form-control" :disabled="readonly" />
+      <input v-model="ruleForm.id" class="form-control" :disabled="readonly" />
     </el-form-item>
     <!--Connections-->
     <div v-if="!isInput" class="mb-05r">
@@ -25,14 +25,9 @@
       <div v-if="step['source'].length > 0" class="text-muted small">Connections: {{ step['source'].join(', ') }}</div>
     </div>
     <!--Label-->
+    {{ ruleForm.label }}
     <el-form-item label="Label" prop="label">
-      <input
-        v-model="ruleForm.label"
-        type="text"
-        class="form-control"
-        :disabled="readonly"
-        @blur="labelUpdate($event)"
-      />
+      <input v-model="ruleForm.label" class="form-control" :disabled="readonly" @input="onLabelChange" />
     </el-form-item>
     <!--Input Type -->
     <type-select :param-type="ruleForm.typeForm" :readonly="readonly" @onUpdate="onParamTypeChange"></type-select>
@@ -107,18 +102,23 @@
         @change="onChange('description')"
       ></textarea>
     </el-form-item>
+    <!-- TODO -->
     <!--Secondary Files-->
-    <el-form-item label="Secondary Files"></el-form-item>
+    <collapse-item title="Secondary Files">
+      <div>{{ ruleForm.secondaryFiles }}</div>
+    </collapse-item>
   </el-form>
 </template>
 
 <script type="text/babel">
-  import TypeSelect from '@/pages/application/_components/TypeSelect'
+  import TypeSelect from '@/pages/application/_components/workflow/TypeSelect'
+  import debounce from '@/utils/debounce'
   import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
+  import CollapseItem from '@/pages/application/_components/CollapseItem'
 
   export default {
     name: 'WorkflowStepIo',
-    components: { TypeSelect },
+    components: { TypeSelect, CollapseItem },
     props: {
       step: {
         type: Object,
@@ -283,14 +283,6 @@
       },
     },
     methods: {
-      labelUpdate(ev) {
-        const val = ev.srcElement.value
-        if (val === this.step.label) {
-          return
-        }
-        this.step.label = val || undefined
-        this.workflow.draw()
-      },
       findBatchValueInTheList(batchTypeValue) {
         if (!batchTypeValue) {
           // None value
@@ -315,6 +307,14 @@
           return batchTypeValue
         }
       },
+      onLabelChange: debounce(function () {
+        const val = this.ruleForm.label
+        if (val === this.step.label) {
+          return
+        }
+        this.step.label = val || undefined
+        this.workflow.draw()
+      }, 500),
       onSymbolsChange(value) {
         if (value.length > 0 && this.isEnumType) {
           this.step.type.symbols = value

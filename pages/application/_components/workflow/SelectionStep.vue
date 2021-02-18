@@ -4,13 +4,13 @@
       <!--ID-->
       <el-form-item label="ID" prop="id">
         <el-step-item v-slot="{ onBlur }" :value="ruleForm.id">
-          <input v-model="ruleForm.id" :disabled="readonly" type="text" class="form-control" @blur="onBlur()" />
+          <input v-model="ruleForm.id" :disabled="readonly" class="form-control" @blur="onBlur()" />
         </el-step-item>
       </el-form-item>
 
       <!--Label-->
       <el-form-item label="Label" prop="label">
-        <input v-model="ruleForm.label" :disabled="readonly" type="text" class="form-control" />
+        <input v-model="ruleForm.label" :disabled="readonly" class="form-control" />
       </el-form-item>
 
       <!--Scatter Method-->
@@ -141,7 +141,7 @@
     },
     mounted() {
       const keys = Object.keys(this.ruleForm).filter((k) => k !== 'id')
-      // TODO 优化监听循环，改成 step 更新时取消所有的 ruleForm 监听
+      // 优化监听循环，改成 step 更新时取消所有的 ruleForm 监听
       keys.forEach((k) => {
         const debounced = debounce((value) => {
           this.step[k] = value

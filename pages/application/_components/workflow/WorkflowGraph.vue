@@ -2,15 +2,17 @@
   <div class="workflow-graph h-100 el-row el-row--flex">
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
-      <workflow-tool :workflow="workflow"></workflow-tool>
+      <workflow-tool :workflow="workflow" :readonly="readonly"></workflow-tool>
     </div>
-    <workflow-panel ref="panel" :workflow="workflow" :readonly="readonly"></workflow-panel>
+    <transition name="el-fade-in-linear">
+      <workflow-panel ref="panel" :workflow="workflow" :readonly="readonly"></workflow-panel>
+    </transition>
   </div>
 </template>
 
 <script type="text/babel">
-  import WorkflowPanel from '@/pages/application/_components/WorkflowPanel'
-  import WorkflowTool from '@/pages/application/_components/WorkflowTool'
+  import WorkflowPanel from '@/pages/application/_components/workflow/WorkflowPanel'
+  import WorkflowTool from '@/pages/application/_components/workflow/WorkflowTool'
   import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, Workflow, ZoomPlugin } from 'cwl-svg'
   import 'cwl-svg/src/assets/styles/themes/rabix-dark/theme.scss'
   import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
@@ -100,36 +102,23 @@
       this.workflow?.destroy()
     },
     methods: {
-      /**
-       * 自动排版
-       */
-      autoLayout() {
-        // 第一次调用居中，第二次调用重新排列
-        this.workflow.getPlugin(SVGArrangePlugin).arrange()
+      // 导出数据
+      serialize() {
+        return this.workflow.model.serialize()
       },
     },
   }
 </script>
 
 <style lang="scss" rel="stylesheet">
+  @import 'theme';
   .scrollbar,
   .el-tabs__content {
     overflow-y: auto;
-    &::-webkit-scrollbar-track {
-      border-radius: 8px;
-      background-color: #454545;
-    }
-    &::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-      background-color: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-      border-radius: 8px;
-      background-color: #555;
-    }
-    &::-webkit-scrollbar-corner {
-      background-color: #454545;
-    }
+
+    @include scroll-bar();
+  }
+  .workflow-graph {
+    background: #3c3c3c;
   }
 </style>

@@ -4,7 +4,7 @@
       <form>
         <div v-for="input of group.inputs" :key="input.id" class="input-box">
           <!--Label and port options-->
-          <div class="el-row is-justify-space-between el-row--flex mb-05r">
+          <div class="el-row is-justify-space-between el-row--flex mb-05r is-align-middle">
             <label class="text-truncate" :title="input.label || input.id">
               <span v-if="!input.type.isNullable" class="text-danger">*</span>
               <el-tooltip v-if="hasMetadata(input)" :visible-arrow="false" popper-class="input-popper">
@@ -41,27 +41,25 @@
               <span v-if="input.type.isNullable"> {{ input.isVisible ? 'Show' : 'Hide' }}</span>
               <el-switch
                 v-if="input.type.isNullable"
-                v-model="input.isVisible"
-                :data-input="input.id"
+                :value="input.isVisible"
                 :disabled="readonly"
                 inactive-color="#333333"
                 @change="onPortOptionChange($event ? 'port' : 'default', input)"
-              ></el-switch>
+              />
             </div>
             <!--Port options for all other types-->
-            <div v-else class="input-control">
-              <el-dropdown>
-                <span>
+            <div v-else class="input-control el-col-auto">
+              <el-dropdown trigger="click" @command="onPortOptionChange($event, input)">
+                <span class="pointer">
                   {{ input.status }}
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
-                <el-dropdown-menu style="max-width: 200px">
+                <el-dropdown-menu slot="dropdown" class="input-dropdown-menu">
                   <el-dropdown-item
                     v-for="c of dropDownPortOptions"
                     :key="c.value"
                     :command="c.value"
                     :class="{ active: input.status === c.value }"
-                    @click="onPortOptionChange(input, c.value)"
                   >
                     <div>{{ c.caption }}</div>
                     <div class="text-muted small">{{ c.description }}</div>
@@ -112,9 +110,9 @@
 
 <script type="text/babel">
   import CollapseItem from '@/pages/application/_components/CollapseItem'
-  import LinkMergeSelect from '@/pages/application/_components/LinkMergeSelect'
-  import { ObjectHelper } from '@/pages/application/_components/helps/ObjectHelper'
-  import SelectionInputEntry from '@/pages/application/_components/SelectionInputEntry'
+  import LinkMergeSelect from '@/pages/application/_components/workflow/LinkMergeSelect'
+  import { ObjectHelper } from '@/pages/application/_components/workflow/helps/ObjectHelper'
+  import SelectionInputEntry from '@/pages/application/_components/workflow/SelectionInputEntry'
 
   export default {
     name: 'SelectionStepInputs',
@@ -127,6 +125,10 @@
       readonly: {
         type: Boolean,
         default: false,
+      },
+      workflowModel: {
+        type: Object,
+        default: null,
       },
     },
     data() {
@@ -200,13 +202,13 @@
       onPortOptionChange(value, input) {
         switch (value) {
           case 'default':
-            // this.workflow.model.clearPort(input)
+            this.workflowModel.clearPort(input)
             break
           case 'exposed':
-            // this.workflow.model.exposePort(input)
+            this.workflowModel.exposePort(input)
             break
           case 'port':
-            // this.workflow.model.includePort(input)
+            this.workflowModel.includePort(input)
             break
         }
       },
@@ -215,7 +217,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet">
-  @import '_theme';
+  @import 'theme';
   .el-tooltip__popper.input-popper {
     background: rgba(0, 0, 0, 0.8);
     border-radius: 2px;
@@ -254,6 +256,8 @@
       border-color: #66afe9;
       outline: none;
     }
+
+    @include scroll-bar();
   }
   select.form-control,
   input.form-control {
@@ -262,6 +266,7 @@
     }
   }
   .selection-step-inputs {
+    border: none;
     color: #eee;
     .el-form-item {
       margin-bottom: 1rem;
@@ -277,6 +282,35 @@
       padding-top: 1rem;
       padding-bottom: 1rem;
       border-bottom: 1px solid $black1;
+    }
+  }
+  .input-dropdown-menu {
+    max-width: 220px;
+    background: #333333;
+    border: 1px solid #232323;
+    border-radius: 2px;
+    padding: 0;
+    color: #eee;
+    box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.2);
+    .el-dropdown-menu__item {
+      line-height: 1.5;
+      margin-top: 0;
+      border-top: 1px solid #232323;
+      padding: 0.55rem 1rem;
+      color: inherit;
+      &:focus,
+      &:not(.is-disabled):hover {
+        background: #3c3c3c;
+        color: inherit;
+      }
+    }
+    .popper__arrow {
+      border-bottom-color: $black1 !important;
+      border-top-color: $black1 !important;
+    }
+    .popper__arrow::after {
+      border-top-color: $black2 !important;
+      border-bottom-color: $black2 !important;
     }
   }
 </style>
