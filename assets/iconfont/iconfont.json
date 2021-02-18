@@ -6,6 +6,13 @@
   "description": "six o'clock",
   "glyphs": [
     {
+      "icon_id": "355547",
+      "name": "full-screen",
+      "font_class": "fullscreen",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
       "icon_id": "6150958",
       "name": "ellipsis-v",
       "font_class": "ellipsis-vertical",

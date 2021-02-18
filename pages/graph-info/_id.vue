@@ -1,21 +1,16 @@
 <template>
   <div class="h-100v">
-    <workflow-graph
-      ref="cwl"
-      :cwl="item.cwl_json"
-      :readonly="false"
-      @workflow-changed="onWorkflowChanged"
-    ></workflow-graph>
+    <workflow-graph ref="cwl" :cwl="item.cwl" :readonly="false" @workflow-changed="onWorkflowChanged" />
   </div>
 </template>
 
 <script type="text/babel">
-  import WorkflowGraph from '@/pages/application/_components/WorkflowGraph'
+  import WorkflowGraph from '@/pages/application/_components/workflow/WorkflowGraph'
   export default {
     name: 'GraphInfo',
     components: { WorkflowGraph },
     async asyncData({ app, params }) {
-      const item = await app.$axios.$get(`/workflow/${params.id}`)
+      const item = await app.$axios.$get(`/pipe/${params.id}`)
       return { item }
     },
     data() {

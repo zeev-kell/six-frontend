@@ -17,6 +17,7 @@
           <selection-step-inputs
             :step="selectionNode"
             :readonly="readonly"
+            :workflow-model="workflow.model"
             @onUpdate="onUpdateWorkflow"
           ></selection-step-inputs>
         </el-tab-pane>
@@ -44,11 +45,11 @@
 </template>
 
 <script type="text/babel">
-  import { DblclickPlugin } from '@/pages/application/_components/plugins/dblclick-plugin'
-  import SelectionStep from '@/pages/application/_components/SelectionStep'
-  import SelectionStepInfo from '@/pages/application/_components/SelectionStepInfo'
-  import SelectionStepInputs from '@/pages/application/_components/SelectionStepInputs'
-  import WorkflowStepIo from '@/pages/application/_components/WorkflowStepIo'
+  import { DblclickPlugin } from '@/pages/application/_components/workflow/plugins/dblclick-plugin'
+  import SelectionStep from '@/pages/application/_components/workflow/SelectionStep'
+  import SelectionStepInfo from '@/pages/application/_components/workflow/SelectionStepInfo'
+  import SelectionStepInputs from '@/pages/application/_components/workflow/SelectionStepInputs'
+  import WorkflowStepIo from '@/pages/application/_components/workflow/WorkflowStepIo'
   import { Workflow } from 'cwl-svg'
   import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
   import { StepModel } from 'cwlts/models/generic/StepModel'
@@ -174,27 +175,10 @@
       height: calc(100vh - 47px - 30px - 40px - 15px);
     }
   }
-  .el-collapse /deep/ {
-    border: none;
-
-    .el-collapse-item__header {
-      color: white;
-      background-color: transparent;
-      border: none;
-    }
-    .el-collapse-item__wrap {
-      background-color: transparent;
-      border-bottom: none;
-    }
-    .el-collapse-item__content {
-      color: inherit;
-      padding-bottom: 0;
-    }
-  }
 </style>
 
 <style lang="scss" rel="stylesheet">
-  @import '_theme';
+  @import 'theme';
   .workflow-panel {
     label {
       display: inline-block;

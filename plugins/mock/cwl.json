@@ -2311,7 +2311,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": ["null", "File"],
+            "type": ["null", "map"],
             "label": "Splice sites file",
             "description": "Splice site file produced by HISAT2 Extract Splice Sites.",
             "id": "#ss",
@@ -2329,7 +2329,7 @@
               "separate": false,
               "sbg:cmdInclude": true
             },
-            "type": ["null", "File"],
+            "type": ["null", "map"],
             "label": "SNP file",
             "description": "SNP file produced by HISAT2 Extract SNPs-Haplotypes UCSC/VCF.",
             "id": "#snp",

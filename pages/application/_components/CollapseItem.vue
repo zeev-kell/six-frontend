@@ -32,3 +32,19 @@
     },
   }
 </script>
+
+<style scoped lang="scss">
+  .el-collapse-item__header {
+    color: white;
+    background-color: transparent;
+    border: none;
+  }
+  .el-collapse-item__wrap {
+    background-color: transparent;
+    border-bottom: none;
+  }
+  .el-collapse-item__content {
+    color: inherit;
+    padding-bottom: 0;
+  }
+</style>

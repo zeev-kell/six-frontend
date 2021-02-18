@@ -20,7 +20,7 @@
 
 <script type="text/babel">
   import marked from '@/directives/marked'
-  import { AppHelper } from '@/pages/application/_components/helps/AppHelper'
+  import { AppHelper } from '@/pages/application/_components/workflow/helps/AppHelper'
 
   export default {
     name: 'SelectionStepInfo',

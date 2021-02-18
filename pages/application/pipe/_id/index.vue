@@ -2,18 +2,18 @@
   <div class="container-fluid">
     <div class="panel">
       <div class="panel-header el-row el-row--flex is-align-middle py-5">
-        <h2 class="el-col el-col-16 text-truncate mx-0" :title="item['workflow_name']">
-          {{ item['workflow_name'] }}
+        <h2 class="el-col el-col-16 text-truncate mx-0" :title="item['name']">
+          {{ item['name'] }}
         </h2>
         <div class="el-col el-col-8 text-right">
           <el-button type="primary" icon="el-icon-document-copy" size="medium">复制</el-button>
-          <el-button type="info" icon="el-icon-download" size="medium">下载</el-button>
+          <el-button type="info" icon="el-icon-download" size="medium" @click="download">下载</el-button>
         </div>
       </div>
       <div class="panel-body w-info">
         <div class="el-row">
           <label class="el-col el-col-2">ID</label>
-          <div class="el-col el-col-equal">{{ item['workflow_id'] }}</div>
+          <div class="el-col el-col-equal">{{ item['pipe_id'] }}</div>
         </div>
         <div class="el-row">
           <label class="el-col el-col-2">版本</label>
@@ -50,27 +50,34 @@
     </div>
     <div class="panel">
       <div class="panel-body workflow-box">
-        <workflow-graph :cwl="item.cwl_json"></workflow-graph>
+        <workflow-graph ref="workflow-graph" :cwl="item.cwl"></workflow-graph>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/babel">
-  import WorkflowGraph from '@/pages/application/_components/WorkflowGraph'
+  import WorkflowGraph from '@/pages/application/_components/workflow/WorkflowGraph'
+  import downloadLink from '@/utils/download-link'
 
   export default {
     components: {
       WorkflowGraph,
     },
     async asyncData({ app, params }) {
-      const item = await app.$axios.$get(`/workflow/${params.id}`)
+      const item = await app.$axios.$get(`/pipe/${params.id}`)
       return { item }
     },
     data() {
       return {
         item: undefined,
       }
+    },
+    methods: {
+      download() {
+        const data = this.$refs['workflow-graph'].serialize()
+        downloadLink(data, this.item.name + '.json')
+      },
     },
   }
 </script>
@@ -87,8 +94,13 @@
   .workflow-box {
     min-height: 450px;
     height: 100vh;
-    /deep/ .workflow-panel .panel-body {
-      height: calc(100vh - 162px);
+    /deep/ .el-tabs__content {
+      height: calc(100vh - 47px - 30px - 40px - 15px - 30px);
+      min-height: 450px - 47px - 30px - 40px - 15px - 30px;
+    }
+    /deep/ .panel-body.scrollbar {
+      height: calc(100vh - 47px - 30px);
+      min-height: 450px - 47px - 30px;
     }
   }
 </style>

@@ -2,16 +2,21 @@
   <div class="container-fluid">
     <div class="panel panel-body">
       <div class="search-box">
-        <el-form :inline="true" :model="params">
+        <el-form :inline="true" :model="query">
           <el-form-item>
-            <el-autocomplete v-model="params.name" :fetch-suggestions="queryName" placeholder="按名字筛选">
+            <el-autocomplete v-model="query.name" :fetch-suggestions="queryName" placeholder="按名字筛选">
               <template slot-scope="{ item }">
                 <div class="name">{{ item.value }}</div>
               </template>
             </el-autocomplete>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="params.category" placeholder="按类型筛选" clearable>
+            <el-select v-model="query.type" placeholder="按类别筛选" clearable>
+              <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-select v-model="query.category" placeholder="按类型筛选" clearable>
               <el-option v-for="item in categoryList" :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
@@ -19,31 +24,48 @@
       </div>
       <div class="table-box">
         <el-table :data="tableDate" style="width: 100%">
-          <el-table-column label="软件名称" prop="pipe_name" sortable width="200"></el-table-column>
-          <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
-          <el-table-column label="最近版本" prop="version" width="120"></el-table-column>
-          <el-table-column label="软件配置" prop="configuration" width="120">
+          <el-table-column label="流程名称" prop="name" sortable width="280">
             <template slot-scope="{ row }">
-              <el-button type="normal" size="small" @click="showConfig(row)">
-                配置<i class="iconfont icon-ellipsis-vertical"></i>
-              </el-button>
+              <div class="el-row--flex is-align-middle">
+                <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
+                  <el-button
+                    type="text"
+                    icon="el-icon-search"
+                    class="px-5 py-0"
+                    @click.stop="showVisualModal(row['pipe_id'])"
+                  ></el-button>
+                </el-tooltip>
+                <nuxt-link class="text-truncate" :to="'/application/pipe/' + row['pipe_id']" :title="row.name">
+                  {{ row.name }}
+                </nuxt-link>
+              </div>
             </template>
           </el-table-column>
-          <el-table-column label="软件介绍" prop="description"></el-table-column>
+          <el-table-column label="类别" prop="type" sortable width="120">
+            <template slot-scope="{ row }">
+              {{ row.type | pipeTypeFilter }}
+            </template>
+          </el-table-column>
+          <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
+          <el-table-column label="最近版本" prop="version" width="120"></el-table-column>
+          <el-table-column label="流程介绍" prop="description">
+            <template slot-scope="{ row }">
+              {{ row.description | intercept }}
+            </template>
+          </el-table-column>
         </el-table>
-      </div>
-      <div class="dialog-box">
-        <pipe-info-dialog ref="info-dialog"></pipe-info-dialog>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/babel">
-  import PipeInfoDialog from './_components/PipeInfoDialog'
+  import intercept from '@/filters/intercept'
+  import pipeConstants from '@/constants/PipeConstants'
   export default {
-    components: {
-      PipeInfoDialog,
+    filters: {
+      ...intercept,
+      pipeTypeFilter: pipeConstants.filter.bind(pipeConstants),
     },
     async asyncData({ app }) {
       const items = await app.$axios.$get('/pipes')
@@ -51,11 +73,13 @@
     },
     data() {
       return {
-        params: {
-          name: '',
-          category: '',
+        query: {
+          name: this.$route.query.name || '',
+          category: this.$route.query.category || '',
+          type: this.$route.query.type || undefined,
         },
         items: [],
+        typeList: pipeConstants.toItems(),
       }
     },
     computed: {
@@ -69,22 +93,27 @@
       },
       nameList() {
         return this.items.reduce((list, item) => {
-          if (!list.includes(item.pipe_name)) {
-            list.push({ value: item.pipe_name })
+          if (!list.includes(item.name)) {
+            list.push({ value: item.name })
           }
           return list
         }, [])
       },
       tableDate() {
         let data = this.items
-        if (this.params.category) {
+        if (this.query.category) {
           data = data.filter((item) => {
-            return item.category === this.params.category
+            return item.category === this.query.category
           })
         }
-        if (this.params.name) {
+        if (this.query.name) {
           data = data.filter((item) => {
-            return item.pipe_name.includes(this.params.name)
+            return item.name.includes(this.query.name)
+          })
+        }
+        if (this.query.type) {
+          data = data.filter((item) => {
+            return item.type === this.query.type
           })
         }
         return data
@@ -101,10 +130,9 @@
         const results = str ? nameList.filter(this.createFilter(str)) : nameList
         cb(results)
       },
-      showConfig(row) {
-        // 转成字符代替深拷贝
-        const _row = JSON.stringify(row)
-        this.$refs['info-dialog'].show(JSON.parse(_row))
+      showVisualModal(id) {
+        // window.open(`/graph-info/${id}`, '_blank', 'toolbar=0,location=0,menubar=0')
+        window.open(`/graph-info/${id}`, '_blank')
       },
     },
   }
