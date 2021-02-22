@@ -52,17 +52,14 @@
         this.$refs.form.validate((valid) => {
           if (valid) {
             this.isLoading = true
-            this.$axios
+            this.$$axios
               .$post('/login', {
                 username: this.form.username,
                 password: this.form.password,
               })
               .then((token) => {
-                this.$store.commit('RECORD_USER_INFO', token)
+                this.$store.commit('RECORD_USER_INFO', token.data)
                 this.$router.push('application')
-              })
-              .catch((e) => {
-                this.$message.error(e)
               })
               .finally(() => {
                 this.isLoading = false

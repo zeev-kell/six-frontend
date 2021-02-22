@@ -23,6 +23,6 @@ export const Pipe = {
   'type|1': ['0', '1'],
   website: 'http://www.bwa.com',
 }
-export const PipeUrl = /\/api\/pipe\/[0-9]*/
+export const PipeUrl = /\/api\/vi\/pipe\/[0-9]*/
 export const Pipes = { 'items|10': [Pipe] }
-export const PipesUrl = /\/api\/pipes/
+export const PipesUrl = /\/api\/vi\/pipes/

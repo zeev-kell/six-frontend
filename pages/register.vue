@@ -24,11 +24,9 @@
               立即注册
             </el-button>
           </el-form-item>
-          <el-form-item class="text-center" style="margin-bottom: 0">
-            <el-checkbox v-model="form.checked">
-              注册即代表同意
-              <a>《产品使用协议》</a>
-            </el-checkbox>
+          <el-form-item class="text-center mb-0 el-form_error_rl" prop="checked">
+            <el-checkbox v-model="form.checked"> 注册即代表同意 </el-checkbox>
+            <a>《产品使用协议》</a>
           </el-form-item>
           <el-form-item>
             <div class="text-right">
@@ -51,15 +49,6 @@
       CanvasParticle,
     },
     data() {
-      const validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'))
-        } else if (value !== this.form.password) {
-          callback(new Error('两次输入密码不一致!'))
-        } else {
-          callback()
-        }
-      }
       return {
         form: {
           username: '',
@@ -73,7 +62,20 @@
         rules: {
           username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
           password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
-          surepassword: [{ validator: validatePass, trigger: 'blur' }],
+          surepassword: [
+            {
+              validator: (rule, value, callback) => {
+                if (value === '') {
+                  callback(new Error('请再次输入密码'))
+                } else if (value !== this.form.password) {
+                  callback(new Error('两次输入密码不一致!'))
+                } else {
+                  callback()
+                }
+              },
+              trigger: 'blur',
+            },
+          ],
           phone: [
             {
               required: true,
@@ -83,7 +85,18 @@
             },
           ],
           email: [{ required: true, type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }],
-          checked: [{ required: true, message: '请同意产品使用协议' }],
+          checked: [
+            {
+              required: true,
+              validator: (rule, value, callback) => {
+                if (value === false) {
+                  callback(new Error('请同意产品使用协议'))
+                } else {
+                  callback()
+                }
+              },
+            },
+          ],
         },
       }
     },
@@ -92,8 +105,8 @@
         this.$refs.form.validate((valid) => {
           if (valid) {
             this.isLoading = true
-            this.$axios
-              .post('/register', {
+            this.$$axios
+              .$post('/register', {
                 username: this.form.username,
                 password: this.form.password,
                 phone: this.form.phone,
@@ -101,10 +114,10 @@
                 extra: 'extra',
               })
               .then(() => {
-                this.$router.push('/login')
-              })
-              .catch((e) => {
-                this.$message.error(e)
+                this.$message.success('注册成功，正在跳转至登录...')
+                setTimeout(() => {
+                  this.$router.push('/login')
+                }, 3000)
               })
               .finally(() => {
                 this.isLoading = false

@@ -17,6 +17,7 @@ export default {
   plugins: [
     { src: '@/plugins/element-ui', ssr: true },
     { src: '@/plugins/axios', ssr: true },
+    { src: '@/plugins/axios-msg.js', mode: 'client' },
     { src: '@/plugins/components' },
     { src: '@/plugins/persistedState.js' },
   ],
@@ -43,7 +44,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // ...(process.env.NODE_ENV === 'development' ? ['@/modules/mockjs'] : []),
-    ...['@/modules/mockjs'],
+    // ...['@/modules/mockjs'],
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content

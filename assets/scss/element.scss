@@ -32,15 +32,15 @@
   @include m(dark) {
     @include button-variant($--button-dark-font-color, $--button-dark-background-color, $--button-dark-border-color);
   }
-}
 
-.el-button.block {
-  display: block;
-  width: 100%;
-}
+  &.block {
+    display: block;
+    width: 100%;
+  }
 
-.el-button.pass {
-  background-color: transparent;
+  &.pass {
+    background-color: transparent;
+  }
 }
 
 .el-dialog__header {
@@ -89,4 +89,27 @@
 // 这个可以使平分的换行
 .col-100 {
   width: 100%;
+}
+
+.el-dropdown-info {
+  background-color: $--color-info;
+  color: $--color-white;
+  &[x-placement^='bottom'] .popper__arrow::after {
+    border-bottom-color: $--color-info;
+  }
+  .el-dropdown-menu__item {
+    color: $--color-white;
+
+    &:hover,
+    &:focus {
+      background: mix($--color-white, $--color-info, $--button-hover-tint-percent);
+      border-color: mix($--color-white, $--color-info, $--button-hover-tint-percent);
+      color: $--color-white;
+    }
+  }
+}
+.el-form_error_rl {
+  .el-form-item__error {
+    position: relative;
+  }
 }
