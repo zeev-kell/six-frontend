@@ -11,7 +11,14 @@
             <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button :loading="isLoading" class="el-button-block" round type="primary" @click="login">
+            <el-button
+              :loading="isLoading"
+              class="el-button-block"
+              round
+              type="primary"
+              native-type="submit"
+              @click="login"
+            >
               登 录
             </el-button>
           </el-form-item>

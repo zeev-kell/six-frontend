@@ -20,7 +20,14 @@
             <el-input v-model="form.email" placeholder="请输入邮箱"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button :loading="isLoading" class="el-button-block" round type="primary" @click="register">
+            <el-button
+              :loading="isLoading"
+              class="el-button-block"
+              round
+              type="primary"
+              native-type="submit"
+              @click="register"
+            >
               立即注册
             </el-button>
           </el-form-item>

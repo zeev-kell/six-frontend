@@ -44,8 +44,10 @@
       </div>
     </div>
     <div class="panel">
+      <div class="panel-header">
+        <h2 class="mx-0">示例教程</h2>
+      </div>
       <div class="panel-body">
-        <h2>示例教程</h2>
         <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
         <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
         <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
@@ -55,8 +57,13 @@
       </div>
     </div>
     <div class="panel">
-      <div class="panel-body workflow-box">
-        <workflow-graph ref="workflow-graph" :cwl="item.cwl"></workflow-graph>
+      <div class="panel-header">
+        <h2 class="mx-0">软件结构与参数配置（双击图标进入配置界面）</h2>
+      </div>
+      <div class="panel-body">
+        <div class="workflow-box">
+          <workflow-graph ref="workflow-graph" :cwl="item.cwl"></workflow-graph>
+        </div>
       </div>
     </div>
   </div>
@@ -101,6 +108,8 @@
   .workflow-box {
     min-height: 450px;
     height: 100vh;
+
+    /*
     /deep/ .el-tabs__content {
       height: calc(100vh - 47px - 30px - 40px - 15px - 30px);
       min-height: 450px - 47px - 30px - 40px - 15px - 30px;
@@ -109,5 +118,6 @@
       height: calc(100vh - 47px - 30px);
       min-height: 450px - 47px - 30px;
     }
+    */
   }
 </style>
