@@ -1,5 +1,5 @@
 <template>
-  <div class="s-center-container">
+  <div class="d-center-container">
     <section class="header-banner el-row el-row--flex">
       <div class="el-col-8 el-col-offset-4">
         <h1>相关下载</h1>
@@ -31,16 +31,40 @@
       <div class="section-title" style="padding: 20px 0">
         <h2>开始体验 sixoclock</h2>
       </div>
-      <div class="container" style="width: 800px; padding-bottom: 60px">
+      <div class="container" style="width: 840px; padding-bottom: 60px">
         <el-row :gutter="30">
-          <el-col v-for="item in 3" :key="item" :span="8">
+          <el-col :span="8">
             <el-card class="d-card">
               <div slot="header">
                 <img class="img-fluid" src="/images/coop-01.png" alt="" />
               </div>
-              <h2 class="text-center">sixoclock python包</h2>
+              <h2 class="text-center">Sixoclock python包</h2>
               <p class="text-justify">在python中运行下载自sixoclock软件仓库的软件与流程</p>
-              <el-button type="primary" class="block">去下载</el-button>
+              <el-button type="primary" class="block" @click="openMsg('installer.exe')">去下载</el-button>
+            </el-card>
+          </el-col>
+          <el-col :span="8">
+            <el-card class="d-card">
+              <div slot="header">
+                <img class="img-fluid" src="/images/coop-01.png" alt="" />
+              </div>
+              <h2 class="text-center">Sixoclock软件仓库</h2>
+              <p class="text-justify">查找并下载需要的数据处理软件<br />&nbsp;</p>
+              <nuxt-link to="/application/pipes" tag="div">
+                <el-button type="primary" class="block">登录系统</el-button>
+              </nuxt-link>
+            </el-card>
+          </el-col>
+          <el-col :span="8">
+            <el-card class="d-card">
+              <div slot="header">
+                <img class="img-fluid" src="/images/coop-01.png" alt="" />
+              </div>
+              <h2 class="text-center">使用sixoclock处理数据</h2>
+              <p class="text-justify">运行下载自sixoclock软件仓库的流程处理本地数据</p>
+              <nuxt-link to="/support-center" tag="div">
+                <el-button type="primary" class="block">阅读教程</el-button>
+              </nuxt-link>
             </el-card>
           </el-col>
         </el-row>
@@ -50,17 +74,17 @@
 </template>
 
 <script type="text/babel">
+  const MSG = {
+    'installer.exe': [
+      '<div><p>链接：<a href="https://pan.baidu.com/s/1NccGp4VEr8YBoXcYUg73kQ" target="_blank">https://pan.baidu.com/s/1NccGp4VEr8YBoXcYUg73kQ</a></p><p>提取码：6666</p></div>',
+      'sixoclock运行环境安装器installer.exe',
+    ],
+  }
   export default {
     layout: 'IndexLayoutBase',
-    async asyncData({ app }) {
-      const markdown = await app.$axios.$get('/README.md')
-      return { markdown }
-    },
     methods: {
-      async onSelect() {
-        // eslint-disable-next-line no-console
-        console.log(arguments)
-        this.markdown = await this.$axios.$get('/README.md')
+      openMsg(type) {
+        this.$alert(...MSG[type], { dangerouslyUseHTMLString: true })
       },
     },
   }

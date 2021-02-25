@@ -2,7 +2,7 @@ import Mock from 'better-mock'
 import { Pipe, Pipes, PipeUrl, PipesUrl } from '../plugins/mock/pipe'
 // import { Workflow, WorkflowUrl, WorkflowList, WorkflowListUrl } from '../plugins/mock/workflow'
 // NOTE 由 Node.js 发起请求需要同步修改 modules 至 mock
-Mock.mock(/\/api\/vi\/login/, 'post', function (options) {
+Mock.mock(/\/api\/v1\/login/, 'post', function (options) {
   const body = JSON.parse(options.body)
   return Mock.mock({
     code: 100,
@@ -16,7 +16,7 @@ Mock.mock(/\/api\/vi\/login/, 'post', function (options) {
     msg: '登陆成功',
   })
 })
-Mock.mock(/\/api\/vi\/register/, 'post', function (options) {
+Mock.mock(/\/api\/v1\/register/, 'post', function (options) {
   // eslint-disable-next-line no-console
 })
 Mock.mock(PipeUrl, function () {

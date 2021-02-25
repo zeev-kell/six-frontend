@@ -16,7 +16,7 @@
     <div class="pt-2r">
       <div class="container">
         <ul class="list-unstyled">
-          <li><a>GitHub 仓库</a></li>
+          <li><a href="https://github.com/6-oclock" target="_blank">GitHub 仓库</a></li>
           <li><a>实例</a></li>
           <li><a>优站精选</a></li>
           <li>

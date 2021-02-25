@@ -17,7 +17,7 @@
               round
               type="primary"
               native-type="submit"
-              @click="login"
+              @click.prevent="login"
             >
               登 录
             </el-button>

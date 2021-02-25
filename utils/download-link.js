@@ -4,7 +4,16 @@ export default function downloadLink(data, filename) {
   }
   if (!filename) filename = 'json.json'
   if (typeof data === 'object') {
-    data = JSON.stringify(data, undefined, 4)
+    data = JSON.stringify(
+      data,
+      (key, value) => {
+        if (typeof value === 'string') {
+          return value.replace(/\u2002/g, ' ')
+        }
+        return value
+      },
+      4
+    )
   }
   const blob = new Blob([data], { type: 'text/json' })
   const e = document.createEvent('MouseEvents')

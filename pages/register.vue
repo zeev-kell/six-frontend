@@ -26,7 +26,7 @@
               round
               type="primary"
               native-type="submit"
-              @click="register"
+              @click.prevent="register"
             >
               立即注册
             </el-button>
