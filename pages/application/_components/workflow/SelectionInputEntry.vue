@@ -209,7 +209,7 @@
       },
     },
     methods: {
-      // FIXME 为了使用 default
+      // 为了使用 default，switch 功能组件需要升级到 vue3
       isSingleInputTypes() {
         return ['enum', 'int', 'float', 'string', 'boolean', 'map', 'File', 'Directory'].includes(this.inputType)
       },

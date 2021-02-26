@@ -47,14 +47,7 @@
       <div class="panel-header">
         <h2 class="mx-0">示例教程</h2>
       </div>
-      <div class="panel-body">
-        <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
-        <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
-        <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
-        <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
-        <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
-        <p>新型冠状病毒(SARS)的主要特性及其防治 新型冠状病毒(SARS)的主要特性及其防治</p>
-      </div>
+      <div v-marked="item.tutorial" class="panel-body"></div>
     </div>
     <div class="panel">
       <div class="panel-header">
@@ -70,10 +63,14 @@
 </template>
 
 <script type="text/babel">
+  import marked from '@/directives/marked'
   import WorkflowGraph from '@/pages/application/_components/workflow/WorkflowGraph'
   import downloadLink from '@/utils/download-link'
 
   export default {
+    directives: {
+      ...marked,
+    },
     components: {
       WorkflowGraph,
     },
@@ -84,7 +81,7 @@
     },
     data() {
       return {
-        item: undefined,
+        item: { tutorial: '' },
       }
     },
     methods: {

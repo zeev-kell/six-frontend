@@ -13,13 +13,21 @@ export default function ({ $axios, redirect, store }) {
     return response
   })
   $axios.onResponseError((error) => {
-    return Promise.reject(error.response && error.response.status ? error.response.data : DEFAULT_RESPONSE)
+    if (!error.response || !error.response.status) {
+      return Promise.reject(DEFAULT_RESPONSE)
+    }
+    if (error.response.status === 401) {
+      store.commit('CLEAR_USER_INFO')
+      redirect('/login')
+    }
+    return Promise.reject(error.response.data)
   })
   $axios.onError((error) => {
     const code = parseInt(error.response && error.response.status)
     if (code === 400) {
       redirect('/400')
     } else if (code === 401) {
+      store.commit('CLEAR_USER_INFO')
       redirect('/login')
     }
   })

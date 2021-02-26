@@ -142,15 +142,18 @@
     color: $color2;
     overflow: hidden;
     flex: 0 0 auto;
+    height: 100%;
   }
   .panel-header {
     border-color: $b-color;
     color: $color1;
   }
   .panel-body {
-    height: calc(100vh - 47px);
+    height: calc(100% - 47px);
   }
   .el-tabs /deep/ {
+    height: 100%;
+
     .el-tabs__nav {
       width: 100%;
       display: flex;
@@ -172,7 +175,9 @@
       height: 1px;
     }
     .el-tabs__content {
-      height: calc(100vh - 47px - 30px - 40px - 15px);
+      height: calc(100% - 40px - 15px);
+
+      /*height: calc(100vh - 47px - 30px - 40px - 15px);*/
     }
   }
 </style>

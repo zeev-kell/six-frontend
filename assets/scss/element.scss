@@ -46,6 +46,10 @@
 .el-dialog__header {
   border-bottom: 1px solid #dcdfe6;
   text-align: left;
+  padding: 10px 20px;
+  .el-dialog__headerbtn {
+    top: 14px;
+  }
 }
 
 .el-input__inner[type='number'] {

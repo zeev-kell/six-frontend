@@ -52,21 +52,19 @@
         <textarea v-model="ruleForm.description" class="form-control" rows="4" :disabled="readonly"></textarea>
       </el-form-item>
 
-      <!--TODO Set Hints-->
-      <el-button type="dark" size="mini" :disabled="readonly" @click="setHints()">
-        {{ readonly ? 'View' : 'Set' }} Hints
-      </el-button>
+      <selection-step-hints :step="step" :readonly="readonly"></selection-step-hints>
     </el-form>
   </div>
 </template>
 
 <script type="text/babel">
   import ElStepItem from '@/pages/application/_components/ElStepItem'
+  import SelectionStepHints from '@/pages/application/_components/workflow/SelectionStepHints'
   import debounce from '@/utils/debounce'
 
   export default {
     name: 'SelectionStep',
-    components: { ElStepItem },
+    components: { SelectionStepHints, ElStepItem },
     props: {
       step: {
         type: Object,
@@ -125,6 +123,7 @@
             caption: 'Flat Cross Product',
           },
         ],
+        dialogHintsVisible: false,
       }
     },
     watch: {
@@ -152,10 +151,6 @@
         })
       })
     },
-    methods: {
-      setHints() {
-        // TODO
-      },
-    },
+    methods: {},
   }
 </script>
