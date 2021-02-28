@@ -93,7 +93,7 @@
     },
     computed: {
       isTool() {
-        return this.item?.type === PipeConstants.Constants.TYPE_TOOL
+        return this.item?.type ? this.item?.type === PipeConstants.Constants.TYPE_TOOL : true
       },
     },
     methods: {
