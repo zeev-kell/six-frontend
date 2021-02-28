@@ -4,13 +4,13 @@
       <h3 class="text-center">云计算协助工具</h3>
       <el-row class="row-bg" justify="space-around" type="flex">
         <el-col :span="4">
-          <div class="box-card" onclick="$nuxt.$router.push('/application/pipes?type=1')">
+          <div class="box-card" onclick="$nuxt.$router.push('/application/pipes')">
             <h4>软件流程</h4>
             流程自动生成与下载
           </div>
         </el-col>
         <el-col :span="4">
-          <div class="box-card" onclick="$nuxt.$router.push('/application/pipes?type=0')">
+          <div class="box-card" onclick="$nuxt.$router.push('/application/pipes')">
             <h4>软件工具</h4>
             工具设置与下载
           </div>
@@ -50,7 +50,12 @@
 </template>
 
 <script type="text/babel">
-  export default {}
+  export default {
+    async created() {
+      // FIXME 默认直接进入列表
+      await this.$router.push('/application/pipes')
+    },
+  }
 </script>
 
 <style lang="scss" scoped>

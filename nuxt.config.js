@@ -43,7 +43,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // ...(process.env.NODE_ENV === 'development' ? ['@/modules/mockjs'] : []),
+    ...(process.env.NODE_ENV === 'development' ? ['@/modules/mockjs'] : []),
     // ...['@/modules/mockjs'],
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',

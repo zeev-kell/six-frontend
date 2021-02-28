@@ -6,7 +6,10 @@
           {{ item['name'] }}
         </h2>
         <div class="el-col el-col-8 text-right">
-          <el-button type="primary" icon="el-icon-document-copy" size="medium">复制</el-button>
+          <!--          <el-button type="primary" icon="el-icon-document-copy" size="medium">复制</el-button>-->
+          <a :href="'/graph-info/' + item['pipe_id'] + '/set-run'" target="_blank">
+            <el-button type="primary" icon="el-icon-caret-right" size="medium">设置运行</el-button>
+          </a>
           <el-dropdown trigger="click" size="medium" @command="handleDownload">
             <el-button type="info" icon="el-icon-download" size="medium">下载</el-button>
             <el-dropdown-menu slot="dropdown" class="el-dropdown-info">
@@ -26,12 +29,12 @@
           <div class="el-col el-col-equal">{{ item['version'] }}</div>
         </div>
         <div class="el-row">
-          <label class="el-col el-col-2">发布人</label>
+          <label class="el-col el-col-2">创建人</label>
           <div class="el-col el-col-equal">{{ item['provider'] }}</div>
         </div>
         <div class="el-row">
-          <label class="el-col el-col-2">发布时间</label>
-          <div class="el-col el-col-equal">{{ item['public_time'] }}</div>
+          <label class="el-col el-col-2">创建时间</label>
+          <div class="el-col el-col-equal">{{ item['create_at'] }}</div>
         </div>
         <hr />
         <div class="el-row">
@@ -55,7 +58,8 @@
       </div>
       <div class="panel-body">
         <div class="workflow-box">
-          <workflow-graph ref="workflow-graph" :cwl="item.cwl"></workflow-graph>
+          <tool-graph v-if="isTool" ref="cwl" :cwl="item.cwl" :readonly="true" />
+          <workflow-graph v-else ref="cwl" :cwl="item.cwl" :readonly="true" />
         </div>
       </div>
     </div>
@@ -63,7 +67,9 @@
 </template>
 
 <script type="text/babel">
+  import PipeConstants from '@/constants/PipeConstants'
   import marked from '@/directives/marked'
+  import ToolGraph from '@/pages/application/_components/tool/ToolGraph'
   import WorkflowGraph from '@/pages/application/_components/workflow/WorkflowGraph'
   import downloadLink from '@/utils/download-link'
 
@@ -72,6 +78,7 @@
       ...marked,
     },
     components: {
+      ToolGraph,
       WorkflowGraph,
     },
     async asyncData({ app, params }) {
@@ -81,12 +88,17 @@
     },
     data() {
       return {
-        item: { tutorial: '' },
+        item: null,
       }
+    },
+    computed: {
+      isTool() {
+        return this.item?.type === PipeConstants.Constants.TYPE_TOOL
+      },
     },
     methods: {
       handleDownload(type = 'json') {
-        const data = this.$refs['workflow-graph'].serialize(type === 'cwl')
+        const data = this.$refs.cwl.serialize(type === 'cwl')
         downloadLink(data, this.item.name + `.${type}`)
       },
     },

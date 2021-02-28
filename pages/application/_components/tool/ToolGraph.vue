@@ -1,5 +1,5 @@
 <template>
-  <div class="workflow-graph h-100 el-row el-row--flex">
+  <div class="tool-graph h-100 el-row el-row--flex">
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
       <cwl-tool :workflow="workflow" :readonly="readonly"></cwl-tool>
@@ -11,18 +11,27 @@
 </template>
 
 <script type="text/babel">
+  import { DblclickPlugin } from '@/pages/application/_components/workflow/plugins/dblclick-plugin'
   import WorkflowPanel from '@/pages/application/_components/workflow/WorkflowPanel'
   import cwlTool from '@/pages/application/_components/cwlTool'
-  import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, Workflow, ZoomPlugin } from 'cwl-svg'
-  import 'cwl-svg/src/assets/styles/themes/rabix-dark/theme.scss'
-  import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
-  import 'cwl-svg/src/plugins/selection/theme.dark.scss'
+  import {
+    SelectionPlugin,
+    SVGArrangePlugin,
+    SVGEdgeHoverPlugin,
+    SVGNodeMovePlugin,
+    Workflow as WorkflowGraph,
+    ZoomPlugin,
+  } from 'cwl-svg'
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
+  import { isType } from 'cwlts/models/helpers/utils'
+  import { CommandLineToolFactory } from 'cwlts/models/generic/CommandLineToolFactory'
   import * as Yaml from 'js-yaml'
-  import { DblclickPlugin } from './plugins/dblclick-plugin'
+  import cwlMixin from '../cwl-mixin'
 
   export default {
+    name: 'ToolGraph',
     components: { cwlTool, WorkflowPanel },
+    mixins: [cwlMixin],
     props: {
       cwl: {
         type: [Object, String],
@@ -42,9 +51,10 @@
     },
     data() {
       return {
-        dataModel: null,
         workflow: null,
         cwlState: null,
+        workflowWrapper: null,
+        appID: undefined,
       }
     },
     watch: {
@@ -54,8 +64,34 @@
       workflow() {
         this.$emit('workflow-changed', this.workflow)
       },
-      cwlState() {
-        this.dataModel = WorkflowFactory.from(this.cwlState)
+      cwlState(json) {
+        this.dataModel = CommandLineToolFactory.from(json, 'document')
+        // this.dataModel.onCommandLineResult((cmdResult) => {
+        //   this.commandLineParts.next(cmdResult)
+        // })
+        this.dataModel.updateCommandLine()
+        this.dataModel.setValidationCallback(this.afterModelValidation.bind(this))
+        this.dataModel.validate().then(this.afterModelValidation.bind(this))
+
+        this.workflowWrapper = WorkflowFactory.from({ cwlVersion: this.dataModel.cwlVersion })
+        const step = this.workflowWrapper.addStepFromProcess(this.dataModel.serialize())
+        if (this.dataModel.id) {
+          this.workflowWrapper.changeStepId(step, this.dataModel.id)
+        }
+        // iterate through all inputs of the tool
+        this.workflowWrapper.steps[0].in.forEach((input) => {
+          if (isType(input, ['File', 'Directory'])) {
+            // create inputs from file ports
+            this.workflowWrapper.createInputFromPort(input)
+          } else {
+            // everything else should be exposed (show up in the step inspector)
+            this.workflowWrapper.exposePort(input)
+          }
+        })
+
+        this.workflowWrapper.steps[0].out.forEach((output) => {
+          this.workflowWrapper.createOutputFromPort(output)
+        })
         // 默认可以放缩，选择节点，线条悬浮，自动放缩
         const plugins = [
           new SVGArrangePlugin(),
@@ -63,11 +99,12 @@
           new SelectionPlugin(),
           new DblclickPlugin(),
           new ZoomPlugin(),
+          new SVGNodeMovePlugin(),
           ...this.plugins,
         ]
-        this.workflow = new Workflow({
+        this.workflow = new WorkflowGraph({
           editingEnabled: !this.readonly,
-          model: this.dataModel,
+          model: this.workflowWrapper,
           svgRoot: this.$refs.svg,
           plugins,
         })
@@ -129,15 +166,4 @@
   }
 </script>
 
-<style lang="scss" rel="stylesheet">
-  @import 'theme';
-  .scrollbar,
-  .el-tabs__content {
-    overflow-y: auto;
-
-    @include scroll-bar();
-  }
-  .workflow-graph {
-    background: #3c3c3c;
-  }
-</style>
+<style scoped lang="scss" rel="stylesheet"></style>

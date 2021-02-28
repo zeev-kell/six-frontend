@@ -1,24 +1,24 @@
 <template>
   <el-header>
     <div class="navbar-header el-row--flex nav-darken">
-      <div class="navbar el-col-auto">
+      <div class="navbar el-col-equal">
         <div class="navbar-logo">
           <nuxt-link to="/application" class="logo">
             <logo-svg class="logo-svg" />
           </nuxt-link>
         </div>
       </div>
-      <div class="el-col-equal">
-        <el-menu
-          :default-active="$route.path"
-          :router="true"
-          mode="horizontal"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b"
-          ><el-menu-item index="/application/u-project">我的项目</el-menu-item>
-        </el-menu>
-      </div>
+      <!--      <div class="el-col-equal">-->
+      <!--        <el-menu-->
+      <!--          :default-active="$route.path"-->
+      <!--          :router="true"-->
+      <!--          mode="horizontal"-->
+      <!--          background-color="#545c64"-->
+      <!--          text-color="#fff"-->
+      <!--          active-text-color="#ffd04b"-->
+      <!--          ><el-menu-item index="/application/u-project">我的项目</el-menu-item>-->
+      <!--        </el-menu>-->
+      <!--      </div>-->
       <el-menu
         :default-active="$route.path"
         :router="true"

@@ -14,7 +14,7 @@
   import { DeletionPlugin } from 'cwl-svg/compiled/src/plugins/deletion/deletion'
 
   export default {
-    name: 'WorkflowTool',
+    name: 'CwlTool',
     props: {
       workflow: {
         type: Workflow,

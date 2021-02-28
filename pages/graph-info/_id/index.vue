@@ -1,14 +1,20 @@
 <template>
   <div class="h-100v">
-    <workflow-graph ref="cwl" :cwl="item.cwl" :readonly="false" @workflow-changed="onWorkflowChanged" />
+    <tool-graph v-if="isTool" ref="cwl" :cwl="item.cwl" :readonly="true" @workflow-changed="onWorkflowChanged" />
+    <workflow-graph v-else ref="cwl" :cwl="item.cwl" :readonly="true" @workflow-changed="onWorkflowChanged" />
   </div>
 </template>
 
 <script type="text/babel">
+  import PipeConstants from '@/constants/PipeConstants'
+  import ToolGraph from '@/pages/application/_components/tool/ToolGraph'
   import WorkflowGraph from '@/pages/application/_components/workflow/WorkflowGraph'
   export default {
     name: 'GraphInfo',
-    components: { WorkflowGraph },
+    components: {
+      ToolGraph,
+      WorkflowGraph,
+    },
     async asyncData({ app, params }) {
       const item = await app.$axios.$get(`/pipe/${params.id}`)
       return { item }
@@ -18,6 +24,11 @@
         item: undefined,
         workflow: null,
       }
+    },
+    computed: {
+      isTool() {
+        return this.item?.type === PipeConstants.Constants.TYPE_TOOL
+      },
     },
     mounted() {
       // const onResize = () => {

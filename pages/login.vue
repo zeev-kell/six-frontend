@@ -66,7 +66,7 @@
               })
               .then((token) => {
                 this.$store.commit('RECORD_USER_INFO', token.data)
-                this.$router.push('application')
+                this.$router.push('/application/pipes')
               })
               .finally(() => {
                 this.isLoading = false

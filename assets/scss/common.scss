@@ -119,6 +119,9 @@ hr {
 a {
   text-decoration: none;
   color: $theme-a-color;
+  &.no-underline {
+    text-decoration: none !important;
+  }
 }
 
 a:active,

@@ -105,7 +105,7 @@
     <!-- TODO -->
     <!--Secondary Files-->
     <collapse-item title="Secondary Files">
-      <div>{{ ruleForm.secondaryFiles }}</div>
+      <!--      <div>{{ ruleForm.secondaryFiles }}</div>-->
     </collapse-item>
   </el-form>
 </template>

@@ -43,6 +43,13 @@
   }
 }
 
+.el-link {
+  &.block {
+    display: block;
+    width: 100%;
+  }
+}
+
 .el-dialog__header {
   border-bottom: 1px solid #dcdfe6;
   text-align: left;

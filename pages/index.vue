@@ -8,10 +8,12 @@
           生成功能，以及一站式生信解决方案的本地化部署服务。
         </p>
         <a href="https://wiki-pre.sixoclock.net/" target="_blank"><el-button>公共知识库</el-button></a>
-        <el-button plain type="primary pass">云计算协作</el-button>
+        <a href="#section-product">
+          <el-button plain type="primary pass">云计算协作</el-button>
+        </a>
       </div>
     </section>
-    <section class="section-product">
+    <section id="section-product" class="section-product">
       <div class="section-title">
         <h1>解决方案</h1>
       </div>

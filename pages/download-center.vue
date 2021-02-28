@@ -14,14 +14,11 @@
         <h1>Six O'clock runner</h1>
         <h3 class="sub-title">一键配置sixoclock平台软件运行环境的安装脚本</h3>
         <div class="download-btn">
-          <el-dropdown split-button type="primary" trigger="click" size="download" :visible-arrow="false">
-            下载windows版安装程序
+          <el-dropdown @command="openMsg">
+            <el-button type="primary" size="download">下载windows版安装程序</el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>下载windows版安装程序</el-dropdown-item>
-              <el-dropdown-item>下载windows版安装程序</el-dropdown-item>
-              <el-dropdown-item>下载windows版安装程序</el-dropdown-item>
-              <el-dropdown-item>下载windows版安装程序</el-dropdown-item>
-              <el-dropdown-item>下载windows版安装程序</el-dropdown-item>
+              <el-dropdown-item command="installer">windows版安装程序</el-dropdown-item>
+              <el-dropdown-item command="installer-offline">windows版安装程序离线包</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -40,7 +37,9 @@
               </div>
               <h2 class="text-center">Sixoclock python包</h2>
               <p class="text-justify">在python中运行下载自sixoclock软件仓库的软件与流程</p>
-              <el-button type="primary" class="block" @click="openMsg('installer.exe')">去下载</el-button>
+              <a href="https://pypi.org/project/sixrunr/" target="_blank" class="no-underline">
+                <el-button type="primary" class="block">去下载</el-button>
+              </a>
             </el-card>
           </el-col>
           <el-col :span="8">
@@ -75,10 +74,15 @@
 
 <script type="text/babel">
   const MSG = {
-    'installer.exe': [
+    installer: [
       '<div><p>链接：<a href="https://pan.baidu.com/s/1NccGp4VEr8YBoXcYUg73kQ" target="_blank">https://pan.baidu.com/s/1NccGp4VEr8YBoXcYUg73kQ</a></p><p>提取码：6666</p></div>',
       'sixoclock运行环境安装器installer.exe',
     ],
+    'installer-offline': [
+      '<div><p>运行cwl必须的windows环境离线安装包</p><p>链接：<a href="https://pan.baidu.com/s/1QKelE0BfQF53ySFtfnD32A" target="_blank">https://pan.baidu.com/s/1QKelE0BfQF53ySFtfnD32A</a></p><p>提取码：6666</p></div>',
+      'sixoclock运行环境安装器installer.exe',
+    ],
+    sixrunr: [],
   }
   export default {
     layout: 'IndexLayoutBase',
