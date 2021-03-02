@@ -2,7 +2,7 @@
   <div class="workflow-graph h-100 el-row el-row--flex">
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
-      <cwl-tool :workflow="workflow" :readonly="readonly"></cwl-tool>
+      <cwl-tool :workflow="workflow"></cwl-tool>
     </div>
     <transition name="el-fade-in-linear">
       <workflow-panel ref="panel" :workflow="workflow" :readonly="readonly"></workflow-panel>
@@ -11,6 +11,7 @@
 </template>
 
 <script type="text/babel">
+  import cwlMixin from '@/pages/application/_components/cwl-mixin'
   import WorkflowPanel from '@/pages/application/_components/workflow/WorkflowPanel'
   import cwlTool from '@/pages/application/_components/cwlTool'
   import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, Workflow, ZoomPlugin } from 'cwl-svg'
@@ -18,11 +19,12 @@
   import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
   import 'cwl-svg/src/plugins/selection/theme.dark.scss'
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
-  import * as Yaml from 'js-yaml'
   import { DblclickPlugin } from './plugins/dblclick-plugin'
 
   export default {
+    name: 'WorkflowGraph',
     components: { cwlTool, WorkflowPanel },
+    mixins: [cwlMixin],
     props: {
       cwl: {
         type: [Object, String],
@@ -79,51 +81,6 @@
         // 自动放缩到窗口大小
         // NOTE 如果这时候宽度高度不存在，会发生异常
         // this.workflow.fitToViewport()
-      },
-    },
-    mounted() {
-      // FIX 第一次没有监听到变化
-      if (this.cwl && this.cwlState === null) {
-        this.cwlState = this.load(this.cwl)
-      }
-      // FIX 鼠标滚动事件捕抓
-      this.$refs.svg.addEventListener(
-        'wheel',
-        (event) => {
-          event.preventDefault()
-        },
-        true
-      )
-    },
-    beforeDestroy() {
-      // 销毁流程图
-      this.workflow?.destroy()
-    },
-    methods: {
-      // 导出数据
-      serialize(asYaml = false) {
-        const obj = this.workflow.model.serialize()
-        if (asYaml) {
-          return Yaml.dump(obj, {
-            json: true,
-          })
-        }
-        return JSON.stringify(
-          obj,
-          (key, value) => {
-            if (typeof value === 'string') {
-              return value.replace(/\u2002/g, ' ')
-            }
-            return value
-          },
-          4
-        )
-      },
-      load(cwl) {
-        if (typeof cwl === 'string') {
-          return Yaml.load(cwl, { json: true })
-        }
-        return cwl
       },
     },
   }

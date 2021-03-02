@@ -2,6 +2,8 @@ import path from 'path'
 import axios from 'axios'
 import Mock from 'better-mock'
 import MockAdapter from 'axios-mock-adapter'
+import _tool from '../plugins/mock/commandline.json'
+import _workflow from '../plugins/mock/cwl.json'
 import { Pipe, PipeUrl, Pipes, PipesUrl } from '../plugins/mock/pipe'
 // import { Workflow, WorkflowUrl, WorkflowList, WorkflowListUrl } from '../plugins/mock/workflow'
 
@@ -10,7 +12,11 @@ export default function () {
   // This sets the mock adapter on the default instance
   const mock = new MockAdapter(axios)
   // arguments for reply are (status, data, headers)
-  mock.onGet(PipeUrl).reply(200, Mock.mock(Pipe))
+  mock.onGet(PipeUrl).reply(() => {
+    const item = Mock.mock(Pipe)
+    item.cwl = item.type === '0' ? _tool : _workflow
+    return [200, item]
+  })
   mock.onGet(PipesUrl).reply(() => {
     return [200, Mock.mock(Pipes).items]
   })

@@ -62,8 +62,6 @@
       paramType: {
         immediate: true,
         handler(paramType) {
-          // eslint-disable-next-line no-console
-          console.log(paramType.type, paramType.items, paramType.isItemOrArray)
           if (!paramType) {
             return
           }
@@ -99,8 +97,6 @@
           this.paramType.items = 'File'
           ruleForm.items = 'File'
         }
-        // eslint-disable-next-line no-console
-        console.log(ruleForm)
         this.$emit('onUpdate', this.paramType)
       },
     },

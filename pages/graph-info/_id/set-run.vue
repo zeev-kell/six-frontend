@@ -1,9 +1,21 @@
 <template>
-  <div>run</div>
+  <cwl-graph class="h-100v" :item="item" :readonly="true" />
 </template>
 
 <script type="text/babel">
-  export default {}
+  import CwlGraph from '@/pages/application/_components/cwl-graph'
+  export default {
+    components: { CwlGraph },
+    async asyncData({ app, params }) {
+      const item = await app.$axios.$get(`/pipe/${params.id}`)
+      return { item }
+    },
+    data() {
+      return {
+        item: undefined,
+      }
+    },
+  }
 </script>
 
 <style scoped lang="scss" rel="stylesheet"></style>

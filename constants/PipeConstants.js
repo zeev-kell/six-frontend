@@ -8,8 +8,8 @@ class PipeConstants extends BaseConstants {
   }
 
   Constants = CreateEnum({
-    TYPE_TOOL: 0,
-    TYPE_APP: 1,
+    TYPE_TOOL: '0',
+    TYPE_APP: '1',
   })
 }
 const pipeConstants = new PipeConstants()

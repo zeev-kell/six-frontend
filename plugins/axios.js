@@ -17,7 +17,7 @@ export default function ({ $axios, redirect, store }) {
       return Promise.reject(DEFAULT_RESPONSE)
     }
     if (error.response.status === 401) {
-      store.commit('CLEAR_USER_INFO')
+      store.commit('CLEAR_USER_INFO', process.server)
       redirect('/login')
     }
     return Promise.reject(error.response.data)

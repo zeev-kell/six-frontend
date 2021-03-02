@@ -1,6 +1,6 @@
 // 增加处理异常的 message 提示
 import Element from 'element-ui'
-export default ({ app, $axios, $message }, inject) => {
+export default ({ $axios }, inject) => {
   const $$axios = new Proxy(
     {},
     {
