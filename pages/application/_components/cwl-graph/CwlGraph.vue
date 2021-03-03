@@ -1,7 +1,21 @@
 <template>
   <div class="cwl-graph">
-    <tool-graph v-if="isTool" ref="cwl" :cwl="item.cwl" :readonly="readonly" @workflow-changed="onWorkflowChanged" />
-    <workflow-graph v-else ref="cwl" :cwl="item.cwl" :readonly="readonly" @workflow-changed="onWorkflowChanged" />
+    <tool-graph
+      v-if="isTool"
+      ref="cwl"
+      :config-type="configType"
+      :cwl="item.cwl"
+      :readonly="readonly"
+      @workflow-changed="onWorkflowChanged"
+    />
+    <workflow-graph
+      v-else
+      ref="cwl"
+      :config-type="configType"
+      :cwl="item.cwl"
+      :readonly="readonly"
+      @workflow-changed="onWorkflowChanged"
+    />
   </div>
 </template>
 
@@ -44,12 +58,15 @@
       onWorkflowChanged(workflow) {
         this.workflow = workflow
       },
+      serialize(...arg) {
+        return this.$refs.cwl.serialize(...arg)
+      },
     },
   }
 </script>
 
 <style lang="scss" rel="stylesheet">
-  @import 'theme';
+  @import '_theme';
   .scrollbar,
   .el-tabs__content {
     overflow-y: auto;

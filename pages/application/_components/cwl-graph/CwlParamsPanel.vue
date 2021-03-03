@@ -45,42 +45,19 @@
 </template>
 
 <script type="text/babel">
-  import { DblclickPlugin } from '@/pages/application/_components/cwl-graph/plugins/dblclick-plugin'
   import SelectionStep from '@/pages/application/_components/cwl-graph/SelectionStep'
   import SelectionStepInfo from '@/pages/application/_components/cwl-graph/SelectionStepInfo'
   import SelectionStepInputs from '@/pages/application/_components/cwl-graph/SelectionStepInputs'
   import SelectionStepIo from '@/pages/application/_components/cwl-graph/SelectionStepIo'
-  import { Workflow } from 'cwl-svg'
   import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
   import { StepModel } from 'cwlts/models/generic/StepModel'
+  import CwlPanel from '@/pages/application/_components/cwl-graph/CwlPanel'
 
   export default {
     name: 'CwlParamsPanel',
     components: { SelectionStepIo, SelectionStep, SelectionStepInfo, SelectionStepInputs },
-    props: {
-      workflow: {
-        type: Workflow,
-        default: null,
-      },
-      readonly: {
-        type: Boolean,
-        default: false,
-      },
-    },
-    data() {
-      return {
-        showPanel: false,
-        selectionNode: undefined,
-        activeTabName: undefined,
-      }
-    },
+    mixins: [CwlPanel],
     computed: {
-      run() {
-        return this.selectionNode?.run
-      },
-      customProps() {
-        return this.run?.customProps
-      },
       isStep() {
         return this.selectionNode instanceof StepModel
       },
@@ -97,29 +74,7 @@
         return this.selectionNode.label || this.selectionNode.id || this.selectionNode.loc || this.typeOfSelectionNode
       },
     },
-    watch: {
-      workflow() {
-        const selection = this.workflow?.getPlugin(DblclickPlugin)
-        if (selection) {
-          selection.registerOnDblClick((element) => {
-            if (element && typeof element !== 'string') {
-              // 选择了节点 node
-              const id = element.getAttribute('data-connection-id')
-              const selected = this.workflow.model.findById(id)
-              this.showNodeInfo(selected)
-            }
-          })
-        }
-      },
-    },
     methods: {
-      showNodeInfo(selectionNode) {
-        if (this.selectionNode?.id !== selectionNode.id) {
-          this.selectionNode = selectionNode
-          this.activeTabName = 'input'
-        }
-        this.showPanel = true
-      },
       onUpdateWorkflow() {
         this.workflow.draw()
       },
@@ -132,7 +87,7 @@
 </script>
 
 <style scoped lang="scss" rel="stylesheet">
-  @import 'theme';
+  @import '_theme';
   .cwl-params-panel {
     width: 360px;
     background: #3c3c3c;
@@ -183,7 +138,7 @@
 </style>
 
 <style lang="scss" rel="stylesheet">
-  @import 'theme';
+  @import '_theme';
   .cwl-params-panel {
     label {
       display: inline-block;

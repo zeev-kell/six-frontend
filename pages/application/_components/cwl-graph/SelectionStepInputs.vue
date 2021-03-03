@@ -217,7 +217,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet">
-  @import 'theme';
+  @import '_theme';
   .el-tooltip__popper.input-popper {
     background: rgba(0, 0, 0, 0.8);
     border-radius: 2px;

@@ -58,8 +58,7 @@
       </div>
       <div class="panel-body">
         <div class="workflow-box">
-          <tool-graph v-if="isTool" ref="cwl" :cwl="item.cwl" :readonly="true" />
-          <workflow-graph v-else ref="cwl" :cwl="item.cwl" :readonly="true" />
+          <cwl-graph ref="cwl" :item="item" :readonly="true" class="h-100" />
         </div>
       </div>
     </div>
@@ -67,20 +66,15 @@
 </template>
 
 <script type="text/babel">
-  import PipeConstants from '@/constants/PipeConstants'
   import marked from '@/directives/marked'
-  import ToolGraph from '@/pages/application/_components/tool/ToolGraph'
-  import WorkflowGraph from '@/pages/application/_components/workflow/WorkflowGraph'
+  import CwlGraph from '@/pages/application/_components/cwl-graph/CwlGraph'
   import downloadLink from '@/utils/download-link'
 
   export default {
     directives: {
       ...marked,
     },
-    components: {
-      ToolGraph,
-      WorkflowGraph,
-    },
+    components: { CwlGraph },
     async asyncData({ app, params }) {
       // const item = await app.$axios.$get(`/pipe/${params.id}`)
       const item = await app.$axios.$get(`/pipe?pipe_id=${params.id}`)
@@ -90,11 +84,6 @@
       return {
         item: null,
       }
-    },
-    computed: {
-      isTool() {
-        return this.item?.type ? this.item?.type === PipeConstants.Constants.TYPE_TOOL : true
-      },
     },
     methods: {
       handleDownload(type = 'json') {

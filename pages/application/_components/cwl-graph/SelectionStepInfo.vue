@@ -49,7 +49,7 @@
 </script>
 
 <style scoped lang="scss" rel="stylesheet">
-  @import 'theme';
+  @import '_theme';
   .selection-step-info > div {
     margin-bottom: 10px;
     color: $color1;

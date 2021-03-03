@@ -31,7 +31,7 @@
     name: 'SelectionInputEntryMap',
     props: {
       value: {
-        type: Object,
+        type: [Object, String],
         default: null,
       },
       readonly: {
