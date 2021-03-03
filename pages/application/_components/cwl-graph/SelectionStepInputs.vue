@@ -110,9 +110,9 @@
 
 <script type="text/babel">
   import CollapseItem from '@/pages/application/_components/CollapseItem'
-  import LinkMergeSelect from '@/pages/application/_components/workflow/LinkMergeSelect'
-  import { ObjectHelper } from '@/pages/application/_components/workflow/helps/ObjectHelper'
-  import SelectionInputEntry from '@/pages/application/_components/workflow/SelectionInputEntry'
+  import LinkMergeSelect from '@/pages/application/_components/cwl-graph/LinkMergeSelect'
+  import { ObjectHelper } from '@/pages/application/_components/cwl-graph/helps/ObjectHelper'
+  import SelectionInputEntry from '@/pages/application/_components/cwl-graph/SelectionInputEntry'
 
   export default {
     name: 'SelectionStepInputs',

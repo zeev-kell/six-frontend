@@ -3,7 +3,7 @@
 </template>
 
 <script type="text/babel">
-  import CwlGraph from '@/pages/application/_components/cwl-graph'
+  import CwlGraph from '@/pages/application/_components/cwl-graph/CwlGraph'
   export default {
     components: { CwlGraph },
     async asyncData({ app, params }) {

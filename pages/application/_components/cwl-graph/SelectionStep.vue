@@ -59,7 +59,7 @@
 
 <script type="text/babel">
   import ElStepItem from '@/pages/application/_components/ElStepItem'
-  import SelectionStepHints from '@/pages/application/_components/workflow/SelectionStepHints'
+  import SelectionStepHints from '@/pages/application/_components/cwl-graph/SelectionStepHints'
   import debounce from '@/utils/debounce'
 
   export default {

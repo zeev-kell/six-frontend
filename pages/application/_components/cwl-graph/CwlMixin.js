@@ -3,8 +3,34 @@ import * as Yaml from 'js-yaml'
 export default {
   data() {
     return {
+      workflow: null,
+      cwlState: null,
+      dataModel: null,
+      workflowWrapper: null,
       validationState: {},
     }
+  },
+  props: {
+    cwl: {
+      type: [Object, String],
+      default: null,
+      note: `The JSON object representing the CWL workflow to render`,
+    },
+    readonly: {
+      type: Boolean,
+      default: false,
+      note: `True if the workflow is editable`,
+    },
+    plugins: {
+      type: Array,
+      default: () => [],
+      note: `A list of CWL plugins to use in the CWL rendering`,
+    },
+    isTool: {
+      type: Boolean,
+      default: true,
+      note: `True if the cwl is commandline`,
+    },
   },
   beforeDestroy() {
     // 销毁流程图
@@ -58,5 +84,13 @@ export default {
       },
       true
     )
+  },
+  watch: {
+    cwl() {
+      this.cwlState = this.load(this.cwl)
+    },
+    workflow() {
+      this.$emit('workflow-changed', this.workflow)
+    },
   },
 }

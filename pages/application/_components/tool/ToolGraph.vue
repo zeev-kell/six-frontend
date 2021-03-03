@@ -2,18 +2,18 @@
   <div class="tool-graph h-100 el-row el-row--flex">
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
-      <cwl-tool :workflow="workflow"></cwl-tool>
+      <cwl-tool :workflow="workflow" />
     </div>
     <transition name="el-fade-in-linear">
-      <workflow-panel ref="panel" :workflow="workflow" :readonly="readonly"></workflow-panel>
+      <workflow-panel ref="panel" :workflow="workflow" :readonly="readonly" />
     </transition>
   </div>
 </template>
 
 <script type="text/babel">
-  import { DblclickPlugin } from '@/pages/application/_components/workflow/plugins/dblclick-plugin'
-  import WorkflowPanel from '@/pages/application/_components/workflow/WorkflowPanel'
-  import cwlTool from '@/pages/application/_components/cwlTool'
+  import { DblclickPlugin } from '@/pages/application/_components/cwl-graph/plugins/dblclick-plugin'
+  import WorkflowPanel from '@/pages/application/_components/cwl-graph/CwlParamsPanel'
+  import cwlTool from '@/pages/application/_components/cwl-graph/CwlTool'
   import {
     SelectionPlugin,
     SVGArrangePlugin,
@@ -25,44 +25,13 @@
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
   import { isType } from 'cwlts/models/helpers/utils'
   import { CommandLineToolFactory } from 'cwlts/models/generic/CommandLineToolFactory'
-  import cwlMixin from '../cwl-mixin'
+  import cwlMixin from '../cwl-graph/CwlMixin'
 
   export default {
     name: 'ToolGraph',
     components: { cwlTool, WorkflowPanel },
     mixins: [cwlMixin],
-    props: {
-      cwl: {
-        type: [Object, String],
-        default: null,
-        note: `The JSON object representing the CWL workflow to render`,
-      },
-      readonly: {
-        type: Boolean,
-        default: false,
-        note: `True if the workflow is editable`,
-      },
-      plugins: {
-        type: Array,
-        default: () => [],
-        note: `A list of CWL plugins to use in the CWL rendering`,
-      },
-    },
-    data() {
-      return {
-        workflow: null,
-        cwlState: null,
-        workflowWrapper: null,
-        appID: undefined,
-      }
-    },
     watch: {
-      cwl() {
-        this.cwlState = this.load(this.cwl)
-      },
-      workflow() {
-        this.$emit('workflow-changed', this.workflow)
-      },
       cwlState(json) {
         this.dataModel = CommandLineToolFactory.from(json, 'document')
         // this.dataModel.onCommandLineResult((cmdResult) => {
@@ -106,17 +75,9 @@
           svgRoot: this.$refs.svg,
           plugins,
         })
-
-        // 自动放缩 并且 调整排版
         const arranger = this.workflow.getPlugin(SVGArrangePlugin)
         if (arranger) arranger.arrange()
-
-        // 自动放缩到窗口大小
-        // NOTE 如果这时候宽度高度不存在，会发生异常
-        // this.workflow.fitToViewport()
       },
     },
   }
 </script>
-
-<style scoped lang="scss" rel="stylesheet"></style>

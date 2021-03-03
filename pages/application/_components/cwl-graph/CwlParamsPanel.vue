@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showPanel" class="workflow-panel">
+  <div v-if="showPanel" class="cwl-params-panel">
     <div class="panel-header">
       <div class="f-b text-truncate" :title="labelName">
         {{ labelName }}
@@ -11,7 +11,7 @@
     <div class="panel-body scrollbar">
       <el-tabs v-if="isStep" v-model="activeTabName">
         <el-tab-pane label="详情" name="info">
-          <selection-step-info :step="selectionNode"></selection-step-info>
+          <selection-step-info :step="selectionNode" />
         </el-tab-pane>
         <el-tab-pane label="输入" name="input">
           <selection-step-inputs
@@ -19,7 +19,7 @@
             :readonly="readonly"
             :workflow-model="workflow.model"
             @onUpdate="onUpdateWorkflow"
-          ></selection-step-inputs>
+          />
         </el-tab-pane>
         <el-tab-pane label="步骤" name="step">
           <selection-step
@@ -28,35 +28,35 @@
             :workflow-model="workflow.model"
             :readonly="readonly"
             @onUpdate="onUpdateStep()"
-          ></selection-step>
+          />
         </el-tab-pane>
       </el-tabs>
       <div v-else>
-        <workflow-step-io
+        <selection-step-io
           :step="selectionNode"
           :workflow-model="workflow.model"
           :workflow="workflow"
           :readonly="readonly"
           @onUpdate="onUpdateWorkflow"
-        ></workflow-step-io>
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/babel">
-  import { DblclickPlugin } from '@/pages/application/_components/workflow/plugins/dblclick-plugin'
-  import SelectionStep from '@/pages/application/_components/workflow/SelectionStep'
-  import SelectionStepInfo from '@/pages/application/_components/workflow/SelectionStepInfo'
-  import SelectionStepInputs from '@/pages/application/_components/workflow/SelectionStepInputs'
-  import WorkflowStepIo from '@/pages/application/_components/workflow/WorkflowStepIo'
+  import { DblclickPlugin } from '@/pages/application/_components/cwl-graph/plugins/dblclick-plugin'
+  import SelectionStep from '@/pages/application/_components/cwl-graph/SelectionStep'
+  import SelectionStepInfo from '@/pages/application/_components/cwl-graph/SelectionStepInfo'
+  import SelectionStepInputs from '@/pages/application/_components/cwl-graph/SelectionStepInputs'
+  import SelectionStepIo from '@/pages/application/_components/cwl-graph/SelectionStepIo'
   import { Workflow } from 'cwl-svg'
   import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
   import { StepModel } from 'cwlts/models/generic/StepModel'
 
   export default {
-    name: 'WorkflowPanel',
-    components: { WorkflowStepIo, SelectionStep, SelectionStepInfo, SelectionStepInputs },
+    name: 'CwlParamsPanel',
+    components: { SelectionStepIo, SelectionStep, SelectionStepInfo, SelectionStepInputs },
     props: {
       workflow: {
         type: Workflow,
@@ -133,7 +133,7 @@
 
 <style scoped lang="scss" rel="stylesheet">
   @import 'theme';
-  .workflow-panel {
+  .cwl-params-panel {
     width: 360px;
     background: #3c3c3c;
     border-left: 1px solid $b-color;
@@ -184,7 +184,7 @@
 
 <style lang="scss" rel="stylesheet">
   @import 'theme';
-  .workflow-panel {
+  .cwl-params-panel {
     label {
       display: inline-block;
       margin-bottom: 0.5rem;

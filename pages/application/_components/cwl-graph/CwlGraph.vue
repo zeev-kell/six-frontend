@@ -6,14 +6,15 @@
 </template>
 
 <script type="text/babel">
+  import 'cwl-svg/src/assets/styles/themes/rabix-dark/theme.scss'
+  import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
+  import 'cwl-svg/src/plugins/selection/theme.dark.scss'
   import PipeConstants from '@/constants/PipeConstants'
-  import ToolGraph from '@/pages/application/_components/tool/ToolGraph'
-  import WorkflowGraph from '@/pages/application/_components/workflow/WorkflowGraph'
   export default {
     name: 'CwlGraph',
     components: {
-      ToolGraph,
-      WorkflowGraph,
+      ToolGraph: () => import('@/pages/application/_components/tool/ToolGraph'),
+      WorkflowGraph: () => import('@/pages/application/_components/workflow/WorkflowGraph'),
     },
     props: {
       item: {
@@ -23,6 +24,10 @@
       readonly: {
         type: Boolean,
         default: false,
+      },
+      configType: {
+        type: String,
+        default: 'params',
       },
     },
     data() {
@@ -42,3 +47,16 @@
     },
   }
 </script>
+
+<style lang="scss" rel="stylesheet">
+  @import 'theme';
+  .scrollbar,
+  .el-tabs__content {
+    overflow-y: auto;
+
+    @include scroll-bar();
+  }
+  .cwl-graph {
+    background: #3c3c3c;
+  }
+</style>

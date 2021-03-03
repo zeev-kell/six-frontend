@@ -25,7 +25,6 @@
       <div v-if="step['source'].length > 0" class="text-muted small">Connections: {{ step['source'].join(', ') }}</div>
     </div>
     <!--Label-->
-    {{ ruleForm.label }}
     <el-form-item label="Label" prop="label">
       <input v-model="ruleForm.label" class="form-control" :disabled="readonly" @input="onLabelChange" />
     </el-form-item>
@@ -111,13 +110,13 @@
 </template>
 
 <script type="text/babel">
-  import TypeSelect from '@/pages/application/_components/workflow/TypeSelect'
+  import TypeSelect from '@/pages/application/_components/cwl-graph/TypeSelect'
   import debounce from '@/utils/debounce'
   import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
   import CollapseItem from '@/pages/application/_components/CollapseItem'
 
   export default {
-    name: 'WorkflowStepIo',
+    name: 'SelectionStepIo',
     components: { TypeSelect, CollapseItem },
     props: {
       step: {
@@ -343,5 +342,3 @@
     },
   }
 </script>
-
-<style scoped lang="scss" rel="stylesheet"></style>
