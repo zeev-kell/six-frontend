@@ -51,12 +51,12 @@
   import SelectionStepIo from '@/pages/application/_components/cwl-graph/SelectionStepIo'
   import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
   import { StepModel } from 'cwlts/models/generic/StepModel'
-  import CwlPanel from '@/pages/application/_components/cwl-graph/CwlPanel'
+  import CwlPanelMixin from '@/pages/application/_components/cwl-graph/CwlPanelMixin'
 
   export default {
-    name: 'CwlParamsPanel',
+    name: 'CwlPanelParams',
     components: { SelectionStepIo, SelectionStep, SelectionStepInfo, SelectionStepInputs },
-    mixins: [CwlPanel],
+    mixins: [CwlPanelMixin],
     computed: {
       isStep() {
         return this.selectionNode instanceof StepModel
@@ -81,6 +81,21 @@
       onUpdateStep() {
         // eslint-disable-next-line no-console
         console.log(arguments)
+      },
+      onDblClick(element) {
+        if (element && typeof element !== 'string') {
+          // 选择了节点 node
+          const id = element.getAttribute('data-connection-id')
+          const selected = this.workflow.model.findById(id)
+          this.showNodeInfo(selected)
+        }
+      },
+      showNodeInfo(selectionNode) {
+        if (this.selectionNode?.id !== selectionNode.id) {
+          this.selectionNode = selectionNode
+          this.activeTabName = 'input'
+        }
+        this.showPanel = true
       },
     },
   }

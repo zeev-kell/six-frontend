@@ -1,11 +1,11 @@
 <script type="text/babel">
   import { SVGArrangePlugin, Workflow } from 'cwl-svg'
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
-  import cwlMixin from '@/pages/application/_components/cwl-graph/CwlMixin'
+  import CwlGraphMixin from '@/pages/application/_components/cwl-graph/CwlGraphMixin'
 
   export default {
     name: 'WorkflowGraph',
-    mixins: [cwlMixin],
+    mixins: [CwlGraphMixin],
     watch: {
       cwlState(json) {
         this.dataModel = WorkflowFactory.from(json)

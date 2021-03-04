@@ -5,22 +5,22 @@
       <cwl-tool :workflow="workflow" />
     </div>
     <transition name="el-fade-in-linear">
-      <cwl-params-panel v-if="configType === 'params'" ref="panel" :workflow="workflow" :readonly="readonly" />
-      <cwl-run-panel v-else ref="panel" :workflow="workflow" :readonly="readonly" />
+      <cwl-panel-params v-if="configType === 'params'" ref="panel" :workflow="workflow" :readonly="readonly" />
+      <cwl-panel-run v-else ref="panel" :workflow="workflow" :readonly="readonly" :pipe-id="pipeId" />
     </transition>
   </div>
 </template>
 
 <script type="text/babel">
-  import CwlParamsPanel from '@/pages/application/_components/cwl-graph/CwlParamsPanel'
-  import CwlRunPanel from '@/pages/application/_components/cwl-graph/CwlRunPanel'
+  import CwlPanelParams from '@/pages/application/_components/cwl-graph/CwlPanelParams'
+  import CwlPanelRun from '@/pages/application/_components/cwl-graph/CwlPanelRun'
   import cwlTool from '@/pages/application/_components/cwl-graph/CwlTool'
   import { DblclickPlugin } from '@/pages/application/_components/cwl-graph/plugins/dblclick-plugin'
   import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, ZoomPlugin } from 'cwl-svg'
   import * as Yaml from 'js-yaml'
 
   export default {
-    components: { CwlRunPanel, cwlTool, CwlParamsPanel },
+    components: { CwlPanelRun, cwlTool, CwlPanelParams },
     props: {
       cwl: {
         type: [Object, String],
@@ -46,14 +46,16 @@
         type: String,
         default: 'params',
       },
+      pipeId: {
+        type: String,
+        default: undefined,
+      },
     },
     data() {
       return {
         workflow: null,
         cwlState: null,
         dataModel: null,
-        workflowWrapper: null,
-        validationState: {},
       }
     },
     watch: {
@@ -83,14 +85,6 @@
       )
     },
     methods: {
-      afterModelValidation() {
-        this.validationState = {
-          ...this.validationState,
-          errors: this.dataModel.errors || [],
-          warnings: this.dataModel.warnings || [],
-          isPending: false,
-        }
-      },
       // 导出数据
       serialize(asYaml = false) {
         const obj = this.workflow.model.serialize()

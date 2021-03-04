@@ -2,12 +2,18 @@
   import { SVGArrangePlugin, SVGNodeMovePlugin, Workflow } from 'cwl-svg'
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
   import { CommandLineToolFactory } from 'cwlts/models/generic/CommandLineToolFactory'
-  import cwlMixin from '@/pages/application/_components/cwl-graph/CwlMixin'
+  import CwlGraphMixin from '@/pages/application/_components/cwl-graph/CwlGraphMixin'
   import { isType } from 'cwlts/models/helpers/utils'
 
   export default {
     name: 'ToolGraph',
-    mixins: [cwlMixin],
+    mixins: [CwlGraphMixin],
+    data() {
+      return {
+        workflowWrapper: null,
+        validationState: {},
+      }
+    },
     watch: {
       cwlState(json) {
         this.createWrapper(json)
@@ -51,6 +57,14 @@
         this.workflowWrapper.steps[0].out.forEach((output) => {
           this.workflowWrapper.createOutputFromPort(output)
         })
+      },
+      afterModelValidation() {
+        this.validationState = {
+          ...this.validationState,
+          errors: this.dataModel.errors || [],
+          warnings: this.dataModel.warnings || [],
+          isPending: false,
+        }
       },
     },
   }

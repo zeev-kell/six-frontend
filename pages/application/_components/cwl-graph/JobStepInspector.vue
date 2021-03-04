@@ -1,0 +1,191 @@
+<template>
+  <div class="job-step-inspector">
+    <div v-if="inputGroups.length">
+      <div v-for="(group, index) of inputGroups" :key="index">
+        <collapse-item :title="group.name">
+          <form>
+            <div v-for="(input, _index) of group.inputs" :key="_index" class="input-box">
+              <!--Label and port options-->
+              <div class="input-title flex-baseline">
+                <label class="input-label" :title="input.label || getInputSource(input)">
+                  <span v-if="!input.type.isNullable" class="text-danger">*</span>
+                  <el-tooltip v-if="input.description">
+                    <div slot="content">
+                      <h4>{{ input.label || getInputSource(input) }}</h4>
+                      <div>
+                        <span class="title">Description:</span>
+                        <span class="value">{{ input.description }}</span>
+                      </div>
+                    </div>
+                    <i class="fa fa-info-circle text-muted"> </i>
+                  </el-tooltip>
+                  {{ input.label || getInputSource(input) }}
+                  <span class="text-muted">({{ input.type.type }})</span>
+                </label>
+                <div>
+                  <el-dropdown trigger="click" @command="onPortOptionChange($event, input)">
+                    <button type="button" class="btn btn-unstyled">
+                      <i class="fa fa-fw fa-ellipsis-h"></i>
+                    </button>
+                    <el-dropdown-menu slot="dropdown" class="input-dropdown-menu">
+                      <el-dropdown-item> Set values to null </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </div>
+              </div>
+              <!--Input-->
+              <!--              <ct-input-value-editor-->
+              <!--                v-if="jobGroup.get(getInputSource(input)).enabled"-->
+              <!--                -form-control-="jobGroup.get(getInputSource(input))"-->
+              <!--                -relative-path-root-="relativePathRoot"-->
+              <!--                -input-type-="input.type.type"-->
+              <!--                -input-array-items-type-="input.type.items"-->
+              <!--                -input-enum-symbols-="input.type.symbols"-->
+              <!--                -input-record-fields-="input.type.fields"-->
+              <!--                class="mb-0"-->
+              <!--              >-->
+              <!--              </ct-input-value-editor>-->
+              <!--              <div v-if="jobGroup.get(getInputSource(input)).disabled" class="text-xl-center mb-1">-->
+              <!--                <p class="text-muted">No values have been specified for this input</p>-->
+              <!--                <button class="btn btn-primary" type="button" @click="enableEditing(input)">-->
+              <!--                  {{ isFileOrDirectory(input) ? 'Browse' : 'Set Value' }}-->
+              <!--                </button>-->
+              <!--              </div>-->
+              <!--Connections-->
+              <!--Only steps have sources, inputs and outputs don't-->
+              <div v-if="input.source">
+                <!--No connections-->
+                <div v-if="input.source.length === 0 && input.isVisible">
+                  <span v-if="input.type.isNullable" class="text-warning">
+                    <i class="fa fa-warning fa-fw"></i> This port is not connected
+                  </span>
+                  <span v-if="!input.type.isNullable" class="text-danger">
+                    <i class="fa fa-times-circle fa-fw"></i> This required port is not connected
+                  </span>
+                </div>
+                <!--List of connections-->
+                <div v-if="input.source.length > 0" class="text-muted">Connections: {{ input.source.join(', ') }}</div>
+              </div>
+            </div>
+          </form>
+        </collapse-item>
+      </div>
+    </div>
+    <div v-else>No app parameters are exposed for this app.</div>
+  </div>
+</template>
+
+<script type="text/babel">
+  import CollapseItem from '@/pages/application/_components/CollapseItem'
+  import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputModel'
+  import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
+  export default {
+    name: 'JobStepInspector',
+    components: { CollapseItem },
+    props: {
+      stepInputs: {
+        type: Array,
+        default: undefined,
+      },
+      relativePathRoot: {
+        type: String,
+        default: '',
+      },
+      workflowModel: {
+        type: Object,
+        default: null,
+      },
+    },
+    data() {
+      return {
+        inputGroups: [],
+      }
+    },
+    watch: {
+      stepInputs(stepInputs, oldStepInputs) {
+        // eslint-disable-next-line no-console
+        console.log(stepInputs)
+        // I have no idea why step input checking works
+        if (stepInputs && !this.stepInputsAreSame(oldStepInputs, stepInputs)) {
+          this.recreateForms()
+          // if (this.jobValue) {
+          //   this.jobGroup.patchValue(this.jobValue, { emitEvent: false })
+          // }
+        }
+      },
+    },
+    methods: {
+      stepInputsAreSame(previousValue, currentValue) {
+        if (previousValue === currentValue) {
+          return true
+        }
+        if (previousValue === undefined && currentValue !== undefined) {
+          return false
+        }
+        if (previousValue !== undefined && currentValue === undefined) {
+          return false
+        }
+        if (previousValue.length === 0 && currentValue.length === 0) {
+          return true
+        }
+        if (previousValue.length !== currentValue.length) {
+          return false
+        }
+        for (let i = 0; i < previousValue.length; i++) {
+          if (previousValue[i] !== currentValue[i]) {
+            return false
+          }
+        }
+        return true
+      },
+      isType(input, types) {
+        if (typeof types === 'string') {
+          types = [types]
+        }
+        return !!types.find((type) => {
+          return input.type.type === type || input.type.items === type
+        })
+      },
+      recreateForms() {
+        // for (const ctrl in this.jobGroup.controls) {
+        //   this.jobGroup.removeControl(ctrl)
+        // }
+        // this.jobGroup = new FormGroup({})
+        const grouped = {}
+        for (const input of this.stepInputs) {
+          const group = this.isType(input, 'File') ? 'Files' : 'App Parameters'
+          if (!grouped[group]) {
+            grouped[group] = []
+          }
+          grouped[group].push(input)
+          // const control = new FormControl()
+          // this.jobGroup.addControl(this.getInputSource(input), control)
+          if (input.type.type === 'array') {
+            // control.setValue([], { emitEvent: false })
+          } else if (input.type.type === 'record') {
+            // control.setValue({}, { emitEvent: false })
+          }
+        }
+        // Order groups
+        this.inputGroups = Object.keys(grouped)
+          .sort((a, b) => b.localeCompare(a))
+          .map((key) => ({
+            name: key,
+            inputs: grouped[key],
+          }))
+      },
+      getInputSource(input) {
+        if (input instanceof WorkflowStepInputModel) {
+          const inputSource = input.source[0]
+          // Remove # if it exists on the beginning
+          return inputSource[0] === '#' ? inputSource.substring(1) : inputSource
+        }
+        if (input instanceof WorkflowInputParameterModel) {
+          return input.id
+        }
+      },
+    },
+  }
+</script>
+
+<style scoped lang="scss" rel="stylesheet"></style>

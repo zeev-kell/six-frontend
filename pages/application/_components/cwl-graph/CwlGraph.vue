@@ -3,6 +3,7 @@
     <tool-graph
       v-if="isTool"
       ref="cwl"
+      :pipe-id="item['pipe_id']"
       :config-type="configType"
       :cwl="item.cwl"
       :readonly="readonly"
@@ -11,6 +12,7 @@
     <workflow-graph
       v-else
       ref="cwl"
+      :pipe-id="item['pipe_id']"
       :config-type="configType"
       :cwl="item.cwl"
       :readonly="readonly"

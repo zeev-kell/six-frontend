@@ -59,6 +59,7 @@
                     v-for="c of dropDownPortOptions"
                     :key="c.value"
                     :command="c.value"
+                    :disabled="readonly"
                     :class="{ active: input.status === c.value }"
                   >
                     <div>{{ c.caption }}</div>
