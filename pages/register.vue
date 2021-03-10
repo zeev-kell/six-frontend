@@ -13,9 +13,9 @@
           <el-form-item prop="surepassword">
             <el-input v-model="form.surepassword" placeholder="再次输入密码" type="password"></el-input>
           </el-form-item>
-          <el-form-item prop="phone">
-            <el-input v-model="form.phone" placeholder="请输入手机号"></el-input>
-          </el-form-item>
+          <!--          <el-form-item prop="phone">-->
+          <!--            <el-input v-model="form.phone" placeholder="请输入手机号"></el-input>-->
+          <!--          </el-form-item>-->
           <el-form-item prop="email">
             <el-input v-model="form.email" placeholder="请输入邮箱"></el-input>
           </el-form-item>
@@ -33,7 +33,9 @@
           </el-form-item>
           <el-form-item class="text-center mb-0 el-form_error_rl" prop="checked">
             <el-checkbox v-model="form.checked"> 注册即代表同意 </el-checkbox>
-            <a>《产品使用协议》</a>
+            <el-link type="primary" :underline="false" class="y-baseline" @click="outerVisible = true">
+              《产品使用协议》
+            </el-link>
           </el-form-item>
           <el-form-item>
             <div class="text-right">
@@ -44,16 +46,40 @@
         </el-form>
       </div>
       <div class="text-center mt-30">© 2021 Six O'Clock. All Rights Reserved.</div>
+      <el-dialog
+        title="产品使用协议"
+        :visible.sync="outerVisible"
+        center
+        width="80%"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+      >
+        <div v-marked="UserAgreement"></div>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" style="width: 200px" @click="outerVisible = false">确 定</el-button>
+        </div>
+      </el-dialog>
     </div>
     <canvas-particle></canvas-particle>
   </div>
 </template>
 <script>
   import CanvasParticle from '@/components/CanvasParticle'
+  import marked from '@/directives/marked'
+  import axios from 'axios'
 
   export default {
+    directives: {
+      ...marked,
+    },
     components: {
       CanvasParticle,
+    },
+    async asyncData() {
+      const response = await axios.get('/user-agreement.md')
+      return {
+        UserAgreement: response.data,
+      }
     },
     data() {
       return {
@@ -61,7 +87,7 @@
           username: '',
           password: '',
           surepassword: '',
-          phone: '',
+          // phone: '',
           email: '',
           checked: false,
         },
@@ -105,6 +131,8 @@
             },
           ],
         },
+        outerVisible: false,
+        UserAgreement: undefined,
       }
     },
     methods: {
@@ -116,9 +144,8 @@
               .$post('/register', {
                 username: this.form.username,
                 password: this.form.password,
-                phone: this.form.phone,
+                // phone: this.form.phone,
                 email: this.form.email,
-                extra: 'extra',
               })
               .then(() => {
                 this.$message.success('注册成功，正在跳转至登录...')

@@ -51,10 +51,13 @@
 
 <script type="text/babel">
   export default {
-    async created() {
+    asyncData({ redirect }) {
       // FIXME 默认直接进入列表
-      await this.$router.push('/application/pipes')
+      redirect('/application/pipes')
     },
+    // async beforeCreate() {
+    //   await this.$router.push('/application/pipes')
+    // },
   }
 </script>
 

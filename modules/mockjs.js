@@ -40,6 +40,9 @@ export default function () {
       },
     ]
   })
+  mock.onGet(/\/user-agreement.md/).reply(() => {
+    return [200, '### DDD']
+  })
   /** @function addPlugin */
   this.addPlugin(path.resolve(__dirname, '..', 'plugins', 'mockjs.js'))
 }
