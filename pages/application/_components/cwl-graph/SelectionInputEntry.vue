@@ -33,7 +33,7 @@
           <input v-model="actualValue" type="number" :disabled="readonly" class="form-control" />
         </template>
         <template v-else-if="isInputType('float')">
-          <el-input v-model="actualValue" type="number" :readonly="readonly" class="form-control"></el-input>
+          <el-input v-model="actualValue" type="number" :readonly="readonly" class="form-control" />
         </template>
 
         <!--Strings-->
@@ -122,7 +122,7 @@
 </template>
 
 <script type="text/babel">
-  import { ObjectHelper } from '@/pages/application/_components/cwl-graph/helps/ObjectHelper'
+  import { ObjectHelper } from '@/pages/application/_components/cwl-graph/helpers/ObjectHelper'
   import SelectionInputEntryMap from '@/pages/application/_components/cwl-graph/SelectionInputEntryMap'
   import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 

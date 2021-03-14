@@ -1,8 +1,11 @@
 <script type="text/babel">
+  import { SVGJobFileDropPlugin } from '@/pages/application/_components/cwl-graph/plugins/job-file-drop'
+  import { SVGRequiredInputMarkup } from '@/pages/application/_components/cwl-graph/plugins/required-input-markup'
   import { SVGArrangePlugin, SVGNodeMovePlugin, Workflow } from 'cwl-svg'
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
   import { CommandLineToolFactory } from 'cwlts/models/generic/CommandLineToolFactory'
   import CwlGraphMixin from '@/pages/application/_components/cwl-graph/CwlGraphMixin'
+  import { JobHelper } from 'cwlts/models/helpers/JobHelper'
   import { isType } from 'cwlts/models/helpers/utils'
 
   export default {
@@ -16,9 +19,12 @@
     },
     watch: {
       cwlState(json) {
-        this.createWrapper(json)
+        this.recreateModel(json)
         // 默认可以放缩，选择节点，线条悬浮，自动放缩
         const plugins = [...this.getDefaultPlugins(), new SVGNodeMovePlugin(), ...this.plugins]
+        if (this.configType === 'run') {
+          plugins.push(new SVGJobFileDropPlugin(), new SVGRequiredInputMarkup())
+        }
         this.workflow = new Workflow({
           editingEnabled: !this.readonly,
           model: this.workflowWrapper,
@@ -27,10 +33,28 @@
         })
         const arranger = this.workflow.getPlugin(SVGArrangePlugin)
         if (arranger) arranger.arrange()
+        this.updateJob({})
       },
     },
+    mounted() {
+      this.$watch('jobControl', {
+        handler(jobControl) {
+          // eslint-disable-next-line no-console
+          console.log('watch', jobControl)
+          const job = this.normalizeJob(jobControl.value)
+          this.workflow?.getPlugin(SVGJobFileDropPlugin)?.updateToJobState(job)
+          const markupPlugin = this.workflow.getPlugin(SVGRequiredInputMarkup)
+          if (markupPlugin) {
+            const missingInputConnectionIDs = this.workflow.inputs
+              .filter((input) => !input.type.isNullable && (job[input.id] === null || job[input.id] === undefined))
+              .map((input) => input.connectionId)
+            markupPlugin.markMissing(...missingInputConnectionIDs)
+          }
+        },
+      })
+    },
     methods: {
-      createWrapper(json) {
+      recreateModel(json) {
         this.dataModel = CommandLineToolFactory.from(json, 'document')
         // this.dataModel.onCommandLineResult((cmdResult) => {
         //   this.commandLineParts.next(cmdResult)
@@ -65,6 +89,27 @@
           warnings: this.dataModel.warnings || [],
           isPending: false,
         }
+      },
+      updateJob(jobObject = {}) {
+        const normalizedJob = this.normalizeJob(jobObject)
+        const controlValue = normalizedJob
+        this.jobControl.patchValue(controlValue, { emitEvent: false })
+        this.workflow?.getPlugin(SVGJobFileDropPlugin)?.updateToJobState(controlValue)
+        // If we modified the job, push the update back
+        if (JSON.stringify(normalizedJob) !== JSON.stringify(jobObject)) {
+          // this.metaManager.patchAppMeta('job', normalizedJob)
+        }
+      },
+      normalizeJob(jobObject) {
+        const nullJob = JobHelper.getNullJobInputs(this.workflow.model)
+        const job = jobObject || {}
+        for (const key in job) {
+          // eslint-disable-next-line no-prototype-builtins
+          if (!nullJob.hasOwnProperty(key)) {
+            delete job[key]
+          }
+        }
+        return { ...nullJob, ...job }
       },
     },
   }

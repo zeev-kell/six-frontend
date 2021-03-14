@@ -1,14 +1,3 @@
-<!--<template>-->
-<!--  <div class="cwl-tool">-->
-<!--    <el-button-group>-->
-<!--      <el-button type="dark" size="mini" icon="el-icon-plus" title="放大" @click="upscale" />-->
-<!--      <el-button type="dark" size="mini" icon="el-icon-minus" title="缩小" @click="downscale" />-->
-<!--      <el-button type="dark" size="mini" icon="iconfont icon-fullscreen" title="适应窗口" @click="fitToViewport" />-->
-<!--    </el-button-group>-->
-<!--    <el-button type="dark" size="mini" icon="el-icon-magic-stick" title="自动排版" @click="autoLayout" />-->
-<!--  </div>-->
-<!--</template>-->
-
 <script type="text/babel">
   import { SVGArrangePlugin, Workflow } from 'cwl-svg'
   import { DeletionPlugin } from 'cwl-svg/compiled/src/plugins/deletion/deletion'

@@ -26,11 +26,13 @@
   import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
   import 'cwl-svg/src/plugins/selection/theme.dark.scss'
   import PipeConstants from '@/constants/PipeConstants'
+  import ToolGraph from '@/pages/application/_components/tool/ToolGraph'
+  import WorkflowGraph from '@/pages/application/_components/workflow/WorkflowGraph'
   export default {
     name: 'CwlGraph',
     components: {
-      ToolGraph: () => import('@/pages/application/_components/tool/ToolGraph'),
-      WorkflowGraph: () => import('@/pages/application/_components/workflow/WorkflowGraph'),
+      ToolGraph,
+      WorkflowGraph,
     },
     props: {
       item: {

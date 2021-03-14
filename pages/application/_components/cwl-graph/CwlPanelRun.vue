@@ -10,6 +10,7 @@
     </div>
     <div class="panel-body scrollbar">
       <job-step-inspector
+        :job-control="jobControl"
         :workflow-model="workflow.model"
         :step-inputs="inspectedInputs"
         :relative-path-root="relativePathRoot"
@@ -20,27 +21,35 @@
 
 <script type="text/babel">
   import CwlPanelMixin from '@/pages/application/_components/cwl-graph/CwlPanelMixin'
-  import { AppHelper } from '@/pages/application/_components/cwl-graph/helps/AppHelper'
+  import { AppHelper } from '@/pages/application/_components/cwl-graph/helpers/AppHelper'
+  import { FormControl } from '@/pages/application/_components/FormControl'
   import JobStepInspector from '@/pages/application/_components/cwl-graph/JobStepInspector'
 
   export default {
     name: 'CwlRunPanel',
     components: { JobStepInspector },
     mixins: [CwlPanelMixin],
+    props: {
+      jobControl: {
+        type: Object,
+        default() {
+          return new FormControl({})
+        },
+      },
+    },
     data() {
       return {
         inspectedInputs: [],
+        inspectedNode: null,
       }
     },
     computed: {
-      labelName() {
-        return this.selectionNode.label || this.selectionNode.id || this.selectionNode.loc || this.typeOfSelectionNode
-      },
       relativePathRoot() {
         return AppHelper.isLocal(this.pipeId) ? AppHelper.getDirname(this.pipeId) : undefined
       },
     },
     methods: {
+      // openNodeInInspector
       onDblClick(element) {
         if (!element || typeof element === 'string') {
           return

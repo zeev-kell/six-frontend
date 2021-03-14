@@ -119,6 +119,7 @@ hr {
 a {
   text-decoration: none;
   color: $theme-a-color;
+
   &.no-underline {
     text-decoration: none !important;
   }
@@ -198,6 +199,10 @@ a:hover {
   color: #909399;
 }
 
+.text-white {
+  color: white;
+}
+
 .text-danger {
   color: $--color-danger;
 }
@@ -275,12 +280,14 @@ img {
 .pointer {
   cursor: pointer;
 }
+
 //
 // align
 //
 .v-center {
   vertical-align: middle;
 }
+
 .y-baseline {
   vertical-align: baseline;
 }

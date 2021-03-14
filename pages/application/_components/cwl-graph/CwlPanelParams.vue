@@ -49,7 +49,6 @@
   import SelectionStepInfo from '@/pages/application/_components/cwl-graph/SelectionStepInfo'
   import SelectionStepInputs from '@/pages/application/_components/cwl-graph/SelectionStepInputs'
   import SelectionStepIo from '@/pages/application/_components/cwl-graph/SelectionStepIo'
-  import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
   import { StepModel } from 'cwlts/models/generic/StepModel'
   import CwlPanelMixin from '@/pages/application/_components/cwl-graph/CwlPanelMixin'
 
@@ -60,18 +59,6 @@
     computed: {
       isStep() {
         return this.selectionNode instanceof StepModel
-      },
-      typeOfSelectionNode() {
-        if (this.selectionNode instanceof StepModel) {
-          return 'Step'
-        } else if (this.selectionNode instanceof WorkflowInputParameterModel) {
-          return 'Input'
-        } else {
-          return 'Output'
-        }
-      },
-      labelName() {
-        return this.selectionNode.label || this.selectionNode.id || this.selectionNode.loc || this.typeOfSelectionNode
       },
     },
     methods: {
@@ -155,14 +142,6 @@
 <style lang="scss" rel="stylesheet">
   @import '_theme';
   .cwl-params-panel {
-    label {
-      display: inline-block;
-      margin-bottom: 0.5rem;
-      padding: 0 !important;
-      height: 20px;
-      line-height: 1;
-      color: #eee;
-    }
     .form-control {
       display: block;
       width: 100%;
@@ -207,11 +186,6 @@
     }
     .el-switch__core {
       border-color: $black1 !important;
-    }
-    .input-box {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid $black1;
     }
     .selection-step-inputs {
       color: #eee;

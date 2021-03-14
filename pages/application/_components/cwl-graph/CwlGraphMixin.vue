@@ -6,7 +6,14 @@
     </div>
     <transition name="el-fade-in-linear">
       <cwl-panel-params v-if="configType === 'params'" ref="panel" :workflow="workflow" :readonly="readonly" />
-      <cwl-panel-run v-else ref="panel" :workflow="workflow" :readonly="readonly" :pipe-id="pipeId" />
+      <cwl-panel-run
+        v-else
+        ref="panel"
+        :workflow="workflow"
+        :readonly="false"
+        :pipe-id="pipeId"
+        :job-control="jobControl"
+      />
     </transition>
   </div>
 </template>
@@ -15,6 +22,7 @@
   import CwlPanelParams from '@/pages/application/_components/cwl-graph/CwlPanelParams'
   import CwlPanelRun from '@/pages/application/_components/cwl-graph/CwlPanelRun'
   import cwlTool from '@/pages/application/_components/cwl-graph/CwlTool'
+  import { FormControl } from '@/pages/application/_components/FormControl'
   import { DblclickPlugin } from '@/pages/application/_components/cwl-graph/plugins/dblclick-plugin'
   import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, ZoomPlugin } from 'cwl-svg'
   import * as Yaml from 'js-yaml'
@@ -56,6 +64,7 @@
         workflow: null,
         cwlState: null,
         dataModel: null,
+        jobControl: new FormControl({}),
       }
     },
     watch: {

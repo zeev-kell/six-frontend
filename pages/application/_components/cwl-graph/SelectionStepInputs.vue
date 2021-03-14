@@ -112,7 +112,7 @@
 <script type="text/babel">
   import CollapseItem from '@/pages/application/_components/CollapseItem'
   import LinkMergeSelect from '@/pages/application/_components/cwl-graph/LinkMergeSelect'
-  import { ObjectHelper } from '@/pages/application/_components/cwl-graph/helps/ObjectHelper'
+  import { ObjectHelper } from '@/pages/application/_components/cwl-graph/helpers/ObjectHelper'
   import SelectionInputEntry from '@/pages/application/_components/cwl-graph/SelectionInputEntry'
 
   export default {
@@ -278,11 +278,6 @@
     }
     .el-switch__core {
       border-color: $black1 !important;
-    }
-    .input-box {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid $black1;
     }
   }
   .input-dropdown-menu {
