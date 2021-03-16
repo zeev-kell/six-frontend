@@ -6,7 +6,7 @@
         {{ warning }}
       </span>
     </div>
-    <div class="el-form-item">
+    <div class="el-form-item mb-1r">
       <!--Each leaf field will be wrapped as an input group-->
       <!--Nested fields below should not be wrapped into other container elements-->
       <!--because it will break size and positioning-->
@@ -22,22 +22,22 @@
 
         <!--Numbers-->
         <template v-else-if="isInputType('int')">
-          <input v-model="control" type="number" class="form-control" :disabled="readonly" />
+          <input v-model="control.value" type="number" class="form-control" :disabled="readonly" />
         </template>
         <template v-else-if="isInputType('float')">
-          <el-input v-model="control" type="number" class="form-control" :disabled="readonly" />
+          <el-input v-model="control.value" type="number" class="form-control" :disabled="readonly" />
         </template>
 
         <!--Strings-->
         <template v-else-if="isInputType('string')">
-          <input v-model="control" class="form-control" :disabled="readonly" />
+          <input v-model="control.value" class="form-control" :disabled="readonly" />
         </template>
 
         <!--Booleans-->
         <template v-else-if="isInputType('boolean')">
           <label class="clickable">
-            <span>{{ actualBoolean ? 'Yes' : 'No' }}</span>
-            <el-switch v-model="actualBoolean" :disabled="readonly" />
+            <span>{{ control.value ? 'Yes' : 'No' }}</span>
+            <el-switch v-model="control.value" :disabled="readonly" />
           </label>
         </template>
 
@@ -211,7 +211,7 @@
       },
       actualBoolean: {
         get() {
-          return this.value === '' ? false : this.value
+          return this.control?.value
         },
         set(value) {
           this.$emit('onUpdate', value)
@@ -242,7 +242,8 @@
       },
       formControl: {
         immediate: true,
-        handler(value) {
+        handler(formControl) {
+          const value = formControl.value
           if (value === undefined) {
             return
           }
@@ -376,38 +377,40 @@
       bindValuePropagationOnControlSetup() {},
       setupFormControls() {
         const disabled = this.readonly
+        let control
         switch (this.inputType) {
           case 'array':
-            this.control = new FormArray([])
-            disabled ? this.control.disable() : this.control.enable()
+            control = new FormArray([])
+            disabled ? control.disable() : control.enable()
             break
           case 'record':
             // eslint-disable-next-line no-case-declarations
             const controls = {}
             for (const field of this.inputRecordFields) {
-              controls[field.id] = new FormControl({ value: undefined, disabled })
+              controls[field.id] = new FormControl(undefined, disabled)
             }
-            this.control = new FormGroup(controls)
+            control = new FormGroup(controls)
             break
           case 'File':
-            this.control = new FormGroup({
-              path: new FormControl({ value: undefined, disabled }),
-              class: new FormControl({ value: 'File', disabled }),
-              metadata: new FormControl({ value: {}, disabled }),
-              secondaryFiles: new FormControl({ value: [], disabled }),
+            control = new FormGroup({
+              path: new FormControl(undefined, disabled),
+              class: new FormControl('File', disabled),
+              metadata: new FormControl({}, disabled),
+              secondaryFiles: new FormControl([], disabled),
             })
             break
           case 'Directory':
-            this.control = new FormGroup({
+            control = new FormGroup({
               class: new FormControl('Directory'),
               path: new FormControl({ value: undefined, disabled }),
             })
             break
           default:
-            this.control = new FormControl()
-            disabled ? this.control.disable() : this.control.enable()
+            control = new FormControl()
+            disabled ? control.disable() : control.enable()
             break
         }
+        this.$set(this, 'control', control)
       },
       patchArrayValue(update, options) {
         const updateIsSameSize = update.length === this.control.length

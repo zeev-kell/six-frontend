@@ -1,5 +1,5 @@
-const DISABLED = 'DISABLED'
-const VALID = 'VALID'
+import Vue from 'vue'
+
 function _find(control, path, delimiter) {
   if (path == null) return null
   if (!Array.isArray(path)) {
@@ -16,43 +16,16 @@ function _find(control, path, delimiter) {
     return null
   }, control)
 }
+
 class AbstractControl {
   constructor() {
     this.value = undefined
+    this.enabled = true
+    this._parent = undefined
   }
 
   get parent() {
     return this._parent
-  }
-
-  get disabled() {
-    return this.status === DISABLED
-  }
-
-  get enabled() {
-    return this.status !== DISABLED
-  }
-
-  disable(opts = {}) {
-    this.status = DISABLED
-    this._forEachChild((control) => {
-      control.disable(Object.assign({}, opts, { onlySelf: true }))
-    })
-  }
-
-  enable(opts = {}) {
-    this.status = VALID
-    this._forEachChild((control) => {
-      control.enable(Object.assign({}, opts, { onlySelf: true }))
-    })
-  }
-
-  setParent(parent) {
-    this._parent = parent
-  }
-
-  get(path) {
-    return _find(this, path, '.')
   }
 
   get root() {
@@ -63,58 +36,98 @@ class AbstractControl {
     return x
   }
 
+  setParent(parent) {
+    this._parent = parent
+  }
+
+  get(path) {
+    return _find(this, path, '.')
+  }
+
+  disable(opts = {}) {
+    this.enabled = false
+    this._forEachChild((control) => {
+      control.disable(Object.assign({}, opts, { onlySelf: true }))
+    })
+  }
+
+  enable(opts = {}) {
+    this.enabled = true
+    this._forEachChild((control) => {
+      control.enable(Object.assign({}, opts, { onlySelf: true }))
+    })
+    this.updateValueAndValidity({ onlySelf: true, emitEvent: opts.emitEvent })
+  }
+
+  updateValueAndValidity(opts = {}) {
+    this._updateValue()
+    if (this._parent && !opts.onlySelf) {
+      this._parent.updateValueAndValidity(opts)
+    }
+  }
+
   toString() {
-    const json = { value: this.value, enabled: this.enabled, disabled: this.disabled, status: this.status }
+    const json = { value: this.value, enabled: this.enabled }
     // eslint-disable-next-line no-console
-    console.log(json)
+    // console.log(json)
     return JSON.stringify(json)
   }
 }
+
 class FormControl extends AbstractControl {
-  constructor(formState = null) {
+  constructor(value = null, enabled = true) {
     super()
-    this.value = formState
+    this.value = value
+    this.enabled = enabled
   }
 
   setValue(value, options = {}) {
     this.value = value
+    this.updateValueAndValidity(options)
   }
 
   patchValue(value, options = {}) {
     this.setValue(value, options)
   }
 
+  _updateValue() {}
+
   reset(formState = null, options = {}) {
-    this.setValue(this.value, options)
+    this.setValue(formState, options)
+  }
+
+  _allControlsDisabled() {
+    return !this.enabled
   }
 
   _forEachChild(cb) {}
 }
+
 class FormGroup extends AbstractControl {
   constructor(controls) {
     super()
     this.controls = controls
     this._setUpControls()
+    this.updateValueAndValidity({ onlySelf: true, emitEvent: false })
   }
 
   registerControl(name, control) {
-    if (this.controls[name]) return this.controls[name]
-    this.controls[name] = control
+    if (this.controls[name]) {
+      return this.controls[name]
+    }
+    Vue.set(this.controls, name, control)
     control.setParent(this)
     return control
   }
 
   addControl(name, control) {
     this.registerControl(name, control)
+    this.updateValueAndValidity()
   }
 
   removeControl(name) {
-    delete this.controls[name]
-  }
-
-  setControl(name, control) {
-    delete this.controls[name]
-    if (control) this.registerControl(name, control)
+    Vue.delete(this.controls, name)
+    this.updateValueAndValidity()
   }
 
   contains(controlName) {
@@ -123,11 +136,11 @@ class FormGroup extends AbstractControl {
   }
 
   setValue(value, options = {}) {
-    this._checkAllValuesPresent(value)
     Object.keys(value).forEach((name) => {
       this._throwIfControlMissing(name)
       this.controls[name].setValue(value[name], { onlySelf: true, emitEvent: options.emitEvent })
     })
+    this.updateValueAndValidity(options)
   }
 
   patchValue(value, options = {}) {
@@ -136,12 +149,14 @@ class FormGroup extends AbstractControl {
         this.controls[name].patchValue(value[name], { onlySelf: true, emitEvent: options.emitEvent })
       }
     })
+    this.updateValueAndValidity(options)
   }
 
   reset(value = {}, options = {}) {
     this._forEachChild((control, name) => {
       control.reset(value[name], { onlySelf: true, emitEvent: options.emitEvent })
     })
+    this.updateValueAndValidity(options)
   }
 
   getRawValue() {
@@ -149,24 +164,6 @@ class FormGroup extends AbstractControl {
       acc[name] = control instanceof FormControl ? control.value : control.getRawValue()
       return acc
     })
-  }
-
-  _syncPendingControls() {
-    return this._reduceChildren(false, (updated, child) => {
-      return child._syncPendingControls() ? true : updated
-    })
-  }
-
-  _throwIfControlMissing(name) {
-    if (!Object.keys(this.controls).length) {
-      throw new Error(`
-        There are no form controls registered with this group yet.  If you're using ngModel,
-        you may want to check next tick (e.g. use setTimeout).
-      `)
-    }
-    if (!this.controls[name]) {
-      throw new Error(`Cannot find form control with name: ${name}.`)
-    }
   }
 
   _forEachChild(cb) {
@@ -183,17 +180,9 @@ class FormGroup extends AbstractControl {
     this.value = this._reduceValue()
   }
 
-  _anyControls(condition) {
-    let res = false
-    this._forEachChild((control, name) => {
-      res = res || (this.contains(name) && condition(control))
-    })
-    return res
-  }
-
   _reduceValue() {
     return this._reduceChildren({}, (acc, control, name) => {
-      if (control.enabled || this.disabled) {
+      if (control.enabled) {
         acc[name] = control.value
       }
       return acc
@@ -208,42 +197,51 @@ class FormGroup extends AbstractControl {
     return res
   }
 
+  _throwIfControlMissing(name) {
+    if (!Object.keys(this.controls).length) {
+      throw new Error(`
+        There are no form controls registered with this group yet.  If you're using ngModel,
+        you may want to check next tick (e.g. use setTimeout).
+      `)
+    }
+    if (!this.controls[name]) {
+      throw new Error(`Cannot find form control with name: ${name}.`)
+    }
+  }
+
   _allControlsDisabled() {
     for (const controlName of Object.keys(this.controls)) {
       if (this.controls[controlName].enabled) {
         return false
       }
     }
-    return Object.keys(this.controls).length > 0 || this.disabled
-  }
-
-  _checkAllValuesPresent(value) {
-    this._forEachChild((control, name) => {
-      if (value[name] === undefined) {
-        throw new Error(`Must supply a value for form control with name: '${name}'.`)
-      }
-    })
+    return Object.keys(this.controls).length > 0 || !this.enabled
   }
 }
+
 class FormArray extends AbstractControl {
   constructor(controls) {
     super()
     this.controls = controls
     this._setUpControls()
+    this.updateValueAndValidity({ onlySelf: true, emitEvent: false })
   }
 
   push(control) {
     this.controls.push(control)
     this._registerControl(control)
+    this.updateValueAndValidity()
   }
 
   insert(index, control) {
     this.controls.splice(index, 0, control)
     this._registerControl(control)
+    this.updateValueAndValidity()
   }
 
   removeAt(index) {
     this.controls.splice(index, 1)
+    this.updateValueAndValidity()
   }
 
   setControl(index, control) {
@@ -252,6 +250,7 @@ class FormArray extends AbstractControl {
       this.controls.splice(index, 0, control)
       this._registerControl(control)
     }
+    this.updateValueAndValidity()
   }
 
   get length() {
@@ -259,11 +258,11 @@ class FormArray extends AbstractControl {
   }
 
   setValue(value, options = {}) {
-    this._checkAllValuesPresent(value)
     value.forEach((newValue, index) => {
       this._throwIfControlMissing(index)
       this.at(index).setValue(newValue, { onlySelf: true, emitEvent: options.emitEvent })
     })
+    this.updateValueAndValidity(options)
   }
 
   patchValue(value, options = {}) {
@@ -272,24 +271,20 @@ class FormArray extends AbstractControl {
         this.at(index).patchValue(newValue, { onlySelf: true, emitEvent: options.emitEvent })
       }
     })
+    this.updateValueAndValidity(options)
   }
 
   reset(value = [], options = {}) {
     this._forEachChild((control, index) => {
       control.reset(value[index], { onlySelf: true, emitEvent: options.emitEvent })
     })
+    this.updateValueAndValidity(options)
   }
 
   getRawValue() {
     return this.controls.map((control) => {
       return control instanceof FormControl ? control.value : control.getRawValue()
     })
-  }
-
-  _syncPendingControls() {
-    return this.controls.reduce((updated, child) => {
-      return child._syncPendingControls() ? true : updated
-    }, false)
   }
 
   _throwIfControlMissing(index) {
@@ -311,7 +306,7 @@ class FormArray extends AbstractControl {
   }
 
   _updateValue() {
-    this.value = this.controls.filter((control) => control.enabled || this.disabled).map((control) => control.value)
+    this.value = this.controls.filter((control) => control.enabled).map((control) => control.value)
   }
 
   _anyControls(condition) {
@@ -322,19 +317,11 @@ class FormArray extends AbstractControl {
     this._forEachChild((control) => this._registerControl(control))
   }
 
-  _checkAllValuesPresent(value) {
-    this._forEachChild((control, i) => {
-      if (value[i] === undefined) {
-        throw new Error(`Must supply a value for form control at index: ${i}.`)
-      }
-    })
-  }
-
   _allControlsDisabled() {
     for (const control of this.controls) {
       if (control.enabled) return false
     }
-    return this.controls.length > 0 || this.disabled
+    return this.controls.length > 0 || !this.enabled
   }
 
   _registerControl(control) {

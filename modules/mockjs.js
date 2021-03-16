@@ -14,7 +14,8 @@ export default function () {
   // arguments for reply are (status, data, headers)
   mock.onGet(PipeUrl).reply(() => {
     const item = Mock.mock(Pipe)
-    item.cwl = item.type === '0' ? _tool : _workflow
+    item.type = 0
+    item.cwl = item.type === 0 ? _tool : _workflow
     return [200, item]
   })
   mock.onGet(PipesUrl).reply(() => {

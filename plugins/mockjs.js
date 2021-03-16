@@ -23,6 +23,7 @@ Mock.mock(/\/api\/v1\/register/, 'post', function (options) {
 })
 Mock.mock(PipeUrl, function () {
   const item = Mock.mock(Pipe)
+  item.type = 0
   item.cwl = item.type === 0 ? _tool : _workflow
   return item
 })

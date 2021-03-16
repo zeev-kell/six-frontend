@@ -1,13 +1,10 @@
 <template>
   <div class="job-step-inspector">
     <div v-if="inputGroups.length">
-      <div v-for="(group, index) of inputGroups" :key="index">
+      <div v-for="group of inputGroups" :key="group.name">
         <collapse-item :title="group.name">
           <form>
-            <div v-for="(input, _index) of group.inputs" :key="_index" class="input-box">
-              <div>
-                {{ jobGroup.get(getInputSource(input)) }}
-              </div>
+            <div v-for="(input, index) of group.inputs" :key="index" class="input-box">
               <!--Label and port options-->
               <div class="el-row is-justify-space-between el-row--flex">
                 <label class="input-label" :title="input.label || getInputSource(input)">
@@ -38,8 +35,8 @@
               </div>
               <!--Input-->
               <input-value-editor
-                v-if="jobGroup.get(getInputSource(input)).enabled"
-                :form-control="jobGroup.get(getInputSource(input))"
+                v-if="jobGroup.controls[getInputSource(input)].enabled"
+                :form-control="jobGroup.controls[getInputSource(input)]"
                 :relative-path-root="relativePathRoot"
                 :input-type="input.type.type"
                 :input-array-items-type="input.type.items"
@@ -48,7 +45,7 @@
                 class="mb-0"
               />
 
-              <div v-if="jobGroup.get(getInputSource(input)).disabled" class="text-center mb-1r">
+              <div v-else class="text-center mb-1r">
                 <p class="text-muted">No values have been specified for this input</p>
                 <el-button type="primary" size="mini" class="el-button-dark-border" @click="enableEditing(input)">
                   {{ isFileOrDirectory(input) ? 'Browse' : 'Set Value' }}
@@ -116,8 +113,13 @@
       return {
         jobGroup: new FormGroup({}),
         inputGroups: [],
-        jobValue: null,
+        file: undefined,
       }
+    },
+    computed: {
+      jobValue() {
+        return this.jobControl.value
+      },
     },
     watch: {
       stepInputs: {
@@ -127,25 +129,7 @@
           if (stepInputs && !this.stepInputsAreSame(oldStepInputs, stepInputs || undefined)) {
             this.recreateForms()
             if (this.jobValue) {
-              this.jobGroup.patchValue(this.jobValue, { emitEvent: false })
-            }
-          }
-        },
-      },
-      jobControl: {
-        immediate: true,
-        handler(jobValue) {
-          // eslint-disable-next-line no-console
-          console.log(jobValue)
-          this.jobValue = jobValue.value
-          this.jobGroup.patchValue(this.jobValue, { emitEvent: false })
-          for (const controlName in this.jobGroup.controls) {
-            const control = this.jobGroup.get(controlName)
-            const kval = this.jobValue[controlName]
-            if (kval === null || kval === undefined) {
-              control.disable({ emitEvent: false, onlySelf: true })
-            } else {
-              control.enable({ emitEvent: false, onlySelf: true })
+              this.resetJobGroup()
             }
           }
         },
@@ -153,9 +137,7 @@
     },
     mounted() {
       this.$watch('jobGroup', function (changes) {
-        // eslint-disable-next-line no-console
-        console.log(changes)
-        const out = { ...this.jobValue, ...changes }
+        const out = { ...this.jobValue, ...changes.value }
         for (const cname in this.jobGroup.controls) {
           if (this.jobGroup.controls[cname].disabled) {
             out[cname] = null
@@ -165,6 +147,19 @@
       })
     },
     methods: {
+      resetJobGroup() {
+        this.jobGroup.patchValue(this.jobValue, { emitEvent: false })
+        for (const controlName of Object.keys(this.jobGroup.controls)) {
+          const control = this.jobGroup.get(controlName)
+          const kVal = this.jobValue[controlName]
+          if (kVal === null || kVal === undefined) {
+            // 数据为空，禁用校验等
+            control.disable({ emitEvent: false, onlySelf: true })
+          } else {
+            control.enable({ emitEvent: false, onlySelf: true })
+          }
+        }
+      },
       isType(input, types) {
         if (typeof types === 'string') {
           types = [types]
@@ -174,8 +169,6 @@
         })
       },
       clear(inputControl) {
-        // eslint-disable-next-line no-console
-        console.log(inputControl)
         inputControl.disable()
         inputControl.setValue(null)
       },
@@ -190,10 +183,10 @@
         }
       },
       recreateForms() {
-        for (const ctrl in this.jobGroup.controls) {
-          this.jobGroup.removeControl(ctrl)
+        for (const controlName of Object.keys(this.jobGroup.controls)) {
+          this.jobGroup.removeControl(controlName)
         }
-        this.jobGroup = new FormGroup({})
+        this.$set(this, 'jobGroup', new FormGroup({}))
         const grouped = {}
         for (const input of this.stepInputs) {
           const group = this.isType(input, 'File') ? 'Files' : 'App Parameters'
@@ -248,6 +241,8 @@
       },
       enableEditing(input) {
         const inputFormField = this.jobGroup.get(this.getInputSource(input))
+        // eslint-disable-next-line no-console
+        console.log(inputFormField)
         let value
         const isArray = input.type.type === 'array'
         const type = input.type.items || input.type.type
@@ -276,17 +271,10 @@
             if (isArray) {
               properties.push('multiSelections')
             }
-            this.native.openFileChoiceDialog({ properties }).then(
-              (filePaths) => {
-                const fileValues = filePaths.map((p) => ({ class: type, path: p }))
-                const value = !isArray ? fileValues[0] : fileValues
-                inputFormField.enable({ onlySelf: true })
-                inputFormField.setValue(value)
-                this.cdr.markForCheck()
-              },
-              // eslint-disable-next-line no-void
-              () => void 0
-            )
+            // eslint-disable-next-line no-case-declarations
+            const fileValues = ['test.jpg'].map((p) => ({ class: type, path: p }))
+            inputFormField.enable({ onlySelf: true })
+            inputFormField.setValue(!isArray ? fileValues[0] : fileValues)
             break
           default:
             value = null
@@ -302,5 +290,3 @@
     },
   }
 </script>
-
-<style scoped lang="scss" rel="stylesheet"></style>

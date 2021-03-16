@@ -10,6 +10,7 @@
     </div>
     <div class="panel-body scrollbar">
       <job-step-inspector
+        ref="jobStepInspector"
         :job-control="jobControl"
         :workflow-model="workflow.model"
         :step-inputs="inspectedInputs"
@@ -40,7 +41,6 @@
     data() {
       return {
         inspectedInputs: [],
-        inspectedNode: null,
       }
     },
     computed: {

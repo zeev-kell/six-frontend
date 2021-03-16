@@ -68,9 +68,6 @@
       }
     },
     watch: {
-      cwl() {
-        this.cwlState = this.load(this.cwl)
-      },
       workflow() {
         this.$emit('workflow-changed', this.workflow)
       },

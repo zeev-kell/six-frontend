@@ -33,19 +33,20 @@
         })
         const arranger = this.workflow.getPlugin(SVGArrangePlugin)
         if (arranger) arranger.arrange()
+        // eslint-disable-next-line no-console
+        console.log(this.workflow)
         this.updateJob({})
       },
     },
     mounted() {
       this.$watch('jobControl', {
+        deep: true,
         handler(jobControl) {
-          // eslint-disable-next-line no-console
-          console.log('watch', jobControl)
           const job = this.normalizeJob(jobControl.value)
           this.workflow?.getPlugin(SVGJobFileDropPlugin)?.updateToJobState(job)
           const markupPlugin = this.workflow.getPlugin(SVGRequiredInputMarkup)
           if (markupPlugin) {
-            const missingInputConnectionIDs = this.workflow.inputs
+            const missingInputConnectionIDs = this.workflow.model.inputs
               .filter((input) => !input.type.isNullable && (job[input.id] === null || job[input.id] === undefined))
               .map((input) => input.connectionId)
             markupPlugin.markMissing(...missingInputConnectionIDs)
@@ -81,6 +82,8 @@
         this.workflowWrapper.steps[0].out.forEach((output) => {
           this.workflowWrapper.createOutputFromPort(output)
         })
+        // set job on the tool to be the actual job, so the command line is the real thing
+        this.dataModel.setJobInputs()
       },
       afterModelValidation() {
         this.validationState = {
@@ -93,7 +96,7 @@
       updateJob(jobObject = {}) {
         const normalizedJob = this.normalizeJob(jobObject)
         const controlValue = normalizedJob
-        this.jobControl.patchValue(controlValue, { emitEvent: false })
+        this.jobControl.setValue(controlValue)
         this.workflow?.getPlugin(SVGJobFileDropPlugin)?.updateToJobState(controlValue)
         // If we modified the job, push the update back
         if (JSON.stringify(normalizedJob) !== JSON.stringify(jobObject)) {
