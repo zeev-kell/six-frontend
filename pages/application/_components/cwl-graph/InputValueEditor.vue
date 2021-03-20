@@ -49,7 +49,10 @@
         <!--Files and array of Files-->
         <template v-else-if="isInputType('File')">
           <div class="el-row" style="width: 100%">
-            <native-file-browser-form-field :form-control="control.get('path')" />
+            <native-file-browser-form-field
+              :form-control="control.get('path')"
+              @onUpdate="onChildUpdate($event, control.get('path'))"
+            />
             <el-button v-if="control.get('path').enabled" size="mini" type="text" @click="promptFileMetadata()">
               <div v-if="metadataKeysCount > 0 || secondaryFilesCount > 0">
                 {{ secondaryFilesCount }} secondary {{ secondaryFilesCount === 1 ? 'file' : 'files' }},
@@ -205,6 +208,7 @@
         set(value) {
           // eslint-disable-next-line no-console
           console.log('set actualValue')
+          // TODO 修改数据更新方式
           this.formControl.setValue(value)
           this.recalculateSecondaryFilesAndMetadataCounts()
           // this.$emit('onUpdate', value)
@@ -457,7 +461,10 @@
         // eslint-disable-next-line no-prototype-builtins
         this.metadataKeysCount = Object.prototype.isPrototypeOf(metadata) ? Object.keys(metadata).length : 0
       },
-      onChildUpdate() {},
+      onChildUpdate(value, control) {
+        control.setValue(value)
+        this.formControl.setValue(this.control.value)
+      },
     },
   }
 </script>

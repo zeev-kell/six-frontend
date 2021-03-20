@@ -298,7 +298,7 @@
         inputFormField.enable({ onlySelf: true })
         // TODO 修改选择器
         // eslint-disable-next-line no-case-declarations
-        const fileValues = ['test.jpg'].map((p) => ({ class: type, path: p }))
+        const fileValues = [''].map((p) => ({ class: type, path: p }))
         inputFormField.setValue(!isArray ? fileValues[0] : fileValues)
       },
       isFileOrDirectory(input) {

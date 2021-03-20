@@ -25,7 +25,8 @@
           return this.formControl?.value
         },
         set(value) {
-          this.formControl.setValue(value)
+          // TODO 修改数据更新方式
+          this.$emit('onUpdate', value)
         },
       },
     },
