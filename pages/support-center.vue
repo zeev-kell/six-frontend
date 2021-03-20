@@ -14,6 +14,9 @@
         <el-aside width="240px">
           <h2>帮助文档</h2>
           <el-menu class="menu-normal" @select="onSelect">
+            <el-menu-item v-for="menu in menus" :key="menu.key" :index="menu.key">
+              <span slot="title">{{ menu.text }}</span>
+            </el-menu-item>
             <el-submenu index="1">
               <template slot="title">
                 <span>帮助一</span>
@@ -21,38 +24,28 @@
               <el-menu-item index="1-1">选项1</el-menu-item>
               <el-menu-item index="1-2">选项2</el-menu-item>
             </el-submenu>
-            <el-menu-item index="2">
-              <span slot="title">帮助二</span>
-            </el-menu-item>
-            <el-menu-item index="3">
-              <span slot="title">帮助三</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-              <span slot="title">帮助四</span>
-            </el-menu-item>
           </el-menu>
         </el-aside>
-        <el-main>
-          <h2>{{ markdown.title }}</h2>
-          <div class="content" v-html="markdown.body"></div>
-        </el-main>
+        <nuxt-child />
       </el-container>
     </section>
   </div>
 </template>
 
 <script type="text/babel">
+  import menus from '@/pages/support-center/menus'
   export default {
     layout: 'IndexLayout',
-    async asyncData({ app }) {
-      const markdown = await app.$axios.$get('/README.md')
-      return { markdown }
+    data() {
+      return {
+        menus,
+      }
     },
     methods: {
-      async onSelect() {
+      onSelect(title, list) {
         // eslint-disable-next-line no-console
         console.log(arguments)
-        this.markdown = await this.$axios.$get('/README.md')
+        this.$router.push('/support-center/' + title)
       },
     },
   }
