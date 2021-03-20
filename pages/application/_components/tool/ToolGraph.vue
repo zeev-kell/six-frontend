@@ -33,8 +33,6 @@
         })
         const arranger = this.workflow.getPlugin(SVGArrangePlugin)
         if (arranger) arranger.arrange()
-        // eslint-disable-next-line no-console
-        console.log(this.workflow)
         this.updateJob({})
       },
     },

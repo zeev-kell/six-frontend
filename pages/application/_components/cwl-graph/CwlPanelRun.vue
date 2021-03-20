@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showPanel" class="cwl-run-panel">
+  <div v-if="showPanel" class="cwl-run-panel right-panel">
     <div class="panel-header">
       <div class="f-b text-truncate" :title="labelName">
         {{ labelName }}
@@ -10,8 +10,6 @@
     </div>
     <div class="panel-body scrollbar">
       <job-step-inspector
-        ref="jobStepInspector"
-        :job-control="jobControl"
         :workflow-model="workflow.model"
         :step-inputs="inspectedInputs"
         :relative-path-root="relativePathRoot"
@@ -23,21 +21,12 @@
 <script type="text/babel">
   import CwlPanelMixin from '@/pages/application/_components/cwl-graph/CwlPanelMixin'
   import { AppHelper } from '@/pages/application/_components/cwl-graph/helpers/AppHelper'
-  import { FormControl } from '@/pages/application/_components/FormControl'
   import JobStepInspector from '@/pages/application/_components/cwl-graph/JobStepInspector'
 
   export default {
     name: 'CwlRunPanel',
     components: { JobStepInspector },
     mixins: [CwlPanelMixin],
-    props: {
-      jobControl: {
-        type: Object,
-        default() {
-          return new FormControl({})
-        },
-      },
-    },
     data() {
       return {
         inspectedInputs: [],
@@ -79,25 +68,3 @@
     },
   }
 </script>
-
-<style scoped lang="scss" rel="stylesheet">
-  @import '_theme';
-  .cwl-run-panel {
-    width: 360px;
-    background: #3c3c3c;
-    border-left: 1px solid $b-color;
-    padding-left: 5px;
-    padding-right: 5px;
-    color: $color2;
-    overflow: hidden;
-    flex: 0 0 auto;
-    height: 100%;
-  }
-  .panel-header {
-    border-color: $b-color;
-    color: $color1;
-  }
-  .panel-body {
-    height: calc(100% - 47px);
-  }
-</style>

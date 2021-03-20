@@ -3,20 +3,20 @@
     <tool-graph
       v-if="isTool"
       ref="cwl"
-      :pipe-id="item['pipe_id']"
+      :item="item"
       :config-type="configType"
       :cwl="item.cwl"
       :readonly="readonly"
-      @workflow-changed="onWorkflowChanged"
+      :tools="tools"
     />
     <workflow-graph
       v-else
       ref="cwl"
-      :pipe-id="item['pipe_id']"
+      :item="item"
       :config-type="configType"
       :cwl="item.cwl"
       :readonly="readonly"
-      @workflow-changed="onWorkflowChanged"
+      :tools="tools"
     />
   </div>
 </template>
@@ -47,11 +47,10 @@
         type: String,
         default: 'params',
       },
-    },
-    data() {
-      return {
-        workflow: null,
-      }
+      tools: {
+        type: [String, Array],
+        default: undefined,
+      },
     },
     computed: {
       isTool() {
@@ -59,10 +58,7 @@
       },
     },
     methods: {
-      onWorkflowChanged(workflow) {
-        this.workflow = workflow
-      },
-      serialize(...arg) {
+      exportCwl(...arg) {
         return this.$refs.cwl.serialize(...arg)
       },
     },

@@ -17,7 +17,7 @@
         <div class="el-row el-row--flex is-justify-space-around">
           <div v-for="item in 4" :key="item" class="el-col el-col-6 mb-2r text-center">
             <el-image style="width: 100px; height: 100px" src="/images/banner.jpg" fit="cover"></el-image>
-            <h3 class="pro-title mx-1r">
+            <h3 class="pro-title my-1r">
               <strong>云计算</strong>
             </h3>
             <div class="pro-content">

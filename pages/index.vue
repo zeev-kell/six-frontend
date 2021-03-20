@@ -25,7 +25,7 @@
                 <div class="pro-icon">
                   <i class="el-icon-files"></i>
                 </div>
-                <h3 class="pro-title mx-1r">
+                <h3 class="pro-title my-1r">
                   <strong>软件下载</strong>
                 </h3>
                 <div class="pro-content">
@@ -44,7 +44,7 @@
                 <div class="pro-icon">
                   <i class="el-icon-files"></i>
                 </div>
-                <h3 class="pro-title mx-1r">
+                <h3 class="pro-title my-1r">
                   <strong>流程组合</strong>
                 </h3>
                 <div class="pro-content">
@@ -62,7 +62,7 @@
                 <div class="pro-icon">
                   <i class="el-icon-files"></i>
                 </div>
-                <h3 class="pro-title mx-1r">
+                <h3 class="pro-title my-1r">
                   <strong>数据下载</strong>
                 </h3>
                 <div class="pro-content">
@@ -80,7 +80,7 @@
                 <div class="pro-icon">
                   <i class="el-icon-files"></i>
                 </div>
-                <h3 class="pro-title mx-1r">
+                <h3 class="pro-title my-1r">
                   <strong>知识库</strong>
                 </h3>
                 <div class="pro-content">

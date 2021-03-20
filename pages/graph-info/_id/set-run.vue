@@ -1,5 +1,5 @@
 <template>
-  <cwl-graph class="h-100v" :item="item" :readonly="true" config-type="run" />
+  <cwl-graph class="h-100v" :item="item" :readonly="true" config-type="run" tools="download|plus,minus,fit|auto" />
 </template>
 
 <script type="text/babel">

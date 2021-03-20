@@ -66,6 +66,16 @@ class AbstractControl {
     }
   }
 
+  _isBoxedValue(formState) {
+    return (
+      typeof formState === 'object' &&
+      formState !== null &&
+      Object.keys(formState).length === 2 &&
+      'value' in formState &&
+      'disabled' in formState
+    )
+  }
+
   toString() {
     const json = { value: this.value, enabled: this.enabled }
     // eslint-disable-next-line no-console
@@ -75,10 +85,10 @@ class AbstractControl {
 }
 
 class FormControl extends AbstractControl {
-  constructor(value = null, enabled = true) {
+  constructor(formState) {
     super()
-    this.value = value
-    this.enabled = enabled
+    this._applyFormState(formState)
+    this.type = 'FormControl'
   }
 
   setValue(value, options = {}) {
@@ -101,6 +111,17 @@ class FormControl extends AbstractControl {
   }
 
   _forEachChild(cb) {}
+
+  _applyFormState(formState) {
+    if (this._isBoxedValue(formState)) {
+      this.value = formState.value
+      formState.disabled
+        ? this.disable({ onlySelf: true, emitEvent: false })
+        : this.enable({ onlySelf: true, emitEvent: false })
+    } else {
+      this.value = formState
+    }
+  }
 }
 
 class FormGroup extends AbstractControl {
@@ -109,6 +130,7 @@ class FormGroup extends AbstractControl {
     this.controls = controls
     this._setUpControls()
     this.updateValueAndValidity({ onlySelf: true, emitEvent: false })
+    this.type = 'FormGroup'
   }
 
   registerControl(name, control) {
@@ -225,6 +247,7 @@ class FormArray extends AbstractControl {
     this.controls = controls
     this._setUpControls()
     this.updateValueAndValidity({ onlySelf: true, emitEvent: false })
+    this.type = 'FormArray'
   }
 
   push(control) {
@@ -234,12 +257,14 @@ class FormArray extends AbstractControl {
   }
 
   insert(index, control) {
+    // TODO
     this.controls.splice(index, 0, control)
     this._registerControl(control)
     this.updateValueAndValidity()
   }
 
   removeAt(index) {
+    // TODO
     this.controls.splice(index, 1)
     this.updateValueAndValidity()
   }

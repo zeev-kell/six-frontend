@@ -47,8 +47,24 @@
 
               <div v-else class="text-center mb-1r">
                 <p class="text-muted">No values have been specified for this input</p>
-                <el-button type="primary" size="mini" class="el-button-dark-border" @click="enableEditing(input)">
-                  {{ isFileOrDirectory(input) ? 'Browse' : 'Set Value' }}
+                <el-button
+                  v-if="isFileOrDirectory(input)"
+                  type="primary"
+                  size="mini"
+                  class="el-button-dark-border"
+                  @click="enableFileEditing(input)"
+                >
+                  Browse
+                </el-button>
+
+                <el-button
+                  v-else
+                  type="primary"
+                  size="mini"
+                  class="el-button-dark-border"
+                  @click="enableEditing(input)"
+                >
+                  Set Value
                 </el-button>
               </div>
 
@@ -102,23 +118,20 @@
         type: String,
         default: '',
       },
-      jobControl: {
-        type: Object,
-        default() {
-          return new FormControl({})
-        },
-      },
     },
     data() {
       return {
         jobGroup: new FormGroup({}),
         inputGroups: [],
-        file: undefined,
       }
     },
+    inject: ['TheGraph'],
     computed: {
+      jobControl() {
+        return this.TheGraph.jobControl
+      },
       jobValue() {
-        return this.jobControl.value
+        return this.jobControl?.value
       },
     },
     watch: {
@@ -136,14 +149,17 @@
       },
     },
     mounted() {
-      this.$watch('jobGroup', function (changes) {
-        const out = { ...this.jobValue, ...changes.value }
-        for (const cname in this.jobGroup.controls) {
-          if (this.jobGroup.controls[cname].disabled) {
-            out[cname] = null
+      this.$watch('jobGroup.value', {
+        deep: true,
+        handler(changes) {
+          const out = { ...this.jobValue, ...changes }
+          for (const cname in this.jobGroup.controls) {
+            if (this.jobGroup.controls[cname].disabled) {
+              out[cname] = null
+            }
           }
-        }
-        this.$emit('input', out)
+          this.TheGraph.updateJob(out)
+        },
       })
     },
     methods: {
@@ -168,9 +184,9 @@
           return input.type.type === type || input.type.items === type
         })
       },
-      clear(inputControl) {
-        inputControl.disable()
-        inputControl.setValue(null)
+      clear(control) {
+        control.setValue(null)
+        control.disable()
       },
       getInputSource(input) {
         if (input instanceof WorkflowStepInputModel) {
@@ -241,8 +257,6 @@
       },
       enableEditing(input) {
         const inputFormField = this.jobGroup.get(this.getInputSource(input))
-        // eslint-disable-next-line no-console
-        console.log(inputFormField)
         let value
         const isArray = input.type.type === 'array'
         const type = input.type.items || input.type.type
@@ -265,12 +279,7 @@
             break
           case 'File':
           case 'Directory':
-            // eslint-disable-next-line no-case-declarations
-            const properties = []
-            properties.push(type === 'File' ? 'openFile' : 'openDirectory')
-            if (isArray) {
-              properties.push('multiSelections')
-            }
+            // TODO 修改选择器
             // eslint-disable-next-line no-case-declarations
             const fileValues = ['test.jpg'].map((p) => ({ class: type, path: p }))
             inputFormField.enable({ onlySelf: true })
@@ -280,7 +289,17 @@
             value = null
             break
         }
-        inputFormField.value = input.type.type === 'array' ? [value] : value
+        inputFormField.setValue(input.type.type === 'array' ? [value] : value)
+      },
+      enableFileEditing(input) {
+        const inputFormField = this.jobGroup.get(this.getInputSource(input))
+        const isArray = input.type.type === 'array'
+        const type = input.type.items || input.type.type
+        inputFormField.enable({ onlySelf: true })
+        // TODO 修改选择器
+        // eslint-disable-next-line no-case-declarations
+        const fileValues = ['test.jpg'].map((p) => ({ class: type, path: p }))
+        inputFormField.setValue(!isArray ? fileValues[0] : fileValues)
       },
       isFileOrDirectory(input) {
         const type = input.type.type

@@ -1,10 +1,10 @@
 $node-required-fill: #f89406;
 $node-required-fill-fade: #94621b;
 
-.node.__plugin-required-input-markup-required .inner {
-  fill: $node-required-fill;
-}
 svg.cwl-workflow.__plugin-required-input-markup {
+  .node.__plugin-required-input-markup-required .inner {
+    fill: $node-required-fill;
+  }
   &.__selection-plugin-fade {
     .node:not(.__selection-plugin-highlight) {
       &.__plugin-required-input-markup-required .inner {

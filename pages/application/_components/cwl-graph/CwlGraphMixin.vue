@@ -1,19 +1,12 @@
 <template>
   <div class="tool-graph h-100 el-row el-row--flex">
     <div class="h-100 el-col-full p-r">
-      <svg ref="svg" class="cwl-workflow h-100" oncontextmenu="return false"></svg>
-      <cwl-tool :workflow="workflow" />
+      <svg ref="svg" class="cwl-workflow h-100"></svg>
+      <cwl-tool :workflow="workflow" :tools="tools || undefined" />
     </div>
     <transition name="el-fade-in-linear">
       <cwl-panel-params v-if="configType === 'params'" ref="panel" :workflow="workflow" :readonly="readonly" />
-      <cwl-panel-run
-        v-else
-        ref="panel"
-        :workflow="workflow"
-        :readonly="false"
-        :pipe-id="pipeId"
-        :job-control="jobControl"
-      />
+      <cwl-panel-run v-else ref="panel" :workflow="workflow" :readonly="false" :pipe-id="pipeId" />
     </transition>
   </div>
 </template>
@@ -22,8 +15,10 @@
   import CwlPanelParams from '@/pages/application/_components/cwl-graph/CwlPanelParams'
   import CwlPanelRun from '@/pages/application/_components/cwl-graph/CwlPanelRun'
   import cwlTool from '@/pages/application/_components/cwl-graph/CwlTool'
+  import { stringifyObject } from '@/pages/application/_components/cwl-graph/helpers/YamlHelper'
   import { FormControl } from '@/pages/application/_components/FormControl'
   import { DblclickPlugin } from '@/pages/application/_components/cwl-graph/plugins/dblclick-plugin'
+  import downloadLink from '@/utils/download-link'
   import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, ZoomPlugin } from 'cwl-svg'
   import * as Yaml from 'js-yaml'
 
@@ -33,30 +28,28 @@
       cwl: {
         type: [Object, String],
         default: null,
-        note: `The JSON object representing the CWL workflow to render`,
       },
       readonly: {
         type: Boolean,
         default: false,
-        note: `True if the workflow is editable`,
       },
       plugins: {
         type: Array,
-        default: () => [],
-        note: `A list of CWL plugins to use in the CWL rendering`,
-      },
-      isTool: {
-        type: Boolean,
-        default: true,
-        note: `True if the cwl is commandline`,
+        default() {
+          return []
+        },
       },
       configType: {
         type: String,
         default: 'params',
       },
-      pipeId: {
-        type: String,
+      tools: {
+        type: [String, Array],
         default: undefined,
+      },
+      item: {
+        type: Object,
+        default: null,
       },
     },
     data() {
@@ -67,10 +60,21 @@
         jobControl: new FormControl({}),
       }
     },
+    computed: {
+      pipeId() {
+        return this.item && this.item.pipe_id
+      },
+    },
     watch: {
       workflow() {
         this.$emit('workflow-changed', this.workflow)
       },
+    },
+    provide() {
+      return {
+        TheGraph: this,
+        dataModel: this.dataModel,
+      }
     },
     beforeDestroy() {
       // 销毁流程图
@@ -94,21 +98,11 @@
       // 导出数据
       serialize(asYaml = false) {
         const obj = this.workflow.model.serialize()
-        if (asYaml) {
-          return Yaml.dump(obj, {
-            json: true,
-          })
-        }
-        return JSON.stringify(
-          obj,
-          (key, value) => {
-            if (typeof value === 'string') {
-              return value.replace(/\u2002/g, ' ')
-            }
-            return value
-          },
-          4
-        )
+        return stringifyObject(obj, asYaml)
+      },
+      exportJob(format = 'yaml') {
+        const data = stringifyObject(this.jobControl.value, format)
+        downloadLink(data, this.item.name + `.job.${format}`)
       },
       // 处理 yaml 格式为 json 格式
       load(cwl) {

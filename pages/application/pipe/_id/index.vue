@@ -58,7 +58,7 @@
       </div>
       <div class="panel-body">
         <div class="workflow-box">
-          <cwl-graph ref="cwl" :item="item" :readonly="true" class="h-100" />
+          <cwl-graph ref="cwl" :item="item" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
         </div>
       </div>
     </div>
@@ -86,8 +86,8 @@
       }
     },
     methods: {
-      handleDownload(type = 'json') {
-        const data = this.$refs.cwl.serialize(type === 'cwl')
+      handleDownload(type = 'cwl') {
+        const data = this.$refs.cwl.exportCwl(type === 'cwl')
         downloadLink(data, this.item.name + `.${type}`)
       },
     },

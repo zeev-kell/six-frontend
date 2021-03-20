@@ -2,25 +2,35 @@
   import { SVGArrangePlugin, Workflow } from 'cwl-svg'
   import { DeletionPlugin } from 'cwl-svg/compiled/src/plugins/deletion/deletion'
   const BUTTON_LIST = {
+    run: {
+      icon: 'el-icon-video-play',
+      title: '运行',
+      action: 'toRun',
+    },
     plus: {
       icon: 'el-icon-plus',
       title: '放大',
-      click: 'upscale',
+      action: 'upscale',
     },
     minus: {
       icon: 'el-icon-minus',
       title: '缩小',
-      click: 'downscale',
+      action: 'downscale',
     },
     fit: {
       icon: 'iconfont icon-fullscreen',
       title: '适应窗口',
-      click: 'fitToViewport',
+      action: 'fitToViewport',
     },
     auto: {
       icon: 'el-icon-magic-stick',
       title: '自动排版',
-      click: 'autoLayout',
+      action: 'autoLayout',
+    },
+    download: {
+      icon: 'el-icon-download',
+      title: '下载',
+      action: 'download',
     },
   }
 
@@ -73,7 +83,14 @@
       deleteSelectedElement() {
         this.graph.getPlugin(DeletionPlugin).deleteSelection()
       },
+      toRun() {
+        this.$router.push(`/graph-info/${this.$route.params.id}/set-run`)
+      },
+      download() {
+        this.TheGraph.exportJob()
+      },
     },
+    inject: ['TheGraph'],
     render(createElement) {
       const tools = this.tools.split('|')
       const createButton = (b) => {
@@ -91,7 +108,7 @@
           },
           ...BUTTON_LIST[b],
           on: {
-            click: this[btn.click],
+            click: this[btn.action],
           },
         })
       }
@@ -124,7 +141,8 @@
   .el-button--mini {
     padding: 8px;
   }
-  .el-button-group + .el-button {
+  .el-button-group + .el-button,
+  .el-button + .el-button-group {
     margin-left: 4px;
   }
 </style>

@@ -13,7 +13,7 @@
       <div v-if="isSingleInputTypes()" class="el-row el-row--flex is-align-middle">
         <!--Enums-->
         <template v-if="isInputType('enum')">
-          <select v-model="control" class="form-control">
+          <select v-model="actualValue" class="form-control">
             <option v-for="val of inputEnumSymbols" :key="val" :value="val">
               {{ val }}
             </option>
@@ -22,22 +22,22 @@
 
         <!--Numbers-->
         <template v-else-if="isInputType('int')">
-          <input v-model="control.value" type="number" class="form-control" :disabled="readonly" />
+          <input v-model="actualValue" type="number" class="form-control" :disabled="readonly" />
         </template>
         <template v-else-if="isInputType('float')">
-          <el-input v-model="control.value" type="number" class="form-control" :disabled="readonly" />
+          <el-input v-model="actualValue" type="number" class="form-control" :disabled="readonly" />
         </template>
 
         <!--Strings-->
         <template v-else-if="isInputType('string')">
-          <input v-model="control.value" class="form-control" :disabled="readonly" />
+          <input v-model="actualValue" class="form-control" :disabled="readonly" />
         </template>
 
         <!--Booleans-->
         <template v-else-if="isInputType('boolean')">
           <label class="clickable">
-            <span>{{ control.value ? 'Yes' : 'No' }}</span>
-            <el-switch v-model="control.value" :disabled="readonly" />
+            <span>{{ actualValue ? 'Yes' : 'No' }}</span>
+            <el-switch v-model="actualValue" :disabled="readonly" />
           </label>
         </template>
 
@@ -48,15 +48,15 @@
 
         <!--Files and array of Files-->
         <template v-else-if="isInputType('File')">
-          <div>
-            <!-- TODO ct-native-file-browser-form-field -->
-            <button v-if="control.get('path').enabled" class="btn btn-link" type="button" @click="promptFileMetadata()">
+          <div class="el-row" style="width: 100%">
+            <native-file-browser-form-field :form-control="control.get('path')" />
+            <el-button v-if="control.get('path').enabled" size="mini" type="text" @click="promptFileMetadata()">
               <div v-if="metadataKeysCount > 0 || secondaryFilesCount > 0">
                 {{ secondaryFilesCount }} secondary {{ secondaryFilesCount === 1 ? 'file' : 'files' }},
                 {{ metadataKeysCount }} metadata
               </div>
               <span v-else>Add secondary files and metadata</span>
-            </button>
+            </el-button>
           </div>
         </template>
 
@@ -111,6 +111,7 @@
               :input-record-fields="inputRecordFields"
               :readonly="readonly"
               :form-control="ctrl"
+              @onChildUpdate="onChildUpdate"
             />
 
             <!--Delete button if not array of maps-->
@@ -140,14 +141,18 @@
       <!--Unknown-->
       <template v-else> Unknown input type: {{ inputType || 'null' }} </template>
     </div>
+    <input-value-editor-modal ref="fileMetadata" />
   </div>
 </template>
 
 <script type="text/babel">
+  import InputValueEditorModal from '@/pages/application/_components/cwl-graph/InputValueEditorModal'
+  import NativeFileBrowserFormField from '@/pages/application/_components/cwl-graph/NativeFileBrowserFormField'
   import { FormArray, FormControl, FormGroup } from '@/pages/application/_components/FormControl'
 
   export default {
     name: 'InputValueEditor',
+    components: { InputValueEditorModal, NativeFileBrowserFormField },
     props: {
       readonly: {
         type: Boolean,
@@ -195,42 +200,31 @@
     computed: {
       actualValue: {
         get() {
-          return this.value
-        },
-        set(value) {
-          this.$emit('onUpdate', value)
-        },
-      },
-      actualString: {
-        get() {
-          return this.value === null || this.value === undefined ? '' : this.value
-        },
-        set(value) {
-          this.$emit('onUpdate', value)
-        },
-      },
-      actualBoolean: {
-        get() {
           return this.control?.value
         },
         set(value) {
-          this.$emit('onUpdate', value)
+          // eslint-disable-next-line no-console
+          console.log('set actualValue')
+          this.formControl.setValue(value)
+          this.recalculateSecondaryFilesAndMetadataCounts()
+          // this.$emit('onUpdate', value)
         },
+      },
+      changeInput() {
+        return [this.inputType, this.inputRecordFields]
       },
     },
     watch: {
+      changeInput: {
+        immediate: true,
+        handler() {
+          this.setupFormControls()
+        },
+      },
       inputType: {
         immediate: true,
         handler() {
-          this.setupFormControls()
-          this.bindFileMetadataSyncOnControlChanges()
           this.bindValuePropagationOnControlSetup()
-        },
-      },
-      inputRecordFields: {
-        immediate: true,
-        handler() {
-          this.setupFormControls()
         },
       },
       readonly() {
@@ -240,10 +234,10 @@
           this.control.enable({ onlySelf: true, emitEvent: false })
         }
       },
-      formControl: {
+      'formControl.value': {
         immediate: true,
-        handler(formControl) {
-          const value = formControl.value
+        handler() {
+          const value = this.formControl.value
           if (value === undefined) {
             return
           }
@@ -316,7 +310,6 @@
               this.control.setValue(update, updateOptions)
               break
           }
-          // this.cdr.markForCheck();
         },
       },
     },
@@ -337,12 +330,12 @@
         return this.inputType === type
       },
       clear() {
-        this.control.setValue(null)
+        this.control?.setValue(null)
       },
       addArrayEntry() {
         this.warning = undefined
         const control = this.makeControlForArray()
-        this.control.push(control)
+        this.control?.push(control)
       },
       deleteFromArray(index, control = this.control) {
         control.removeAt(index)
@@ -351,14 +344,6 @@
         if (this.$refs.input) {
           this.$refs.input.focus()
         }
-      },
-      setDisabledState(isDisabled) {
-        if (isDisabled && this.control.enabled) {
-          this.control.disable()
-        } else if (!isDisabled && this.control.disabled) {
-          this.control.enable()
-        }
-        // this.cdr.markForCheck()
       },
       addArrayFileOrDirectory() {
         const properties = ['multiSelections']
@@ -369,12 +354,15 @@
           this.cdr.markForCheck()
         })
       },
-      bindFileMetadataSyncOnControlChanges() {
-        // this.control.valueChanges.subscribeTracked(this, () => {
-        //   this.recalculateSecondaryFilesAndMetadataCounts();
-        // });
+      bindValuePropagationOnControlSetup() {
+        // let typecheckedChange = change;
+        // if (this.inputType === "int") {
+        //   typecheckedChange = parseInt(change, 10);
+        // } else if (this.inputType === "float") {
+        //   typecheckedChange = isNaN(change) ? 0 : parseFloat(change);
+        // }
+        // this.propagateChange(typecheckedChange);
       },
-      bindValuePropagationOnControlSetup() {},
       setupFormControls() {
         const disabled = this.readonly
         let control
@@ -387,16 +375,16 @@
             // eslint-disable-next-line no-case-declarations
             const controls = {}
             for (const field of this.inputRecordFields) {
-              controls[field.id] = new FormControl(undefined, disabled)
+              controls[field.id] = new FormControl({ value: undefined, disabled })
             }
             control = new FormGroup(controls)
             break
           case 'File':
             control = new FormGroup({
-              path: new FormControl(undefined, disabled),
-              class: new FormControl('File', disabled),
-              metadata: new FormControl({}, disabled),
-              secondaryFiles: new FormControl([], disabled),
+              path: new FormControl({ value: undefined, disabled }),
+              class: new FormControl({ value: 'File', disabled }),
+              metadata: new FormControl({ value: {}, disabled }),
+              secondaryFiles: new FormControl({ value: [], disabled }),
             })
             break
           case 'Directory':
@@ -430,7 +418,7 @@
         this.control.setValue(update, options)
       },
       promptFileMetadata() {
-        // TODO
+        this.$refs.fileMetadata.showDialog(this.control.value, this.relativePathRoot)
       },
       makeControlForArray() {
         switch (this.inputArrayItemsType) {
@@ -469,6 +457,7 @@
         // eslint-disable-next-line no-prototype-builtins
         this.metadataKeysCount = Object.prototype.isPrototypeOf(metadata) ? Object.keys(metadata).length : 0
       },
+      onChildUpdate() {},
     },
   }
 </script>

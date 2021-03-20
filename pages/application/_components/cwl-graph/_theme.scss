@@ -58,3 +58,96 @@ $t-color: #409eff;
     border-color: $black1;
   }
 }
+
+.right-panel {
+  width: 360px;
+  background: #3c3c3c;
+  border-left: 1px solid $b-color;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: $color2;
+  overflow: hidden;
+  flex: 0 0 auto;
+  height: 100%;
+
+  .panel-header {
+    border-color: $b-color;
+    color: $color1;
+  }
+  .panel-body {
+    height: calc(100% - 47px);
+  }
+  .form-control {
+    display: block;
+    width: 100%;
+    padding: 0.4rem 0.55rem;
+    font-size: 12px;
+    line-height: 1rem;
+    color: #eee;
+    background-color: $black2;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid $black1;
+    border-radius: 0;
+    &:focus {
+      color: #eee;
+      background-color: #333333;
+      border-color: #66afe9;
+      outline: none;
+    }
+  }
+  select.form-control,
+  input.form-control {
+    &:not([size]):not([multiple]) {
+      height: calc(2.5rem - 2px);
+    }
+  }
+  .el-form-item {
+    margin-bottom: 1rem;
+    &.is-error .form-control-feedback,
+    &.is-error .el-form-item__label,
+    &.is-error .form-check-label,
+    &.is-error .form-check-inline,
+    &.is-error .custom-control {
+      color: #dd4a38;
+    }
+    &.is-error .form-control {
+      border-color: #dd4a38;
+    }
+    .el-form-item__error {
+      position: relative;
+      top: 0;
+    }
+  }
+  .el-switch__core {
+    border-color: $black1 !important;
+  }
+  .selection-step-inputs {
+    color: #eee;
+  }
+  .el-input__inner {
+    height: 33px !important;
+    background: $black2;
+    border-color: $black1;
+  }
+  .is-disabled .el-input__inner {
+    background: $black2 !important;
+    border-color: $black1 !important;
+  }
+  .el-select {
+    background: transparent;
+    width: 100%;
+    &:hover .el-input__inner {
+      border-color: $t-color;
+    }
+  }
+  .el-tag {
+    background: #337cb9;
+    border-color: #296394;
+    color: #ffffff;
+  }
+  .el-tag__close {
+    background: transparent !important;
+    color: white !important;
+  }
+}
