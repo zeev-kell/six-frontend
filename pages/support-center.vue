@@ -13,17 +13,10 @@
       <el-container>
         <el-aside width="240px">
           <h2>帮助文档</h2>
-          <el-menu class="menu-normal" @select="onSelect">
-            <el-menu-item v-for="menu in menus" :key="menu.key" :index="menu.key">
+          <el-menu class="menu-normal" :default-active="$route.path" :router="true">
+            <el-menu-item v-for="menu in menus" :key="menu.key" :index="'/support-center/' + menu.key">
               <span slot="title">{{ menu.text }}</span>
             </el-menu-item>
-            <el-submenu index="1">
-              <template slot="title">
-                <span>帮助一</span>
-              </template>
-              <el-menu-item index="1-1">选项1</el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-submenu>
           </el-menu>
         </el-aside>
         <nuxt-child />
@@ -40,13 +33,6 @@
       return {
         menus,
       }
-    },
-    methods: {
-      onSelect(title, list) {
-        // eslint-disable-next-line no-console
-        console.log(arguments)
-        this.$router.push('/support-center/' + title)
-      },
     },
   }
 </script>

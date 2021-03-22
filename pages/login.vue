@@ -54,6 +54,11 @@
         },
       }
     },
+    created() {
+      if (this.$route.query.notAuthorized === 'true') {
+        this.$store.commit('CLEAR_USER_INFO', process.server)
+      }
+    },
     methods: {
       login() {
         this.$refs.form.validate((valid) => {

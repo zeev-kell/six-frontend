@@ -50,6 +50,7 @@
         title="产品使用协议"
         :visible.sync="outerVisible"
         center
+        top="5vh"
         width="80%"
         :close-on-click-modal="false"
         :close-on-press-escape="false"

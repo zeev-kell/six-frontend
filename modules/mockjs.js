@@ -25,25 +25,22 @@ export default function () {
   // mock.onGet(WorkflowListUrl).reply(() => {
   //   return [200, Mock.mock(WorkflowList).items]
   // })
-  mock.onGet(/\/README.md/).reply(() => {
-    const randomBody = () => {
-      const subTitle = `<h3>${Mock.Random.title()}</h3>`
-      const subBody = `<div>${Mock.Random.cparagraph(30)}</div>`
-      return subTitle + subBody
-    }
-    return [
-      200,
-      {
-        title: Mock.Random.title(),
-        body: Array.from({ length: Math.ceil(Math.random() * 3 + 3) })
-          .map(randomBody)
-          .join(''),
-      },
-    ]
-  })
-  mock.onGet(/\/user-agreement.md/).reply(() => {
-    return [200, '### DDD']
-  })
+  // mock.onGet(/\/markdown.md/).reply(() => {
+  //   const randomBody = () => {
+  //     const subTitle = `<h3>${Mock.Random.title()}</h3>`
+  //     const subBody = `<div>${Mock.Random.cparagraph(30)}</div>`
+  //     return subTitle + subBody
+  //   }
+  //   return [
+  //     200,
+  //     {
+  //       title: Mock.Random.title(),
+  //       body: Array.from({ length: Math.ceil(Math.random() * 3 + 3) })
+  //         .map(randomBody)
+  //         .join(''),
+  //     },
+  //   ]
+  // })
   /** @function addPlugin */
   this.addPlugin(path.resolve(__dirname, '..', 'plugins', 'mockjs.js'))
 }

@@ -36,16 +36,16 @@ Mock.mock(PipesUrl, function () {
 // Mock.mock(WorkflowListUrl, function () {
 //   return Mock.mock(WorkflowList).items
 // })
-Mock.mock(/\/README.md/, function () {
-  const randomBody = () => {
-    const subTitle = `<h3>${Mock.Random.title()}</h3>`
-    const subBody = `<div>${Mock.Random.cparagraph(30)}</div>`
-    return subTitle + subBody
-  }
-  return {
-    title: Mock.Random.title(),
-    body: Array.from({ length: Math.ceil(Math.random() * 3 + 3) })
-      .map(randomBody)
-      .join(''),
-  }
-})
+// Mock.mock(/\/markdown.md/, function () {
+//   const randomBody = () => {
+//     const subTitle = `<h3>${Mock.Random.title()}</h3>`
+//     const subBody = `<div>${Mock.Random.cparagraph(30)}</div>`
+//     return subTitle + subBody
+//   }
+//   return {
+//     title: Mock.Random.title(),
+//     body: Array.from({ length: Math.ceil(Math.random() * 3 + 3) })
+//       .map(randomBody)
+//       .join(''),
+//   }
+// })

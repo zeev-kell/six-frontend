@@ -11,10 +11,9 @@ export default {
   CLEAR_USER_INFO(state, isServer) {
     state.token = undefined
     state[TokenKey] = undefined
+    removeToken()
     if (!isServer) {
       removeStore('token')
-    } else {
-      removeToken()
     }
   },
   SET_BODY_CLASS(state, bodyClass) {

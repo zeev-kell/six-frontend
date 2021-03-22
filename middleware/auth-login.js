@@ -1,6 +1,9 @@
 import { TokenKey } from '../utils/local-storage'
 
-export default function ({ store, route, query, redirect }) {
+export default function ({ store, query, redirect }) {
+  if (query.notAuthorized === 'true') {
+    return
+  }
   const token = store.state[TokenKey]
   // 如果用户已经登录，跳转到重定向地址或者 application 页面
   if (token) {
