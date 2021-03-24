@@ -55,7 +55,7 @@
       }
     },
     created() {
-      if (this.$route.query.notAuthorized === 'true') {
+      if (this.$route.query.notAuthorized) {
         this.$store.commit('CLEAR_USER_INFO', process.server)
       }
     },

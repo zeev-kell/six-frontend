@@ -10,14 +10,21 @@
           <el-form-item prop="password">
             <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
           </el-form-item>
-          <el-form-item prop="surepassword">
-            <el-input v-model="form.surepassword" placeholder="再次输入密码" type="password"></el-input>
-          </el-form-item>
+          <!--          <el-form-item prop="surepassword">-->
+          <!--            <el-input v-model="form.surepassword" placeholder="再次输入密码" type="password"></el-input>-->
+          <!--          </el-form-item>-->
           <!--          <el-form-item prop="phone">-->
           <!--            <el-input v-model="form.phone" placeholder="请输入手机号"></el-input>-->
           <!--          </el-form-item>-->
           <el-form-item prop="email">
-            <el-input v-model="form.email" placeholder="请输入邮箱"></el-input>
+            <el-input v-model="form.email" placeholder="请输入邮箱" />
+          </el-form-item>
+          <el-form-item prop="code">
+            <el-input v-model="form.code" placeholder="请输入验证码">
+              <el-button slot="append" :disabled="isLoadingCode" @click="onClickGetCode">
+                {{ loadingCodeText }}
+              </el-button>
+            </el-input>
           </el-form-item>
           <el-form-item>
             <el-button
@@ -32,7 +39,7 @@
             </el-button>
           </el-form-item>
           <el-form-item class="text-center mb-0 el-form_error_rl" prop="checked">
-            <el-checkbox v-model="form.checked"> 注册即代表同意 </el-checkbox>
+            <el-checkbox v-model="form.checked">注册即代表同意</el-checkbox>
             <el-link type="primary" :underline="false" class="y-baseline" @click="outerVisible = true">
               《产品使用协议》
             </el-link>
@@ -45,7 +52,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="text-center mt-30">© 2021 Six O'Clock. All Rights Reserved.</div>
+      <div class="text-center mt-20">© 2021 Six O'Clock. All Rights Reserved.</div>
       <el-dialog
         title="产品使用协议"
         :visible.sync="outerVisible"
@@ -87,9 +94,10 @@
         form: {
           username: '',
           password: '',
-          surepassword: '',
+          // surepassword: '',
           // phone: '',
           email: '',
+          code: '',
           checked: false,
         },
         isLoading: false,
@@ -119,6 +127,7 @@
             },
           ],
           email: [{ required: true, type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }],
+          code: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
           checked: [
             {
               required: true,
@@ -134,6 +143,8 @@
         },
         outerVisible: false,
         UserAgreement: undefined,
+        isLoadingCode: false,
+        loadingCodeText: '获取验证码',
       }
     },
     methods: {
@@ -147,6 +158,7 @@
                 password: this.form.password,
                 // phone: this.form.phone,
                 email: this.form.email,
+                code: this.form.code,
               })
               .then(() => {
                 this.$message.success('注册成功，正在跳转至登录...')
@@ -160,19 +172,47 @@
           }
         })
       },
+      onClickGetCode() {
+        if (this.isLoadingCode === true) {
+          return
+        }
+        this.$refs.form.validateField('email', (error) => {
+          if (error === '') {
+            this.isLoadingCode = true
+            this.$$axios
+              .$post('/register/getcode', { email: this.form.email })
+              .then(() => {
+                this.$message.success('验证码已发送，请注意查收...')
+                this.loadingCodeText = '发送成功'
+                setTimeout(() => {
+                  this.isLoadingCode = false
+                  this.loadingCodeText = '获取验证码'
+                }, 60000)
+              })
+              .catch(() => {
+                this.isLoadingCode = false
+                this.loadingCodeText = '获取验证码'
+              })
+          }
+        })
+      },
     },
   }
 </script>
 <style lang="scss">
   .register-container {
     width: 400px;
-    margin: 50px auto 0;
+    margin: 30px auto 0;
+
+    .el-form_error_rl .el-form-item__content {
+      line-height: 20px;
+    }
   }
 
   .register-box {
     border: 1px solid #eceff1;
     border-radius: 2px;
-    padding: 30px 50px;
+    padding: 20px 50px 10px;
     background: #ffffff;
     position: relative;
     z-index: 1;
