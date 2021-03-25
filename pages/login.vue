@@ -55,8 +55,9 @@
       }
     },
     created() {
-      if (this.$route.query.notAuthorized) {
-        this.$store.commit('CLEAR_USER_INFO', process.server)
+      // 如果已经登录就跳转到主页
+      if (this.$auth.loggedIn) {
+        this.$router.push('/application')
       }
     },
     methods: {
@@ -64,23 +65,13 @@
         this.$refs.form.validate((valid) => {
           if (valid) {
             this.isLoading = true
-            this.$$axios
-              .$post('/login', {
-                username: this.form.username,
-                password: this.form.password,
-              })
-              .then((token) => {
-                this.$store.commit('RECORD_USER_INFO', token.data)
-                this.$router.push('/application/pipes')
-              })
-              .finally(() => {
-                this.isLoading = false
-              })
+            this.$auth.loginWith('local', { data: this.form }).finally(() => {
+              this.isLoading = false
+            })
           }
         })
       },
     },
-    middleware: ['auth-login'],
   }
 </script>
 <style scoped lang="scss">

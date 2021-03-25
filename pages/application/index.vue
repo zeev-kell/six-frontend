@@ -55,9 +55,6 @@
       // FIXME 默认直接进入列表
       redirect('/application/pipes')
     },
-    // async beforeCreate() {
-    //   await this.$router.push('/application/pipes')
-    // },
   }
 </script>
 

@@ -19,7 +19,6 @@ export default {
     { src: '@/plugins/axios', ssr: true },
     { src: '@/plugins/axios-msg.js', mode: 'client' },
     { src: '@/plugins/components' },
-    { src: '@/plugins/persistedState.js' },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -43,6 +42,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
     ...(process.env.NODE_ENV === 'development' ? ['@/modules/mockjs'] : []),
     // ...['@/modules/mockjs'],
     // https://go.nuxtjs.dev/pwa
@@ -57,6 +57,37 @@ export default {
     progress: true,
     // debug: process.env.NODE_ENV === 'development',
   },
+  // auth-next
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          required: false,
+          type: false,
+        },
+        user: {
+          property: '',
+          autoFetch: true,
+        },
+        endpoints: {
+          login: {
+            url: '/login',
+            method: 'post',
+            propertyName: 'data.token',
+          },
+          logout: { url: '/logout', method: 'get' },
+          user: { url: '/user', method: 'get' },
+        },
+      },
+    },
+    redirect: {
+      login: '/login',
+      logout: '/logout',
+      callback: '/login',
+      home: '/application',
+    },
+  },
+
   router: {
     middleware: ['class'],
   },

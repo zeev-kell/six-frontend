@@ -18,8 +18,14 @@ Mock.mock(/\/api\/v1\/login/, 'post', function (options) {
     msg: '登陆成功',
   })
 })
-Mock.mock(/\/api\/v1\/register/, 'post', function (options) {
-  // eslint-disable-next-line no-console
+Mock.mock(/\/api\/v1\/logout/, 'get', function (options) {})
+Mock.mock(/\/api\/v1\/register/, 'post', function (options) {})
+Mock.mock(/\/api\/v1\/user/, 'get', function (options) {
+  return Mock.mock({
+    admin: false,
+    uid: Mock.Random.string('lower', 32),
+    uname: 'keziyuan',
+  })
 })
 Mock.mock(PipeUrl, function () {
   const item = Mock.mock(Pipe)

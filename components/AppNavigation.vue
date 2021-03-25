@@ -29,7 +29,7 @@
         ><li role="menuitem" tabindex="-1" class="el-menu-item menu-link">
           <a href="/support-center" target="_blank">帮助中心</a>
         </li>
-        <template v-if="username">
+        <template v-if="username || true">
           <el-submenu index="1" popper-class="nav-darken">
             <template slot="title">{{ username }}</template>
             <el-menu-item index="/application/u-center">用户中心</el-menu-item>
@@ -48,7 +48,7 @@
 </template>
 
 <script type="text/babel">
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapGetters, mapActions, mapState } from 'vuex'
   import LogoSvg from '@/components/LogoSvg'
   export default {
     name: 'AppNavigation',
@@ -57,6 +57,7 @@
     },
     computed: {
       ...mapGetters(['username']),
+      ...mapState(['auth.loggedIn']),
     },
     methods: {
       ...mapActions(['logout']),
