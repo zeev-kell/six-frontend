@@ -47,7 +47,7 @@
           <el-form-item>
             <div class="text-right">
               <span class="text-muted">已有账号？</span>
-              <router-link to="login">立即登录</router-link>
+              <nuxt-link to="login">立即登录</nuxt-link>
             </div>
           </el-form-item>
         </el-form>

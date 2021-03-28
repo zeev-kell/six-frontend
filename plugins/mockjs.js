@@ -11,6 +11,7 @@ Mock.mock(/\/api\/v1\/login/, 'post', function (options) {
     data: {
       admin: false,
       expires_at: 1923980785 + Mock.Random.integer(1000, 100000),
+      refresh_token: Mock.Random.string('lower', 32),
       token: Mock.Random.string('lower', 32),
       uid: Mock.Random.string('lower', 32),
       uname: body.username,
@@ -31,6 +32,7 @@ Mock.mock(PipeUrl, function () {
   const item = Mock.mock(Pipe)
   item.type = 0
   item.cwl = item.type === 0 ? _tool : _workflow
+  item.status = 401
   return item
 })
 Mock.mock(PipesUrl, function () {

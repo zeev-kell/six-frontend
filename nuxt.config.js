@@ -18,6 +18,7 @@ export default {
     { src: '@/plugins/element-ui', ssr: true },
     { src: '@/plugins/axios', ssr: true },
     { src: '@/plugins/axios-msg.js', mode: 'client' },
+    { src: '@/plugins/nuxt-client-init.client.js' },
     { src: '@/plugins/components' },
   ],
 
@@ -62,12 +63,9 @@ export default {
     strategies: {
       local: {
         token: {
-          required: false,
-          type: false,
-        },
-        user: {
-          property: '',
-          autoFetch: true,
+          required: true,
+          type: '',
+          property: 'data.token',
         },
         endpoints: {
           login: {
@@ -76,13 +74,18 @@ export default {
             propertyName: 'data.token',
           },
           logout: { url: '/logout', method: 'get' },
-          user: { url: '/user', method: 'get' },
+          user: false,
+        },
+        user: {
+          // 是否自动请求用户数据，目前没有该接口
+          autoFetch: false,
+          property: false,
         },
       },
     },
     redirect: {
       login: '/login',
-      logout: '/logout',
+      logout: '/login',
       callback: '/login',
       home: '/application',
     },

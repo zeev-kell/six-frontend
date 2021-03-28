@@ -1,19 +1,10 @@
-import { TokenKey, setToken, removeToken } from '@/utils/local-storage'
-
+import vue from 'vue'
 export default {
-  // 用户信息记录
-  RECORD_USER_INFO(state, token) {
-    state.token = token
-    state[TokenKey] = token.token
-    setToken(token.token)
-  },
-  // 清理用户信息
-  CLEAR_USER_INFO(state) {
-    state.token = undefined
-    setToken(undefined)
-    removeToken()
-  },
   SET_BODY_CLASS(state, bodyClass) {
     state.bodyClass = bodyClass
+  },
+  SET_USER_INFO(state, user) {
+    state.auth.user = user
+    vue.set(state.auth, 'user', user)
   },
 }

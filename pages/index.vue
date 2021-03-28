@@ -20,22 +20,24 @@
       <div class="container">
         <div class="el-row el-row--flex is-justify-space-around">
           <div class="el-col el-col-auto mb-2r text-center pro-panel">
-            <nuxt-link tag="div" to="/application/pipes">
-              <el-card shadow="hover" class="pro-card">
-                <div class="pro-icon">
-                  <i class="el-icon-files"></i>
-                </div>
-                <h3 class="pro-title my-1r">
-                  <strong>软件下载</strong>
-                </h3>
-                <div class="pro-content">
-                  提供即下即用的算法<br />
-                  软件（免环境配置），<br />
-                  并可通过在线配置<br />
-                  软件参数，实现本地<br />
-                  一键运行。
-                </div>
-              </el-card>
+            <nuxt-link v-slot="{ navigate }" to="/application/pipes" custom>
+              <div class="pointer" @click="navigate" @keypress.enter="navigate">
+                <el-card shadow="hover" class="pro-card">
+                  <div class="pro-icon">
+                    <i class="el-icon-files"></i>
+                  </div>
+                  <h3 class="pro-title my-1r">
+                    <strong>软件下载</strong>
+                  </h3>
+                  <div class="pro-content">
+                    提供即下即用的算法<br />
+                    软件（免环境配置），<br />
+                    并可通过在线配置<br />
+                    软件参数，实现本地<br />
+                    一键运行。
+                  </div>
+                </el-card>
+              </div>
             </nuxt-link>
           </div>
           <div class="el-col el-col-auto mb-2r text-center pro-panel">

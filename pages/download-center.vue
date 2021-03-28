@@ -49,8 +49,10 @@
               </div>
               <h2 class="text-center">Sixoclock软件仓库</h2>
               <p class="text-justify">查找并下载需要的数据处理软件<br />&nbsp;</p>
-              <nuxt-link to="/application/pipes" tag="div">
-                <el-button type="primary" class="block">登录系统</el-button>
+              <nuxt-link v-slot="{ navigate }" to="/application/pipes" custom>
+                <el-button type="primary" class="block" @click="navigate" @keypress.enter="navigate">
+                  登录系统
+                </el-button>
               </nuxt-link>
             </el-card>
           </el-col>
@@ -61,8 +63,10 @@
               </div>
               <h2 class="text-center">使用sixoclock处理数据</h2>
               <p class="text-justify">运行下载自sixoclock软件仓库的流程处理本地数据</p>
-              <nuxt-link to="/support-center" tag="div">
-                <el-button type="primary" class="block">阅读教程</el-button>
+              <nuxt-link v-slot="{ navigate }" to="/support-center" custom>
+                <el-button type="primary" class="block" @click="navigate" @keypress.enter="navigate">
+                  阅读教程
+                </el-button>
               </nuxt-link>
             </el-card>
           </el-col>

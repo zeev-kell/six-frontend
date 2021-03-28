@@ -17,7 +17,7 @@
               round
               type="primary"
               native-type="submit"
-              @click.prevent="login"
+              @click.prevent="onSubmit"
             >
               登 录
             </el-button>
@@ -25,7 +25,7 @@
           <el-form-item>
             <div class="text-right">
               <span class="text-muted">没有账号？</span>
-              <router-link to="register">立即注册</router-link>
+              <nuxt-link to="register">立即注册</nuxt-link>
             </div>
           </el-form-item>
         </el-form>
@@ -36,6 +36,7 @@
 </template>
 <script type="text/babel">
   import CanvasParticle from '@/components/CanvasParticle'
+  import { mapActions } from 'vuex'
 
   export default {
     components: {
@@ -54,18 +55,13 @@
         },
       }
     },
-    created() {
-      // 如果已经登录就跳转到主页
-      if (this.$auth.loggedIn) {
-        this.$router.push('/application')
-      }
-    },
     methods: {
-      login() {
+      ...mapActions(['login']),
+      onSubmit() {
         this.$refs.form.validate((valid) => {
           if (valid) {
             this.isLoading = true
-            this.$auth.loginWith('local', { data: this.form }).finally(() => {
+            this.login(this.form).finally(() => {
               this.isLoading = false
             })
           }
