@@ -34,6 +34,7 @@
     "cwl-svg": "^2.1.7",
     "cwlts": "^1.15.30",
     "element-ui": "^2.13.2",
+    "highlight.js": "^10.7.1",
     "js-cookie": "^2.2.1",
     "js-yaml": "^4.0.0",
     "jszip": "^3.6.0",

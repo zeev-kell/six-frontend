@@ -18,7 +18,7 @@
   import { stringifyObject } from '@/pages/application/_components/cwl-graph/helpers/YamlHelper'
   import { FormControl } from '@/pages/application/_components/FormControl'
   import { DblclickPlugin } from '@/pages/application/_components/cwl-graph/plugins/dblclick-plugin'
-  import downloadLink from '@/utils/download-link'
+  import { downloadStrLink } from '@/utils/download-link'
   import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, ZoomPlugin } from 'cwl-svg'
   import * as Yaml from 'js-yaml'
 
@@ -100,9 +100,22 @@
         const obj = this.workflow.model.serialize()
         return stringifyObject(obj, asYaml)
       },
-      exportJob(format = 'yaml') {
-        const data = stringifyObject(this.jobControl.value, format)
-        downloadLink(data, this.item.name + `.job.${format}`)
+      exportCwl(format = 'yaml', isOnlyData = false) {
+        const asYaml = format === 'yaml'
+        const data = stringifyObject(this.workflow.model.serialize(), asYaml)
+        const name = this.item.name + `.${asYaml ? 'cwl' : format}`
+        if (isOnlyData) {
+          return { data, name }
+        }
+        downloadStrLink(data, name)
+      },
+      exportJob(format = 'yaml', isOnlyData = false) {
+        const data = stringifyObject(this.jobControl.value, format === 'yaml')
+        const name = this.item.name + `.job.${format}`
+        if (isOnlyData) {
+          return { data, name }
+        }
+        downloadStrLink(data, name)
       },
       // 处理 yaml 格式为 json 格式
       load(cwl) {

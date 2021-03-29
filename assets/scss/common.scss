@@ -328,3 +328,19 @@ img {
 .lh-20-i {
   line-height: 20px !important;
 }
+//
+// display
+//
+.d-inline-b {
+  display: inline-block;
+}
+
+//
+// marked
+//
+
+.marked-content {
+  img {
+    @extend .img-fluid;
+  }
+}

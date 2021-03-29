@@ -89,6 +89,11 @@ export default {
       callback: '/login',
       home: '/application',
     },
+    cookie: {
+      options: {
+        maxAge: 60 * 60 * 24 * 7,
+      },
+    },
   },
 
   router: {

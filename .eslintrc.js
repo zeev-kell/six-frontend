@@ -14,6 +14,7 @@ module.exports = {
     'prettier/prettier': 'warn',
     'nuxt/no-cjs-in-config': 'off',
     'vue/no-v-html': 'off',
+    'no-unused-vars': 'warn',
   },
   overrides: [
     {

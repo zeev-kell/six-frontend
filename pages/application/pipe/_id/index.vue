@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <template>
   <div class="container-fluid">
     <div class="panel">
@@ -50,7 +51,7 @@
       <div class="panel-header">
         <h2 class="mx-0">示例教程</h2>
       </div>
-      <div v-marked="item.tutorial" class="panel-body"></div>
+      <div v-marked.replace="item.tutorial" class="panel-body"></div>
     </div>
     <div class="panel">
       <div class="panel-header">
@@ -68,7 +69,6 @@
 <script type="text/babel">
   import marked from '@/directives/marked'
   import CwlGraph from '@/pages/application/_components/cwl-graph/CwlGraph'
-  import downloadLink from '@/utils/download-link'
 
   export default {
     directives: {
@@ -87,8 +87,7 @@
     },
     methods: {
       handleDownload(type = 'cwl') {
-        const data = this.$refs.cwl.exportCwl(type === 'cwl')
-        downloadLink(data, this.item.name + `.${type}`)
+        this.$refs.cwl.exportCwl(type)
       },
     },
   }

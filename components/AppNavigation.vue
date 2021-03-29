@@ -31,7 +31,7 @@
         </li>
         <template v-if="loggedIn">
           <el-submenu index="1" popper-class="nav-darken">
-            <div slot="title">{{ username }}</div>
+            <span slot="title" class="y-baseline">{{ username }}</span>
             <el-menu-item index="/application/u-center">用户中心</el-menu-item>
             <el-menu-item hidden index="/application/u-center/change-password">修改密码</el-menu-item>
             <el-menu-item hidden index="/application/u-center/authorization">修改密码</el-menu-item>

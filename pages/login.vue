@@ -55,6 +55,11 @@
         },
       }
     },
+    created() {
+      if (this.$auth.loggedIn) {
+        this.$router.push('/application')
+      }
+    },
     methods: {
       ...mapActions(['login']),
       onSubmit() {

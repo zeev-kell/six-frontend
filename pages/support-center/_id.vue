@@ -1,6 +1,6 @@
 <template>
   <el-main>
-    <div v-marked="markdown" class="content"></div>
+    <div v-marked="markdown" class="marked-content"></div>
   </el-main>
 </template>
 
@@ -15,7 +15,10 @@
     async asyncData({ params }) {
       const menu = menus.find((m) => m.key === params.id)
       const response = await axios.get(process.env.BLOG_URL + encodeURIComponent(menu.md))
-      return { markdown: response.data, title: menu.text }
+      const markdown = response.data.replace(/(!\[.*?]\()img\//gi, (matchStr, subStr) => {
+        return subStr + process.env.BLOG_URL + '/img/'
+      })
+      return { markdown, title: menu.text }
     },
   }
 </script>

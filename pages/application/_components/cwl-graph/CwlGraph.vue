@@ -59,7 +59,7 @@
     },
     methods: {
       exportCwl(...arg) {
-        return this.$refs.cwl.serialize(...arg)
+        return this.$refs.cwl.exportCwl(...arg)
       },
     },
   }

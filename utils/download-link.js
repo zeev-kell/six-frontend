@@ -1,4 +1,4 @@
-export default function downloadLink(data, filename) {
+export function downloadStrLink(data, filename) {
   if (!data) {
     return
   }
@@ -16,6 +16,9 @@ export default function downloadLink(data, filename) {
     )
   }
   const blob = new Blob([data], { type: 'text/json' })
+  downloadBlobLink(blob, filename)
+}
+export function downloadBlobLink(blob, filename) {
   const e = document.createEvent('MouseEvents')
   const a = document.createElement('a')
   a.download = filename
@@ -23,4 +26,5 @@ export default function downloadLink(data, filename) {
   a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
   e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
   a.dispatchEvent(e)
+  window.URL.revokeObjectURL(a.href)
 }

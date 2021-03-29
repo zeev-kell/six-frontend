@@ -26,6 +26,7 @@ $t-color: #409eff;
 }
 
 .el-dialog-dark {
+  color: white;
   .el-dialog {
     background: $black2;
   }
@@ -34,8 +35,12 @@ $t-color: #409eff;
     border-bottom: none;
   }
   .el-dialog__title,
-  .dialog-body,
+  .el-dialog__body,
   .el-dialog__headerbtn .el-dialog__close {
+    color: white;
+  }
+  .el-checkbox,
+  .el-radio {
     color: white;
   }
 }

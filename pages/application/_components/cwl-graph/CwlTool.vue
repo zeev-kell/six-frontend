@@ -1,5 +1,40 @@
+<template>
+  <div class="cwl-tool">
+    <div v-for="(group, index) of toolList" :key="index" class="d-inline-b">
+      <div class="el-button-group">
+        <el-button
+          v-for="btn of group"
+          :key="btn.title"
+          :title="btn.title"
+          :icon="btn.icon"
+          type="dark"
+          size="mini"
+          @click="onClick(btn.action)"
+        ></el-button>
+      </div>
+    </div>
+    <el-dialog title="下载文件" :append-to-body="true" :visible.sync="downloadVisible" center class="el-dialog-dark">
+      <div>
+        <p>选择需要下载的内容</p>
+        <el-checkbox v-model="dMain">主文件</el-checkbox>
+        <el-checkbox v-model="dJob">运行参数文件</el-checkbox>
+      </div>
+      <div>
+        <p>选择下载内容的格式</p>
+        <el-radio v-model="dType" label="json">JSON 格式</el-radio>
+        <el-radio v-model="dType" label="yaml">YAML 格式</el-radio>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="downloadVisible = false">取 消</el-button>
+        <el-button size="mini" type="primary" @click="onDownload">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
+</template>
+
 <script type="text/babel">
   import { SVGArrangePlugin, Workflow } from 'cwl-svg'
+  import { downloadBlobLink } from '@/utils/download-link'
   import { DeletionPlugin } from 'cwl-svg/compiled/src/plugins/deletion/deletion'
   const BUTTON_LIST = {
     run: {
@@ -53,7 +88,18 @@
     data() {
       return {
         scaleStep: 0.1,
+        toolList: [],
+        downloadVisible: false,
+        dMain: false,
+        dJob: true,
+        dType: 'yaml',
       }
+    },
+    mounted() {
+      // 统一处理为数组
+      this.toolList = this.tools.split('|').map((tool) => {
+        return tool.split(',').map((t) => BUTTON_LIST[t])
+      })
     },
     methods: {
       // 自动排版
@@ -87,43 +133,35 @@
         this.$router.push(`/graph-info/${this.$route.params.id}/set-run`)
       },
       download() {
-        this.TheGraph.exportJob()
+        this.downloadVisible = true
+      },
+      onClick(action, ...arg) {
+        this[action](...arg)
+      },
+      async onDownload() {
+        if (!this.dMain && !this.dJob) {
+          return
+        }
+        if (this.dMain && !this.dJob) {
+          this.TheGraph.exportCwl(this.dType)
+        } else if (!this.dMain && this.dJob) {
+          this.TheGraph.exportJob(this.dType)
+        } else if (this.dMain && this.dJob) {
+          const job = this.TheGraph.exportJob(this.dType, true)
+          const main = this.TheGraph.exportCwl(this.dType, true)
+          const JSZip = await import('jszip')
+          // eslint-disable-next-line new-cap
+          const zip = new JSZip.default()
+          zip.file(main.name, main.data)
+          zip.file(job.name, job.data)
+          const content = await zip.generateAsync({ type: 'blob' })
+          const name = main.name.split('.')[0]
+          downloadBlobLink(content, name + '.zip')
+        }
+        this.downloadVisible = false
       },
     },
     inject: ['TheGraph'],
-    render(createElement) {
-      const tools = this.tools.split('|')
-      const createButton = (b) => {
-        const btn = BUTTON_LIST[b]
-        return createElement('el-button', {
-          // 普通的 HTML attribute
-          attrs: {
-            title: btn.title,
-          },
-          // 组件 prop
-          props: {
-            type: 'dark',
-            size: 'mini',
-            icon: btn.icon,
-          },
-          ...BUTTON_LIST[b],
-          on: {
-            click: this[btn.action],
-          },
-        })
-      }
-      return createElement(
-        'div',
-        { class: 'cwl-tool' },
-        tools.map((t) => {
-          if (t.includes(',')) {
-            t = t.split(',')
-            return createElement('el-button-group', t.map(createButton))
-          }
-          return createButton(t)
-        })
-      )
-    },
   }
 </script>
 
@@ -141,6 +179,7 @@
   .el-button--mini {
     padding: 8px;
   }
+  .d-inline-b + .d-inline-b,
   .el-button-group + .el-button,
   .el-button + .el-button-group {
     margin-left: 4px;
