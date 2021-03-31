@@ -1,16 +1,18 @@
 export default class BaseConstants {
-  transition = {}
+  transition = new Map()
 
-  filter(value) {
-    return this.transition[value]
+  translate(value) {
+    return this.transition.get(value)
   }
 
-  toItems() {
-    return Object.keys(this.transition).map((t) => {
-      return {
-        value: t,
-        label: this.transition[t],
-      }
-    })
+  get items() {
+    const items = []
+    for (const [value, label] of this.transition) {
+      items.push({
+        value,
+        label,
+      })
+    }
+    return items
   }
 }

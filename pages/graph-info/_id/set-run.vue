@@ -1,5 +1,5 @@
 <template>
-  <cwl-graph class="h-100v" :item="item" :readonly="true" config-type="run" tools="download|plus,minus,fit|auto" />
+  <cwl-graph class="h-100v" :item="item" :readonly="false" config-type="run" tools="download|plus,minus,fit" />
 </template>
 
 <script type="text/babel">
@@ -7,7 +7,6 @@
   export default {
     components: { CwlGraph },
     async asyncData({ app, params }) {
-      // const item = await app.$axios.$get(`/pipe?pipe_id=${params.id}`)
       const item = await app.$axios.$get(`/pipe/${params.id}`)
       return { item }
     },

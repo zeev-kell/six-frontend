@@ -76,7 +76,6 @@
     },
     components: { CwlGraph },
     async asyncData({ app, params }) {
-      // const item = await app.$axios.$get(`/pipe?pipe_id=${params.id}`)
       const item = await app.$axios.$get(`/pipe/${params.id}`)
       return { item }
     },

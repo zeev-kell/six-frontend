@@ -104,7 +104,7 @@
     methods: {
       // 自动排版
       autoLayout() {
-        // 第一次调用居中，第二次调用重新排列
+        // 重新排列
         this.workflow.getPlugin(SVGArrangePlugin).arrange()
       },
       // 放大

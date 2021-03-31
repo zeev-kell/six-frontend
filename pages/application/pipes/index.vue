@@ -43,7 +43,7 @@
           </el-table-column>
           <el-table-column label="类别" prop="type" sortable width="120">
             <template slot-scope="{ row }">
-              {{ row.type | pipeTypeFilter }}
+              {{ row.type | pipeTypeTranslate }}
             </template>
           </el-table-column>
           <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
@@ -65,7 +65,7 @@
   export default {
     filters: {
       ...intercept,
-      pipeTypeFilter: pipeConstants.filter.bind(pipeConstants),
+      pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
     },
     async asyncData({ app }) {
       const items = await app.$axios.$get('/pipes')
@@ -79,7 +79,7 @@
           type: this.$route.query.type || undefined,
         },
         items: [],
-        typeList: pipeConstants.toItems(),
+        typeList: pipeConstants.items,
       }
     },
     computed: {

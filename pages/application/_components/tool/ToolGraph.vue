@@ -1,7 +1,7 @@
 <script type="text/babel">
   import { SVGJobFileDropPlugin } from '@/pages/application/_components/cwl-graph/plugins/job-file-drop'
   import { SVGRequiredInputMarkup } from '@/pages/application/_components/cwl-graph/plugins/required-input-markup'
-  import { SVGArrangePlugin, SVGNodeMovePlugin, Workflow } from 'cwl-svg'
+  import { SVGNodeMovePlugin, Workflow } from 'cwl-svg'
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
   import { CommandLineToolFactory } from 'cwlts/models/generic/CommandLineToolFactory'
   import CwlGraphMixin from '@/pages/application/_components/cwl-graph/CwlGraphMixin'
@@ -21,18 +21,19 @@
       cwlState(json) {
         this.recreateModel(json)
         // 默认可以放缩，选择节点，线条悬浮，自动放缩
-        const plugins = [...this.getDefaultPlugins(), new SVGNodeMovePlugin(), ...this.plugins]
+        const plugins = [...this.plugins]
         if (this.configType === 'run') {
           plugins.push(new SVGJobFileDropPlugin(), new SVGRequiredInputMarkup())
         }
+        plugins.push(...this.getDefaultPlugins(), new SVGNodeMovePlugin())
         this.workflow = new Workflow({
           editingEnabled: !this.readonly,
           model: this.workflowWrapper,
           svgRoot: this.$refs.svg,
           plugins,
         })
-        const arranger = this.workflow.getPlugin(SVGArrangePlugin)
-        if (arranger) arranger.arrange()
+        // const arranger = this.workflow.getPlugin(SVGArrangePlugin)
+        // if (arranger) arranger.arrange()
         this.updateJob({})
       },
     },

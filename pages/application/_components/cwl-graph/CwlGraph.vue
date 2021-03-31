@@ -54,7 +54,7 @@
     },
     computed: {
       isTool() {
-        return this.item?.type ? this.item?.type === PipeConstants.Constants.TYPE_TOOL : true
+        return this.item?.type ? this.item?.type === PipeConstants.Constants.get('TYPE_TOOL') : true
       },
     },
     methods: {
