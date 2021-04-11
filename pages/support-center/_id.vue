@@ -1,6 +1,6 @@
 <template>
   <el-main>
-    <div v-marked="markdown" class="marked-content"></div>
+    <div v-marked="markdown"></div>
   </el-main>
 </template>
 

@@ -48,12 +48,15 @@
 //
 .menu-normal {
   .is-active .el-submenu__title,
+  .el-menu-item.is-active {
+    font-weight: bold;
+  }
+  .is-active .el-submenu__title,
   .el-submenu__title:hover,
   .el-menu-item.is-active,
   .el-menu-item:hover,
   .el-menu-item:focus {
     background-color: transparent;
-    font-weight: bold;
     color: $theme-color;
   }
 }

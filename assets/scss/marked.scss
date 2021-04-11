@@ -1,0 +1,450 @@
+.marked-content {
+  --md-typeset-table--ascending: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 4h2v12l5.5-5.5 1.42 1.42L12 19.84l-7.92-7.92L5.5 10.5 11 16V4z"/></svg>');
+  --md-typeset-table--descending: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>');
+
+  font-size: 16px;
+  line-height: 1.6;
+  color-adjust: exact;
+
+  p,
+  ul,
+  ol,
+  blockquote {
+    margin: 1em 0;
+  }
+
+  // 1st level headline
+  h1 {
+    margin: 0 0 1.25em;
+    color: #333;
+    font-weight: 300;
+    font-size: 2em;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  // 2nd level headline
+  h2 {
+    margin: 1.6em 0 0.64em;
+    font-weight: 300;
+    font-size: 1.5625em;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  // 3rd level headline
+  h3 {
+    margin: 1.6em 0 0.8em;
+    font-weight: 400;
+    font-size: 1.25em;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+  }
+  // 3rd level headline following an 2nd level headline
+  h2 + h3 {
+    margin-top: 0.8em;
+  }
+
+  // 4th level headline
+  h4 {
+    margin: 1em 0;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  // 5th and 6th level headline
+  h5,
+  h6 {
+    margin: 1.25em 0;
+    color: #333;
+    font-weight: 700;
+    font-size: 0.8em;
+    letter-spacing: -0.01em;
+  }
+
+  // Overrides for 5th level headline
+  h5 {
+    text-transform: uppercase;
+  }
+
+  // Horizontal separators
+  hr {
+    margin: 1.5em 0;
+    border-bottom: 0.05rem dotted hsla(0, 0%, 0%, 0.32);
+  }
+  // Links
+  a {
+    color: hsla(231, 48%, 48%, 1);
+    word-break: break-word;
+
+    // Also enable color transition on pseudo elements
+    &,
+    &::before {
+      transition: color 125ms;
+    }
+
+    // Focused or hovered links
+    &:focus,
+    &:hover {
+      color: hsla(231, 99%, 66%, 1);
+    }
+  }
+  // Code blocks
+  code,
+  pre,
+  kbd {
+    color: hsla(200, 18%, 26%, 1);
+    direction: ltr;
+
+    // Wrap text and hide scollbars
+    @media print {
+      white-space: pre-wrap;
+    }
+  }
+
+  // Inline code blocks
+  code {
+    padding: 0 0.2941176471em;
+    font-size: 0.85em;
+    word-break: break-word;
+    background-color: hsla(0, 0%, 96%, 1);
+    border-radius: 0.1rem;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  // Disable containing block inside headlines
+  h1 code,
+  h2 code,
+  h3 code,
+  h4 code,
+  h5 code,
+  h6 code {
+    margin: initial;
+    padding: initial;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  // Ensure link color in code blocks
+  a > code {
+    color: currentColor;
+  }
+
+  // Unformatted code blocks
+  pre {
+    position: relative;
+    margin: 1em 0;
+    line-height: 1.4;
+
+    // Actual container with code, overflowing
+    > code {
+      display: block;
+      margin: 0;
+      padding: 0.7720588235em 1.1764705882em;
+      overflow: auto;
+      word-break: normal;
+      box-shadow: none;
+      -webkit-box-decoration-break: slice;
+      box-decoration-break: slice;
+      touch-action: auto;
+      scrollbar-width: thin;
+      scrollbar-color: hsla(0, 0%, 0%, 0.32) transparent;
+
+      // Override native scrollbar styles
+      &::-webkit-scrollbar {
+        width: 0.2rem;
+        height: 0.2rem;
+      }
+
+      // Scrollbar thumb
+      &::-webkit-scrollbar-thumb {
+        background-color: hsla(0, 0%, 0%, 0.32);
+      }
+
+      // Override Firefox scrollbar hover color
+      &:hover {
+        scrollbar-color: hsla(231, 99%, 66%, 1) transparent;
+      }
+
+      // Scrollbar thumb
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: hsla(231, 99%, 66%, 1);
+      }
+    }
+  }
+
+  // Keyboard key
+  kbd {
+    display: inline-block;
+    padding: 0 0.6666666667em;
+    color: hsla(0, 0%, 0%, 0.87);
+    font-size: 0.75em;
+    vertical-align: text-top;
+    word-break: break-word;
+    background-color: hsla(0, 0%, 98%, 1);
+    border-radius: 0.1rem;
+    box-shadow: 0 0.1rem 0 0.05rem hsla(0, 0%, 72%, 1), 0 0.1rem 0 hsla(0, 0%, 72%, 1),
+      0 -0.1rem 0.2rem hsla(0, 100%, 100%, 1) inset;
+  }
+
+  // Text highlighting marker
+  mark {
+    color: inherit;
+    word-break: break-word;
+    background-color: hsla(60, 100%, 50%, 0.5);
+    box-decoration-break: clone;
+  }
+
+  // Abbreviations
+  abbr {
+    text-decoration: none;
+    border-bottom: 0.05rem dotted hsla(0, 0%, 0%, 0.54);
+    cursor: help;
+
+    // Render a tooltip for touch devices
+    @media (hover: none) {
+      position: relative;
+
+      // Tooltip
+      &[title]:focus::after,
+      &[title]:hover::after {
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        left: 0;
+        display: inline-block;
+        width: auto;
+        min-width: -webkit-max-content;
+        min-width: -moz-max-content;
+        min-width: max-content;
+        max-width: 80%;
+        margin-top: 2em;
+        padding: 0.2rem 0.3rem;
+        color: hsla(0, 0%, 100%, 1);
+        font-size: 0.7rem;
+        background: hsla(0, 0%, 0%, 0.87);
+        border-radius: 0.1rem;
+        content: attr(title);
+      }
+    }
+  }
+
+  // Small text
+  small {
+    opacity: 0.75;
+  }
+
+  // Superscript and subscript
+  sup,
+  sub {
+    margin-left: 0.078125em;
+  }
+
+  // Blockquotes, possibly nested
+  blockquote {
+    padding-left: 0.6rem;
+    color: hsla(0, 0%, 0%, 0.32);
+    border-left: 0.2rem solid hsla(0, 0%, 0%, 0.32);
+  }
+
+  // Unordered lists
+  ul {
+    list-style-type: disc;
+  }
+
+  // Unordered and ordered lists
+  ul,
+  ol {
+    margin-left: 0.625em;
+    padding: 0;
+
+    // Nested ordered lists
+    ol {
+      list-style-type: lower-alpha;
+
+      // Triply nested ordered list
+      ol {
+        list-style-type: lower-roman;
+      }
+    }
+
+    // List elements
+    li {
+      margin-bottom: 0.5em;
+      margin-left: 1.25em;
+
+      // Decrease vertical spacing
+      p,
+      blockquote {
+        margin: 0.5em 0;
+      }
+
+      // Remove margin on last element
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      // Nested lists
+      ul,
+      ol {
+        margin: 0.5em 0 0.5em 0.625em;
+      }
+    }
+  }
+
+  // Definition lists
+  dd {
+    margin: 1em 0 1.5em 1.875em;
+  }
+
+  // Limit width to container, scale height proportionally
+  img,
+  svg {
+    max-width: 100%;
+    height: auto;
+
+    // Left-aligned
+    &[align='left'] {
+      margin: 1em 1em 1em 0;
+    }
+
+    // Right-aligned
+    &[align='right'] {
+      margin: 1em 0 1em 1em;
+    }
+
+    // Remove top spacing of sole children
+    &[align]:only-child {
+      margin-top: 0;
+    }
+  }
+
+  // Figures
+  figure {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  // Figure captions
+  figcaption {
+    max-width: 24rem;
+    margin: 0.5em auto 2em;
+    font-style: italic;
+  }
+
+  // Limit width to container
+  iframe {
+    max-width: 100%;
+  }
+
+  // Data tables
+  table:not([class]) {
+    display: inline-block;
+    max-width: 100%;
+    overflow: auto;
+    font-size: 0.64rem;
+    background: hsla(0, 0%, 100%, 1);
+    border-radius: 0.1rem;
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05), 0 0 0.05rem rgba(0, 0, 0, 0.1);
+    touch-action: auto;
+
+    // Due to margin collapse because of the necessary inline-block hack, we
+    // cannot increase the bottom margin on the table, so we just increase the
+    // top margin on the following element
+    & + * {
+      margin-top: 1.5em;
+    }
+
+    // Elements inside cells
+    th > *,
+    td > * {
+      // Remove top spacing of first child
+      &:first-child {
+        margin-top: 0;
+      }
+
+      // Remove bottom spacing of last child
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    // Do not wrap links in tables
+    a {
+      word-break: normal;
+    }
+
+    // Table headings
+    th {
+      min-width: 5rem;
+      padding: 0.9375em 1.25em;
+      color: hsla(0, 0%, 100%, 1);
+      vertical-align: top;
+      background-color: hsla(0, 0%, 0%, 0.32);
+
+      // Links in table headings
+      a {
+        color: inherit;
+      }
+    }
+
+    // Table cells
+    td {
+      padding: 0.9375em 1.25em;
+      vertical-align: top;
+      border-top: 0.05rem solid hsla(0, 0%, 0%, 0.07);
+    }
+
+    // Table headings and cells
+    th:not([align]),
+    td:not([align]) {
+      text-align: left;
+    }
+
+    // Table rows
+    tr:first-child td {
+      border-top: 0;
+    }
+
+    // Table rows
+    tr {
+      transition: background-color 125ms;
+
+      // Add background on hover
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.035);
+        box-shadow: 0 0.05rem 0 hsla(0, 0%, 100%, 1) inset;
+      }
+    }
+  }
+
+  // Sortable tables
+  table th[role='columnheader'] {
+    cursor: pointer;
+
+    // Sort icon
+    &::after {
+      display: inline-block;
+      width: 1.2em;
+      height: 1.2em;
+      margin-left: 0.5em;
+      vertical-align: sub;
+      mask-repeat: no-repeat;
+      content: ' ';
+    }
+
+    // Sort ascending
+    &[aria-sort='ascending']::after {
+      background-color: currentColor;
+      mask-image: var(--md-typeset-table--ascending);
+    }
+
+    // Sort descending
+    &[aria-sort='descending']::after {
+      background-color: currentColor;
+      mask-image: var(--md-typeset-table--descending);
+    }
+  }
+}

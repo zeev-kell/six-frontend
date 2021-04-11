@@ -1,7 +1,8 @@
 import marked from 'marked'
 import sanitizeHtml from 'sanitize-html'
 import highlight from 'highlight.js'
-import 'highlight.js/styles/github.css'
+import 'highlight.js/styles/darcula.css'
+import '@/assets/scss/marked.scss'
 
 marked.setOptions({
   highlight(code) {
@@ -29,5 +30,12 @@ export default {
   marked: {
     update: translateMark,
     bind: translateMark,
+    inserted(el) {
+      if (el.className === '') {
+        el.className = 'marked-content'
+      } else if (!el.className.includes('marked-')) {
+        el.className = el.className + ' marked-content'
+      }
+    },
   },
 }
