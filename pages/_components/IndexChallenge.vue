@@ -8,7 +8,7 @@
         <el-carousel-item v-for="item in 4" :key="item">
           <div class="el-row el-row--flex is-align-middle">
             <div class="el-col el-col-12">
-              <img src="/images/coop-01.png" />
+              <img src="/images/coop-01.png" alt="" />
             </div>
             <div class="el-col el-col-6 el-col-offset-1">
               <h2>生物医疗大数据服务</h2>

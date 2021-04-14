@@ -76,7 +76,7 @@
         query: {
           name: this.$route.query.name || '',
           category: this.$route.query.category || '',
-          type: this.$route.query.type || undefined,
+          type: this.$route.query.type || '',
         },
         items: [],
         typeList: pipeConstants.items,
@@ -101,17 +101,17 @@
       },
       tableDate() {
         let data = this.items
-        if (this.query.category) {
+        if (this.query.category !== '') {
           data = data.filter((item) => {
             return item.category === this.query.category
           })
         }
-        if (this.query.name) {
+        if (this.query.name !== '') {
           data = data.filter((item) => {
             return item.name.includes(this.query.name)
           })
         }
-        if (this.query.type) {
+        if (this.query.type !== '') {
           data = data.filter((item) => {
             return item.type === this.query.type
           })

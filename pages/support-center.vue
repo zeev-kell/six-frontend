@@ -63,7 +63,7 @@
   .aside-wrap {
     position: sticky;
     height: 100%;
-    top: 70px;
+    top: 60px;
   }
 
   .aside-wrap__scroll {

@@ -19,6 +19,9 @@ function translateMark(el, binding) {
    */
   const { replace, safe } = binding.modifiers
   const value = replace ? binding.value.replace(/[↵ ]{2,}/g, '  \n') : binding.value
+  if (!value) {
+    return
+  }
   const html = marked(value, { smartypants: false })
   // 首个P元素需要重置一下margin属性
   if (/^<p[> ]/.test(html)) {

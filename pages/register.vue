@@ -40,7 +40,7 @@
           </el-form-item>
           <el-form-item class="text-center mb-0 el-form_error_rl" prop="checked">
             <el-checkbox v-model="form.checked">注册即代表同意</el-checkbox>
-            <el-link type="primary" :underline="false" class="y-baseline" @click="outerVisible = true">
+            <el-link type="primary" :underline="false" class="y-baseline" @click="showUserAgreement()">
               《产品使用协议》
             </el-link>
           </el-form-item>
@@ -55,16 +55,16 @@
       <div class="text-center mt-20">© 2021 Six O'Clock. All Rights Reserved.</div>
       <el-dialog
         title="产品使用协议"
-        :visible.sync="outerVisible"
+        :visible.sync="showUAVisible"
         center
         top="5vh"
         width="80%"
         :close-on-click-modal="false"
         :close-on-press-escape="false"
       >
-        <div v-marked="UserAgreement"></div>
+        <div v-marked="userAgreement" v-loading="loadingUA"></div>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" style="width: 200px" @click="outerVisible = false">确 定</el-button>
+          <el-button type="primary" style="width: 200px" @click="showUAVisible = false">确 定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -82,12 +82,6 @@
     },
     components: {
       CanvasParticle,
-    },
-    async asyncData() {
-      const response = await axios.get('/user-agreement.md')
-      return {
-        UserAgreement: response.data,
-      }
     },
     data() {
       return {
@@ -141,10 +135,11 @@
             },
           ],
         },
-        outerVisible: false,
-        UserAgreement: undefined,
+        showUAVisible: false,
+        userAgreement: undefined,
         isLoadingCode: false,
         loadingCodeText: '获取验证码',
+        loadingUA: false,
       }
     },
     methods: {
@@ -195,6 +190,15 @@
               })
           }
         })
+      },
+      async showUserAgreement() {
+        if (this.userAgreement === undefined) {
+          this.loadingUA = true
+          const response = await axios.get('/user-agreement.md')
+          this.userAgreement = response.data
+          this.loadingUA = false
+        }
+        this.showUAVisible = true
       },
     },
   }
