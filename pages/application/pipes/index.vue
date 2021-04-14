@@ -24,7 +24,7 @@
       </div>
       <div class="table-box">
         <el-table :data="tableDate" style="width: 100%">
-          <el-table-column label="流程名称" prop="name" sortable width="280">
+          <el-table-column label="名称" prop="name" sortable width="280">
             <template slot-scope="{ row }">
               <div class="el-row--flex is-align-middle">
                 <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
@@ -48,7 +48,7 @@
           </el-table-column>
           <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
           <el-table-column label="最近版本" prop="version" width="120"></el-table-column>
-          <el-table-column label="流程介绍" prop="description">
+          <el-table-column label="介绍" prop="description">
             <template slot-scope="{ row }">
               {{ row.description | intercept }}
             </template>

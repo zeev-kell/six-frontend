@@ -3,7 +3,7 @@ import axios from 'axios'
 import Mock from 'better-mock'
 import MockAdapter from 'axios-mock-adapter'
 import _tool from '../plugins/mock/commandline.json'
-import _workflow from '../plugins/mock/cwl.json'
+import _workflow from '../plugins/mock/workflow.json'
 import { Pipe, PipeUrl, Pipes, PipesUrl } from '../plugins/mock/pipe'
 // import { Workflow, WorkflowUrl, WorkflowList, WorkflowListUrl } from '../plugins/mock/workflow'
 
@@ -14,7 +14,7 @@ export default function () {
   // arguments for reply are (status, data, headers)
   mock.onGet(PipeUrl).reply(() => {
     const item = Mock.mock(Pipe)
-    item.type = 0
+    item.type = 1
     item.cwl = item.type === 0 ? _tool : _workflow
     return [200, item]
   })
