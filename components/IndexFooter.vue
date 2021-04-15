@@ -25,7 +25,10 @@
             </nuxt-link>
           </li>
         </ul>
-        <p id="copyright" class="copyright">©2021 Six O'clock <a>粤ICP 备1500xxxx号-1</a></p>
+        <p id="copyright" class="copyright">
+          ©2021 Six O'clock
+          <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021047962号-1</a>
+        </p>
       </div>
     </div>
   </footer>
