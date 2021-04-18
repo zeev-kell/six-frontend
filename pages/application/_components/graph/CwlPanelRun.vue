@@ -19,9 +19,9 @@
 </template>
 
 <script type="text/babel">
-  import CwlPanelMixin from '@/pages/application/_components/cwl-graph/CwlPanelMixin'
-  import { AppHelper } from '@/pages/application/_components/cwl-graph/helpers/AppHelper'
-  import JobStepInspector from '@/pages/application/_components/cwl-graph/JobStepInspector'
+  import CwlPanelMixin from '@/pages/application/_components/graph/CwlPanelMixin'
+  import { AppHelper } from '@/pages/application/_components/graph/helpers/AppHelper'
+  import JobStepInspector from '@/pages/application/_components/graph/JobStepInspector'
 
   export default {
     name: 'CwlRunPanel',

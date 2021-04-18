@@ -1,8 +1,8 @@
 <template>
-  <div class="tool-graph h-100 el-row el-row--flex">
+  <div class="graph-job-editor h-100 el-row el-row--flex">
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100"></svg>
-      <cwl-tool :workflow="workflow" :tools="tools || undefined" />
+      <graph-tool :workflow="workflow" :tools="tools || undefined" />
     </div>
     <transition name="el-fade-in-linear">
       <cwl-panel-params v-if="configType === 'params'" ref="panel" :workflow="workflow" :readonly="readonly" />
@@ -12,18 +12,18 @@
 </template>
 
 <script type="text/babel">
-  import CwlPanelParams from '@/pages/application/_components/cwl-graph/CwlPanelParams'
-  import CwlPanelRun from '@/pages/application/_components/cwl-graph/CwlPanelRun'
-  import cwlTool from '@/pages/application/_components/cwl-graph/CwlTool'
-  import { stringifyObject } from '@/pages/application/_components/cwl-graph/helpers/YamlHelper'
+  import CwlPanelParams from '@/pages/application/_components/graph/CwlPanelParams'
+  import CwlPanelRun from '@/pages/application/_components/graph/CwlPanelRun'
+  import GraphTool from '@/pages/application/_components/graph/GraphTool'
+  import { stringifyObject } from '@/pages/application/_components/graph/helpers/YamlHelper'
   import { FormControl } from '@/pages/application/_components/FormControl'
-  import { DblclickPlugin } from '@/pages/application/_components/cwl-graph/plugins/dblclick-plugin'
+  import { DblclickPlugin } from '@/pages/application/_components/graph/plugins/dblclick-plugin'
   import { downloadStrLink } from '@/utils/download-link'
   import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, ZoomPlugin } from 'cwl-svg'
   import * as Yaml from 'js-yaml'
 
   export default {
-    components: { CwlPanelRun, cwlTool, CwlPanelParams },
+    components: { CwlPanelRun, GraphTool, CwlPanelParams },
     props: {
       cwl: {
         type: [Object, String],

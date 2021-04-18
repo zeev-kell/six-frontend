@@ -82,6 +82,9 @@ class AbstractControl {
     // console.log(json)
     return JSON.stringify(json)
   }
+
+  _forEachChild() {}
+  _updateValue() {}
 }
 
 class FormControl extends AbstractControl {
@@ -257,14 +260,12 @@ class FormArray extends AbstractControl {
   }
 
   insert(index, control) {
-    // TODO
     this.controls.splice(index, 0, control)
     this._registerControl(control)
     this.updateValueAndValidity()
   }
 
   removeAt(index) {
-    // TODO
     this.controls.splice(index, 1)
     this.updateValueAndValidity()
   }

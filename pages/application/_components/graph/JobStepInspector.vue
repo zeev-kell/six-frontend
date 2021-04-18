@@ -95,7 +95,7 @@
 <script type="text/babel">
   import CollapseItem from '@/pages/application/_components/CollapseItem'
   import { FormControl, FormGroup } from '@/pages/application/_components/FormControl'
-  import InputValueEditor from '@/pages/application/_components/cwl-graph/InputValueEditor'
+  import InputValueEditor from '@/pages/application/_components/graph/InputValueEditor'
   import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputModel'
   import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
   export default {

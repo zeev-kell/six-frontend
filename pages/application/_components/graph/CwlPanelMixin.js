@@ -1,4 +1,4 @@
-import { DblclickPlugin } from '@/pages/application/_components/cwl-graph/plugins/dblclick-plugin'
+import { DblclickPlugin } from '@/pages/application/_components/graph/plugins/dblclick-plugin'
 import { Workflow } from 'cwl-svg'
 import { StepModel } from 'cwlts/models/generic/StepModel'
 import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'

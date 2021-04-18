@@ -1,7 +1,7 @@
 <script type="text/babel">
   import { SVGArrangePlugin, Workflow } from 'cwl-svg'
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
-  import CwlGraphMixin from '@/pages/application/_components/cwl-graph/CwlGraphMixin'
+  import CwlGraphMixin from '@/pages/application/_components/graph/CwlGraphMixin'
 
   export default {
     name: 'WorkflowGraph',

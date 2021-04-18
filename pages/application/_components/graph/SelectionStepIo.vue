@@ -110,7 +110,7 @@
 </template>
 
 <script type="text/babel">
-  import TypeSelect from '@/pages/application/_components/cwl-graph/TypeSelect'
+  import TypeSelect from '@/pages/application/_components/graph/TypeSelect'
   import debounce from '@/utils/debounce'
   import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
   import CollapseItem from '@/pages/application/_components/CollapseItem'

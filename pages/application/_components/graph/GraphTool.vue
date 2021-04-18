@@ -1,5 +1,5 @@
 <template>
-  <div class="cwl-tool">
+  <div class="graph-tool">
     <div v-for="(group, index) of toolList" :key="index" class="d-inline-b">
       <div class="el-button-group">
         <el-button
@@ -70,7 +70,7 @@
   }
 
   export default {
-    name: 'CwlTool',
+    name: 'GraphTool',
     props: {
       workflow: {
         type: Workflow,
@@ -166,7 +166,7 @@
 </script>
 
 <style scoped lang="scss" rel="stylesheet">
-  .cwl-tool {
+  .graph-tool {
     position: absolute;
     right: 30px;
     top: 10px;

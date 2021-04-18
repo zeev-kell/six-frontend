@@ -68,7 +68,7 @@
 
 <script type="text/babel">
   import marked from '@/directives/marked'
-  import CwlGraph from '@/pages/application/_components/cwl-graph/CwlGraph'
+  import CwlGraph from '@/pages/application/_components/graph/CwlGraph'
 
   export default {
     directives: {

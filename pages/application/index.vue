@@ -52,7 +52,7 @@
 <script type="text/babel">
   export default {
     asyncData({ redirect }) {
-      // FIXME 默认直接进入列表
+      // 现阶段默认直接进入列表
       redirect('/application/pipes')
     },
   }

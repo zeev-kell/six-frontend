@@ -149,8 +149,8 @@
 </template>
 
 <script type="text/babel">
-  import InputValueEditorModal from '@/pages/application/_components/cwl-graph/InputValueEditorModal'
-  import NativeFileBrowserFormField from '@/pages/application/_components/cwl-graph/NativeFileBrowserFormField'
+  import InputValueEditorModal from '@/pages/application/_components/graph/InputValueEditorModal'
+  import NativeFileBrowserFormField from '@/pages/application/_components/graph/NativeFileBrowserFormField'
   import { FormArray, FormControl, FormGroup } from '@/pages/application/_components/FormControl'
 
   export default {

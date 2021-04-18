@@ -45,12 +45,12 @@
 </template>
 
 <script type="text/babel">
-  import SelectionStep from '@/pages/application/_components/cwl-graph/SelectionStep'
-  import SelectionStepInfo from '@/pages/application/_components/cwl-graph/SelectionStepInfo'
-  import SelectionStepInputs from '@/pages/application/_components/cwl-graph/SelectionStepInputs'
-  import SelectionStepIo from '@/pages/application/_components/cwl-graph/SelectionStepIo'
+  import SelectionStep from '@/pages/application/_components/graph/SelectionStep'
+  import SelectionStepInfo from '@/pages/application/_components/graph/SelectionStepInfo'
+  import SelectionStepInputs from '@/pages/application/_components/graph/SelectionStepInputs'
+  import SelectionStepIo from '@/pages/application/_components/graph/SelectionStepIo'
   import { StepModel } from 'cwlts/models/generic/StepModel'
-  import CwlPanelMixin from '@/pages/application/_components/cwl-graph/CwlPanelMixin'
+  import CwlPanelMixin from '@/pages/application/_components/graph/CwlPanelMixin'
 
   export default {
     name: 'CwlPanelParams',

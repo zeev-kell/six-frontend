@@ -20,7 +20,7 @@
 
 <script type="text/babel">
   import marked from '@/directives/marked'
-  import { AppHelper } from '@/pages/application/_components/cwl-graph/helpers/AppHelper'
+  import { AppHelper } from '@/pages/application/_components/graph/helpers/AppHelper'
 
   export default {
     name: 'SelectionStepInfo',

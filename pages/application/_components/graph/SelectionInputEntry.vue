@@ -122,8 +122,8 @@
 </template>
 
 <script type="text/babel">
-  import { ObjectHelper } from '@/pages/application/_components/cwl-graph/helpers/ObjectHelper'
-  import SelectionInputEntryMap from '@/pages/application/_components/cwl-graph/SelectionInputEntryMap'
+  import { ObjectHelper } from '@/pages/application/_components/graph/helpers/ObjectHelper'
+  import SelectionInputEntryMap from '@/pages/application/_components/graph/SelectionInputEntryMap'
   import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 
   export default {

@@ -1,10 +1,10 @@
 <script type="text/babel">
-  import { SVGJobFileDropPlugin } from '@/pages/application/_components/cwl-graph/plugins/job-file-drop'
-  import { SVGRequiredInputMarkup } from '@/pages/application/_components/cwl-graph/plugins/required-input-markup'
+  import { SVGJobFileDropPlugin } from '@/pages/application/_components/graph/plugins/job-file-drop'
+  import { SVGRequiredInputMarkup } from '@/pages/application/_components/graph/plugins/required-input-markup'
   import { SVGNodeMovePlugin, Workflow } from 'cwl-svg'
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
   import { CommandLineToolFactory } from 'cwlts/models/generic/CommandLineToolFactory'
-  import CwlGraphMixin from '@/pages/application/_components/cwl-graph/CwlGraphMixin'
+  import CwlGraphMixin from '@/pages/application/_components/graph/CwlGraphMixin'
   import { JobHelper } from 'cwlts/models/helpers/JobHelper'
   import { isType } from 'cwlts/models/helpers/utils'
 

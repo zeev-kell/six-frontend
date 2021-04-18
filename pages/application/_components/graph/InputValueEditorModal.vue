@@ -45,7 +45,7 @@
 </template>
 
 <script type="text/babel">
-  import NativeFileBrowserFormField from '@/pages/application/_components/cwl-graph/NativeFileBrowserFormField'
+  import NativeFileBrowserFormField from '@/pages/application/_components/graph/NativeFileBrowserFormField'
   import { FormArray, FormControl, FormGroup } from '@/pages/application/_components/FormControl'
   export default {
     name: 'InputValueEditorModal',
