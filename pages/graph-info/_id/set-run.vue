@@ -1,11 +1,11 @@
 <template>
-  <cwl-graph class="h-100v" :item="item" :readonly="false" config-type="run" tools="download|plus,minus,fit" />
+  <graph-index class="h-100v" :item="item" config-type="run" tools="download|plus,minus,fit" />
 </template>
 
 <script type="text/babel">
-  import CwlGraph from '@/pages/application/_components/graph/CwlGraph'
+  import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
   export default {
-    components: { CwlGraph },
+    components: { GraphIndex },
     async asyncData({ app, params }) {
       const item = await app.$axios.$get(`/pipe/${params.id}`)
       return { item }

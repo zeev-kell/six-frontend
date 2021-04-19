@@ -1,6 +1,6 @@
 <template>
   <div class="selection-step">
-    <el-form ref="ruleForm" label-position="top" :model="ruleForm" :rules="rules">
+    <el-form ref="ruleForm" label-position="top" :model="ruleForm" :rules="rules" @submit.native.prevent>
       <!--ID-->
       <el-form-item label="ID" prop="id">
         <el-step-item v-slot="{ onBlur }" :value="ruleForm.id">

@@ -32,7 +32,7 @@
           <div class="col-xs-6">Class</div>
           <div class="col-xs-6">Value</div>
         </div>
-        <form v-if="hints.length">
+        <form v-if="hints.length" @submit.prevent>
           <ul class="editor-list">
             <li v-for="(control, i) of hints" :key="i">
               <div class="flex-row">

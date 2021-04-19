@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="ruleForm" :rules="rules" label-position="top">
+  <el-form :model="ruleForm" :rules="rules" label-position="top" @submit.native.prevent>
     <!--Required-->
     <div v-if="isInput" class="el-form-item el-row--flex">
       <label class="el-col-full">Required</label>

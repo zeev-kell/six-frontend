@@ -59,7 +59,7 @@
       </div>
       <div class="panel-body">
         <div class="workflow-box">
-          <cwl-graph ref="cwl" :item="item" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
+          <graph-index ref="cwl" :item="item" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
         </div>
       </div>
     </div>
@@ -68,13 +68,13 @@
 
 <script type="text/babel">
   import marked from '@/directives/marked'
-  import CwlGraph from '@/pages/application/_components/graph/CwlGraph'
+  import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
 
   export default {
     directives: {
       ...marked,
     },
-    components: { CwlGraph },
+    components: { GraphIndex },
     async asyncData({ app, params }) {
       const item = await app.$axios.$get(`/pipe/${params.id}`)
       return { item }

@@ -4,7 +4,7 @@
       <div class="container">
         <h2><span>Six<span>O</span>'clock</span> 电子报刊</h2>
         <p>将最新的新闻发送到您的收件箱，这由 Six O'clock 团队策划。</p>
-        <el-form class="el-row el-row--flex is-justify-center">
+        <el-form class="el-row el-row--flex is-justify-center" @submit.native.prevent>
           <el-form-item style="min-width: 300px">
             <el-input placeholder="请输入邮箱">
               <el-button slot="append" icon="el-icon-search"></el-button>

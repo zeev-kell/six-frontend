@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="panel panel-body">
       <div class="search-box">
-        <el-form :inline="true" :model="query">
+        <el-form :inline="true" :model="query" @submit.native.prevent>
           <el-form-item>
             <el-autocomplete v-model="query.name" :fetch-suggestions="queryName" placeholder="按名字筛选">
               <template slot-scope="{ item }">

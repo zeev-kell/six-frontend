@@ -15,7 +15,7 @@
   import CwlPanelParams from '@/pages/application/_components/graph/CwlPanelParams'
   import CwlPanelRun from '@/pages/application/_components/graph/CwlPanelRun'
   import GraphTool from '@/pages/application/_components/graph/GraphTool'
-  import { stringifyObject } from '@/pages/application/_components/graph/helpers/YamlHelper'
+  import { stringifyObject } from '@/pages/application/_components/graph/plugins/yaml-handle'
   import { FormControl } from '@/pages/application/_components/FormControl'
   import { DblclickPlugin } from '@/pages/application/_components/graph/plugins/dblclick-plugin'
   import { downloadStrLink } from '@/utils/download-link'

@@ -1,6 +1,6 @@
 <template>
-  <div class="cwl-graph">
-    <tool-graph
+  <div class="graph-index">
+    <graph-commandline
       v-if="isTool"
       ref="cwl"
       :item="item"
@@ -9,7 +9,7 @@
       :readonly="readonly"
       :tools="tools"
     />
-    <workflow-graph
+    <graph-workflow
       v-else
       ref="cwl"
       :item="item"
@@ -26,13 +26,13 @@
   import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
   import 'cwl-svg/src/plugins/selection/theme.dark.scss'
   import PipeConstants from '@/constants/PipeConstants'
-  import ToolGraph from '@/pages/application/_components/tool/ToolGraph'
-  import WorkflowGraph from '@/pages/application/_components/workflow/WorkflowGraph'
+  import GraphCommandline from '@/pages/application/_components/graph/GraphCommandline'
+  import GraphWorkflow from '@/pages/application/_components/graph/GraphWorkflow'
   export default {
     name: 'CwlGraph',
     components: {
-      ToolGraph,
-      WorkflowGraph,
+      GraphCommandline,
+      GraphWorkflow,
     },
     props: {
       item: {
@@ -54,7 +54,7 @@
     },
     computed: {
       isTool() {
-        return this.item?.type ? this.item?.type === PipeConstants.Constants.get('TYPE_TOOL') : true
+        return this.item?.type ? this.item.type === PipeConstants.Constants.get('TYPE_TOOL') : true
       },
     },
     methods: {
@@ -73,7 +73,7 @@
 
     @include scroll-bar();
   }
-  .cwl-graph {
+  .graph-index {
     background: #3c3c3c;
   }
 </style>

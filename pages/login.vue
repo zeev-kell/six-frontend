@@ -3,7 +3,7 @@
     <div class="login-container">
       <div class="login-box">
         <h1 class="text-center">six o'clock</h1>
-        <el-form ref="form" :model="form" :rules="rules">
+        <el-form ref="form" :model="form" :rules="rules" @submit.native.prevent>
           <el-form-item prop="username">
             <el-input v-model="form.username" placeholder="请输入账号"></el-input>
           </el-form-item>

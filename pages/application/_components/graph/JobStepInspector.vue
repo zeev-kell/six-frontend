@@ -3,7 +3,7 @@
     <div v-if="inputGroups.length">
       <div v-for="group of inputGroups" :key="group.name">
         <collapse-item :title="group.name">
-          <form>
+          <form @submit.prevent>
             <div v-for="(input, index) of group.inputs" :key="index" class="input-box">
               <!--Label and port options-->
               <div class="el-row is-justify-space-between el-row--flex">

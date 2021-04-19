@@ -1,7 +1,7 @@
 <template>
   <div class="el-collapse selection-step-inputs">
     <collapse-item v-for="group of inputGroups" :key="group.name" :title="group.name">
-      <form>
+      <form @submit.prevent>
         <div v-for="input of group.inputs" :key="input.id" class="input-box">
           <!--Label and port options-->
           <div class="el-row is-justify-space-between el-row--flex mb-05r is-align-middle">

@@ -1,5 +1,5 @@
 <template>
-  <div class="tool-graph h-100 el-row el-row--flex">
+  <div class="graph h-100 el-row el-row--flex">
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100"></svg>
       <graph-tool :workflow="workflow" :tools="tools || undefined" />
@@ -15,11 +15,14 @@
   import CwlPanelParams from '@/pages/application/_components/graph/CwlPanelParams'
   import CwlPanelRun from '@/pages/application/_components/graph/CwlPanelRun'
   import GraphTool from '@/pages/application/_components/graph/GraphTool'
-  import { stringifyObject } from '@/pages/application/_components/graph/helpers/YamlHelper'
+  import { SVGJobFileDropPlugin } from '@/pages/application/_components/graph/plugins/job-file-drop'
+  import { SVGRequiredInputMarkup } from '@/pages/application/_components/graph/plugins/required-input-markup'
+  import { stringifyObject } from '@/pages/application/_components/graph/plugins/yaml-handle'
   import { FormControl } from '@/pages/application/_components/FormControl'
   import { DblclickPlugin } from '@/pages/application/_components/graph/plugins/dblclick-plugin'
   import { downloadStrLink } from '@/utils/download-link'
   import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, ZoomPlugin } from 'cwl-svg'
+  import { JobHelper } from 'cwlts/models/helpers/JobHelper'
   import * as Yaml from 'js-yaml'
 
   export default {
@@ -58,16 +61,33 @@
         cwlState: null,
         dataModel: null,
         jobControl: new FormControl({}),
+        validationState: {},
       }
     },
     computed: {
       pipeId() {
         return this.item && this.item.pipe_id
       },
+      isRunJob() {
+        return this.configType === 'run'
+      },
+      defaultPlugins() {
+        const plugins = [...this.plugins, ...this.getDefaultPlugins()]
+        if (this.isRunJob) {
+          plugins.push(new SVGJobFileDropPlugin(), new SVGRequiredInputMarkup())
+        }
+        return plugins
+      },
     },
     watch: {
       workflow() {
         this.$emit('workflow-changed', this.workflow)
+      },
+      cwlState(json) {
+        this.createModel(json)
+        if (this.isRunJob) {
+          this.updateJob({})
+        }
       },
     },
     provide() {
@@ -84,6 +104,11 @@
       // FIX 第一次没有监听到变化
       if (this.cwl && this.cwlState === null) {
         this.cwlState = this.load(this.cwl)
+        this.$nextTick(() => {
+          // 自动放缩 并且 调整排版
+          const arranger = this.workflow.getPlugin(SVGArrangePlugin)
+          if (arranger) arranger.arrange()
+        })
       }
       // FIX 鼠标滚动事件捕抓
       this.$refs.svg.addEventListener(
@@ -125,6 +150,7 @@
         return cwl
       },
       getDefaultPlugins() {
+        // 默认可以放缩，选择节点，线条悬浮，自动放缩
         return [
           new SVGArrangePlugin(),
           new SVGEdgeHoverPlugin(),
@@ -132,6 +158,35 @@
           new DblclickPlugin(),
           new ZoomPlugin(),
         ]
+      },
+      afterModelValidation() {
+        this.validationState = {
+          ...this.validationState,
+          errors: this.dataModel.errors || [],
+          warnings: this.dataModel.warnings || [],
+          isPending: false,
+        }
+      },
+      updateJob(jobObject = {}) {
+        const normalizedJob = this.normalizeJob(jobObject)
+        const controlValue = normalizedJob
+        this.jobControl.setValue(controlValue)
+        this.workflow?.getPlugin(SVGJobFileDropPlugin)?.updateToJobState(controlValue)
+        // If we modified the job, push the update back
+        if (JSON.stringify(normalizedJob) !== JSON.stringify(jobObject)) {
+          // this.metaManager.patchAppMeta('job', normalizedJob)
+        }
+      },
+      normalizeJob(jobObject) {
+        const nullJob = JobHelper.getNullJobInputs(this.workflow.model)
+        const job = jobObject || {}
+        for (const key of Object.keys(job)) {
+          // eslint-disable-next-line no-prototype-builtins
+          if (!nullJob.hasOwnProperty(key)) {
+            delete job[key]
+          }
+        }
+        return { ...nullJob, ...job }
       },
     },
   }

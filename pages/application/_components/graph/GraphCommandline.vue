@@ -5,37 +5,15 @@
   import { WorkflowFactory } from 'cwlts/models/generic/WorkflowFactory'
   import { CommandLineToolFactory } from 'cwlts/models/generic/CommandLineToolFactory'
   import CwlGraphMixin from '@/pages/application/_components/graph/CwlGraphMixin'
-  import { JobHelper } from 'cwlts/models/helpers/JobHelper'
   import { isType } from 'cwlts/models/helpers/utils'
 
   export default {
-    name: 'ToolGraph',
+    name: 'GraphCommandline',
     mixins: [CwlGraphMixin],
     data() {
       return {
         workflowWrapper: null,
-        validationState: {},
       }
-    },
-    watch: {
-      cwlState(json) {
-        this.recreateModel(json)
-        // 默认可以放缩，选择节点，线条悬浮，自动放缩
-        const plugins = [...this.plugins]
-        if (this.configType === 'run') {
-          plugins.push(new SVGJobFileDropPlugin(), new SVGRequiredInputMarkup())
-        }
-        plugins.push(...this.getDefaultPlugins(), new SVGNodeMovePlugin())
-        this.workflow = new Workflow({
-          editingEnabled: !this.readonly,
-          model: this.workflowWrapper,
-          svgRoot: this.$refs.svg,
-          plugins,
-        })
-        // const arranger = this.workflow.getPlugin(SVGArrangePlugin)
-        // if (arranger) arranger.arrange()
-        this.updateJob({})
-      },
     },
     mounted() {
       this.$watch('jobControl', {
@@ -54,7 +32,7 @@
       })
     },
     methods: {
-      recreateModel(json) {
+      createDataModel(json) {
         this.dataModel = CommandLineToolFactory.from(json, 'document')
         // this.dataModel.onCommandLineResult((cmdResult) => {
         //   this.commandLineParts.next(cmdResult)
@@ -84,34 +62,16 @@
         // set job on the tool to be the actual job, so the command line is the real thing
         this.dataModel.setJobInputs()
       },
-      afterModelValidation() {
-        this.validationState = {
-          ...this.validationState,
-          errors: this.dataModel.errors || [],
-          warnings: this.dataModel.warnings || [],
-          isPending: false,
-        }
-      },
-      updateJob(jobObject = {}) {
-        const normalizedJob = this.normalizeJob(jobObject)
-        const controlValue = normalizedJob
-        this.jobControl.setValue(controlValue)
-        this.workflow?.getPlugin(SVGJobFileDropPlugin)?.updateToJobState(controlValue)
-        // If we modified the job, push the update back
-        if (JSON.stringify(normalizedJob) !== JSON.stringify(jobObject)) {
-          // this.metaManager.patchAppMeta('job', normalizedJob)
-        }
-      },
-      normalizeJob(jobObject) {
-        const nullJob = JobHelper.getNullJobInputs(this.workflow.model)
-        const job = jobObject || {}
-        for (const key in job) {
-          // eslint-disable-next-line no-prototype-builtins
-          if (!nullJob.hasOwnProperty(key)) {
-            delete job[key]
-          }
-        }
-        return { ...nullJob, ...job }
+      createModel(json) {
+        this.createDataModel(json)
+        const plugins = this.defaultPlugins
+        plugins.push(new SVGNodeMovePlugin())
+        this.workflow = new Workflow({
+          editingEnabled: !this.readonly,
+          model: this.workflowWrapper,
+          svgRoot: this.$refs.svg,
+          plugins,
+        })
       },
     },
   }

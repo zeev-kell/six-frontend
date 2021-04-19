@@ -1,6 +1,6 @@
 <template>
   <el-dialog title="Secondary files and metadata" :visible.sync="dialogFormVisible" class="el-dialog-dark">
-    <el-form>
+    <el-form @submit.native.prevent>
       <div class="form-group">
         <label>Secondary files</label>
         <div v-for="(group, idx) of controls" :key="idx" class="mb-1r el-input el-input-group el-input-group--append">
