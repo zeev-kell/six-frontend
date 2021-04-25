@@ -1,26 +1,40 @@
 <template>
   <div class="container-fluid">
     <div class="panel panel-body">
-      <div class="search-box">
-        <el-form :inline="true" :model="query" @submit.native.prevent>
-          <el-form-item>
-            <el-autocomplete v-model="query.name" :fetch-suggestions="queryName" placeholder="按名字筛选">
-              <template slot-scope="{ item }">
-                <div class="name">{{ item.value }}</div>
-              </template>
-            </el-autocomplete>
-          </el-form-item>
-          <el-form-item>
-            <el-select v-model="query.type" placeholder="按类别筛选" clearable>
-              <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-select v-model="query.category" placeholder="按类型筛选" clearable>
-              <el-option v-for="item in categoryList" :key="item" :label="item" :value="item"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
+      <div class="el-row--flex is-justify-space-between pb-10">
+        <div class="search-box">
+          <el-form class="form-inline" :inline="true" :model="query" @submit.native.prevent>
+            <el-form-item>
+              <el-autocomplete v-model="query.name" :fetch-suggestions="queryName" placeholder="按名字筛选">
+                <template slot-scope="{ item }">
+                  <div class="name">{{ item.value }}</div>
+                </template>
+              </el-autocomplete>
+            </el-form-item>
+            <el-form-item>
+              <el-select v-model="query.type" placeholder="按类别筛选" clearable>
+                <el-option
+                  v-for="item in typeList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-select v-model="query.category" placeholder="按类型筛选" clearable>
+                <el-option v-for="item in categoryList" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div class="action-box">
+          <has-develop>
+            <nuxt-link v-slot="{ navigate }" to="/application/pipe/new-pipe" custom>
+              <el-button type="primary" role="link" @click="navigate" @keypress.enter="navigate">新建</el-button>
+            </nuxt-link>
+          </has-develop>
+        </div>
       </div>
       <div class="table-box">
         <el-table :data="tableDate" style="width: 100%">
@@ -60,9 +74,11 @@
 </template>
 
 <script type="text/babel">
+  import HasDevelop from '@/components/common/HasDevelop'
   import intercept from '@/filters/intercept'
   import pipeConstants from '@/constants/PipeConstants'
   export default {
+    components: { HasDevelop },
     filters: {
       ...intercept,
       pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),

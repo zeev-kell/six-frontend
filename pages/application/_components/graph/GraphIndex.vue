@@ -17,13 +17,11 @@
   import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
   import 'cwl-svg/src/plugins/selection/theme.dark.scss'
   import PipeConstants from '@/constants/PipeConstants'
-  import GraphCommandline from '@/pages/application/_components/graph/GraphCommandline'
-  import GraphWorkflow from '@/pages/application/_components/graph/GraphWorkflow'
   export default {
     name: 'CwlGraph',
     components: {
-      GraphCommandline,
-      GraphWorkflow,
+      GraphCommandline: () => import('@/pages/application/_components/graph/GraphCommandline'),
+      GraphWorkflow: () => import('@/pages/application/_components/graph/GraphWorkflow'),
     },
     props: {
       item: {
