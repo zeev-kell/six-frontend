@@ -1,16 +1,7 @@
 <template>
   <div class="graph-index">
-    <graph-commandline
-      v-if="isTool"
-      ref="cwl"
-      :item="item"
-      :config-type="configType"
-      :cwl="item.cwl"
-      :readonly="readonly"
-      :tools="tools"
-    />
-    <graph-workflow
-      v-else
+    <component
+      :is="graphComponent"
       ref="cwl"
       :item="item"
       :config-type="configType"
@@ -53,8 +44,10 @@
       },
     },
     computed: {
-      isTool() {
-        return this.item?.type ? this.item.type === PipeConstants.Constants.get('TYPE_TOOL') : true
+      graphComponent() {
+        // 根据当前类型实例化不同的组件
+        const isTool = this.item?.type ? this.item.type === PipeConstants.Constants.get('TYPE_TOOL') : true
+        return isTool ? 'graph-commandline' : 'graph-workflow'
       },
     },
     methods: {

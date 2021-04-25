@@ -1,5 +1,5 @@
 <template>
-  <el-main>
+  <el-main style="max-width: 900px">
     <div v-marked="markdown"></div>
   </el-main>
 </template>
