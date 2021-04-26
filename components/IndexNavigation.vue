@@ -5,6 +5,7 @@
         <div class="navbar-logo">
           <nuxt-link class="logo" to="/">
             <logo-svg class="logo-svg" />
+            <logo-png class="logo-svg" />
           </nuxt-link>
         </div>
       </div>
@@ -25,11 +26,13 @@
 
 <script type="text/babel">
   import LogoSvg from '@/components/LogoSvg'
+  import LogoPng from '@/components/LogoPng'
 
   const SCROLL_TRANSPORT = 100
   export default {
     components: {
       LogoSvg,
+      LogoPng,
     },
     mounted() {
       this.onWindowScroll()

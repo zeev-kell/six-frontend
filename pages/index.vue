@@ -108,7 +108,7 @@
 </script>
 <style lang="scss" scoped>
   .index-banner {
-    background: url('/images/banner.jpg') no-repeat;
+    background: url('/images/banner-2.jpg') no-repeat;
     background-size: cover;
     min-height: 100vh;
     height: 600px;

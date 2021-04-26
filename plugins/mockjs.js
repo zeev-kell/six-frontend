@@ -1,5 +1,6 @@
 import Mock from 'better-mock'
-import { Pipe, Pipes, PipeUrl, PipesUrl } from '../plugins/mock/pipe'
+// eslint-disable-next-line import/named
+import { Pipe, Pipes, PipeUrl, PipesUrl, addPipeUrl } from '../plugins/mock/pipe'
 import _tool from '../plugins/mock/commandline.json'
 import _workflow from '../plugins/mock/workflow.json'
 // import { Workflow, WorkflowUrl, WorkflowList, WorkflowListUrl } from '../plugins/mock/workflow'
@@ -36,6 +37,12 @@ Mock.mock(PipeUrl, function () {
 })
 Mock.mock(PipesUrl, function () {
   return Mock.mock(Pipes).items
+})
+Mock.mock(addPipeUrl, 'post', function () {
+  return Mock.mock({
+    code: 100,
+    msg: '登陆成功',
+  })
 })
 // Mock.mock(WorkflowUrl, function () {
 //   return Mock.mock(Workflow)

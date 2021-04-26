@@ -24,5 +24,6 @@ export const Pipe = {
   website: 'http://www.bwa.com',
 }
 export const PipeUrl = /\/api\/v1\/pipe[^s]/
+export const addPipeUrl = /\/api\/v1\/pipe/
 export const Pipes = { 'items|10': [Pipe] }
 export const PipesUrl = /\/api\/v1\/pipes/

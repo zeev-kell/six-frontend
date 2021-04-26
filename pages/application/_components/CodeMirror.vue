@@ -7,8 +7,10 @@
 
 <script>
   import _CodeMirror from 'codemirror'
-  import 'codemirror/mode/javascript/javascript.js'
+  import 'codemirror/mode/yaml/yaml'
   import 'codemirror/lib/codemirror.css'
+  // theme css
+  import 'codemirror/theme/mbo.css'
   const CodeMirror = window.CodeMirror || _CodeMirror
 
   export default {
