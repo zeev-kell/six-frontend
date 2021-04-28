@@ -4,7 +4,7 @@
       <div class="navbar el-col-equal">
         <div class="navbar-logo">
           <nuxt-link to="/application" class="logo">
-            <logo-svg class="logo-svg" />
+            <logo-png />
           </nuxt-link>
         </div>
       </div>
@@ -49,11 +49,11 @@
 
 <script type="text/babel">
   import { mapGetters, mapActions } from 'vuex'
-  import LogoSvg from '@/components/LogoSvg'
+  import LogoPng from '@/components/LogoPng'
   export default {
     name: 'AppNavigation',
     components: {
-      LogoSvg,
+      LogoPng,
     },
     computed: {
       ...mapGetters(['username', 'loggedIn']),

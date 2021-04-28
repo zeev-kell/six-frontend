@@ -101,25 +101,6 @@
   border-bottom: none;
 }
 
-.logo-svg {
-  height: 40px;
-  margin-top: 10px;
-
-  .rect,
-  .edge-2,
-  .text {
-    fill: #3e3a39;
-  }
-
-  .rect {
-    fill-opacity: 0;
-  }
-
-  .edge-1 {
-    fill: #0071bc;
-  }
-}
-
 .nav-darken .el-menu .el-menu-item {
   color: white;
   background-color: $nav-darken-bg;
@@ -135,12 +116,6 @@
     color: white;
     background-color: $nav-darken-bg-over;
   }
-
-  .logo-svg {
-    .text {
-      fill: var(--light_grey);
-    }
-  }
 }
 
 .nav-white {
@@ -151,10 +126,8 @@
     color: var(--s-theme-color--dark);
   }
 
-  .logo-svg {
-    .text {
-      fill: #3e3a39;
-    }
+  .logo-png {
+    color: var(--s-theme-color--dark);
   }
 }
 

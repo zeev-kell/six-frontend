@@ -92,6 +92,10 @@
     layout: 'IndexLayoutBase',
     methods: {
       openMsg(type) {
+        if (type === 'installer') {
+          window.open('/installer.exe')
+          return
+        }
         this.$alert(...MSG[type], { dangerouslyUseHTMLString: true })
       },
     },
