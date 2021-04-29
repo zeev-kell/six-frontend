@@ -10,7 +10,6 @@
   overflow-x: auto !important;
 }
 /deep/ .markdown-theme-gitHub pre * {
-  font-family: Consolas !important;
 }
 /deep/ .markdown-theme-gitHub .hljs-comment,
 /deep/ .markdown-theme-gitHub .hljs-quote {

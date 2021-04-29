@@ -12,7 +12,6 @@
   margin: 10px 0 !important;
 }
 /deep/ .markdown-theme-light pre code {
-  font-family: Consolas !important;
   font-size: 13px;
   line-height: 1 !important;
   color: #444;
@@ -79,7 +78,6 @@
 /deep/ .markdown-theme-light code {
   display: inline-block;
   background: #f7f7f7;
-  font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
   margin: 0 3px;
   padding: 1px 5px;
   border-radius: 3px;

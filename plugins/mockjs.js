@@ -11,6 +11,7 @@ Mock.mock(/\/api\/v1\/login/, 'post', function (options) {
     code: 100,
     data: {
       admin: false,
+      permissions: 1,
       expires_at: 1923980785 + Mock.Random.integer(1000, 100000),
       refresh_token: Mock.Random.string('lower', 32),
       token: Mock.Random.string('lower', 32),

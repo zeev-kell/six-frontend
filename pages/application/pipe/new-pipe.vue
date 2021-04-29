@@ -3,15 +3,31 @@
     <div class="panel">
       <div class="panel-body el-row">
         <div class="el-col-12">
-          <el-form ref="formModel" label-width="80px" :model="formModel" :rules="rules">
+          <el-form ref="formModel" label-width="80px" :model="formModel" :rules="rules" size="medium">
             <el-form-item label="名称" prop="name">
-              <el-input v-model="formModel.name"></el-input>
+              <el-input v-model="formModel.name" placeholder="请输入名称" />
             </el-form-item>
             <el-form-item label="版本" prop="version">
-              <el-input v-model="formModel.version"></el-input>
+              <el-input v-model="formModel.version" placeholder="请输入版本" />
+            </el-form-item>
+            <el-form-item label="分类" prop="category">
+              <el-input v-model="formModel.category" placeholder="请输入分类" />
+            </el-form-item>
+            <el-form-item label="类别" prop="type">
+              <el-select v-model="formModel.type" placeholder="请选择类别" clearable style="width: 100%">
+                <el-option
+                  v-for="item in typeList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="地址" prop="description">
+              <el-input v-model="formModel.website" placeholder="请输入地址" />
             </el-form-item>
             <el-form-item label="描述" prop="description">
-              <el-input v-model="formModel.description"></el-input>
+              <el-input v-model="formModel.description" placeholder="请输入描述" />
             </el-form-item>
           </el-form>
         </div>
@@ -21,7 +37,7 @@
       <div class="panel-header">
         <h2 class="mx-0">示例教程</h2>
       </div>
-      <div class="panel-body">
+      <div class="panel-body marked-content">
         <client-only placeholder="Codemirror Loading...">
           <markdown v-model="formModel.tutorial" />
         </client-only>
@@ -38,7 +54,7 @@
       </div>
     </div>
     <div class="el-row text-right mt-20">
-      <el-button type="primary" icon="el-icon-circle-plus" size="success" :loading="loading" @click="onSubmit">
+      <el-button type="primary" icon="el-icon-plus" size="success" :loading="loading" @click="onSubmit">
         保存
       </el-button>
     </div>
@@ -46,6 +62,7 @@
 </template>
 
 <script type="text/babel">
+  import pipeConstants from '@/constants/PipeConstants'
   export default {
     components: {
       codemirror: () => import('@/pages/application/_components/CodeMirror'),
@@ -57,7 +74,10 @@
           name: '',
           version: '',
           description: '',
+          category: '',
+          website: '',
           tutorial: '',
+          type: '',
           cwl: '',
         },
         rules: {
@@ -67,6 +87,11 @@
           ],
           version: [
             { required: true, message: '请输入版本', trigger: 'blur' },
+            { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
+          ],
+          type: [{ required: true, message: '请选择类型', trigger: 'change' }],
+          category: [
+            { required: true, message: '请输入分类', trigger: 'blue' },
             { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
           ],
         },
@@ -80,6 +105,7 @@
           theme: 'default',
         },
         loading: false,
+        typeList: pipeConstants.items,
       }
     },
     methods: {

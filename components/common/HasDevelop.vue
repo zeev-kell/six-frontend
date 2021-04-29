@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!role">
+  <div v-if="permissions === 1">
     <slot></slot>
   </div>
 </template>
@@ -9,7 +9,7 @@
   export default {
     name: 'HasDevelop',
     computed: {
-      ...mapGetters(['role']),
+      ...mapGetters(['permissions']),
     },
   }
 </script>
