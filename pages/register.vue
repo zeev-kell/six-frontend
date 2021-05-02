@@ -96,15 +96,13 @@
         },
         isLoading: false,
         rules: {
-          username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
-          password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
-          surepassword: [
+          username: [
+            { required: true, message: '账号不能为空', trigger: 'blur' },
+            { min: 6, message: '长度在6到20个字符', trigger: 'blur' },
             {
               validator: (rule, value, callback) => {
-                if (value === '') {
-                  callback(new Error('请再次输入密码'))
-                } else if (value !== this.form.password) {
-                  callback(new Error('两次输入密码不一致!'))
+                if (!/^[a-zA-Z0-9_-]{6,20}$/.test(value)) {
+                  callback(new Error('至少6个字符（字母，数字，下划线）'))
                 } else {
                   callback()
                 }
@@ -112,6 +110,37 @@
               trigger: 'blur',
             },
           ],
+          password: [
+            { required: true, message: '密码不能为空', trigger: 'blur' },
+            { min: 6, message: '长度在 6 到 20 个字符', trigger: 'blur' },
+            {
+              validator: (rule, value, callback) => {
+                // 密码强度正则，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
+                // const reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/
+                const flag = [/[a-zA-Z]/, /[0-9]/, /[!@#$%^&*?.]/].map((r) => r.test(value)).filter((r) => r)
+                if (flag.length !== 2) {
+                  callback(new Error('至少包含字母、数字和特殊字符(半角)中的两种'))
+                } else {
+                  callback()
+                }
+              },
+              trigger: 'blur',
+            },
+          ],
+          // surepassword: [
+          //   {
+          //     validator: (rule, value, callback) => {
+          //       if (value === '') {
+          //         callback(new Error('请再次输入密码'))
+          //       } else if (value !== this.form.password) {
+          //         callback(new Error('两次输入密码不一致!'))
+          //       } else {
+          //         callback()
+          //       }
+          //     },
+          //     trigger: 'blur',
+          //   },
+          // ],
           phone: [
             {
               required: true,

@@ -16,16 +16,16 @@
     display: inline-block;
     height: 100%;
     width: auto;
-    margin-right: 5px;
+    margin-right: 10px;
   }
   .logo-black {
     display: none;
   }
   .logo-wrap {
     font-size: 18px;
-    height: 40px;
+    height: 30px;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 15px;
   }
 </style>
 <style lang="scss">
