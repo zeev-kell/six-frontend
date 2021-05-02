@@ -1,7 +1,9 @@
 <template>
-  <div v-if="permissions === 1">
-    <slot></slot>
-  </div>
+  <client-only>
+    <div v-if="permissions === 1">
+      <slot></slot>
+    </div>
+  </client-only>
 </template>
 
 <script type="text/babel">
