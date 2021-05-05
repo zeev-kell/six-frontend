@@ -93,7 +93,7 @@
     methods: {
       openMsg(type) {
         if (type === 'installer') {
-          window.open('/installer.exe')
+          window.open(process.env.RESOURCES_URL + '/dist/latest/installer.exe')
           return
         }
         this.$alert(...MSG[type], { dangerouslyUseHTMLString: true })

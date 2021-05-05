@@ -59,7 +59,7 @@
             </a>
           </div>
           <div class="el-col el-col-auto mb-2r text-center pro-panel">
-            <a href="https://github.com/6-oclock/example-data" target="_blank" class="a-link">
+            <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link">
               <el-card shadow="hover" class="pro-card">
                 <div class="pro-icon">
                   <i class="el-icon-files"></i>
@@ -104,6 +104,11 @@
 <script type="text/babel">
   export default {
     layout: 'IndexLayout',
+    data() {
+      return {
+        RESOURCES_URL: process.env.RESOURCES_URL,
+      }
+    },
   }
 </script>
 <style lang="scss" scoped>

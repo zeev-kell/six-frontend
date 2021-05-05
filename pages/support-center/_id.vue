@@ -8,6 +8,7 @@
   import marked from '@/directives/marked'
   import menus from '@/pages/support-center/menus'
   import axios from 'axios'
+  const BLOG_URL = process.env.RESOURCES_URL + '/blog'
   export default {
     directives: {
       ...marked,
@@ -17,10 +18,10 @@
       if (!menu) {
         return redirect('/404')
       }
-      const response = await axios.get(process.env.BLOG_URL + '/' + encodeURIComponent(menu.md))
+      const response = await axios.get(BLOG_URL + '/' + encodeURIComponent(menu.md))
       const markdown = response.data.replace(/(!\[.*?]\()img\//gi, (matchStr, subStr) => {
         // 替换图片的地址
-        return subStr + process.env.BLOG_URL + '/img/'
+        return subStr + BLOG_URL + '/img/'
       })
       return { markdown, title: menu.text }
     },

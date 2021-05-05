@@ -17,13 +17,13 @@
       <div class="container">
         <ul class="list-unstyled">
           <li><a href="https://github.com/6-oclock" target="_blank">GitHub 仓库</a></li>
-          <li><a>实例</a></li>
-          <li><a>优站精选</a></li>
-          <li>
-            <nuxt-link v-slot="{ navigate }" to="/about-us" custom>
-              <a role="link" class="pointer" @click="navigate" @keypress.enter="navigate">关于我们</a>
-            </nuxt-link>
-          </li>
+          <!--          <li><a>实例</a></li>-->
+          <!--          <li><a>优站精选</a></li>-->
+          <!--          <li>-->
+          <!--            <nuxt-link v-slot="{ navigate }" to="/about-us" custom>-->
+          <!--              <a role="link" class="pointer" @click="navigate" @keypress.enter="navigate">关于我们</a>-->
+          <!--            </nuxt-link>-->
+          <!--          </li>-->
         </ul>
         <p id="copyright" class="copyright">
           ©2021 Six O'clock
