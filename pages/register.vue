@@ -2,7 +2,7 @@
   <div class="container-fluid" style="padding: 1px">
     <div class="register-container">
       <div class="register-box">
-        <h1 class="text-center">six o'clock</h1>
+        <h1 class="text-center">六点了技术</h1>
         <el-form ref="form" :model="form" :rules="rules" @submit.native.prevent>
           <el-form-item prop="username">
             <el-input v-model="form.username" placeholder="请输入账号"></el-input>
@@ -52,7 +52,10 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="text-center mt-20">© 2021 Six O'Clock. All Rights Reserved.</div>
+      <div class="text-center mt-20">
+        ©2021 六点了技术
+        <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021047962号-1</a>
+      </div>
       <el-dialog
         title="产品使用协议"
         :visible.sync="showUAVisible"

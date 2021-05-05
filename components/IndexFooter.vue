@@ -26,7 +26,7 @@
           <!--          </li>-->
         </ul>
         <p id="copyright" class="copyright">
-          ©2021 Six O'clock
+          ©2021 六点了技术
           <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021047962号-1</a>
         </p>
       </div>
