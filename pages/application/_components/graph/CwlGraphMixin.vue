@@ -111,13 +111,15 @@
         })
       }
       // FIX 鼠标滚动事件捕抓
-      this.$refs.svg.addEventListener(
-        'wheel',
-        (event) => {
-          event.preventDefault()
-        },
-        true
-      )
+      if (!this.readonly) {
+        this.$refs.svg.addEventListener(
+          'wheel',
+          (event) => {
+            event.preventDefault()
+          },
+          true
+        )
+      }
     },
     methods: {
       // 导出数据
@@ -151,13 +153,11 @@
       },
       getDefaultPlugins() {
         // 默认可以放缩，选择节点，线条悬浮，自动放缩
-        return [
-          new SVGArrangePlugin(),
-          new SVGEdgeHoverPlugin(),
-          new SelectionPlugin(),
-          new DblclickPlugin(),
-          new ZoomPlugin(),
-        ]
+        const plugins = [new SVGArrangePlugin(), new SVGEdgeHoverPlugin(), new SelectionPlugin(), new DblclickPlugin()]
+        if (!this.readonly) {
+          plugins.push(new ZoomPlugin())
+        }
+        return plugins
       },
       afterModelValidation() {
         this.validationState = {

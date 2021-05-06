@@ -1,24 +1,24 @@
 <template>
   <el-header>
     <div class="navbar-header el-row--flex nav-darken">
-      <div class="navbar el-col-equal">
+      <div class="navbar">
         <div class="navbar-logo">
-          <nuxt-link to="/application" class="logo">
+          <nuxt-link to="/" class="logo">
             <logo-png />
           </nuxt-link>
         </div>
       </div>
-      <!--      <div class="el-col-equal">-->
-      <!--        <el-menu-->
-      <!--          :default-active="$route.path"-->
-      <!--          :router="true"-->
-      <!--          mode="horizontal"-->
-      <!--          background-color="#545c64"-->
-      <!--          text-color="#fff"-->
-      <!--          active-text-color="#ffd04b"-->
-      <!--          ><el-menu-item index="/application/u-project">我的项目</el-menu-item>-->
-      <!--        </el-menu>-->
-      <!--      </div>-->
+      <div class="el-col-equal">
+        <el-menu
+          :default-active="$route.path"
+          :router="true"
+          mode="horizontal"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          ><el-menu-item index="/application/pipes">主页</el-menu-item>
+        </el-menu>
+      </div>
       <el-menu
         :default-active="$route.path"
         :router="true"

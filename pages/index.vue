@@ -12,6 +12,9 @@
           <el-button plain type="primary pass">云计算协作</el-button>
         </a>
       </div>
+      <div class="down-btn-wrap">
+        <div class="down-btn" @click="scrollToNext()"></div>
+      </div>
     </section>
     <section id="section-product" class="section-product">
       <div class="section-title">
@@ -102,6 +105,7 @@
 </template>
 
 <script type="text/babel">
+  import scrollTop from '@/utils/animate-scroll'
   export default {
     layout: 'IndexLayout',
     data() {
@@ -109,15 +113,23 @@
         RESOURCES_URL: process.env.RESOURCES_URL,
       }
     },
+    methods: {
+      scrollToNext() {
+        const height = document.querySelector('.index-banner').offsetHeight
+        scrollTop(document.documentElement, height)
+      },
+    },
   }
 </script>
 <style lang="scss" scoped>
+  @import './assets/scss/variables';
   .index-banner {
     background: url('/images/banner-2.jpg') no-repeat;
     background-size: cover;
     min-height: 100vh;
     height: 600px;
     color: var(--light_grey);
+    position: relative;
   }
 
   .a-link {
@@ -139,5 +151,50 @@
   .pro-icon {
     font-size: 80px;
     color: $theme-color;
+  }
+
+  .down-btn-wrap {
+    position: absolute;
+    bottom: 10%;
+    width: 100%;
+    animation: shake 1s;
+    animation-iteration-count: infinite;
+    display: flex;
+    justify-content: center;
+  }
+
+  .down-btn {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    transform: rotate(45deg);
+  }
+
+  @keyframes shake {
+    0%,
+    20%,
+    53%,
+    80%,
+    to {
+      transform: translate(0);
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    40%,
+    43% {
+      transform: translateY(-10px);
+      transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    }
+
+    70% {
+      transform: translateY(-5px);
+      transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    }
+
+    90% {
+      transform: translateY(-4px);
+    }
   }
 </style>
