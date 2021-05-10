@@ -6,17 +6,20 @@
           {{ item['name'] }}
         </h2>
         <div class="el-col el-col-8 text-right">
-          <!--          <el-button type="primary" icon="el-icon-document-copy" size="medium">复制</el-button>-->
+          <!--          <el-button type="primary" icon="el-icon-document-copy" >复制</el-button>-->
           <a :href="'/graph-info/' + item['pipe_id'] + '/set-run'" target="_blank">
-            <el-button type="primary" icon="el-icon-caret-right" size="medium">设置运行</el-button>
+            <el-button type="primary" icon="el-icon-caret-right">设置运行</el-button>
           </a>
           <el-dropdown trigger="click" size="medium" @command="handleDownload">
-            <el-button type="info" icon="el-icon-download" size="medium">下载</el-button>
+            <el-button type="info" icon="el-icon-download">下载</el-button>
             <el-dropdown-menu slot="dropdown" class="el-dropdown-info">
               <el-dropdown-item command="json">JSON 格式</el-dropdown-item>
               <el-dropdown-item command="cwl">YAML 格式</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
+          <has-develop>
+            <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe">删除</el-button>
+          </has-develop>
         </div>
       </div>
       <div class="panel-body w-info">
@@ -66,6 +69,7 @@
 </template>
 
 <script type="text/babel">
+  import HasDevelop from '@/components/common/HasDevelop'
   import marked from '@/directives/marked'
   import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
 
@@ -73,7 +77,7 @@
     directives: {
       ...marked,
     },
-    components: { GraphIndex },
+    components: { HasDevelop, GraphIndex },
     async asyncData({ app, params }) {
       const item = await app.$axios.$get(`/pipe/${params.id}`)
       return { item }
@@ -86,6 +90,23 @@
     methods: {
       handleDownload(type = 'cwl') {
         this.$refs.cwl.exportCwl(type)
+      },
+      handleDeletePipe() {
+        this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(() => {
+            return this.$$axios.delete('/pipe/' + this.$route.params.id).then(() => {
+              this.$message({
+                type: 'success',
+                message: '删除成功!',
+              })
+              this.$router.push('/application/pipes')
+            })
+          })
+          .catch(() => {})
       },
     },
   }

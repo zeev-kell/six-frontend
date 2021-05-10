@@ -1,13 +1,14 @@
 <template>
-  <client-only>
-    <div v-if="permissions === 1">
+  <client-only v-if="permissions === 1">
+    <span class="promise-group">
       <slot></slot>
-    </div>
+    </span>
   </client-only>
 </template>
 
 <script type="text/babel">
   import { mapGetters } from 'vuex'
+
   export default {
     name: 'HasDevelop',
     computed: {
@@ -15,3 +16,9 @@
     },
   }
 </script>
+
+<style lang="scss">
+  .promise-group .el-button + .el-button {
+    margin-left: 0;
+  }
+</style>

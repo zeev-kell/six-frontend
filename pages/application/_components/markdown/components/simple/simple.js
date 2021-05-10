@@ -22,7 +22,7 @@ export default {
       }
       setTimeout(() => {
         const textarea = this.$refs.textarea
-        textarea.focus()
+        // textarea.focus()
         textarea.addEventListener('keydown', (e) => {
           if (e.keyCode === 83) {
             if (e.metaKey || e.ctrlKey) {

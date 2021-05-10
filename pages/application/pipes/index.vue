@@ -31,13 +31,15 @@
         <div class="action-box">
           <has-develop>
             <nuxt-link v-slot="{ navigate }" to="/application/pipe/new-pipe" custom>
-              <el-button type="primary" role="link" @click="navigate" @keypress.enter="navigate">新建</el-button>
+              <el-button type="primary" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate">
+                新建
+              </el-button>
             </nuxt-link>
           </has-develop>
         </div>
       </div>
       <div class="table-box">
-        <el-table :data="tableDate" style="width: 100%">
+        <el-table ref="multipleTable" :data="tableDate" style="width: 100%">
           <el-table-column label="名称" prop="name" sortable width="280">
             <template slot-scope="{ row }">
               <div class="el-row--flex is-align-middle">
@@ -134,6 +136,12 @@
         }
         return data
       },
+      selection() {
+        return this.$refs.multipleTable ? this.$refs.multipleTable.selection : []
+      },
+      hasSelection() {
+        return this.selection.length > 0
+      },
     },
     methods: {
       createFilter(str) {
@@ -150,6 +158,7 @@
         // window.open(`/graph-info/${id}`, '_blank', 'toolbar=0,location=0,menubar=0')
         window.open(`/graph-info/${id}`, '_blank')
       },
+      handleDeletePipes() {},
     },
   }
 </script>

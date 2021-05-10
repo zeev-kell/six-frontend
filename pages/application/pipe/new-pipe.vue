@@ -54,9 +54,7 @@
       </div>
     </div>
     <div class="el-row text-right mt-20">
-      <el-button type="primary" icon="el-icon-plus" size="success" :loading="loading" @click="onSubmit">
-        保存
-      </el-button>
+      <el-button type="success" icon="el-icon-plus" :loading="loading" @click="onSubmit"> 保存 </el-button>
     </div>
   </div>
 </template>
@@ -87,7 +85,7 @@
           ],
           version: [
             { required: true, message: '请输入版本', trigger: 'blur' },
-            { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
+            { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
           ],
           type: [{ required: true, message: '请选择类型', trigger: 'change' }],
           category: [

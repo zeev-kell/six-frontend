@@ -45,6 +45,12 @@ Mock.mock(addPipeUrl, 'post', function () {
     msg: '登陆成功',
   })
 })
+Mock.mock(PipeUrl, 'delete', function () {
+  return Mock.mock({
+    code: 200,
+    msg: '工具删除成功',
+  })
+})
 // Mock.mock(WorkflowUrl, function () {
 //   return Mock.mock(Workflow)
 // })
