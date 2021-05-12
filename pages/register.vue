@@ -3,7 +3,7 @@
     <div class="register-container">
       <div class="register-box">
         <h1 class="text-center">六点了技术</h1>
-        <el-form ref="form" :model="form" :rules="rules" @submit.native.prevent>
+        <el-form ref="form" size="large" :model="form" :rules="rules" @submit.native.prevent>
           <el-form-item prop="username">
             <el-input v-model="form.username" placeholder="请输入账号"></el-input>
           </el-form-item>
