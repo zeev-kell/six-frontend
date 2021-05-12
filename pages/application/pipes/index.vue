@@ -29,13 +29,13 @@
           </el-form>
         </div>
         <div class="action-box">
-          <has-develop>
+          <can-create>
             <nuxt-link v-slot="{ navigate }" to="/application/pipe/new-pipe" custom>
               <el-button type="primary" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate">
                 新建
               </el-button>
             </nuxt-link>
-          </has-develop>
+          </can-create>
         </div>
       </div>
       <div class="table-box">
@@ -76,11 +76,11 @@
 </template>
 
 <script type="text/babel">
-  import HasDevelop from '@/components/common/HasDevelop'
+  import CanCreate from '@/components/common/CanCreate'
   import intercept from '@/filters/intercept'
   import pipeConstants from '@/constants/PipeConstants'
   export default {
-    components: { HasDevelop },
+    components: { CanCreate },
     filters: {
       ...intercept,
       pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),

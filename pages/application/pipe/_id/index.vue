@@ -17,9 +17,9 @@
               <el-dropdown-item command="cwl">YAML 格式</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          <has-develop>
+          <can-examine>
             <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe">删除</el-button>
-          </has-develop>
+          </can-examine>
         </div>
       </div>
       <div class="panel-body w-info">
@@ -69,7 +69,7 @@
 </template>
 
 <script type="text/babel">
-  import HasDevelop from '@/components/common/HasDevelop'
+  import CanExamine from '@/components/common/CanExamine'
   import marked from '@/directives/marked'
   import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
 
@@ -77,7 +77,7 @@
     directives: {
       ...marked,
     },
-    components: { HasDevelop, GraphIndex },
+    components: { CanExamine, GraphIndex },
     async asyncData({ app, params }) {
       const item = await app.$axios.$get(`/pipe/${params.id}`)
       return { item }
