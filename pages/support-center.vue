@@ -16,9 +16,16 @@
             <div class="aside-wrap__inner">
               <h2>帮助文档</h2>
               <el-menu class="menu-normal" :default-active="$route.path" :router="true">
-                <el-menu-item v-for="menu in menus" :key="menu.key" :index="'/support-center/' + menu.key">
-                  <span slot="title">{{ menu.text }}</span>
-                </el-menu-item>
+                <el-submenu v-for="menu in menus" :key="menu.key" :index="'/support-center/' + menu.key">
+                  <template slot="title">
+                    {{ menu.title }}
+                  </template>
+                  <el-menu-item v-for="m in menu.children" :key="m.key" :index="'/support-center/' + m.key">
+                    <template slot="title">
+                      {{ m.title }}
+                    </template>
+                  </el-menu-item>
+                </el-submenu>
               </el-menu>
             </div>
           </div>
@@ -30,14 +37,21 @@
 </template>
 
 <script type="text/babel">
-  import menus from '@/pages/support-center/menus'
+  import axios from 'axios'
+  const BLOG_URL = process.env.RESOURCES_URL + '/blog'
 
   export default {
     layout: 'IndexLayout',
-    data() {
-      return {
-        menus,
+    async fetch({ store }) {
+      if (!store.state.helpMenus?.length) {
+        const response = await axios.get(BLOG_URL + '/nav.json')
+        store.commit('SET_HELP_MENUS', response.data)
       }
+    },
+    computed: {
+      menus() {
+        return this.$store.state.helpMenus
+      },
     },
   }
 </script>

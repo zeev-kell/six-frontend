@@ -7,4 +7,7 @@ export default {
     state.auth.user = user
     vue.set(state.auth, 'user', user)
   },
+  SET_HELP_MENUS(state, helpMenus) {
+    state.helpMenus = helpMenus
+  },
 }

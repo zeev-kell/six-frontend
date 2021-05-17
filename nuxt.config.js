@@ -20,6 +20,7 @@ export default {
     { src: '@/plugins/axios-msg.js', mode: 'client' },
     { src: '@/plugins/nuxt-client-init.client.js' },
     { src: '@/plugins/components' },
+    { src: '@/plugins/i18n' },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -44,7 +45,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    ...(process.env.NODE_ENV === 'development' ? ['@/modules/mockjs'] : []),
+    // ...(process.env.NODE_ENV === 'development' ? ['@/modules/mockjs'] : []),
     // ...['@/modules/mockjs'],
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',

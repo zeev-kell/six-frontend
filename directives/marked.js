@@ -4,11 +4,28 @@ import highlight from 'highlight.js'
 import 'highlight.js/styles/darcula.css'
 import '@/assets/scss/marked.scss'
 
+let toc = []
+const renderer = new marked.Renderer()
+renderer.heading = function (text, level, raw) {
+  // const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-')
+  const id = `toc_${level}_${toc.length}`
+  toc.push({
+    id,
+    level,
+    text,
+    index: toc.length,
+    children: [],
+  })
+  return `<h${level} id="${id}"><a class="anchor" href="#${id}"><span class="header-link"></span></a>${text}</h${level}>`
+}
+
 marked.setOptions({
+  renderer,
   highlight(code) {
     return highlight.highlightAuto(code).value
   },
 })
+
 /**
  * 转换 markdown 语法
  */
@@ -40,5 +57,10 @@ export default {
         el.className = el.className + ' marked-content'
       }
     },
+  },
+  $getTocObj(markdown) {
+    toc = []
+    const html = marked(markdown, { smartypants: false })
+    return [html, toc]
   },
 }

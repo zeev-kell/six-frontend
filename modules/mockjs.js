@@ -21,9 +21,9 @@ export default function () {
   mock.onGet(PipesUrl).reply(() => {
     return [200, Mock.mock(Pipes).items]
   })
-  mock.onGet(/\/blog\//g).reply(() => {
-    return [200, '### DDD']
-  })
+  // mock.onGet(/\/blog\//g).reply(() => {
+  //   return [200, '### DDD']
+  // })
   // mock.onGet(/\/user-agreement.md/).reply(() => {
   //   return [200, '### DDD']
   // })

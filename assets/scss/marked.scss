@@ -447,4 +447,14 @@
       mask-image: var(--md-typeset-table--descending);
     }
   }
+  h5[id]::before,
+  h4[id]::before,
+  h3[id]::before,
+  h2[id]::before,
+  h1[id]::before {
+    display: block;
+    margin-top: -64px;
+    padding-top: 64px;
+    content: '';
+  }
 }

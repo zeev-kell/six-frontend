@@ -1,34 +1,61 @@
 <template>
-  <el-main style="max-width: 900px">
-    <div v-marked="markdown"></div>
+  <el-main class="main-container">
+    <el-row type="flex">
+      <el-col :span="20" class="marked-content">
+        <div v-html="markdown"></div>
+      </el-col>
+      <el-col style="width: 260px">
+        <client-only>
+          <markdown-toc :toc="toc"></markdown-toc>
+        </client-only>
+      </el-col>
+    </el-row>
   </el-main>
 </template>
 
 <script type="text/babel">
-  import marked from '@/directives/marked'
-  import menus from '@/pages/support-center/menus'
+  import dMarked from '@/directives/marked'
   import axios from 'axios'
   const BLOG_URL = process.env.RESOURCES_URL + '/blog'
   export default {
-    directives: {
-      ...marked,
+    components: {
+      MarkdownToc: () => import('@/pages/_components/markdown-toc'),
     },
-    async asyncData({ params, redirect }) {
-      const menu = menus.find((m) => m.key === params.id)
-      if (!menu) {
-        return redirect('/404')
-      }
-      const response = await axios.get(BLOG_URL + '/' + encodeURIComponent(menu.md))
-      const markdown = response.data.replace(/(!\[.*?]\()img\//gi, (matchStr, subStr) => {
+    directives: {
+      marked: dMarked.marked,
+    },
+    async asyncData({ params, store }) {
+      console.log(11111111111111111)
+      const helpMenus = store.state.helpMenus
+      const helpMenusObj = helpMenus.reduce((obj, h) => {
+        obj[h.key] = h
+        if (h.children?.length) {
+          h.children.forEach((c) => {
+            obj[c.key] = c
+          })
+        }
+        return obj
+      }, {})
+      const response = await axios.get(BLOG_URL + '/' + helpMenusObj[params.id].md)
+      const str = response.data.replace(/(!\[.*?]\()img\//gi, (matchStr, subStr) => {
         // 替换图片的地址
         return subStr + BLOG_URL + '/img/'
       })
-      return { markdown, title: menu.text }
+      const [markdown, toc] = dMarked.$getTocObj(str)
+      return { markdown, toc }
     },
     data() {
       return {
         markdown: undefined,
+        toc: [],
       }
     },
   }
 </script>
+
+<style lang="scss" scoped>
+  .main-container {
+    width: calc(100% - 240px);
+    overflow: inherit;
+  }
+</style>
