@@ -12,23 +12,7 @@
     <section>
       <el-container>
         <el-aside width="240px" class="aside-wrap">
-          <div class="aside-wrap__scroll">
-            <div class="aside-wrap__inner">
-              <h2>帮助文档</h2>
-              <el-menu class="menu-normal" :default-active="$route.path" :router="true">
-                <el-submenu v-for="menu in menus" :key="menu.key" :index="'/support-center/' + menu.key">
-                  <template slot="title">
-                    {{ menu.title }}
-                  </template>
-                  <el-menu-item v-for="m in menu.children" :key="m.key" :index="'/support-center/' + m.key">
-                    <template slot="title">
-                      {{ m.title }}
-                    </template>
-                  </el-menu-item>
-                </el-submenu>
-              </el-menu>
-            </div>
-          </div>
+          <aside-menu></aside-menu>
         </el-aside>
         <nuxt-child />
       </el-container>
@@ -37,22 +21,11 @@
 </template>
 
 <script type="text/babel">
-  import axios from 'axios'
-  const BLOG_URL = process.env.RESOURCES_URL + '/blog'
-
+  import AsideMenu from '@/pages/support-center/_components/AsideMenu'
   export default {
+    components: { AsideMenu },
     layout: 'IndexLayout',
-    async fetch({ store }) {
-      if (!store.state.helpMenus?.length) {
-        const response = await axios.get(BLOG_URL + '/nav.json')
-        store.commit('SET_HELP_MENUS', response.data)
-      }
-    },
-    computed: {
-      menus() {
-        return this.$store.state.helpMenus
-      },
-    },
+    middleware: 'support-menus',
   }
 </script>
 
@@ -78,29 +51,6 @@
     position: sticky;
     height: 100%;
     top: 60px;
-  }
-
-  .aside-wrap__scroll {
-    max-height: 100%;
-    overflow-y: auto;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-
-    &::-webkit-scrollbar {
-      width: 4px;
-      height: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: hsla(0, 0%, 0%, 0.32);
-    }
-
-    &:hover {
-      scrollbar-color: hsla(231, 99%, 66%, 1);
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: hsla(231, 99%, 66%, 1);
-    }
+    padding: 20px 0;
   }
 </style>

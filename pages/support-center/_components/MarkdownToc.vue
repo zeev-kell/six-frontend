@@ -61,7 +61,7 @@
           nav.children.length > 0
             ? createElement(
                 'ul',
-                { class: 'md-nav__list' },
+                { class: 'md-nav__list', key: nav.id },
                 nav.children.map((c) => createUl(c))
               )
             : ''
