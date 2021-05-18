@@ -124,11 +124,12 @@
 <style lang="scss" scoped>
   @import './assets/scss/variables';
   .index-banner {
-    background: url('/images/banner-2.jpg') no-repeat;
+    background: url('/images/banner-3.png') no-repeat;
     background-size: cover;
     min-height: 100vh;
     height: 600px;
-    color: var(--light_grey);
+    // color: var(--light_grey);
+    color: #333333;
     position: relative;
   }
 

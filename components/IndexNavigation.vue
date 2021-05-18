@@ -1,5 +1,5 @@
 <template>
-  <el-header id="header" class="nav-fixed nav-darken">
+  <el-header id="header" class="nav-fixed nav-darken nav-white" style="background: rgba(255, 255, 255, 0.95)">
     <div class="navbar-header el-row--flex">
       <div class="navbar el-col-equal">
         <div class="navbar-logo">
@@ -32,11 +32,11 @@
       LogoPng,
     },
     mounted() {
-      this.onWindowScroll()
-      window.addEventListener('scroll', this.onWindowScroll, true)
+      // this.onWindowScroll()
+      // window.addEventListener('scroll', this.onWindowScroll, true)
     },
     beforeDestroy() {
-      window.removeEventListener('scroll', this.onWindowScroll, true)
+      // window.removeEventListener('scroll', this.onWindowScroll, true)
     },
     methods: {
       onWindowScroll() {
