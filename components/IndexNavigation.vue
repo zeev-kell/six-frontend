@@ -1,5 +1,5 @@
 <template>
-  <el-header id="header" class="nav-fixed nav-darken nav-white" style="background: rgba(255, 255, 255, 0.95)">
+  <el-header id="header" class="nav-fixed nav-darken">
     <div class="navbar-header el-row--flex">
       <div class="navbar el-col-equal">
         <div class="navbar-logo">
@@ -32,19 +32,24 @@
       LogoPng,
     },
     mounted() {
-      // this.onWindowScroll()
-      // window.addEventListener('scroll', this.onWindowScroll, true)
+      this.onWindowScroll()
+      window.addEventListener('scroll', this.onWindowScroll, true)
     },
     beforeDestroy() {
-      // window.removeEventListener('scroll', this.onWindowScroll, true)
+      window.removeEventListener('scroll', this.onWindowScroll, true)
     },
     methods: {
       onWindowScroll() {
-        const scrollTop = document.documentElement.scrollTop
-        const scrollPercent = scrollTop <= SCROLL_TRANSPORT ? scrollTop / 140 : 0.96
         const header = document.querySelector('#header')
-        header.style.backgroundColor = 'rgba(255, 255, 255,' + scrollPercent + ')'
-        scrollTop >= SCROLL_TRANSPORT ? header.classList.add('nav-white') : header.classList.remove('nav-white')
+        if (this.$route.name === 'index') {
+          header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)'
+          header.classList.add('nav-white')
+        } else {
+          const scrollTop = document.documentElement.scrollTop
+          const scrollPercent = scrollTop <= SCROLL_TRANSPORT ? scrollTop / 140 : 0.96
+          header.style.backgroundColor = 'rgba(255, 255, 255,' + scrollPercent + ')'
+          scrollTop >= SCROLL_TRANSPORT ? header.classList.add('nav-white') : header.classList.remove('nav-white')
+        }
       },
     },
   }

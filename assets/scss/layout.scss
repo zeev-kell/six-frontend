@@ -1,4 +1,5 @@
 @import 'variables';
+@import './node_modules/element-theme-chalk/src/mixins/mixins';
 
 .container-fluid {
   width: 100%;
@@ -8,6 +9,10 @@
   width: 1200px;
   margin-left: auto;
   margin-right: auto;
+
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+  }
 }
 
 //
@@ -51,6 +56,7 @@
   .el-menu-item.is-active {
     font-weight: bold;
   }
+
   .is-active .el-submenu__title,
   .el-submenu__title:hover,
   .el-menu-item.is-active,
@@ -69,6 +75,20 @@
     height: 100%;
     display: block;
     text-decoration: none !important;
+  }
+}
+
+@include res(xs-only, $--breakpoints-spec) {
+  .el-menu-item {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    &.menu-link {
+      padding: 0;
+    }
+  }
+  .menu-link > a {
+    padding: 0 10px;
   }
 }
 
@@ -181,6 +201,13 @@ section {
       left: 10%;
       top: 60px;
       border: 2px solid #eeeeee;
+    }
+  }
+
+  @include res(xs-only, $--breakpoints-spec) {
+    .section-title {
+      padding-top: 40px;
+      padding-bottom: 30px;
     }
   }
 }

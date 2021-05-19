@@ -2,7 +2,7 @@
   <div class="logo-wrap el-row--flex is-align-middle">
     <img src="/images/logo-white.png" class="logo-white" />
     <img src="/images/logo-black.png" class="logo-black" />
-    六点了技术
+    <span class="hidden-sm-and-down">六点了技术</span>
   </div>
 </template>
 <script type="text/babel">

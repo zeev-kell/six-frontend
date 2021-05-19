@@ -1,7 +1,7 @@
 <template>
   <div class="index-container">
     <section class="index-banner el-row is-align-middle el-row--flex">
-      <div class="el-col-8 el-col-offset-4">
+      <div class="el-col-20 el-col-offset-2 el-col-sm-8 el-col-offset-sm-4">
         <h1>生物医疗大数据服务</h1>
         <p>
           生物医疗数据处理云平台，提供系统的生物信息知识检索，数据处理算法下载、在线组合、自动
@@ -22,7 +22,7 @@
       </div>
       <div class="container">
         <div class="el-row el-row--flex is-justify-space-around">
-          <div class="el-col el-col-auto mb-2r text-center pro-panel">
+          <div class="el-col-auto mb-2r text-center pro-panel">
             <nuxt-link v-slot="{ navigate }" to="/application/pipes" custom>
               <div class="pointer" @click="navigate" @keypress.enter="navigate">
                 <el-card shadow="hover" class="pro-card">
@@ -43,7 +43,7 @@
               </div>
             </nuxt-link>
           </div>
-          <div class="el-col el-col-auto mb-2r text-center pro-panel">
+          <div class="el-col-auto mb-2r text-center pro-panel">
             <a class="a-link">
               <el-card shadow="hover" class="pro-card">
                 <div class="pro-icon">
@@ -61,7 +61,7 @@
               </el-card>
             </a>
           </div>
-          <div class="el-col el-col-auto mb-2r text-center pro-panel">
+          <div class="el-col-auto mb-2r text-center pro-panel">
             <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link">
               <el-card shadow="hover" class="pro-card">
                 <div class="pro-icon">
@@ -79,7 +79,7 @@
               </el-card>
             </a>
           </div>
-          <div class="el-col el-col-auto mb-2r text-center pro-panel">
+          <div class="el-col-auto mb-2r text-center pro-panel">
             <a class="a-link" href="https://wiki-pre.sixoclock.net/" target="_blank">
               <el-card shadow="hover" class="pro-card">
                 <div class="pro-icon">
@@ -123,6 +123,8 @@
 </script>
 <style lang="scss" scoped>
   @import './assets/scss/variables';
+  @import '/node_modules/element-theme-chalk/src/mixins/mixins';
+
   .index-banner {
     background: url('/images/banner-3.png') no-repeat;
     background-size: cover;
@@ -196,6 +198,24 @@
 
     90% {
       transform: translateY(-4px);
+    }
+  }
+
+  // 小于 768px
+  @include res(xs-only, $--breakpoints-spec) {
+    .index-banner {
+      background-position-x: 40%;
+    }
+    #section-product {
+      .pro-card {
+        width: 100%;
+      }
+      .el-col-auto {
+        width: 80%;
+      }
+      .container > .el-row--flex {
+        flex-wrap: wrap;
+      }
     }
   }
 </style>
