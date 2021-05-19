@@ -11,13 +11,14 @@
     </section>
     <section>
       <div class="section-border">
-        <h1>Six O'clock runner</h1>
-        <h3 class="sub-title">一键配置sixoclock平台软件运行环境的安装脚本</h3>
+        <h1>Sixoclock 客户端软件</h1>
+        <h3 class="sub-title">一键配置sixoclock平台软件运行环境的安装程序</h3>
         <div class="download-btn">
           <el-dropdown @command="openMsg">
-            <el-button type="primary" size="download">下载windows版安装程序</el-button>
+            <el-button type="primary" size="download">免费下载 Sixbox 安装程序</el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="installer">windows版安装程序</el-dropdown-item>
+              <el-dropdown-item command="installer">windows 版安装程序</el-dropdown-item>
+              <el-dropdown-item command="sixbox_linux">linux 版安装程序</el-dropdown-item>
               <el-dropdown-item command="installer-offline">windows版安装程序离线包</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -94,6 +95,10 @@
       openMsg(type) {
         if (type === 'installer') {
           window.open(process.env.RESOURCES_URL + '/dist/latest/installer.exe')
+          return
+        }
+        if (type === 'sixbox_linux') {
+          window.open(process.env.RESOURCES_URL + '/dist/latest/Sixbox_linux64_latest.sh')
           return
         }
         this.$alert(...MSG[type], { dangerouslyUseHTMLString: true })
