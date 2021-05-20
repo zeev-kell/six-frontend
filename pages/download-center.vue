@@ -4,7 +4,7 @@
       <div class="el-col-8 el-col-offset-4">
         <h1>相关下载</h1>
         <p>
-          生物医疗数据处理云平台，提供系统的生物信息知识检索，数据处理算法下载、在线组合、自动
+          生物医疗数据处理云平台，提供数据处理算法下载、在线组合、自动
           生成功能，以及一站式生信解决方案的本地化部署服务。
         </p>
       </div>
@@ -34,7 +34,7 @@
           <el-col :span="8">
             <el-card class="d-card">
               <div slot="header">
-                <img class="img-fluid" src="/images/coop-01.png" alt="" />
+                <img class="img-fluid" src="/images/clients_02-1.png" alt="" />
               </div>
               <h2 class="text-center">Sixoclock python包</h2>
               <p class="text-justify">在python中运行下载自sixoclock软件仓库的软件与流程</p>
@@ -46,7 +46,7 @@
           <el-col :span="8">
             <el-card class="d-card">
               <div slot="header">
-                <img class="img-fluid" src="/images/coop-01.png" alt="" />
+                <img class="img-fluid" src="/images/appstore_03-1.png" alt="" />
               </div>
               <h2 class="text-center">Sixoclock软件仓库</h2>
               <p class="text-justify">查找并下载需要的数据处理软件<br />&nbsp;</p>
@@ -60,7 +60,7 @@
           <el-col :span="8">
             <el-card class="d-card">
               <div slot="header">
-                <img class="img-fluid" src="/images/coop-01.png" alt="" />
+                <img class="img-fluid" src="/images/pipline_03-1.png" alt="" />
               </div>
               <h2 class="text-center">使用sixoclock处理数据</h2>
               <p class="text-justify">运行下载自sixoclock软件仓库的流程处理本地数据</p>
