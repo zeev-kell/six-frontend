@@ -1,13 +1,14 @@
 export default {
-  links: {
-    home: 'Home',
-  },
-  home: {
-    title: 'Welcome',
-    introduction: 'This is an introduction in English.',
-  },
-  about: {
-    title: 'About',
-    introduction: '...',
+  cwl: {
+    file: 'FILE',
+    Files: 'Files',
+    'App parameters': 'App parameters',
+    NoAppParams: 'No app parameters are exposed for this app.',
+    NoValue: 'No values have been specified for this input.',
+    Browse: 'Browse',
+    Required: 'Required',
+    SecondaryFiles: 'Secondary Files',
+    Description: 'Description',
+    Connections: 'Connections',
   },
 }

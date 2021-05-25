@@ -36,7 +36,7 @@
               <div slot="header">
                 <img class="img-fluid" src="/images/clients_02-1.png" alt="" />
               </div>
-              <h2 class="text-center">Sixoclock python包</h2>
+              <h3 class="text-center">Sixoclock python包</h3>
               <p class="text-justify">在python中运行下载自sixoclock软件仓库的软件与流程</p>
               <a href="https://pypi.org/project/sixrunr/" target="_blank" class="no-underline">
                 <el-button type="primary" class="block">去下载</el-button>
@@ -48,7 +48,7 @@
               <div slot="header">
                 <img class="img-fluid" src="/images/appstore_03-1.png" alt="" />
               </div>
-              <h2 class="text-center">Sixoclock软件仓库</h2>
+              <h3 class="text-center">Sixoclock软件仓库</h3>
               <p class="text-justify">查找并下载需要的数据处理软件<br />&nbsp;</p>
               <nuxt-link v-slot="{ navigate }" to="/application/pipes" custom>
                 <el-button type="primary" class="block" @click="navigate" @keypress.enter="navigate">
@@ -62,7 +62,7 @@
               <div slot="header">
                 <img class="img-fluid" src="/images/pipline_03-1.png" alt="" />
               </div>
-              <h2 class="text-center">使用sixoclock处理数据</h2>
+              <h3 class="text-center">使用sixoclock处理数据</h3>
               <p class="text-justify">运行下载自sixoclock软件仓库的流程处理本地数据</p>
               <nuxt-link v-slot="{ navigate }" to="/support-center" custom>
                 <el-button type="primary" class="block" @click="navigate" @keypress.enter="navigate">

@@ -2,7 +2,7 @@
   <el-form :model="ruleForm" :rules="rules" label-position="top" @submit.native.prevent>
     <!--Required-->
     <div v-if="isInput" class="el-form-item el-row--flex">
-      <label class="el-col-full">Required</label>
+      <label class="el-col-full">{{ $t('cwl.Required') }}</label>
       <div class="el-col-auto">
         <el-switch
           v-model="ruleForm.isRequired"
@@ -22,7 +22,9 @@
         <span class="text-warning small"> <i class="el-icon-warning"></i> This port is not connected </span>
       </div>
       <!--List of connections-->
-      <div v-if="step['source'].length > 0" class="text-muted small">Connections: {{ step['source'].join(', ') }}</div>
+      <div v-if="step['source'].length > 0" class="text-muted small">
+        {{ $t('cwl.Connections') }}: {{ step['source'].join(', ') }}
+      </div>
     </div>
     <!--Label-->
     <el-form-item label="Label" prop="label">
@@ -92,7 +94,7 @@
       </div>
     </el-form-item>
     <!--Description-->
-    <el-form-item label="Description" prop="description">
+    <el-form-item :label="$t('cwl.Description')" prop="description">
       <textarea
         v-model="ruleForm.description"
         class="form-control"
@@ -103,7 +105,7 @@
     </el-form-item>
     <!-- TODO -->
     <!--Secondary Files-->
-    <collapse-item title="Secondary Files">
+    <collapse-item title="SecondaryFiles">
       <!--      <div>{{ ruleForm.secondaryFiles }}</div>-->
     </collapse-item>
   </el-form>

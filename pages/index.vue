@@ -7,13 +7,17 @@
           生物医疗数据处理云平台，提供数据处理算法下载、在线组合、自动
           生成功能，以及一站式生信解决方案的本地化部署服务。
         </p>
-        <a href="http://www.sixoclock.net/support-center/get_started" target="_blank"><el-button>开始体验</el-button></a>
+        <a href="http://www.sixoclock.net/support-center/get_started" target="_blank"
+          ><el-button>开始体验</el-button></a
+        >
         <a href="#section-product">
           <el-button plain type="primary pass">云计算协作</el-button>
         </a>
       </div>
       <div class="down-btn-wrap">
-        <div class="down-btn" @click="scrollToNext()"></div>
+        <div style="padding: 10px; cursor: pointer" @click="scrollToNext()">
+          <div class="down-btn"></div>
+        </div>
       </div>
     </section>
     <section id="section-product" class="section-product">
@@ -170,8 +174,8 @@
     width: 2rem;
     height: 2rem;
     cursor: pointer;
-    border-right: 2px solid #ffffff;
-    border-bottom: 2px solid #ffffff;
+    border-right: 2px solid #333333;
+    border-bottom: 2px solid #333333;
     transform: rotate(45deg);
   }
 

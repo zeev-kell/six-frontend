@@ -2,7 +2,7 @@
   <div class="el-collapse-item">
     <div role="tab" aria-expanded="true" @click="collapsed = !collapsed">
       <div role="button" class="el-collapse-item__header text-uppercase" :class="[!collapsed && 'is-active']">
-        {{ title }}
+        {{ $t('cwl.' + title) }}
         <i class="el-collapse-item__arrow el-icon-arrow-right" :class="[!collapsed && 'is-active']"></i>
       </div>
     </div>

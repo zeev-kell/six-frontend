@@ -28,8 +28,9 @@
         <p id="copyright" class="copyright">
           ©2021 六点了技术
           <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021047962号-1&emsp;</a>
-          <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030302001909"><img src="/images/beian.png"/>&ensp;粤公网安备 44030302001909号</a>
-
+          <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030302001909"
+            ><img src="/images/beian.png" />&ensp;粤公网安备 44030302001909号</a
+          >
         </p>
       </div>
     </div>

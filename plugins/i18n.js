@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
+import en from '@/locales/en'
+import zh from '@/locales/zh'
 
 Vue.use(VueI18n)
 
@@ -8,8 +10,8 @@ export default ({ app, store }) => {
     locale: store.state.locale || 'zh',
     fallbackLocale: 'zh', // 我这里默认语言为中文
     messages: {
-      en: require('@/locales/en.js'),
-      zh: require('@/locales/zh.js'),
+      en,
+      zh,
     },
   })
   app.i18n.path = (link) => {

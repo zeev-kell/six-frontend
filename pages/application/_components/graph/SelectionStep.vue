@@ -48,7 +48,7 @@
       </el-form-item>
 
       <!--Description-->
-      <el-form-item label="Description">
+      <el-form-item :label="$t('cwl.Description')">
         <textarea v-model="ruleForm.description" class="form-control" rows="4" :disabled="readonly"></textarea>
       </el-form-item>
 
