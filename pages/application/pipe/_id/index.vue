@@ -14,7 +14,7 @@
             <el-button type="info" icon="el-icon-download">下载</el-button>
             <el-dropdown-menu slot="dropdown" class="el-dropdown-info">
               <el-dropdown-item command="json">JSON 格式</el-dropdown-item>
-              <el-dropdown-item command="cwl">YAML 格式</el-dropdown-item>
+              <el-dropdown-item command="yaml">YAML 格式</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           <can-examine>
@@ -88,7 +88,7 @@
       }
     },
     methods: {
-      handleDownload(type = 'cwl') {
+      handleDownload(type = 'yaml') {
         this.$refs.cwl.exportCwl(type)
       },
       handleDeletePipe() {

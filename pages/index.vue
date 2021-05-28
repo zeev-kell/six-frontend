@@ -7,7 +7,9 @@
           生物医疗数据处理云平台，提供数据处理算法下载、在线组合、自动
           生成功能，以及一站式生信解决方案的本地化部署服务。
         </p>
-        <a href="http://www.sixoclock.net/support-center/get_started" target="_blank"><el-button>开始体验</el-button></a>
+        <a href="http://www.sixoclock.net/support-center/get_started" target="_blank"
+          ><el-button>开始体验</el-button></a
+        >
         <a href="#section-product">
           <el-button plain type="primary pass">云计算协作</el-button>
         </a>
