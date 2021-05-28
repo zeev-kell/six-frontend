@@ -13,7 +13,7 @@
                     <div slot="content">
                       <h4>{{ input.label || getInputSource(input) }}</h4>
                       <div>
-                        <span class="title">Description:</span>
+                        <span class="title">{{ $t('cwl.Description') }}:</span>
                         <span class="value">{{ input.description }}</span>
                       </div>
                     </div>
@@ -46,7 +46,7 @@
               />
 
               <div v-else class="text-center mb-1r">
-                <p class="text-muted">No values have been specified for this input</p>
+                <p class="text-muted">{{ $t('cwl.NoValue') }}</p>
                 <el-button
                   v-if="isFileOrDirectory(input)"
                   type="primary"
@@ -54,7 +54,7 @@
                   class="el-button-dark-border"
                   @click="enableFileEditing(input)"
                 >
-                  Browse
+                  {{ $t('cwl.Browse') }}
                 </el-button>
 
                 <el-button
@@ -81,14 +81,16 @@
                   </span>
                 </div>
                 <!--List of connections-->
-                <div v-if="input.source.length > 0" class="text-muted">Connections: {{ input.source.join(', ') }}</div>
+                <div v-if="input.source.length > 0" class="text-muted">
+                  {{ $t('cwl.Connections') }}: {{ input.source.join(', ') }}
+                </div>
               </div>
             </div>
           </form>
         </collapse-item>
       </div>
     </div>
-    <div v-else>No app parameters are exposed for this app.</div>
+    <div v-else>{{ $t('cwl.NoAppParams') }}</div>
   </div>
 </template>
 

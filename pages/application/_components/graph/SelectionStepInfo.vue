@@ -10,7 +10,7 @@
     <div><label>AUTHOR:</label>{{ step.run.customProps['sbg:createdBy'] }}</div>
     <div><label>SOURCE:</label>{{ source }}</div>
     <div>
-      <label>Description{{ description ? '' : ':' }}</label>
+      <label>{{ $t('cwl.Description') }}{{ description ? '' : ':' }}</label>
       <div class="el-form-item">
         <div v-marked="description"></div>
       </div>

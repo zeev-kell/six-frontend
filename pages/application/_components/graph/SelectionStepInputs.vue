@@ -100,7 +100,9 @@
               </span>
             </div>
             <!--List of connections-->
-            <div v-if="input.source.length > 0" class="text-muted">Connections: {{ input.source.join(', ') }}</div>
+            <div v-if="input.source.length > 0" class="text-muted">
+              {{ $t('cwl.Connections') }}: {{ input.source.join(', ') }}
+            </div>
           </div>
           <!--Tooltip-->
         </div>

@@ -15,7 +15,9 @@
         </a>
       </div>
       <div class="down-btn-wrap">
-        <div class="down-btn" @click="scrollToNext()"></div>
+        <div style="padding: 10px; cursor: pointer" @click="scrollToNext()">
+          <div class="down-btn"></div>
+        </div>
       </div>
     </section>
     <section id="section-product" class="section-product">
@@ -172,8 +174,8 @@
     width: 2rem;
     height: 2rem;
     cursor: pointer;
-    border-right: 2px solid #ffffff;
-    border-bottom: 2px solid #ffffff;
+    border-right: 2px solid #333333;
+    border-bottom: 2px solid #333333;
     transform: rotate(45deg);
   }
 
