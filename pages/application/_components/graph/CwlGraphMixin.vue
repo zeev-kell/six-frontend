@@ -22,6 +22,7 @@
   import { DblclickPlugin } from '@/pages/application/_components/graph/plugins/dblclick-plugin'
   import { downloadStrLink } from '@/utils/download-link'
   import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, ZoomPlugin } from 'cwl-svg'
+  import { WorkflowModel } from 'cwlts/models/generic/WorkflowModel'
   import { JobHelper } from 'cwlts/models/helpers/JobHelper'
   import * as Yaml from 'js-yaml'
 
@@ -129,7 +130,9 @@
       },
       exportCwl(format = 'yaml', isOnlyData = false) {
         const asYaml = format === 'yaml'
-        const data = stringifyObject(this.workflow.model.serialize(), asYaml)
+        const serialize =
+          this.dataModel instanceof WorkflowModel ? this.dataModel.serializeEmbedded() : this.dataModel.serialize()
+        const data = stringifyObject(serialize, asYaml)
         const name = this.item.name + `.${asYaml ? 'cwl' : format}`
         if (isOnlyData) {
           return { data, name }
