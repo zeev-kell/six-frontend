@@ -25,7 +25,10 @@
     {
       "default": true,
       "id": "is_paired_end",
-      "type": "boolean"
+      "type": {
+        "items": "long",
+        "type": "array"
+      }
     },
     {
       "default": 2000,

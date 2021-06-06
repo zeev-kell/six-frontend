@@ -253,6 +253,10 @@ class FormArray extends AbstractControl {
     this.type = 'FormArray'
   }
 
+  at(index) {
+    return this.controls[index]
+  }
+
   push(control) {
     this.controls.push(control)
     this._registerControl(control)

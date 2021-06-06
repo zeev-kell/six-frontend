@@ -56,8 +56,13 @@
       <div v-marked.replace="item.tutorial" class="panel-body"></div>
     </div>
     <div class="panel">
-      <div class="panel-header">
-        <h2 class="mx-0">软件结构与参数配置（双击图标进入配置界面）</h2>
+      <div class="panel-header el-row--flex is-align-middle">
+        <h2 class="mx-0 el-col-equal">软件结构与参数配置（双击图标查看配置）</h2>
+        <div class="el-col-auto">
+          <a :href="'/graph-info/' + item['pipe_id'] + '/set-run'" target="_blank">
+            <el-button type="primary" icon="el-icon-caret-right">设置运行</el-button>
+          </a>
+        </div>
       </div>
       <div class="panel-body">
         <div class="workflow-box">

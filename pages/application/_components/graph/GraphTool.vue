@@ -90,7 +90,7 @@
         scaleStep: 0.1,
         toolList: [],
         downloadVisible: false,
-        dMain: false,
+        dMain: true,
         dJob: true,
         dType: 'yaml',
       }
@@ -169,7 +169,7 @@
   .graph-tool {
     position: absolute;
     right: 30px;
-    top: 10px;
+    top: 25px;
     z-index: 10;
     color: white;
     > .el-button {

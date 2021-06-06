@@ -10,5 +10,7 @@ export default {
     SecondaryFiles: 'Secondary Files',
     Description: 'Description',
     Connections: 'Connections',
+    SetValue: 'Set Value',
+    SetNull: 'Set Values to null',
   },
 }

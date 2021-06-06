@@ -10,5 +10,7 @@ export default {
     SecondaryFiles: '辅助文件',
     Description: '描述',
     Connections: '连接',
+    SetValue: '设定值',
+    SetNull: '将值设置为null',
   },
 }

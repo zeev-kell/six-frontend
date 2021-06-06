@@ -28,7 +28,7 @@
                       <i class="el-icon-more"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown" class="input-dropdown-menu">
-                      <el-dropdown-item> Set values to null </el-dropdown-item>
+                      <el-dropdown-item> {{ $t('cwl.SetNull') }} </el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </div>
@@ -64,7 +64,7 @@
                   class="el-button-dark-border"
                   @click="enableEditing(input)"
                 >
-                  Set Value
+                  {{ $t('cwl.SetValue') }}
                 </el-button>
               </div>
 

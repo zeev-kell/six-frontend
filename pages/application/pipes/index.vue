@@ -3,7 +3,7 @@
     <div class="panel panel-body">
       <div class="el-row--flex is-justify-space-between pb-10">
         <div class="search-box">
-          <el-form class="form-inline" :inline="true" :model="query" @submit.native.prevent>
+          <el-form class="form-inline" :inline="true" :model="query" @submit.native.prevent="">
             <el-form-item>
               <el-autocomplete v-model="query.name" :fetch-suggestions="queryName" placeholder="按名字筛选">
                 <template slot-scope="{ item }">

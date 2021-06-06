@@ -32,7 +32,7 @@ Mock.mock(/\/api\/v1\/user/, 'get', function (options) {
 })
 Mock.mock(PipeUrl, function () {
   const item = Mock.mock(Pipe)
-  item.type = 1
+  item.type = 0
   item.cwl = item.type === 0 ? _tool : _workflow
   return item
 })

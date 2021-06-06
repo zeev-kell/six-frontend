@@ -4,7 +4,7 @@
       <h1>精准医疗时代下制药行业的挑战和机遇</h1>
     </div>
     <div class="container">
-      <el-carousel :interval="4000" arrow="never" height="480px" indicator-position="outside">
+      <el-carousel arrow="never" height="480px" :interval="4000" indicator-position="outside">
         <el-carousel-item v-for="item in 4" :key="item">
           <div class="el-row el-row--flex is-align-middle">
             <div class="el-col el-col-12">

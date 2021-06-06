@@ -32,8 +32,9 @@
         <template v-else-if="isInputType('int')">
           <input v-model="actualValue" type="number" :disabled="readonly" class="form-control" />
         </template>
+
         <template v-else-if="isInputType('float')">
-          <el-input v-model="actualValue" type="number" :readonly="readonly" class="form-control" />
+          <input v-model="actualValue" type="number" :readonly="readonly" class="form-control" />
         </template>
 
         <!--Strings-->

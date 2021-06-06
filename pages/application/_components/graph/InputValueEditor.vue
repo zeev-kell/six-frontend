@@ -25,7 +25,7 @@
           <input v-model="actualValue" type="number" class="form-control" :disabled="readonly" />
         </template>
         <template v-else-if="isInputType('float')">
-          <el-input v-model="actualValue" type="number" class="form-control" :disabled="readonly" />
+          <input v-model="actualValue" type="number" class="form-control" :disabled="readonly" />
         </template>
 
         <!--Strings-->
@@ -96,7 +96,6 @@
 
       <!--Arrays-->
       <template v-else-if="isInputType('array')">
-        <!-- TODO -->
         <div v-for="(ctrl, idx) of control.controls" :key="idx" class="array-row">
           <!--Delete button if array of maps-->
           <div v-if="inputArrayItemsType === 'map'" class="pb-1">
@@ -123,7 +122,6 @@
             </el-tooltip>
           </div>
         </div>
-
         <div v-if="control.enabled">
           <!--Add array item button in case that element is not File or Directory-->
           <div v-if="inputArrayItemsType !== 'File' && inputArrayItemsType !== 'Directory'">
@@ -207,7 +205,7 @@
         },
         set(value) {
           // eslint-disable-next-line no-console
-          console.log('set actualValue')
+          console.log('set actualValue', value)
           // TODO 修改数据更新方式
           this.formControl.setValue(value)
           this.recalculateSecondaryFilesAndMetadataCounts()
@@ -239,6 +237,7 @@
         }
       },
       'formControl.value': {
+        // TODO 修改数据传输方式
         immediate: true,
         handler() {
           const value = this.formControl.value
@@ -274,8 +273,8 @@
               break
             case 'float':
               // eslint-disable-next-line no-case-declarations
-              const float = parseFloat(update)
-              this.control.setValue(isNaN(float) ? 0 : float, updateOptions)
+              const _float = typeof update !== 'number' ? parseFloat(update) : update
+              this.control.setValue(isNaN(_float) ? 0 : _float, updateOptions)
               break
             case 'int':
               // eslint-disable-next-line no-case-declarations
@@ -416,7 +415,6 @@
           const ctrlArr = Array.apply(null, Array(update.length)).map(() => this.makeControlForArray())
           this.control = new FormArray(ctrlArr)
           this.readonly ? this.control.disable(options) : this.control.enable(options)
-          this.bindFileMetadataSyncOnControlChanges()
           this.bindValuePropagationOnControlSetup()
         }
         this.control.setValue(update, options)
