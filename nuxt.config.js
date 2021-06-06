@@ -59,6 +59,17 @@ export default {
     progress: true,
     // debug: process.env.NODE_ENV === 'development',
   },
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: process.env.BROWSER_BASE_URL,
+    },
+  },
+  // 只有在服务器上可用
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL,
+    },
+  },
   // auth-next
   auth: {
     strategies: {

@@ -1,6 +1,5 @@
 const DEFAULT_RESPONSE = { status: 500, msg: '服务器异常' }
 export default function ({ $axios, store }) {
-  $axios.setBaseURL(process.env._AXIOS_BASE_URL_)
   $axios.onRequest((config) => {
     return config
   })
