@@ -5,10 +5,10 @@
         <h1 class="text-center">六点了技术</h1>
         <el-form ref="form" size="large" :model="form" :rules="rules" @submit.native.prevent>
           <el-form-item prop="username">
-            <el-input v-model="form.username" placeholder="请输入账号"></el-input>
+            <el-input v-model="form.username" placeholder="请输入账号，长度在6到20个字符"></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
+            <el-input v-model="form.password" placeholder="请输入密码，长度在6到20个字符" type="password"></el-input>
           </el-form-item>
           <!--          <el-form-item prop="surepassword">-->
           <!--            <el-input v-model="form.surepassword" placeholder="再次输入密码" type="password"></el-input>-->

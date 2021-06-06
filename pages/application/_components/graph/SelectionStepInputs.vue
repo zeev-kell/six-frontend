@@ -160,7 +160,7 @@
         // Whenever inputs are updated, regroup them and sort them for display
         const grouped = this.step.in.reduce((acc, item) => {
           // eslint-disable-next-line no-console
-          const group = this.isType(item, 'File') ? 'Files' : 'App parameters'
+          const group = this.isType(item, 'File') ? 'Files' : 'AppParameters'
           return Object.assign(acc, group ? { [group]: (acc[group] || []).concat(item) } : null)
         }, {})
         // Order groups

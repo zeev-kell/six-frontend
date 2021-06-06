@@ -2,7 +2,7 @@ export default {
   cwl: {
     file: 'FILE',
     Files: 'Files',
-    'App parameters': 'App parameters',
+    AppParameters: 'App parameters',
     NoAppParams: 'No app parameters are exposed for this app.',
     NoValue: 'No values have been specified for this input.',
     Browse: 'Browse',
@@ -12,5 +12,10 @@ export default {
     Connections: 'Connections',
     SetValue: 'Set Value',
     SetNull: 'Set Values to null',
+    AllowArrayAsSingle: 'Allow array as well as a single item',
+  },
+  common: {
+    yes: 'Yes',
+    no: 'No',
   },
 }

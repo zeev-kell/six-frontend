@@ -297,6 +297,10 @@
     margin: 1em 0 1.5em 1.875em;
   }
 
+  img {
+    cursor: pointer;
+  }
+
   // Limit width to container, scale height proportionally
   img,
   svg {

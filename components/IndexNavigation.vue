@@ -57,7 +57,7 @@
 <style lang="scss" scoped>
   .nav-fixed {
     width: 100%;
-    z-index: 9999;
+    z-index: 1001;
     position: fixed;
     left: 0;
     right: 0;

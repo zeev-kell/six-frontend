@@ -2,7 +2,7 @@
   <el-main class="main-container">
     <el-row type="flex">
       <el-col :span="20" class="marked-content">
-        <div v-html="markdown"></div>
+        <div ref="markdown" v-html="markdown"></div>
       </el-col>
       <el-col style="width: 260px">
         <client-only>
@@ -10,6 +10,7 @@
         </client-only>
       </el-col>
     </el-row>
+    <el-image ref="elImage" style="width: 0; height: 0" :src="currentImage" :preview-src-list="imageList"> </el-image>
   </el-main>
 </template>
 
@@ -38,18 +39,32 @@
         return obj
       }, {})
       const response = await axios.get(BLOG_URL + '/' + encodeURIComponent(helpMenusObj[params.id].md))
-      const str = response.data.replace(/(!\[.*?]\()img\//gi, (matchStr, subStr) => {
+      const imageList = []
+      const str = response.data.replace(/(!\[.*?]\()img\/(.*?)\)/gi, (matchStr, subStr, imageName) => {
         // 替换图片的地址
-        return subStr + BLOG_URL + '/img/'
+        const imageSrc = BLOG_URL + '/img/' + imageName
+        imageList.push(imageSrc)
+        return subStr + BLOG_URL + '/img/' + imageName + ')'
       })
       const [markdown, toc] = dMarked.$getTocObj(str)
-      return { markdown, toc }
+      const currentImage = imageList[0] || undefined
+      return { markdown, toc, imageList, currentImage }
     },
     data() {
       return {
         markdown: undefined,
         toc: [],
+        imageList: [],
+        currentImage: undefined,
       }
+    },
+    mounted() {
+      this.$refs.markdown.querySelectorAll('img').forEach((el) => {
+        el.addEventListener('click', () => {
+          this.currentImage = el.src
+          this.$refs.elImage.clickHandler()
+        })
+      })
     },
   }
 </script>

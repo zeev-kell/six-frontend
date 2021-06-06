@@ -207,7 +207,7 @@
         this.$set(this, 'jobGroup', new FormGroup({}))
         const grouped = {}
         for (const input of this.stepInputs) {
-          const group = this.isType(input, 'File') ? 'Files' : 'App Parameters'
+          const group = this.isType(input, 'File') ? 'Files' : 'AppParameters'
           if (!grouped[group]) {
             grouped[group] = []
           }
