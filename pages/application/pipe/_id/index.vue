@@ -17,6 +17,11 @@
               <el-dropdown-item command="yaml">YAML 格式</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
+          <can-create v-if="item.provider === username">
+            <a :href="'/application/pipe/' + item['pipe_id'] + '/edit-pipe'">
+              <el-button type="primary" icon="el-icon-edit">编辑</el-button>
+            </a>
+          </can-create>
           <can-examine>
             <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe">删除</el-button>
           </can-examine>
@@ -74,7 +79,6 @@
 </template>
 
 <script type="text/babel">
-  import CanExamine from '@/components/common/CanExamine'
   import marked from '@/directives/marked'
   import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
 
@@ -82,7 +86,7 @@
     directives: {
       ...marked,
     },
-    components: { CanExamine, GraphIndex },
+    components: { GraphIndex },
     async asyncData({ app, params }) {
       const item = await app.$axios.$get(`/pipe/${params.id}`)
       return { item }
@@ -91,6 +95,11 @@
       return {
         item: null,
       }
+    },
+    computed: {
+      username() {
+        return this.$store.getters.username
+      },
     },
     methods: {
       handleDownload(type = 'yaml') {

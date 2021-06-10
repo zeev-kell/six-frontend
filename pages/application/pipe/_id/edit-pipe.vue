@@ -15,12 +15,7 @@
             </el-form-item>
             <el-form-item label="类别" prop="type">
               <el-select v-model="formModel.type" placeholder="请选择类别" clearable style="width: 100%">
-                <el-option
-                  v-for="item in typeList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
+                <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
             </el-form-item>
             <el-form-item label="地址" prop="description">
@@ -65,6 +60,12 @@
     components: {
       codemirror: () => import('@/pages/application/_components/CodeMirror'),
       Markdown: () => import('@/pages/application/_components/markdown/simple'),
+    },
+    async asyncData({ app, params }) {
+      const item = await app.$axios.$get(`/pipe/${params.id}`)
+      item.cwl = JSON.stringify(item.cwl, null, 2)
+      item.tutorial = item.tutorial.replace(/[↵ ]{2,}/g, '  \n')
+      return { formModel: item }
     },
     data() {
       return {
@@ -112,9 +113,9 @@
           if (valid) {
             this.loading = true
             this.$$axios
-              .post('/pipe', this.formModel)
+              .$put('/pipe/' + this.formModel.pipe_id, this.formModel)
               .then(() => {
-                this.$router.push('/application/pipes')
+                this.$router.push('/application/pipe/' + this.formModel.pipe_id)
               })
               .finally(() => {
                 this.loading = false
