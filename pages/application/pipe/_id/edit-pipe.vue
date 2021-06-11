@@ -63,7 +63,10 @@
     },
     async asyncData({ app, params }) {
       const item = await app.$axios.$get(`/pipe/${params.id}`)
-      item.cwl = JSON.stringify(item.cwl, null, 2)
+      if (typeof item.cwl !== 'string') {
+        // 尝试转换字段为字符串
+        item.cwl = JSON.stringify(item.cwl, null, 2)
+      }
       item.tutorial = item.tutorial.replace(/[↵ ]{2,}/g, '  \n')
       return { formModel: item }
     },
