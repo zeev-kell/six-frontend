@@ -38,6 +38,7 @@
   import CanvasParticle from '@/components/CanvasParticle'
   import { mapActions } from 'vuex'
 
+  /** @typedef import('vue').Component */
   export default {
     components: {
       CanvasParticle,
@@ -55,18 +56,14 @@
         },
       }
     },
-    created() {
-      if (this.$auth.loggedIn) {
-        this.$router.push('/application')
-      }
-    },
+    middleware: ['check-login'],
     methods: {
       ...mapActions(['login']),
       onSubmit() {
         this.$refs.form.validate((valid) => {
           if (valid) {
             this.isLoading = true
-            this.login(this.form).finally(() => {
+            this.login(this.form).catch(() => {
               this.isLoading = false
             })
           }

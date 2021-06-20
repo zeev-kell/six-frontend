@@ -8,7 +8,7 @@ export default function ({ $axios, store }) {
     console.log('onRequestError', error)
   })
   $axios.onResponse((response) => {
-    if (process.client) {
+    if (process.client && process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-undef,no-console
       console.log(response)
     }
