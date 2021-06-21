@@ -7,7 +7,7 @@
   export default {
     components: { GraphIndex },
     async asyncData({ app, params }) {
-      const item = await app.$axios.$get(`/pipe/${params.id}`)
+      const item = await app.$axios.$get(`/v1/pipe/${params.id}`)
       return { item }
     },
     data() {

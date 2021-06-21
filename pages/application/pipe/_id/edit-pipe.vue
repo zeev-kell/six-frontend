@@ -62,7 +62,7 @@
       Markdown: () => import('@/pages/application/_components/markdown/simple'),
     },
     async asyncData({ app, params }) {
-      const item = await app.$axios.$get(`/pipe/${params.id}`)
+      const item = await app.$axios.$get(`/v1/pipe/${params.id}`)
       if (typeof item.cwl !== 'string') {
         // 尝试转换字段为字符串
         item.cwl = JSON.stringify(item.cwl, null, 2)

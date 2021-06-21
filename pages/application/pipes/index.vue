@@ -86,7 +86,7 @@
       pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
     },
     async asyncData({ app }) {
-      const items = await app.$axios.$get('/pipes')
+      const items = await app.$axios.$get('/v1/pipes')
       return { items }
     },
     data() {

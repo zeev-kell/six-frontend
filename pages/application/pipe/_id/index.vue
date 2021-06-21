@@ -88,7 +88,7 @@
     },
     components: { GraphIndex },
     async asyncData({ app, params }) {
-      const item = await app.$axios.$get(`/pipe/${params.id}`)
+      const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
       return { item }
     },
     data() {
@@ -112,7 +112,7 @@
           type: 'warning',
         })
           .then(() => {
-            return this.$$axios.delete('/pipe/' + this.$route.params.id).then(() => {
+            return this.$$axios.delete('/v1/pipe/' + this.$route.params.id).then(() => {
               this.$message({
                 type: 'success',
                 message: '删除成功!',

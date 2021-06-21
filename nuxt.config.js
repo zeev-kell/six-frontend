@@ -81,11 +81,11 @@ export default {
         },
         endpoints: {
           login: {
-            url: '/login',
+            url: '/v1/login',
             method: 'post',
             propertyName: 'data.token',
           },
-          logout: { url: '/logout', method: 'get' },
+          logout: { url: '/v1/logout', method: 'get' },
           user: false,
         },
         user: {
