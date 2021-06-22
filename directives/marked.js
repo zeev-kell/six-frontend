@@ -35,7 +35,7 @@ function translateMark(el, binding) {
    * safe 是否是可信任的字符
    */
   const { replace, safe } = binding.modifiers
-  const value = replace ? binding.value.replace(/[↵ ]{2,}/g, '  \n') : binding.value
+  const value = replace ? binding.value?.replace(/[↵ ]{2,}/g, '  \n') : binding.value
   if (!value) {
     return
   }

@@ -32,9 +32,9 @@ const actions = {
         this.$auth.setUser(null)
         this.$auth.$storage.setLocalStorage('user', undefined)
       })
-      .catch((e) => {
-        Element.Message.error(e.msg || e)
-        return Promise.reject(e)
+      .catch(() => {
+        this.$auth.setUser(null)
+        this.$auth.$storage.setLocalStorage('user', null)
       })
   },
 }

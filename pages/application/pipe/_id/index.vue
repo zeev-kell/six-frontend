@@ -30,7 +30,7 @@
       <div class="panel-body w-info">
         <div class="el-row">
           <label class="el-col el-col-2">ID</label>
-          <div class="el-col el-col-equal">{{ item['pipe_id'] }}</div>
+          <div class="el-col el-col-equal">{{ item['resource_id'] }}</div>
         </div>
         <div class="el-row">
           <label class="el-col el-col-2">版本</label>
