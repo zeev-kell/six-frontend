@@ -23,16 +23,16 @@
 </template>
 
 <script>
-  export default {
-    // eslint-disable-next-line vue/require-prop-types
-    props: ['error'],
-  }
+export default {
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['error'],
+}
 </script>
 <style>
-  .error-page {
-    margin: 5% auto 0;
-    max-width: 400px;
-    padding: 10px;
-    position: relative;
-  }
+.error-page {
+  margin: 5% auto 0;
+  max-width: 400px;
+  padding: 10px;
+  position: relative;
+}
 </style>

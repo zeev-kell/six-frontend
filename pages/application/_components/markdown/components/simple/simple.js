@@ -84,8 +84,7 @@ export default {
         const startPos = textDom.selectionStart
         const endPos = textDom.selectionEnd
         const scrollTop = textDom.scrollTop
-        textDom.value =
-          textDom.value.substring(0, startPos) + value + textDom.value.substring(endPos, textDom.value.length)
+        textDom.value = textDom.value.substring(0, startPos) + value + textDom.value.substring(endPos, textDom.value.length)
         textDom.focus()
         textDom.selectionStart = startPos + value.length
         textDom.selectionEnd = startPos + value.length
@@ -267,10 +266,7 @@ export default {
         const markdownScrollHeight = markdownEditor.scrollHeight
         const markdownScrollTop = markdownEditor.scrollTop
         const previewScrollHeight = preview.scrollHeight
-        preview.scrollTop = parseInt(
-          (markdownScrollTop / (markdownScrollHeight - contentHeight)) * (previewScrollHeight - contentHeight),
-          0
-        )
+        preview.scrollTop = parseInt((markdownScrollTop / (markdownScrollHeight - contentHeight)) * (previewScrollHeight - contentHeight), 0)
       }
     },
     previewScroll() {
@@ -285,10 +281,7 @@ export default {
         const markdownScrollHeight = markdownEditor.scrollHeight
         const previewScrollHeight = preview.scrollHeight
         const previewScrollTop = preview.scrollTop
-        markdownEditor.scrollTop = parseInt(
-          (previewScrollTop / (previewScrollHeight - contentHeight)) * (markdownScrollHeight - contentHeight),
-          0
-        )
+        markdownEditor.scrollTop = parseInt((previewScrollTop / (previewScrollHeight - contentHeight)) * (markdownScrollHeight - contentHeight), 0)
       }
     },
     mousescrollSide(side) {

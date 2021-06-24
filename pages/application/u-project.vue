@@ -3,7 +3,7 @@
 </template>
 
 <script type="text/babel">
-  export default {}
+export default {}
 </script>
 
 <style scoped lang="scss" rel="stylesheet"></style>

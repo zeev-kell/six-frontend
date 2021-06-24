@@ -11,9 +11,9 @@
 </template>
 
 <script type="text/babel">
-  export default {
-    name: 'Information',
-  }
+export default {
+  name: 'Information',
+}
 </script>
 
 <style scoped lang="scss"></style>

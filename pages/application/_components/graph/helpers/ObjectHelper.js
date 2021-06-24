@@ -10,8 +10,7 @@ export class ObjectHelper {
    */
   static addProperty(target, path, value) {
     // Ensure that path is an array of path elements
-    const resolvedPath =
-      typeof path === 'string' ? path.split(ObjectHelper.pathDelimiter).filter((v) => v.length) : path
+    const resolvedPath = typeof path === 'string' ? path.split(ObjectHelper.pathDelimiter).filter((v) => v.length) : path
     if (!resolvedPath) {
       return
     }

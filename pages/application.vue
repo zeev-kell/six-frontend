@@ -3,7 +3,7 @@
 </template>
 
 <script type="text/babel">
-  export default {
-    layout: 'AppLayout',
-  }
+export default {
+  layout: 'AppLayout',
+}
 </script>

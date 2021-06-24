@@ -17,34 +17,34 @@
 </template>
 
 <script type="text/babel">
-  export default {
-    name: 'CollapseItem',
-    props: {
-      title: {
-        type: String,
-        default: '',
-      },
+export default {
+  name: 'CollapseItem',
+  props: {
+    title: {
+      type: String,
+      default: '',
     },
-    data() {
-      return {
-        collapsed: false,
-      }
-    },
-  }
+  },
+  data() {
+    return {
+      collapsed: false,
+    }
+  },
+}
 </script>
 
 <style scoped lang="scss">
-  .el-collapse-item__header {
-    color: white;
-    background-color: transparent;
-    border: none;
-  }
-  .el-collapse-item__wrap {
-    background-color: transparent;
-    border-bottom: none;
-  }
-  .el-collapse-item__content {
-    color: inherit;
-    padding-bottom: 0;
-  }
+.el-collapse-item__header {
+  color: white;
+  background-color: transparent;
+  border: none;
+}
+.el-collapse-item__wrap {
+  background-color: transparent;
+  border-bottom: none;
+}
+.el-collapse-item__content {
+  color: inherit;
+  padding-bottom: 0;
+}
 </style>

@@ -68,11 +68,7 @@ class AbstractControl {
 
   _isBoxedValue(formState) {
     return (
-      typeof formState === 'object' &&
-      formState !== null &&
-      Object.keys(formState).length === 2 &&
-      'value' in formState &&
-      'disabled' in formState
+      typeof formState === 'object' && formState !== null && Object.keys(formState).length === 2 && 'value' in formState && 'disabled' in formState
     )
   }
 
@@ -118,9 +114,7 @@ class FormControl extends AbstractControl {
   _applyFormState(formState) {
     if (this._isBoxedValue(formState)) {
       this.value = formState.value
-      formState.disabled
-        ? this.disable({ onlySelf: true, emitEvent: false })
-        : this.enable({ onlySelf: true, emitEvent: false })
+      formState.disabled ? this.disable({ onlySelf: true, emitEvent: false }) : this.enable({ onlySelf: true, emitEvent: false })
     } else {
       this.value = formState
     }

@@ -16,6 +16,12 @@ module.exports = {
     'declaration-block-trailing-semicolon': null,
     'rule-empty-line-before': null,
     'comment-whitespace-inside': null,
+    'selector-pseudo-element-no-unknown': [
+      true,
+      {
+        ignorePseudoElements: ['v-deep'],
+      },
+    ],
     indentation: [
       2,
       {

@@ -15,12 +15,7 @@
             </el-form-item>
             <el-form-item label="类别" prop="type">
               <el-select v-model="formModel.type" placeholder="请选择类别" clearable style="width: 100%">
-                <el-option
-                  v-for="item in typeList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
+                <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="地址" prop="description">
@@ -60,71 +55,71 @@
 </template>
 
 <script type="text/babel">
-  import pipeConstants from '@/constants/PipeConstants'
-  export default {
-    components: {
-      codemirror: () => import('@/pages/application/_components/CodeMirror'),
-      Markdown: () => import('@/pages/application/_components/markdown/simple'),
-    },
-    data() {
-      return {
-        formModel: {
-          name: '',
-          version: '',
-          description: '',
-          category: '',
-          website: '',
-          tutorial: '',
-          type: '',
-          cwl: '',
-        },
-        rules: {
-          name: [
-            { required: true, message: '请输入名称', trigger: 'blur' },
-            { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' },
-          ],
-          version: [
-            { required: true, message: '请输入版本', trigger: 'blur' },
-            { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
-          ],
-          type: [{ required: true, message: '请选择类型', trigger: 'change' }],
-          category: [
-            { required: true, message: '请输入分类', trigger: 'blue' },
-            { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-          ],
-        },
-        cmOptions: {
-          tabSize: 4,
-          styleActiveLine: true,
-          lineNumbers: true,
-          line: true,
-          mode: 'text/yaml',
-          lineWrapping: true,
-          theme: 'default',
-        },
-        loading: false,
-        typeList: pipeConstants.items,
-      }
-    },
-    methods: {
-      onSubmit() {
-        this.$refs.formModel.validate((valid) => {
-          if (valid) {
-            this.loading = true
-            this.$$axios
-              .post('/pipe', this.formModel)
-              .then(() => {
-                this.$router.push('/application/pipes')
-              })
-              .finally(() => {
-                this.loading = false
-              })
-          } else {
-            this.$message.warning('请填写完整信息')
-            return false
-          }
-        })
+import pipeConstants from '@/constants/PipeConstants'
+export default {
+  components: {
+    codemirror: () => import('@/pages/application/_components/CodeMirror'),
+    Markdown: () => import('@/pages/application/_components/markdown/simple'),
+  },
+  data() {
+    return {
+      formModel: {
+        name: '',
+        version: '',
+        description: '',
+        category: '',
+        website: '',
+        tutorial: '',
+        type: '',
+        cwl: '',
       },
+      rules: {
+        name: [
+          { required: true, message: '请输入名称', trigger: 'blur' },
+          { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' },
+        ],
+        version: [
+          { required: true, message: '请输入版本', trigger: 'blur' },
+          { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
+        ],
+        type: [{ required: true, message: '请选择类型', trigger: 'change' }],
+        category: [
+          { required: true, message: '请输入分类', trigger: 'blue' },
+          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
+        ],
+      },
+      cmOptions: {
+        tabSize: 4,
+        styleActiveLine: true,
+        lineNumbers: true,
+        line: true,
+        mode: 'text/yaml',
+        lineWrapping: true,
+        theme: 'default',
+      },
+      loading: false,
+      typeList: pipeConstants.items,
+    }
+  },
+  methods: {
+    onSubmit() {
+      this.$refs.formModel.validate((valid) => {
+        if (valid) {
+          this.loading = true
+          this.$$axios
+            .post('/pipe', this.formModel)
+            .then(() => {
+              this.$router.push('/application/pipes')
+            })
+            .finally(() => {
+              this.loading = false
+            })
+        } else {
+          this.$message.warning('请填写完整信息')
+          return false
+        }
+      })
     },
-  }
+  },
+}
 </script>

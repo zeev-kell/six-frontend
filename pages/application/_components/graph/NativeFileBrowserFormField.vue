@@ -3,32 +3,32 @@
 </template>
 
 <script type="text/babel">
-  import { FormControl } from '@/pages/application/_components/FormControl'
+import { FormControl } from '@/pages/application/_components/FormControl'
 
-  export default {
-    name: 'NativeFileBrowserFormField',
-    props: {
-      formControl: {
-        type: Object,
-        default() {
-          return new FormControl(null)
-        },
-      },
-      selectionType: {
-        type: String,
-        default: '',
+export default {
+  name: 'NativeFileBrowserFormField',
+  props: {
+    formControl: {
+      type: Object,
+      default() {
+        return new FormControl(null)
       },
     },
-    computed: {
-      actualValue: {
-        get() {
-          return this.formControl?.value
-        },
-        set(value) {
-          // TODO 修改数据更新方式
-          this.$emit('onUpdate', value)
-        },
+    selectionType: {
+      type: String,
+      default: '',
+    },
+  },
+  computed: {
+    actualValue: {
+      get() {
+        return this.formControl?.value
+      },
+      set(value) {
+        // TODO 修改数据更新方式
+        this.$emit('onUpdate', value)
       },
     },
-  }
+  },
+}
 </script>

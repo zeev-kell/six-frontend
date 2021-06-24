@@ -55,80 +55,80 @@
 </template>
 
 <script type="text/babel">
-  import pipeConstants from '@/constants/PipeConstants'
-  export default {
-    components: {
-      codemirror: () => import('@/pages/application/_components/CodeMirror'),
-      Markdown: () => import('@/pages/application/_components/markdown/simple'),
-    },
-    async asyncData({ app, params }) {
-      const item = await app.$axios.$get(`/v1/pipe/${params.id}`)
-      if (typeof item.cwl !== 'string') {
-        // 尝试转换字段为字符串
-        item.cwl = JSON.stringify(item.cwl, null, 2)
-      }
-      item.tutorial = item.tutorial.replace(/[↵ ]{2,}/g, '  \n')
-      return { formModel: item }
-    },
-    data() {
-      return {
-        formModel: {
-          name: '',
-          version: '',
-          description: '',
-          category: '',
-          website: '',
-          tutorial: '',
-          type: '',
-          cwl: '',
-        },
-        rules: {
-          name: [
-            { required: true, message: '请输入名称', trigger: 'blur' },
-            { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' },
-          ],
-          version: [
-            { required: true, message: '请输入版本', trigger: 'blur' },
-            { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
-          ],
-          type: [{ required: true, message: '请选择类型', trigger: 'change' }],
-          category: [
-            { required: true, message: '请输入分类', trigger: 'blue' },
-            { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-          ],
-        },
-        cmOptions: {
-          tabSize: 4,
-          styleActiveLine: true,
-          lineNumbers: true,
-          line: true,
-          mode: 'text/yaml',
-          lineWrapping: true,
-          theme: 'default',
-        },
-        loading: false,
-        typeList: pipeConstants.items,
-      }
-    },
-    methods: {
-      onSubmit() {
-        this.$refs.formModel.validate((valid) => {
-          if (valid) {
-            this.loading = true
-            this.$$axios
-              .$put('/pipe/' + this.formModel.pipe_id, this.formModel)
-              .then(() => {
-                this.$router.push('/application/pipe/' + this.formModel.pipe_id)
-              })
-              .finally(() => {
-                this.loading = false
-              })
-          } else {
-            this.$message.warning('请填写完整信息')
-            return false
-          }
-        })
+import pipeConstants from '@/constants/PipeConstants'
+export default {
+  components: {
+    codemirror: () => import('@/pages/application/_components/CodeMirror'),
+    Markdown: () => import('@/pages/application/_components/markdown/simple'),
+  },
+  async asyncData({ app, params }) {
+    const item = await app.$axios.$get(`/v1/pipe/${params.id}`)
+    if (typeof item.cwl !== 'string') {
+      // 尝试转换字段为字符串
+      item.cwl = JSON.stringify(item.cwl, null, 2)
+    }
+    item.tutorial = item.tutorial.replace(/[↵ ]{2,}/g, '  \n')
+    return { formModel: item }
+  },
+  data() {
+    return {
+      formModel: {
+        name: '',
+        version: '',
+        description: '',
+        category: '',
+        website: '',
+        tutorial: '',
+        type: '',
+        cwl: '',
       },
+      rules: {
+        name: [
+          { required: true, message: '请输入名称', trigger: 'blur' },
+          { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' },
+        ],
+        version: [
+          { required: true, message: '请输入版本', trigger: 'blur' },
+          { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
+        ],
+        type: [{ required: true, message: '请选择类型', trigger: 'change' }],
+        category: [
+          { required: true, message: '请输入分类', trigger: 'blue' },
+          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
+        ],
+      },
+      cmOptions: {
+        tabSize: 4,
+        styleActiveLine: true,
+        lineNumbers: true,
+        line: true,
+        mode: 'text/yaml',
+        lineWrapping: true,
+        theme: 'default',
+      },
+      loading: false,
+      typeList: pipeConstants.items,
+    }
+  },
+  methods: {
+    onSubmit() {
+      this.$refs.formModel.validate((valid) => {
+        if (valid) {
+          this.loading = true
+          this.$$axios
+            .$put('/pipe/' + this.formModel.pipe_id, this.formModel)
+            .then(() => {
+              this.$router.push('/application/pipe/' + this.formModel.pipe_id)
+            })
+            .finally(() => {
+              this.loading = false
+            })
+        } else {
+          this.$message.warning('请填写完整信息')
+          return false
+        }
+      })
     },
-  }
+  },
+}
 </script>

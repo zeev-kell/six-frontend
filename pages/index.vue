@@ -3,13 +3,8 @@
     <section class="index-banner el-row is-align-middle el-row--flex">
       <div class="el-col-20 el-col-offset-2 el-col-sm-8 el-col-offset-sm-4">
         <h1>生物医疗大数据服务</h1>
-        <p>
-          生物医疗数据处理云平台，提供数据处理算法下载、在线组合、自动
-          生成功能，以及一站式生信解决方案的本地化部署服务。
-        </p>
-        <a href="http://www.sixoclock.net/support-center/get_started" target="_blank"
-          ><el-button>开始体验</el-button></a
-        >
+        <p>生物医疗数据处理云平台，提供数据处理算法下载、在线组合、自动 生成功能，以及一站式生信解决方案的本地化部署服务。</p>
+        <a href="http://www.sixoclock.net/support-center/get_started" target="_blank"><el-button>开始体验</el-button></a>
         <a href="#section-product">
           <el-button plain type="primary pass">云计算协作</el-button>
         </a>
@@ -26,14 +21,14 @@
       </div>
       <div class="container">
         <div class="el-row el-row--flex is-justify-space-around">
-          <div class="el-col-auto mb-2r text-center pro-panel">
+          <div class="el-col-auto m-b-2 text-center pro-panel">
             <nuxt-link v-slot="{ navigate }" to="/application/pipes" custom>
               <div class="pointer" @click="navigate" @keypress.enter="navigate">
                 <el-card shadow="hover" class="pro-card">
                   <div class="pro-icon">
                     <i class="el-icon-files"></i>
                   </div>
-                  <h3 class="pro-title my-1r">
+                  <h3 class="pro-title m-y-1">
                     <strong>软件下载</strong>
                   </h3>
                   <div class="pro-content">
@@ -47,13 +42,13 @@
               </div>
             </nuxt-link>
           </div>
-          <div class="el-col-auto mb-2r text-center pro-panel">
+          <div class="el-col-auto m-b-2 text-center pro-panel">
             <a class="a-link">
               <el-card shadow="hover" class="pro-card">
                 <div class="pro-icon">
                   <i class="el-icon-files"></i>
                 </div>
-                <h3 class="pro-title my-1r">
+                <h3 class="pro-title m-y-1">
                   <strong>流程组合</strong>
                 </h3>
                 <div class="pro-content">
@@ -65,13 +60,13 @@
               </el-card>
             </a>
           </div>
-          <div class="el-col-auto mb-2r text-center pro-panel">
+          <div class="el-col-auto m-b-2 text-center pro-panel">
             <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link">
               <el-card shadow="hover" class="pro-card">
                 <div class="pro-icon">
                   <i class="el-icon-files"></i>
                 </div>
-                <h3 class="pro-title my-1r">
+                <h3 class="pro-title m-y-1">
                   <strong>数据下载</strong>
                 </h3>
                 <div class="pro-content">
@@ -83,13 +78,13 @@
               </el-card>
             </a>
           </div>
-          <div class="el-col-auto mb-2r text-center pro-panel">
+          <div class="el-col-auto m-b-2 text-center pro-panel">
             <a class="a-link" href="https://wiki-pre.sixoclock.net/" target="_blank">
               <el-card shadow="hover" class="pro-card">
                 <div class="pro-icon">
                   <i class="el-icon-files"></i>
                 </div>
-                <h3 class="pro-title my-1r">
+                <h3 class="pro-title m-y-1">
                   <strong>知识库</strong>
                 </h3>
                 <div class="pro-content">
@@ -109,117 +104,117 @@
 </template>
 
 <script type="text/babel">
-  import scrollTop from '@/utils/animate-scroll'
-  export default {
-    layout: 'IndexLayout',
-    data() {
-      return {
-        RESOURCES_URL: process.env.RESOURCES_URL,
-      }
+import scrollTop from '@/utils/animate-scroll'
+export default {
+  layout: 'IndexLayout',
+  data() {
+    return {
+      RESOURCES_URL: process.env.RESOURCES_URL,
+    }
+  },
+  methods: {
+    scrollToNext() {
+      const height = document.querySelector('.index-banner').offsetHeight
+      scrollTop(document.documentElement, height)
     },
-    methods: {
-      scrollToNext() {
-        const height = document.querySelector('.index-banner').offsetHeight
-        scrollTop(document.documentElement, height)
-      },
-    },
-  }
+  },
+}
 </script>
 <style lang="scss" scoped>
-  @import './assets/scss/variables';
-  @import '/node_modules/element-theme-chalk/src/mixins/mixins';
+@import './assets/scss/variables';
+@import '/node_modules/element-theme-chalk/src/mixins/mixins';
 
+.index-banner {
+  background: url('/images/banner-3.png') no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  height: 600px;
+  // color: var(--light_grey);
+  color: #333333;
+  position: relative;
+}
+
+.a-link {
+  text-decoration: none !important;
+}
+
+.pro-card {
+  background-color: transparent;
+  border: 1px solid transparent;
+  transition: transform 0.2s;
+  cursor: pointer;
+  width: 240px;
+  &:hover {
+    transform: translateY(-8px);
+    border: 1px solid #ebeef5;
+  }
+}
+
+.pro-icon {
+  font-size: 80px;
+  color: $theme-color;
+}
+
+.down-btn-wrap {
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+  animation: shake 1s;
+  animation-iteration-count: infinite;
+  display: flex;
+  justify-content: center;
+}
+
+.down-btn {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  border-right: 2px solid #333333;
+  border-bottom: 2px solid #333333;
+  transform: rotate(45deg);
+}
+
+@keyframes shake {
+  0%,
+  20%,
+  53%,
+  80%,
+  to {
+    transform: translate(0);
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  40%,
+  43% {
+    transform: translateY(-10px);
+    transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  }
+
+  70% {
+    transform: translateY(-5px);
+    transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  }
+
+  90% {
+    transform: translateY(-4px);
+  }
+}
+
+// 小于 768px
+@include res(xs-only, $--breakpoints-spec) {
   .index-banner {
-    background: url('/images/banner-3.png') no-repeat;
-    background-size: cover;
-    min-height: 100vh;
-    height: 600px;
-    // color: var(--light_grey);
-    color: #333333;
-    position: relative;
+    background-position-x: 40%;
   }
-
-  .a-link {
-    text-decoration: none !important;
-  }
-
-  .pro-card {
-    background-color: transparent;
-    border: 1px solid transparent;
-    transition: transform 0.2s;
-    cursor: pointer;
-    width: 240px;
-    &:hover {
-      transform: translateY(-8px);
-      border: 1px solid #ebeef5;
+  #section-product {
+    .pro-card {
+      width: 100%;
+    }
+    .el-col-auto {
+      width: 80%;
+    }
+    .container > .el-row--flex {
+      flex-wrap: wrap;
     }
   }
-
-  .pro-icon {
-    font-size: 80px;
-    color: $theme-color;
-  }
-
-  .down-btn-wrap {
-    position: absolute;
-    bottom: 10%;
-    width: 100%;
-    animation: shake 1s;
-    animation-iteration-count: infinite;
-    display: flex;
-    justify-content: center;
-  }
-
-  .down-btn {
-    width: 2rem;
-    height: 2rem;
-    cursor: pointer;
-    border-right: 2px solid #333333;
-    border-bottom: 2px solid #333333;
-    transform: rotate(45deg);
-  }
-
-  @keyframes shake {
-    0%,
-    20%,
-    53%,
-    80%,
-    to {
-      transform: translate(0);
-      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    }
-
-    40%,
-    43% {
-      transform: translateY(-10px);
-      transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-    }
-
-    70% {
-      transform: translateY(-5px);
-      transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-    }
-
-    90% {
-      transform: translateY(-4px);
-    }
-  }
-
-  // 小于 768px
-  @include res(xs-only, $--breakpoints-spec) {
-    .index-banner {
-      background-position-x: 40%;
-    }
-    #section-product {
-      .pro-card {
-        width: 100%;
-      }
-      .el-col-auto {
-        width: 80%;
-      }
-      .container > .el-row--flex {
-        flex-wrap: wrap;
-      }
-    }
-  }
+}
 </style>

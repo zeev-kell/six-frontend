@@ -9,9 +9,9 @@
   </div>
 </template>
 <script>
-  import AppNavigation from '@/components/AppNavigation'
-  export default {
-    components: { AppNavigation },
-    middleware: ['auth'],
-  }
+import AppNavigation from '@/components/AppNavigation'
+export default {
+  components: { AppNavigation },
+  middleware: ['auth'],
+}
 </script>

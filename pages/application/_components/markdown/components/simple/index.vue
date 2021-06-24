@@ -123,13 +123,7 @@
     </div>
     <!-- 编辑器 -->
     <div class="markdown-content" :style="{ background: preview ? '#fff' : '' }">
-      <div
-        v-show="!preview"
-        ref="markdownEditor"
-        class="markdown-editor"
-        @scroll="markdownScroll"
-        @mouseenter="mousescrollSide('markdown')"
-      >
+      <div v-show="!preview" ref="markdownEditor" class="markdown-editor" @scroll="markdownScroll" @mouseenter="mousescrollSide('markdown')">
         <ul
           ref="index"
           class="index"
@@ -172,13 +166,13 @@
 </template>
 
 <script>
-  import markdown from './simple'
+import markdown from './simple'
 
-  export default markdown
+export default markdown
 </script>
 
 <style scoped lang="scss">
-  @import '../../assets/font/iconfont.css';
-  @import '../../assets/css/light.css';
-  @import '../../assets/css/index.css';
+@import '../../assets/font/iconfont.css';
+@import '../../assets/css/light.css';
+@import '../../assets/css/index.css';
 </style>

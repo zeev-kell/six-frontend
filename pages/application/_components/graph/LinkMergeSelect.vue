@@ -7,27 +7,27 @@
 </template>
 
 <script type="text/babel">
-  export default {
-    name: 'LinkMergeSelect',
-    props: {
-      // eslint-disable-next-line vue/require-prop-types
-      value: {
-        default: undefined,
+export default {
+  name: 'LinkMergeSelect',
+  props: {
+    // eslint-disable-next-line vue/require-prop-types
+    value: {
+      default: undefined,
+    },
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    actualValue: {
+      get() {
+        return this.value === null || this.value === undefined ? '' : this.value
       },
-      readonly: {
-        type: Boolean,
-        default: false,
+      set(value) {
+        this.$emit('onUpdate', value)
       },
     },
-    computed: {
-      actualValue: {
-        get() {
-          return this.value === null || this.value === undefined ? '' : this.value
-        },
-        set(value) {
-          this.$emit('onUpdate', value)
-        },
-      },
-    },
-  }
+  },
+}
 </script>

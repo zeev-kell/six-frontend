@@ -13,12 +13,7 @@
             </el-form-item>
             <el-form-item>
               <el-select v-model="query.type" placeholder="按类别筛选" clearable>
-                <el-option
-                  v-for="item in typeList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
+                <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item>
@@ -31,9 +26,7 @@
         <div class="action-box">
           <can-create>
             <nuxt-link v-slot="{ navigate }" to="/application/pipe/new-pipe" custom>
-              <el-button type="primary" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate">
-                新建
-              </el-button>
+              <el-button type="primary" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
             </nuxt-link>
           </can-create>
         </div>
@@ -44,12 +37,7 @@
             <template slot-scope="{ row }">
               <div class="el-row--flex is-align-middle">
                 <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
-                  <el-button
-                    type="text"
-                    icon="el-icon-search"
-                    class="px-5 py-0"
-                    @click.stop="showVisualModal(row['pipe_id'])"
-                  ></el-button>
+                  <el-button type="text" icon="el-icon-search" class="px-5 py-0" @click.stop="showVisualModal(row['pipe_id'])"></el-button>
                 </el-tooltip>
                 <nuxt-link class="text-truncate" :to="'/application/pipe/' + row['pipe_id']" :title="row.name">
                   {{ row.name }}
@@ -76,89 +64,88 @@
 </template>
 
 <script type="text/babel">
-  import CanCreate from '@/components/common/CanCreate'
-  import intercept from '@/filters/intercept'
-  import pipeConstants from '@/constants/PipeConstants'
-  export default {
-    components: { CanCreate },
-    filters: {
-      ...intercept,
-      pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
+import CanCreate from '@/components/common/CanCreate'
+import intercept from '@/filters/intercept'
+import pipeConstants from '@/constants/PipeConstants'
+export default {
+  components: { CanCreate },
+  filters: {
+    ...intercept,
+    pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
+  },
+  async asyncData({ app }) {
+    const items = await app.$axios.$get('/v1/pipes')
+    return { items }
+  },
+  data() {
+    return {
+      query: {
+        name: this.$route.query.name || '',
+        category: this.$route.query.category || '',
+        type: this.$route.query.type || '',
+      },
+      items: [],
+      typeList: pipeConstants.items,
+    }
+  },
+  computed: {
+    categoryList() {
+      return this.items.reduce((list, item) => {
+        if (!list.includes(item.category)) {
+          list.push(item.category)
+        }
+        return list
+      }, [])
     },
-    async asyncData({ app }) {
-      const items = await app.$axios.$get('/v1/pipes')
-      return { items }
+    nameList() {
+      return this.items.reduce((list, item) => {
+        if (!list.includes(item.name)) {
+          list.push({ value: item.name })
+        }
+        return list
+      }, [])
     },
-    data() {
-      return {
-        query: {
-          name: this.$route.query.name || '',
-          category: this.$route.query.category || '',
-          type: this.$route.query.type || '',
-        },
-        items: [],
-        typeList: pipeConstants.items,
+    tableDate() {
+      let data = this.items
+      if (this.query.category !== '') {
+        data = data.filter((item) => {
+          return item.category === this.query.category
+        })
+      }
+      if (this.query.name !== '') {
+        data = data.filter((item) => {
+          return item.name.includes(this.query.name)
+        })
+      }
+      if (this.query.type !== '') {
+        data = data.filter((item) => {
+          return item.type === this.query.type
+        })
+      }
+      return data
+    },
+    selection() {
+      return this.$refs.multipleTable ? this.$refs.multipleTable.selection : []
+    },
+    hasSelection() {
+      return this.selection.length > 0
+    },
+  },
+  methods: {
+    createFilter(str) {
+      return (name) => {
+        return name.value.toLowerCase().includes(str.toLowerCase())
       }
     },
-    computed: {
-      categoryList() {
-        return this.items.reduce((list, item) => {
-          if (!list.includes(item.category)) {
-            list.push(item.category)
-          }
-          return list
-        }, [])
-      },
-      nameList() {
-        return this.items.reduce((list, item) => {
-          if (!list.includes(item.name)) {
-            list.push({ value: item.name })
-          }
-          return list
-        }, [])
-      },
-      tableDate() {
-        let data = this.items
-        if (this.query.category !== '') {
-          data = data.filter((item) => {
-            return item.category === this.query.category
-          })
-        }
-        if (this.query.name !== '') {
-          data = data.filter((item) => {
-            return item.name.includes(this.query.name)
-          })
-        }
-        if (this.query.type !== '') {
-          data = data.filter((item) => {
-            return item.type === this.query.type
-          })
-        }
-        return data
-      },
-      selection() {
-        return this.$refs.multipleTable ? this.$refs.multipleTable.selection : []
-      },
-      hasSelection() {
-        return this.selection.length > 0
-      },
+    queryName(str, cb) {
+      const nameList = this.nameList
+      const results = str ? nameList.filter(this.createFilter(str)) : nameList
+      cb(results)
     },
-    methods: {
-      createFilter(str) {
-        return (name) => {
-          return name.value.toLowerCase().includes(str.toLowerCase())
-        }
-      },
-      queryName(str, cb) {
-        const nameList = this.nameList
-        const results = str ? nameList.filter(this.createFilter(str)) : nameList
-        cb(results)
-      },
-      showVisualModal(id) {
-        // window.open(`/graph-info/${id}`, '_blank', 'toolbar=0,location=0,menubar=0')
-        window.open(`/graph-info/${id}`, '_blank')
-      },
-      handleDeletePipes() {},
+    showVisualModal(id) {
+      // window.open(`/graph-info/${id}`, '_blank', 'toolbar=0,location=0,menubar=0')
+      window.open(`/graph-info/${id}`, '_blank')
     },
-  }
+  },
+}
 </script>

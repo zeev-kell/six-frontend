@@ -66,13 +66,13 @@
         </template>
 
         <!--Delete button for array item if its not a map-->
-        <el-tooltip v-if="index !== -1 && input.type.type !== 'map' && !readonly" content="Delete" class="ml-05r p-5">
+        <el-tooltip v-if="index !== -1 && input.type.type !== 'map' && !readonly" content="Delete" class="m-l-05 p-5">
           <i class="el-icon-delete" @click="deleteFromArray()"></i>
         </el-tooltip>
       </div>
       <!--Records-->
       <template v-else-if="isInputType('record')">
-        <div v-for="entry of input.type.fields" :key="entry.id" class="ml-1r">
+        <div v-for="entry of input.type.fields" :key="entry.id" class="m-l-1">
           <label>
             {{ entry.label || entry.id }}
             <span class="text-muted">({{ entry.type.type }})</span>
@@ -123,137 +123,137 @@
 </template>
 
 <script type="text/babel">
-  import { ObjectHelper } from '@/pages/application/_components/graph/helpers/ObjectHelper'
-  import SelectionInputEntryMap from '@/pages/application/_components/graph/SelectionInputEntryMap'
-  import { JobHelper } from 'cwlts/models/helpers/JobHelper'
+import { ObjectHelper } from '@/pages/application/_components/graph/helpers/ObjectHelper'
+import SelectionInputEntryMap from '@/pages/application/_components/graph/SelectionInputEntryMap'
+import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 
-  export default {
-    name: 'SelectionInputEntry',
-    components: { SelectionInputEntryMap },
-    props: {
-      input: {
-        type: [Object, Array],
-        default: null,
-      },
-      prefix: {
-        type: String,
-        default: '',
-      },
-      // eslint-disable-next-line vue/require-prop-types
-      value: {
-        default: '',
-      },
-      readonly: {
-        type: Boolean,
-        default: false,
-      },
-      index: {
-        type: Number,
-        default: -1,
-      },
-      type: {
-        type: [String, Object],
-        default: '',
-      },
+export default {
+  name: 'SelectionInputEntry',
+  components: { SelectionInputEntryMap },
+  props: {
+    input: {
+      type: [Object, Array],
+      default: null,
     },
-    data() {
-      return {
-        warning: undefined,
+    prefix: {
+      type: String,
+      default: '',
+    },
+    // eslint-disable-next-line vue/require-prop-types
+    value: {
+      default: '',
+    },
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
+    index: {
+      type: Number,
+      default: -1,
+    },
+    type: {
+      type: [String, Object],
+      default: '',
+    },
+  },
+  data() {
+    return {
+      warning: undefined,
+    }
+  },
+  computed: {
+    inputType() {
+      const inputType = this.input.type.type
+      if (inputType === 'array') {
+        if (this.input.type.items === 'File') {
+          return 'File'
+        }
       }
+      return inputType
     },
-    computed: {
-      inputType() {
-        const inputType = this.input.type.type
-        if (inputType === 'array') {
-          if (this.input.type.items === 'File') {
-            return 'File'
-          }
-        }
-        return inputType
+    actualValue: {
+      get() {
+        return this.value
       },
-      actualValue: {
-        get() {
-          return this.value
-        },
-        set(value) {
-          this.$emit('onUpdate', value)
-        },
-      },
-      actualString: {
-        get() {
-          return this.value === null || this.value === undefined ? '' : this.value
-        },
-        set(value) {
-          this.$emit('onUpdate', value)
-        },
-      },
-      actualBoolean: {
-        get() {
-          return this.value === '' ? false : this.value
-        },
-        set(value) {
-          this.$emit('onUpdate', value)
-        },
-      },
-      arrayModifiedInput() {
-        if (this.input.type.type === 'array' && this.input.type.items !== 'File') {
-          return {
-            ...this.input,
-            type: {
-              ...this.input.type,
-              type: this.input.type.items,
-              symbols: this.input.type.symbols,
-            },
-          }
-        }
-        return undefined
+      set(value) {
+        this.$emit('onUpdate', value)
       },
     },
-    methods: {
-      // 为了使用 default，switch 功能组件需要升级到 vue3
-      isSingleInputTypes() {
-        return ['enum', 'int', 'float', 'string', 'boolean', 'map', 'File', 'Directory'].includes(this.inputType)
+    actualString: {
+      get() {
+        return this.value === null || this.value === undefined ? '' : this.value
       },
-      isInputType(type) {
-        return this.inputType === type
+      set(value) {
+        this.$emit('onUpdate', value)
       },
-      deleteFromArray() {
-        this.onUpdateJob(undefined)
+    },
+    actualBoolean: {
+      get() {
+        return this.value === '' ? false : this.value
       },
-      onUpdateJob(data) {
-        this.$emit('onUpdate', data)
+      set(value) {
+        this.$emit('onUpdate', value)
       },
-      onUpdateArray(data, index) {
-        // We need some kind of convention to broadcast information
-        // that an array element should be deleted
-        if (data === undefined) {
-          this.onUpdateJob(this.value.filter((e, i) => i !== index))
-          return
+    },
+    arrayModifiedInput() {
+      if (this.input.type.type === 'array' && this.input.type.items !== 'File') {
+        return {
+          ...this.input,
+          type: {
+            ...this.input.type,
+            type: this.input.type.items,
+            symbols: this.input.type.symbols,
+          },
         }
+      }
+      return undefined
+    },
+  },
+  methods: {
+    // 为了使用 default，switch 功能组件需要升级到 vue3
+    isSingleInputTypes() {
+      return ['enum', 'int', 'float', 'string', 'boolean', 'map', 'File', 'Directory'].includes(this.inputType)
+    },
+    isInputType(type) {
+      return this.inputType === type
+    },
+    deleteFromArray() {
+      this.onUpdateJob(undefined)
+    },
+    onUpdateJob(data) {
+      this.$emit('onUpdate', data)
+    },
+    onUpdateArray(data, index) {
+      // We need some kind of convention to broadcast information
+      // that an array element should be deleted
+      if (data === undefined) {
+        this.onUpdateJob(this.value.filter((e, i) => i !== index))
+        return
+      }
 
-        // This is tricky.
-        // We need to update the original value in place, and cant replace its reference because
-        // of the object inspector, which would still point to the previous entry.
-        // We can't close and reopen the inspector because it would break the control focus.
-        Object.keys(this.value[index]).forEach((item) => delete this.value[index][item])
-        this.value[index] = Object.assign(this.value[index], data)
+      // This is tricky.
+      // We need to update the original value in place, and cant replace its reference because
+      // of the object inspector, which would still point to the previous entry.
+      // We can't close and reopen the inspector because it would break the control focus.
+      Object.keys(this.value[index]).forEach((item) => delete this.value[index][item])
+      this.value[index] = Object.assign(this.value[index], data)
 
-        this.onUpdateJob(this.value.slice())
-      },
-      addArrayEntry(input) {
-        this.warning = undefined
-        const generatedEntry = JobHelper.generateMockJobData(input)
-        this.onUpdateJob((this.value || []).concat(generatedEntry.slice(0, 1)))
-      },
-      onUpdateRecord(event, entryId) {
-        const data = { ...(this.value || {}) }
-        ObjectHelper.addProperty(data, entryId, event)
-        const d = {
-          ...data,
-          [entryId]: Array.isArray(event) || ObjectHelper.isPrimitiveValue(event) ? event : { ...event },
-        }
-        this.onUpdateJob(d)
-      },
+      this.onUpdateJob(this.value.slice())
     },
-  }
+    addArrayEntry(input) {
+      this.warning = undefined
+      const generatedEntry = JobHelper.generateMockJobData(input)
+      this.onUpdateJob((this.value || []).concat(generatedEntry.slice(0, 1)))
+    },
+    onUpdateRecord(event, entryId) {
+      const data = { ...(this.value || {}) }
+      ObjectHelper.addProperty(data, entryId, event)
+      const d = {
+        ...data,
+        [entryId]: Array.isArray(event) || ObjectHelper.isPrimitiveValue(event) ? event : { ...event },
+      }
+      this.onUpdateJob(d)
+    },
+  },
+}
 </script>

@@ -3,10 +3,7 @@
     <section class="header-banner el-row el-row--flex">
       <div class="el-col-8 el-col-offset-4">
         <h1>帮助中心</h1>
-        <p>
-          生物医疗数据处理云平台，提供数据处理算法下载、在线组合、自动
-          生成功能，以及一站式生信解决方案的本地化部署服务。
-        </p>
+        <p>生物医疗数据处理云平台，提供数据处理算法下载、在线组合、自动 生成功能，以及一站式生信解决方案的本地化部署服务。</p>
       </div>
     </section>
     <section>
@@ -21,36 +18,36 @@
 </template>
 
 <script type="text/babel">
-  import AsideMenu from '@/pages/support-center/_components/AsideMenu'
-  export default {
-    components: { AsideMenu },
-    layout: 'IndexLayout',
-    middleware: 'support-menus',
-  }
+import AsideMenu from '@/pages/support-center/_components/AsideMenu'
+export default {
+  components: { AsideMenu },
+  layout: 'IndexLayout',
+  middleware: 'support-menus',
+}
 </script>
 
 <style lang="scss" scoped>
-  .header-banner {
-    background-color: #2f5c8a;
-    color: var(--light_grey);
-  }
+.header-banner {
+  background-color: #2f5c8a;
+  color: var(--light_grey);
+}
 
-  .el-aside {
-    padding: 20px;
-  }
+.el-aside {
+  padding: 20px;
+}
 
-  .el-menu {
-    border-right: none;
-  }
+.el-menu {
+  border-right: none;
+}
 
-  .el-container {
-    padding-bottom: 50px;
-  }
+.el-container {
+  padding-bottom: 50px;
+}
 
-  .aside-wrap {
-    position: sticky;
-    height: 100%;
-    top: 60px;
-    padding: 20px 0;
-  }
+.aside-wrap {
+  position: sticky;
+  height: 100%;
+  top: 60px;
+  padding: 20px 0;
+}
 </style>

@@ -50,30 +50,30 @@
 </template>
 
 <script type="text/babel">
-  export default {
-    asyncData({ redirect }) {
-      // 现阶段默认直接进入列表
-      redirect('/application/pipes')
-    },
-  }
+export default {
+  asyncData({ redirect }) {
+    // 现阶段默认直接进入列表
+    redirect('/application/pipes')
+  },
+}
 </script>
 
 <style lang="scss" scoped>
-  .box-card {
-    height: 160px;
-    background: #909399;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    cursor: pointer;
-    padding: 15px;
-    h4 {
-      margin-top: 0;
-    }
-    &:hover {
-      background: #606266;
-      color: #eeeeee;
-    }
+.box-card {
+  height: 160px;
+  background: #909399;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  padding: 15px;
+  h4 {
+    margin-top: 0;
   }
+  &:hover {
+    background: #606266;
+    color: #eeeeee;
+  }
+}
 </style>

@@ -23,12 +23,12 @@
 </template>
 
 <script type="text/babel">
-  export default {}
+export default {}
 </script>
 
 <style scoped lang="scss">
-  .menu {
-    flex: 0 0 240px;
-    width: 240px;
-  }
+.menu {
+  flex: 0 0 240px;
+  width: 240px;
+}
 </style>

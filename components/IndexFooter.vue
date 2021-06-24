@@ -1,6 +1,6 @@
 <template>
   <footer class="footer text-center" :style="style">
-    <div v-if="withSubscribe" class="py-2r bg inset">
+    <div v-if="withSubscribe" class="p-y-2 bg inset">
       <div class="container">
         <h2><span>Six<span>O</span>'clock</span> 电子报刊</h2>
         <p>将最新的新闻发送到您的收件箱，这由六点了技术团队策划。</p>
@@ -13,7 +13,7 @@
         </el-form>
       </div>
     </div>
-    <div class="pt-2r">
+    <div class="p-t-2">
       <div class="container">
         <ul class="list-unstyled">
           <li><a href="https://github.com/6-oclock" target="_blank">GitHub 仓库</a></li>
@@ -38,41 +38,41 @@
 </template>
 
 <script type="text/babel">
-  export default {
-    name: 'IndexFooter',
-    props: {
-      withSubscribe: {
-        default: true,
-        type: Boolean,
-      },
+export default {
+  name: 'IndexFooter',
+  props: {
+    withSubscribe: {
+      default: true,
+      type: Boolean,
     },
-    computed: {
-      style() {
-        return this.withSubscribe ? '' : 'box-shadow: 0 -8px 8px -8px rgba(0, 0, 0, 0.1)'
-      },
+  },
+  computed: {
+    style() {
+      return this.withSubscribe ? '' : 'box-shadow: 0 -8px 8px -8px rgba(0, 0, 0, 0.1)'
     },
-  }
+  },
+}
 </script>
 
 <style lang="scss">
-  footer .bg {
-    background: rgba(248, 250, 252, 1);
-  }
+footer .bg {
+  background: rgba(248, 250, 252, 1);
+}
 
-  footer .list-unstyled li {
-    display: inline-block;
+footer .list-unstyled li {
+  display: inline-block;
 
-    & + li {
-      margin-left: 1rem;
-    }
+  & + li {
+    margin-left: 1rem;
   }
+}
 
-  footer .copyright {
-    text-align: center;
-    font-size: 14px;
-    font-weight: 100;
-    padding-top: 1rem;
-    padding-bottom: 2rem;
-    margin: 0;
-  }
+footer .copyright {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 100;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  margin: 0;
+}
 </style>

@@ -6,9 +6,9 @@
   </div>
 </template>
 <script>
-  import IndexFooter from '@/components/IndexFooter'
-  import IndexNavigation from '@/components/IndexNavigation'
-  export default {
-    components: { IndexFooter, IndexNavigation },
-  }
+import IndexFooter from '@/components/IndexFooter'
+import IndexNavigation from '@/components/IndexNavigation'
+export default {
+  components: { IndexFooter, IndexNavigation },
+}
 </script>

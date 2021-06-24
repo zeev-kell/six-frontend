@@ -27,7 +27,7 @@
   </svg>
 </template>
 <script type="text/babel">
-  export default {
-    name: 'LogoSvg',
-  }
+export default {
+  name: 'LogoSvg',
+}
 </script>

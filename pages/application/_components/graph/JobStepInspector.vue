@@ -45,25 +45,13 @@
                 class="mb-0"
               />
 
-              <div v-else class="text-center mb-1r">
+              <div v-else class="text-center m-b-1">
                 <p class="text-muted">{{ $t('cwl.NoValue') }}</p>
-                <el-button
-                  v-if="isFileOrDirectory(input)"
-                  type="primary"
-                  size="mini"
-                  class="el-button-dark-border"
-                  @click="enableFileEditing(input)"
-                >
+                <el-button v-if="isFileOrDirectory(input)" type="primary" size="mini" class="el-button-dark-border" @click="enableFileEditing(input)">
                   {{ $t('cwl.Browse') }}
                 </el-button>
 
-                <el-button
-                  v-else
-                  type="primary"
-                  size="mini"
-                  class="el-button-dark-border"
-                  @click="enableEditing(input)"
-                >
+                <el-button v-else type="primary" size="mini" class="el-button-dark-border" @click="enableEditing(input)">
                   {{ $t('cwl.SetValue') }}
                 </el-button>
               </div>
@@ -73,17 +61,11 @@
               <div v-if="input.source">
                 <!--No connections-->
                 <div v-if="input.source.length === 0 && input.isVisible">
-                  <span v-if="input.type.isNullable" class="text-warning">
-                    <i class="el-icon-warning"></i> This port is not connected
-                  </span>
-                  <span v-if="!input.type.isNullable" class="text-danger">
-                    <i class="el-icon-error"></i> This required port is not connected
-                  </span>
+                  <span v-if="input.type.isNullable" class="text-warning"> <i class="el-icon-warning"></i> This port is not connected </span>
+                  <span v-if="!input.type.isNullable" class="text-danger"> <i class="el-icon-error"></i> This required port is not connected </span>
                 </div>
                 <!--List of connections-->
-                <div v-if="input.source.length > 0" class="text-muted">
-                  {{ $t('cwl.Connections') }}: {{ input.source.join(', ') }}
-                </div>
+                <div v-if="input.source.length > 0" class="text-muted">{{ $t('cwl.Connections') }}: {{ input.source.join(', ') }}</div>
               </div>
             </div>
           </form>
@@ -95,219 +77,219 @@
 </template>
 
 <script type="text/babel">
-  import CollapseItem from '@/pages/application/_components/CollapseItem'
-  import { FormControl, FormGroup } from '@/pages/application/_components/FormControl'
-  import InputValueEditor from '@/pages/application/_components/graph/InputValueEditor'
-  import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputModel'
-  import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
-  export default {
-    name: 'JobStepInspector',
-    components: { InputValueEditor, CollapseItem },
-    props: {
-      readonly: {
-        type: Boolean,
-        default: false,
-      },
-      workflowModel: {
-        type: Object,
-        default: null,
-      },
-      stepInputs: {
-        type: Array,
-        default: undefined,
-      },
-      relativePathRoot: {
-        type: String,
-        default: '',
+import CollapseItem from '@/pages/application/_components/CollapseItem'
+import { FormControl, FormGroup } from '@/pages/application/_components/FormControl'
+import InputValueEditor from '@/pages/application/_components/graph/InputValueEditor'
+import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputModel'
+import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
+export default {
+  name: 'JobStepInspector',
+  components: { InputValueEditor, CollapseItem },
+  props: {
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
+    workflowModel: {
+      type: Object,
+      default: null,
+    },
+    stepInputs: {
+      type: Array,
+      default: undefined,
+    },
+    relativePathRoot: {
+      type: String,
+      default: '',
+    },
+  },
+  data() {
+    return {
+      jobGroup: new FormGroup({}),
+      inputGroups: [],
+    }
+  },
+  inject: ['TheGraph'],
+  computed: {
+    jobControl() {
+      return this.TheGraph.jobControl
+    },
+    jobValue() {
+      return this.jobControl?.value
+    },
+  },
+  watch: {
+    stepInputs: {
+      immediate: true,
+      handler(stepInputs, oldStepInputs) {
+        // I have no idea why step input checking works
+        if (stepInputs && !this.stepInputsAreSame(oldStepInputs, stepInputs || undefined)) {
+          this.recreateForms()
+          if (this.jobValue) {
+            this.resetJobGroup()
+          }
+        }
       },
     },
-    data() {
-      return {
-        jobGroup: new FormGroup({}),
-        inputGroups: [],
+  },
+  mounted() {
+    this.$watch('jobGroup.value', {
+      deep: true,
+      handler(changes) {
+        const out = { ...this.jobValue, ...changes }
+        for (const cname in this.jobGroup.controls) {
+          if (this.jobGroup.controls[cname].disabled) {
+            out[cname] = null
+          }
+        }
+        this.TheGraph.updateJob(out)
+      },
+    })
+  },
+  methods: {
+    resetJobGroup() {
+      this.jobGroup.patchValue(this.jobValue, { emitEvent: false })
+      for (const controlName of Object.keys(this.jobGroup.controls)) {
+        const control = this.jobGroup.get(controlName)
+        const kVal = this.jobValue[controlName]
+        if (kVal === null || kVal === undefined) {
+          // 数据为空，禁用校验等
+          control.disable({ emitEvent: false, onlySelf: true })
+        } else {
+          control.enable({ emitEvent: false, onlySelf: true })
+        }
       }
     },
-    inject: ['TheGraph'],
-    computed: {
-      jobControl() {
-        return this.TheGraph.jobControl
-      },
-      jobValue() {
-        return this.jobControl?.value
-      },
-    },
-    watch: {
-      stepInputs: {
-        immediate: true,
-        handler(stepInputs, oldStepInputs) {
-          // I have no idea why step input checking works
-          if (stepInputs && !this.stepInputsAreSame(oldStepInputs, stepInputs || undefined)) {
-            this.recreateForms()
-            if (this.jobValue) {
-              this.resetJobGroup()
-            }
-          }
-        },
-      },
-    },
-    mounted() {
-      this.$watch('jobGroup.value', {
-        deep: true,
-        handler(changes) {
-          const out = { ...this.jobValue, ...changes }
-          for (const cname in this.jobGroup.controls) {
-            if (this.jobGroup.controls[cname].disabled) {
-              out[cname] = null
-            }
-          }
-          this.TheGraph.updateJob(out)
-        },
+    isType(input, types) {
+      if (typeof types === 'string') {
+        types = [types]
+      }
+      return !!types.find((type) => {
+        return input.type.type === type || input.type.items === type
       })
     },
-    methods: {
-      resetJobGroup() {
-        this.jobGroup.patchValue(this.jobValue, { emitEvent: false })
-        for (const controlName of Object.keys(this.jobGroup.controls)) {
-          const control = this.jobGroup.get(controlName)
-          const kVal = this.jobValue[controlName]
-          if (kVal === null || kVal === undefined) {
-            // 数据为空，禁用校验等
-            control.disable({ emitEvent: false, onlySelf: true })
-          } else {
-            control.enable({ emitEvent: false, onlySelf: true })
-          }
-        }
-      },
-      isType(input, types) {
-        if (typeof types === 'string') {
-          types = [types]
-        }
-        return !!types.find((type) => {
-          return input.type.type === type || input.type.items === type
-        })
-      },
-      clear(control) {
-        control.setValue(null)
-        control.disable()
-      },
-      getInputSource(input) {
-        if (input instanceof WorkflowStepInputModel) {
-          const inputSource = input.source[0]
-          // Remove # if it exists on the beginning
-          return inputSource[0] === '#' ? inputSource.substring(1) : inputSource
-        }
-        if (input instanceof WorkflowInputParameterModel) {
-          return input.id
-        }
-      },
-      recreateForms() {
-        for (const controlName of Object.keys(this.jobGroup.controls)) {
-          this.jobGroup.removeControl(controlName)
-        }
-        this.$set(this, 'jobGroup', new FormGroup({}))
-        const grouped = {}
-        for (const input of this.stepInputs) {
-          const group = this.isType(input, 'File') ? 'Files' : 'AppParameters'
-          if (!grouped[group]) {
-            grouped[group] = []
-          }
-          grouped[group].push(input)
-          const control = new FormControl()
-          this.jobGroup.addControl(this.getInputSource(input), control)
-          if (input.type.type === 'array') {
-            control.setValue([], { emitEvent: false })
-          } else if (input.type.type === 'record') {
-            control.setValue({}, { emitEvent: false })
-          }
-        }
-        // Order groups
-        this.inputGroups = Object.keys(grouped)
-          .sort((a, b) => b.localeCompare(a))
-          .map((key) => ({
-            name: key,
-            inputs: grouped[key],
-          }))
-      },
-      stepInputsAreSame(previousValue, currentValue) {
-        if (previousValue === currentValue) {
-          return true
-        }
-        if (previousValue === undefined && currentValue !== undefined) {
-          return false
-        }
-        if (previousValue !== undefined && currentValue === undefined) {
-          return false
-        }
-        if (previousValue.length === 0 && currentValue.length === 0) {
-          return true
-        }
-        if (previousValue.length !== currentValue.length) {
-          return false
-        }
-        for (let i = 0; i < previousValue.length; i++) {
-          if (previousValue[i] !== currentValue[i]) {
-            return false
-          }
-        }
-        return true
-      },
-      onPortOptionChange(event, input) {
-        if (!event) {
-          const name = this.getInputSource(input)
-          this.clear(this.jobGroup.get(name))
-        }
-      },
-      enableEditing(input) {
-        const inputFormField = this.jobGroup.get(this.getInputSource(input))
-        let value
-        const isArray = input.type.type === 'array'
-        const type = input.type.items || input.type.type
-        if (type !== 'File' && type !== 'Directory') {
-          inputFormField.enable({ onlySelf: true })
-        }
-        switch (type) {
-          case 'record':
-            value = {}
-            break
-          case 'string':
-            value = ''
-            break
-          case 'int':
-          case 'float':
-            value = 0
-            break
-          case 'boolean':
-            value = false
-            break
-          case 'File':
-          case 'Directory':
-            // TODO 修改选择器
-            // eslint-disable-next-line no-case-declarations
-            const fileValues = ['test.jpg'].map((p) => ({ class: type, path: p }))
-            inputFormField.enable({ onlySelf: true })
-            inputFormField.setValue(!isArray ? fileValues[0] : fileValues)
-            break
-          default:
-            value = null
-            break
-        }
-        inputFormField.setValue(input.type.type === 'array' ? [value] : value)
-      },
-      enableFileEditing(input) {
-        const inputFormField = this.jobGroup.get(this.getInputSource(input))
-        const isArray = input.type.type === 'array'
-        const type = input.type.items || input.type.type
-        inputFormField.enable({ onlySelf: true })
-        // TODO 修改选择器
-        // eslint-disable-next-line no-case-declarations
-        const fileValues = [''].map((p) => ({ class: type, path: p }))
-        inputFormField.setValue(!isArray ? fileValues[0] : fileValues)
-      },
-      isFileOrDirectory(input) {
-        const type = input.type.type
-        const itemsType = input.type.items
-        return type === 'File' || type === 'Directory' || itemsType === 'File' || itemsType === 'Directory'
-      },
+    clear(control) {
+      control.setValue(null)
+      control.disable()
     },
-  }
+    getInputSource(input) {
+      if (input instanceof WorkflowStepInputModel) {
+        const inputSource = input.source[0]
+        // Remove # if it exists on the beginning
+        return inputSource[0] === '#' ? inputSource.substring(1) : inputSource
+      }
+      if (input instanceof WorkflowInputParameterModel) {
+        return input.id
+      }
+    },
+    recreateForms() {
+      for (const controlName of Object.keys(this.jobGroup.controls)) {
+        this.jobGroup.removeControl(controlName)
+      }
+      this.$set(this, 'jobGroup', new FormGroup({}))
+      const grouped = {}
+      for (const input of this.stepInputs) {
+        const group = this.isType(input, 'File') ? 'Files' : 'AppParameters'
+        if (!grouped[group]) {
+          grouped[group] = []
+        }
+        grouped[group].push(input)
+        const control = new FormControl()
+        this.jobGroup.addControl(this.getInputSource(input), control)
+        if (input.type.type === 'array') {
+          control.setValue([], { emitEvent: false })
+        } else if (input.type.type === 'record') {
+          control.setValue({}, { emitEvent: false })
+        }
+      }
+      // Order groups
+      this.inputGroups = Object.keys(grouped)
+        .sort((a, b) => b.localeCompare(a))
+        .map((key) => ({
+          name: key,
+          inputs: grouped[key],
+        }))
+    },
+    stepInputsAreSame(previousValue, currentValue) {
+      if (previousValue === currentValue) {
+        return true
+      }
+      if (previousValue === undefined && currentValue !== undefined) {
+        return false
+      }
+      if (previousValue !== undefined && currentValue === undefined) {
+        return false
+      }
+      if (previousValue.length === 0 && currentValue.length === 0) {
+        return true
+      }
+      if (previousValue.length !== currentValue.length) {
+        return false
+      }
+      for (let i = 0; i < previousValue.length; i++) {
+        if (previousValue[i] !== currentValue[i]) {
+          return false
+        }
+      }
+      return true
+    },
+    onPortOptionChange(event, input) {
+      if (!event) {
+        const name = this.getInputSource(input)
+        this.clear(this.jobGroup.get(name))
+      }
+    },
+    enableEditing(input) {
+      const inputFormField = this.jobGroup.get(this.getInputSource(input))
+      let value
+      const isArray = input.type.type === 'array'
+      const type = input.type.items || input.type.type
+      if (type !== 'File' && type !== 'Directory') {
+        inputFormField.enable({ onlySelf: true })
+      }
+      switch (type) {
+        case 'record':
+          value = {}
+          break
+        case 'string':
+          value = ''
+          break
+        case 'int':
+        case 'float':
+          value = 0
+          break
+        case 'boolean':
+          value = false
+          break
+        case 'File':
+        case 'Directory':
+          // TODO 修改选择器
+          // eslint-disable-next-line no-case-declarations
+          const fileValues = ['test.jpg'].map((p) => ({ class: type, path: p }))
+          inputFormField.enable({ onlySelf: true })
+          inputFormField.setValue(!isArray ? fileValues[0] : fileValues)
+          break
+        default:
+          value = null
+          break
+      }
+      inputFormField.setValue(input.type.type === 'array' ? [value] : value)
+    },
+    enableFileEditing(input) {
+      const inputFormField = this.jobGroup.get(this.getInputSource(input))
+      const isArray = input.type.type === 'array'
+      const type = input.type.items || input.type.type
+      inputFormField.enable({ onlySelf: true })
+      // TODO 修改选择器
+      // eslint-disable-next-line no-case-declarations
+      const fileValues = [''].map((p) => ({ class: type, path: p }))
+      inputFormField.setValue(!isArray ? fileValues[0] : fileValues)
+    },
+    isFileOrDirectory(input) {
+      const type = input.type.type
+      const itemsType = input.type.items
+      return type === 'File' || type === 'Directory' || itemsType === 'File' || itemsType === 'Directory'
+    },
+  },
+}
 </script>

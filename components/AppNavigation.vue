@@ -19,13 +19,7 @@
           ><el-menu-item index="/application/pipes">主页</el-menu-item>
         </el-menu>
       </div>
-      <el-menu
-        :default-active="$route.path"
-        :router="true"
-        mode="horizontal"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#ffd04b"
+      <el-menu :default-active="$route.path" :router="true" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b"
         ><li role="menuitem" tabindex="-1" class="el-menu-item menu-link">
           <a href="/support-center" target="_blank">帮助中心</a>
         </li>
@@ -45,18 +39,18 @@
 </template>
 
 <script type="text/babel">
-  import { mapGetters, mapActions } from 'vuex'
-  import LogoPng from '@/components/LogoPng'
-  export default {
-    name: 'AppNavigation',
-    components: {
-      LogoPng,
-    },
-    computed: {
-      ...mapGetters(['username', 'loggedIn']),
-    },
-    methods: {
-      ...mapActions(['logout']),
-    },
-  }
+import { mapGetters, mapActions } from 'vuex'
+import LogoPng from '@/components/LogoPng'
+export default {
+  name: 'AppNavigation',
+  components: {
+    LogoPng,
+  },
+  computed: {
+    ...mapGetters(['username', 'loggedIn']),
+  },
+  methods: {
+    ...mapActions(['logout']),
+  },
+}
 </script>

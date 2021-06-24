@@ -19,44 +19,44 @@
 </template>
 
 <script type="text/babel">
-  import marked from '@/directives/marked'
-  import { AppHelper } from '@/pages/application/_components/graph/helpers/AppHelper'
+import marked from '@/directives/marked'
+import { AppHelper } from '@/pages/application/_components/graph/helpers/AppHelper'
 
-  export default {
-    name: 'SelectionStepInfo',
-    directives: {
-      ...marked,
+export default {
+  name: 'SelectionStepInfo',
+  directives: {
+    ...marked,
+  },
+  props: {
+    step: {
+      type: Object,
+      default: null,
     },
-    props: {
-      step: {
-        type: Object,
-        default: null,
-      },
+  },
+  computed: {
+    description() {
+      return this.step.description || this.step.run ? this.step.run.description : ''
     },
-    computed: {
-      description() {
-        return this.step.description || this.step.run ? this.step.run.description : ''
-      },
-      source() {
-        const rdfID = this.step.customProps['sbg:rdfId']
-        if (rdfID) {
-          return AppHelper.getDirname(rdfID)
-        }
-        return this.step.run.customProps['sbg:project'] || 'Embedded'
-      },
+    source() {
+      const rdfID = this.step.customProps['sbg:rdfId']
+      if (rdfID) {
+        return AppHelper.getDirname(rdfID)
+      }
+      return this.step.run.customProps['sbg:project'] || 'Embedded'
     },
-  }
+  },
+}
 </script>
 
 <style scoped lang="scss" rel="stylesheet">
-  @import '_theme';
-  .selection-step-info > div {
-    margin-bottom: 10px;
-    color: $color1;
-    label {
-      font-weight: bold;
-      color: $color2;
-      margin-right: 4px;
-    }
+@import '_theme';
+.selection-step-info > div {
+  margin-bottom: 10px;
+  color: $color1;
+  label {
+    font-weight: bold;
+    color: $color2;
+    margin-right: 4px;
   }
+}
 </style>

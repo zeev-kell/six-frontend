@@ -27,78 +27,78 @@
 </template>
 
 <script type="text/babel">
-  import { ParameterTypeModel } from 'cwlts/models/generic/ParameterTypeModel'
+import { ParameterTypeModel } from 'cwlts/models/generic/ParameterTypeModel'
 
-  export default {
-    name: 'TypeSelect',
-    props: {
-      readonly: {
-        type: Boolean,
-        default: false,
+export default {
+  name: 'TypeSelect',
+  props: {
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
+    paramType: {
+      type: ParameterTypeModel,
+      default: null,
+    },
+  },
+  data() {
+    return {
+      types: ['array', 'enum', 'record', 'File', 'string', 'int', 'float', 'boolean', 'map'],
+      itemTypes: ['enum', 'record', 'File', 'string', 'int', 'float', 'boolean', 'map'],
+      ruleForm: {
+        type: undefined,
+        items: undefined,
+        isItemOrArray: undefined,
       },
-      paramType: {
-        type: ParameterTypeModel,
-        default: null,
+      rules: {},
+    }
+  },
+  computed: {
+    isParamTypeArray() {
+      return this.paramType?.type !== 'array'
+    },
+  },
+  watch: {
+    paramType: {
+      immediate: true,
+      handler(paramType) {
+        if (!paramType) {
+          return
+        }
+        if (paramType.hasDirectoryType) {
+          if (!this.types.includes('Directory')) {
+            this.types.push('Directory')
+          }
+          if (!this.itemTypes.includes('Directory')) {
+            this.itemTypes.push('Directory')
+          }
+        }
+        this.ruleForm.type = this.paramType.type
+        this.ruleForm.items = this.paramType.items
+        this.ruleForm.isItemOrArray = this.paramType.isItemOrArray
       },
     },
-    data() {
-      return {
-        types: ['array', 'enum', 'record', 'File', 'string', 'int', 'float', 'boolean', 'map'],
-        itemTypes: ['enum', 'record', 'File', 'string', 'int', 'float', 'boolean', 'map'],
-        ruleForm: {
-          type: undefined,
-          items: undefined,
-          isItemOrArray: undefined,
-        },
-        rules: {},
+  },
+  methods: {
+    onFormChange() {
+      const ruleForm = this.ruleForm
+      if (ruleForm.type !== undefined) {
+        this.paramType.type = ruleForm.type
       }
-    },
-    computed: {
-      isParamTypeArray() {
-        return this.paramType?.type !== 'array'
-      },
-    },
-    watch: {
-      paramType: {
-        immediate: true,
-        handler(paramType) {
-          if (!paramType) {
-            return
-          }
-          if (paramType.hasDirectoryType) {
-            if (!this.types.includes('Directory')) {
-              this.types.push('Directory')
-            }
-            if (!this.itemTypes.includes('Directory')) {
-              this.itemTypes.push('Directory')
-            }
-          }
-          this.ruleForm.type = this.paramType.type
-          this.ruleForm.items = this.paramType.items
-          this.ruleForm.isItemOrArray = this.paramType.isItemOrArray
-        },
-      },
-    },
-    methods: {
-      onFormChange() {
-        const ruleForm = this.ruleForm
-        if (ruleForm.type !== undefined) {
-          this.paramType.type = ruleForm.type
+      this.paramType.isItemOrArray = ruleForm.isItemOrArray
+      if (ruleForm.type === 'array') {
+        this.paramType.items = ruleForm.items
+        if (this.paramType.isItemOrArray) {
+          this.paramType.isItemOrArray = false
+          ruleForm.isItemOrArray = false
         }
-        this.paramType.isItemOrArray = ruleForm.isItemOrArray
-        if (ruleForm.type === 'array') {
-          this.paramType.items = ruleForm.items
-          if (this.paramType.isItemOrArray) {
-            this.paramType.isItemOrArray = false
-            ruleForm.isItemOrArray = false
-          }
-        }
-        if (this.paramType.type === 'array' && !this.paramType.items) {
-          this.paramType.items = 'File'
-          ruleForm.items = 'File'
-        }
-        this.$emit('onUpdate', this.paramType)
-      },
+      }
+      if (this.paramType.type === 'array' && !this.paramType.items) {
+        this.paramType.items = 'File'
+        ruleForm.items = 'File'
+      }
+      this.$emit('onUpdate', this.paramType)
     },
-  }
+  },
+}
 </script>
