@@ -20,7 +20,7 @@ import { AppHelper } from '@/pages/application/_components/graph/helpers/AppHelp
 import JobStepInspector from '@/pages/application/_components/graph/JobStepInspector'
 
 export default {
-  name: 'CwlRunPanel',
+  name: 'CwlPanelRun',
   components: { JobStepInspector },
   mixins: [CwlPanelMixin],
   data() {

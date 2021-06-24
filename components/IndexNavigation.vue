@@ -28,6 +28,7 @@ import LogoPng from '@/components/LogoPng'
 
 const SCROLL_TRANSPORT = 100
 export default {
+  name: 'IndexNavigation',
   components: {
     LogoPng,
   },

@@ -3,7 +3,7 @@
 import CheckPermission from '@/components/common/CheckPermission'
 
 export default {
-  name: 'CanExamine',
+  name: 'CanCreate',
   mixins: [CheckPermission],
   data() {
     return {

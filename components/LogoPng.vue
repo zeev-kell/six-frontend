@@ -7,7 +7,7 @@
 </template>
 <script type="text/babel">
 export default {
-  name: 'LogoSvg',
+  name: 'LogoPng',
 }
 </script>
 
