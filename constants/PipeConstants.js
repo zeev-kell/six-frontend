@@ -1,16 +1,18 @@
 import BaseConstants from '@/constants/BaseConstants'
 import CreateEnum from '@/constants/create-enum'
 
-class PipeConstants extends BaseConstants {
-  transition = new Map([
-    [0, '工具'],
-    [1, '流程'],
-  ])
+const items = [
+  [0, 'TYPE_TOOL'],
+  [1, 'TYPE_APP'],
+  [2, 'TYPE_DOCKER'],
+  [3, 'TYPE_WORK'],
+  [4, 'TYPE_WORKFLOW'],
+]
 
-  Constants = CreateEnum({
-    TYPE_TOOL: 0,
-    TYPE_APP: 1,
-  })
+class PipeConstants extends BaseConstants {
+  transition = new Map(items)
+
+  Constants = CreateEnum(items)
 }
 const pipeConstants = new PipeConstants()
 export default pipeConstants

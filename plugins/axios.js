@@ -21,8 +21,12 @@ export default function ({ $axios, store }) {
     if (!error.response || !error.response.status) {
       return Promise.reject(DEFAULT_RESPONSE)
     }
-    if (error.response.status === 401 && error.response.config?.url !== '/login') {
-      await store.dispatch('logout')
+    if (error.response.status === 401) {
+      // eslint-disable-next-line no-console
+      console.error(error.response.config?.url)
+      if (error.response.config?.url !== '/logout') {
+        await store.dispatch('logout')
+      }
     }
     return Promise.reject(error.response.data || {})
   })
