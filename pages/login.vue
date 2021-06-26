@@ -18,11 +18,12 @@
           <el-form-item>
             <div class="text-right">
               <span class="text-muted">没有账号？</span>
-              <nuxt-link to="register">立即注册</nuxt-link>
+              <nuxt-link :to="localePath('register')">立即注册</nuxt-link>
             </div>
           </el-form-item>
         </el-form>
       </div>
+      <copyright />
     </div>
     <canvas-particle></canvas-particle>
   </div>
@@ -51,12 +52,12 @@ export default {
   },
   middleware: ['check-login'],
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['ACTION_LOGIN']),
     onSubmit() {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.isLoading = true
-          this.login(this.form).catch(() => {
+          this.ACTION_LOGIN(this.form).catch(() => {
             this.isLoading = false
           })
         }

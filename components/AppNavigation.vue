@@ -3,7 +3,7 @@
     <div class="navbar-header el-row--flex nav-darken">
       <div class="navbar">
         <div class="navbar-logo">
-          <nuxt-link to="/" class="logo">
+          <nuxt-link class="logo" :to="localePath('/')">
             <logo-png />
           </nuxt-link>
         </div>
@@ -16,17 +16,27 @@
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b"
-          ><el-menu-item index="/application/pipes">主页</el-menu-item>
+        >
+          <el-menu-item :index="localePath('application-pipes')">主页</el-menu-item>
         </el-menu>
       </div>
-      <el-menu :default-active="$route.path" :router="true" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b"
-        ><li role="menuitem" tabindex="-1" class="el-menu-item menu-link">
-          <a href="/support-center" target="_blank">帮助中心</a>
+      <el-menu
+        :default-active="$route.path"
+        :router="true"
+        mode="horizontal"
+        background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#ffd04b"
+      >
+        <li role="menuitem" tabindex="-1" class="el-menu-item menu-link">
+          <nuxt-link v-slot="{ navigate }" :to="localePath('/support-center')" custom>
+            <a target="_blank" @click="navigate" @keypress.enter="navigate">帮助中心</a>
+          </nuxt-link>
         </li>
         <template v-if="loggedIn">
           <el-submenu index="1" popper-class="nav-darken">
             <span slot="title" class="y-baseline">{{ username }}</span>
-            <li role="menuitem" tabindex="-1" class="el-menu-item" @click="logout">注销</li>
+            <li role="menuitem" tabindex="-1" class="el-menu-item" @click="ACTION_LOGOUT">注销</li>
           </el-submenu>
         </template>
         <template v-else>
@@ -50,7 +60,7 @@ export default {
     ...mapGetters(['username', 'loggedIn']),
   },
   methods: {
-    ...mapActions(['logout']),
+    ...mapActions(['ACTION_LOGOUT']),
   },
 }
 </script>

@@ -109,7 +109,7 @@ export default {
           this.$$axios
             .post('/pipe', this.formModel)
             .then(() => {
-              this.$router.push('/application/pipes')
+              this.$I18nRouter.push('/application/pipes')
             })
             .finally(() => {
               this.loading = false

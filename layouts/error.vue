@@ -16,7 +16,7 @@
         <p>您可以尝试刷新页面或者重新打开。</p>
       </div>
       <p>
-        <nuxt-link to="/" class="logo">返回主页</nuxt-link>
+        <nuxt-link class="logo" :to="localePath('/')">返回主页</nuxt-link>
       </p>
     </div>
   </div>

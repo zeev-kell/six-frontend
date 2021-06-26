@@ -5,7 +5,7 @@
         <span v-if="scope.row['resource_id'] === $route.params.id" class="text-muted p-r el-row--flex is-align-middle">
           {{ scope.row.resource_id }}
         </span>
-        <nuxt-link v-else :to="'/application/pipe/' + scope.row['resource_id']">
+        <nuxt-link v-else :to="localePath('/application/pipe/' + scope.row['resource_id'])">
           {{ scope.row.resource_id }}
         </nuxt-link>
       </template>

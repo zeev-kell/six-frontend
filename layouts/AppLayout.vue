@@ -12,6 +12,7 @@
 import AppNavigation from '@/components/AppNavigation'
 export default {
   components: { AppNavigation },
+  // 使用 auth 中间健作为登录的判断跳转
   middleware: ['auth'],
 }
 </script>

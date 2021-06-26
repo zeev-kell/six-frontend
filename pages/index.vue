@@ -22,7 +22,7 @@
       <div class="container">
         <div class="el-row el-row--flex is-justify-space-around">
           <div class="el-col-auto m-b-2 text-center pro-panel">
-            <nuxt-link v-slot="{ navigate }" to="/application/pipes" custom>
+            <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipes')" custom>
               <div class="pointer" @click="navigate" @keypress.enter="navigate">
                 <el-card shadow="hover" class="pro-card">
                   <div class="pro-icon">

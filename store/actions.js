@@ -12,7 +12,7 @@ const actions = {
     }
   },
   // 登录，目前需要手动保存 user 信息
-  login({ commit }, data) {
+  ACTION_LOGIN({ commit }, data) {
     return this.$auth
       .loginWith('local', { data })
       .then((response) => {
@@ -25,7 +25,7 @@ const actions = {
       })
   },
   // 登出，无论是否异常，清空自身保存的 user 信息
-  logout() {
+  ACTION_LOGOUT() {
     return this.$auth
       .logout()
       .finally(() => {

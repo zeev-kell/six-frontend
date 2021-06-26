@@ -130,7 +130,7 @@ export default {
       this.graph.getPlugin(DeletionPlugin).deleteSelection()
     },
     toRun() {
-      this.$router.push(`/graph-info/${this.$route.params.id}/set-run`)
+      this.$I18nRouter.push(`/graph-info/${this.$route.params.id}/set-run`)
     },
     download() {
       this.downloadVisible = true

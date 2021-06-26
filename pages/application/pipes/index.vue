@@ -25,7 +25,7 @@
         </div>
         <div class="action-box">
           <can-create>
-            <nuxt-link v-slot="{ navigate }" to="/application/pipe/new-pipe" custom>
+            <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-new-pipe')" custom>
               <el-button type="primary" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
             </nuxt-link>
           </can-create>
@@ -39,7 +39,7 @@
                 <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
                   <el-button type="text" icon="el-icon-search" class="px-5 py-0" @click.stop="showVisualModal(row['pipe_id'])"></el-button>
                 </el-tooltip>
-                <nuxt-link class="text-truncate" :to="'/application/pipe/' + row['pipe_id']" :title="row.name">
+                <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + row['pipe_id'])" :title="row.name">
                   {{ row.name }}
                 </nuxt-link>
               </div>

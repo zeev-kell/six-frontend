@@ -4,16 +4,20 @@
       <h3 class="text-center">云计算协助工具</h3>
       <el-row class="row-bg" justify="space-around" type="flex">
         <el-col :span="4">
-          <div class="box-card" onclick="$nuxt.$router.push('/application/pipes')">
-            <h4>软件流程</h4>
-            流程自动生成与下载
-          </div>
+          <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipes')" custom>
+            <div class="box-card" @click="navigate" @keypress.enter="navigate">
+              <h4>软件流程</h4>
+              流程自动生成与下载
+            </div>
+          </nuxt-link>
         </el-col>
         <el-col :span="4">
-          <div class="box-card" onclick="$nuxt.$router.push('/application/pipes')">
-            <h4>软件工具</h4>
-            工具设置与下载
-          </div>
+          <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipes')" custom>
+            <div class="box-card" @click="navigate" @keypress.enter="navigate">
+              <h4>软件工具</h4>
+              工具设置与下载
+            </div>
+          </nuxt-link>
         </el-col>
         <el-col :span="4">
           <div class="box-card">
@@ -51,9 +55,9 @@
 
 <script type="text/babel">
 export default {
-  asyncData({ redirect }) {
+  asyncData({ redirect, app }) {
     // 现阶段默认直接进入列表
-    redirect('/application/pipes')
+    redirect(app.localePath('/application/pipes'))
   },
 }
 </script>

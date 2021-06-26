@@ -20,7 +20,7 @@ export default {
     { src: '@/plugins/axios-msg.js', mode: 'client' },
     { src: '@/plugins/nuxt-client-init.client.js' },
     { src: '@/plugins/components' },
-    { src: '@/plugins/i18n' },
+    { src: '@/plugins/i18n-router' },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -52,7 +52,23 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     '@nuxtjs/dotenv',
+    // https://i18n.nuxtjs.org/setup
+    'nuxt-i18n',
   ],
+
+  // nuxt-i18n
+  i18n: {
+    locales: [
+      { code: 'zh', iso: 'zh-CN', file: 'zh.js' },
+      { code: 'en', iso: 'en-US', file: 'en.js' },
+    ],
+    defaultLocale: 'zh',
+    lazy: true,
+    langDir: '~/locales/',
+    vueI18n: {
+      fallbackLocale: 'zh',
+    },
+  },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
@@ -70,6 +86,7 @@ export default {
       baseURL: process.env.BASE_URL,
     },
   },
+
   // auth-next
   auth: {
     strategies: {
@@ -96,16 +113,19 @@ export default {
       },
     },
     redirect: {
-      login: '/login',
-      logout: '/login',
-      callback: '/login',
-      home: '/application',
+      login: '/login', // 如果需要登录，用户将被重定向到此路径。
+      logout: '/login', // 如果注销后当前路由受到保护，用户将被重定向到此路径。
+      callback: '/login', // 用户登录后将被重定向到此路径。
+      home: '/application', // 用户登录后将被身份提供者重定向到此路径。
     },
     cookie: {
+      prefix: 'auth.',
       options: {
+        path: '/',
         maxAge: 60 * 60 * 24 * 7,
       },
     },
+    plugins: ['~/plugins/auth.js'],
   },
 
   router: {

@@ -20,7 +20,7 @@
           <!--          <li><a>实例</a></li>-->
           <!--          <li><a>优站精选</a></li>-->
           <!--          <li>-->
-          <!--            <nuxt-link v-slot="{ navigate }" to="/about-us" custom>-->
+          <!--            <nuxt-link v-slot="{ navigate }" :to="localePath('/about-us')" custom>-->
           <!--              <a role="link" class="pointer" @click="navigate" @keypress.enter="navigate">关于我们</a>-->
           <!--            </nuxt-link>-->
           <!--          </li>-->

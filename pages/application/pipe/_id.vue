@@ -45,6 +45,8 @@
         </can-examine>
       </div>
     </div>
+    {{ activeTab }}
+    <nuxt-link :to="localePath('/login')">11</nuxt-link>
     <el-tabs v-model="activeTab" class="pt-15">
       <el-tab-pane label="资源介绍" name="application-pipe-id" />
       <el-tab-pane label="工具结构" name="application-pipe-id-structure" />
@@ -86,11 +88,10 @@ export default {
     },
     activeTab: {
       get() {
-        return this.$route.name
+        return this.getRouteBaseName()
       },
       set(value) {
-        // TODO 新增方法
-        this.$router.push({ name: value, params: this.$route.params })
+        this.$I18nRouter.push({ name: value, params: this.$route.params })
       },
     },
     isTool() {
@@ -119,7 +120,7 @@ export default {
               type: 'success',
               message: '删除成功!',
             })
-            this.$router.push('/application/pipes')
+            this.$I18nRouter.push('/application/pipes')
           })
         })
         .catch(() => {})

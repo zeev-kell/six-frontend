@@ -118,7 +118,7 @@ export default {
           this.$$axios
             .$put('/pipe/' + this.formModel.pipe_id, this.formModel)
             .then(() => {
-              this.$router.push('/application/pipe/' + this.formModel.pipe_id)
+              this.$I18nRouter.push('/application/pipe/' + this.formModel.pipe_id)
             })
             .finally(() => {
               this.loading = false

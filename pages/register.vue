@@ -38,15 +38,12 @@
           <el-form-item>
             <div class="text-right">
               <span class="text-muted">已有账号？</span>
-              <nuxt-link to="login">立即登录</nuxt-link>
+              <nuxt-link :to="localePath('login')">立即登录</nuxt-link>
             </div>
           </el-form-item>
         </el-form>
       </div>
-      <div class="text-center mt-20">
-        ©2021 六点了技术
-        <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021047962号-1</a>
-      </div>
+      <copyright />
       <el-dialog
         title="产品使用协议"
         :visible.sync="showUAVisible"
@@ -181,7 +178,7 @@ export default {
             .then(() => {
               this.$message.success('注册成功，正在跳转至登录...')
               setTimeout(() => {
-                this.$router.push('/login')
+                this.$I18nRouter.push('/login')
               }, 3000)
             })
             .finally(() => {
@@ -202,10 +199,16 @@ export default {
             .then(() => {
               this.$message.success('验证码已发送，请注意查收...')
               this.loadingCodeText = '发送成功'
-              setTimeout(() => {
-                this.isLoadingCode = false
-                this.loadingCodeText = '获取验证码'
-              }, 60000)
+              let time = 60
+              const timeout = setInterval(() => {
+                time--
+                this.loadingCodeText = `重发(${time}s)`
+                if (time < 0) {
+                  this.isLoadingCode = false
+                  this.loadingCodeText = '获取验证码'
+                  clearInterval(timeout)
+                }
+              }, 1000)
             })
             .catch(() => {
               this.isLoadingCode = false
