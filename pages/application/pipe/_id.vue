@@ -12,7 +12,7 @@
         <div class="el-row el-row--flex item-tip">
           <div class="el-col">
             <div class="title">类别</div>
-            <div>{{ item.type | pipeTypeTranslate }}</div>
+            <div>{{ item.type | pipeTypeTranslate | t }}</div>
           </div>
           <div class="el-col">
             <div class="title">版本</div>
@@ -25,9 +25,11 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <a :href="'/graph-info/' + item['pipe_id'] + '/set-run'" target="_blank">
-          <el-button type="primary" icon="el-icon-caret-right">设置运行</el-button>
-        </a>
+        <nuxt-link v-slot="{ href }" :to="localePath('/graph-info/' + item['pipe_id'] + '/set-run')" custom>
+          <a :href="href" target="_blank">
+            <el-button type="primary" icon="el-icon-caret-right">设置运行</el-button>
+          </a>
+        </nuxt-link>
         <el-dropdown trigger="click" size="medium" @command="handleDownload">
           <el-button type="info" icon="el-icon-download">下载</el-button>
           <el-dropdown-menu slot="dropdown" class="el-dropdown-info">
@@ -35,18 +37,16 @@
             <el-dropdown-item command="yaml">YAML 格式</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <can-create v-if="item.provider === username">
-          <a :href="'/application/pipe/' + item['pipe_id'] + '/edit-pipe'">
-            <el-button type="primary" icon="el-icon-edit">编辑</el-button>
-          </a>
+        <can-create v-if="item.provider !== username">
+          <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipe/' + item['pipe_id'] + '/edit-pipe')" custom>
+            <el-button type="primary" icon="el-icon-edit" @click="navigate" @keypress.enter="navigate">编辑</el-button>
+          </nuxt-link>
         </can-create>
         <can-examine>
           <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe">删除</el-button>
         </can-examine>
       </div>
     </div>
-    {{ activeTab }}
-    <nuxt-link :to="localePath('/login')">11</nuxt-link>
     <el-tabs v-model="activeTab" class="pt-15">
       <el-tab-pane label="资源介绍" name="application-pipe-id" />
       <el-tab-pane label="工具结构" name="application-pipe-id-structure" />

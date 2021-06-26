@@ -67,7 +67,7 @@ export default {
       // 尝试转换字段为字符串
       item.cwl = JSON.stringify(item.cwl, null, 2)
     }
-    item.tutorial = item.tutorial.replace(/[↵ ]{2,}/g, '  \n')
+    item.tutorial = item.tutorial?.replace(/[↵ ]{2,}/g, '  \n')
     return { formModel: item }
   },
   data() {

@@ -29,8 +29,8 @@
         active-text-color="#ffd04b"
       >
         <li role="menuitem" tabindex="-1" class="el-menu-item menu-link">
-          <nuxt-link v-slot="{ navigate }" :to="localePath('/support-center')" custom>
-            <a target="_blank" @click="navigate" @keypress.enter="navigate">帮助中心</a>
+          <nuxt-link v-slot="{ href }" :to="localePath('/support-center')" custom>
+            <a target="_blank" :href="href">帮助中心</a>
           </nuxt-link>
         </li>
         <template v-if="loggedIn">

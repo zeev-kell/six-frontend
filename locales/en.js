@@ -18,4 +18,9 @@ export default {
     yes: 'Yes',
     no: 'No',
   },
+  TYPE_TOOL: 'Tool',
+  TYPE_APP: 'Workflow',
+  TYPE_DOCKER: 'Dockerfile',
+  TYPE_WORK: '工作',
+  TYPE_WORKFLOW: '工作流',
 }
