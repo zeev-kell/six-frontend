@@ -68,7 +68,7 @@ export default {
     pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
   },
   async asyncData({ app, params, store }) {
-    params.id = 'bd5adb8d-8615-4a09-9cf8-fa0005de6518'
+    // params.id = 'bd5adb8d-8615-4a09-9cf8-fa0005de6518'
     const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
     if (typeof item.content === 'string') {
       // 尝试转换字段为 json 对象
