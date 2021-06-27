@@ -12,6 +12,7 @@
 </template>
 
 <script type="text/babel">
+import { GraphEvent } from '@/constants/GraphEvent'
 import CwlPanelParams from '@/pages/application/_components/graph/CwlPanelParams'
 import CwlPanelRun from '@/pages/application/_components/graph/CwlPanelRun'
 import GraphTool from '@/pages/application/_components/graph/GraphTool'
@@ -119,6 +120,9 @@ export default {
         },
         true
       )
+      this.$on(GraphEvent.PayloadUpdateJob, (job) => {
+        this.updateJob(job)
+      })
     }
   },
   methods: {

@@ -23,7 +23,7 @@
         </div>
         <div class="panel-body">
           <p>创建时间<br />{{ item.create_at }}</p>
-          <p>资源分类<br />{{ item.create_at }}</p>
+          <p>资源分类<br />{{ item.category }}</p>
         </div>
       </div>
     </div>

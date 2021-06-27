@@ -50,7 +50,7 @@
     <el-tabs v-model="activeTab" class="pt-15">
       <el-tab-pane label="资源介绍" name="application-pipe-id" />
       <el-tab-pane label="工具结构" name="application-pipe-id-structure" />
-      <el-tab-pane v-if="showCourse" label="使用教程" name="application-pipe-id-course" />
+      <el-tab-pane label="使用教程" name="application-pipe-id-course" />
       <el-tab-pane label="运行案例" name="application-pipe-id-case" />
       <el-tab-pane label="历史版本" name="application-pipe-id-versions" />
     </el-tabs>
@@ -68,6 +68,7 @@ export default {
     pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
   },
   async asyncData({ app, params, store }) {
+    params.id = 'bd5adb8d-8615-4a09-9cf8-fa0005de6518'
     const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
     if (typeof item.content === 'string') {
       // 尝试转换字段为 json 对象
@@ -96,9 +97,6 @@ export default {
     },
     isTool() {
       return this.$store.getters['pipe/isTool']
-    },
-    showCourse() {
-      return !!this.item?.instruction
     },
   },
   methods: {

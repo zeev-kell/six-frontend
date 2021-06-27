@@ -13,7 +13,7 @@
             </el-form-item>
             <el-form-item>
               <el-select v-model="query.type" placeholder="按类别筛选" clearable>
-                <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item>
@@ -47,7 +47,7 @@
           </el-table-column>
           <el-table-column label="类别" prop="type" sortable width="120">
             <template slot-scope="{ row }">
-              {{ row.type | pipeTypeTranslate }}
+              {{ row.type | pipeTypeTranslate | t }}
             </template>
           </el-table-column>
           <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>

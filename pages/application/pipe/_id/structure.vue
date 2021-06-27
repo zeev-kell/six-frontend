@@ -5,7 +5,7 @@
     </div>
     <div class="panel-body">
       <div class="workflow-box">
-        <graph-index ref="cwl" :item="item" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
+        <graph-index :item="item" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
       </div>
     </div>
   </div>

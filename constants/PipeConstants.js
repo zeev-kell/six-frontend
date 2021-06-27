@@ -1,5 +1,5 @@
 import BaseConstants from '@/constants/BaseConstants'
-import CreateEnum from '@/constants/create-enum'
+import CreateEnum from '@/constants/CreateEnum'
 
 const items = [
   [0, 'TYPE_TOOL'],

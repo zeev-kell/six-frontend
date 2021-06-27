@@ -30,6 +30,6 @@ export const mutations = {
 
 export const getters = {
   isTool(state) {
-    return state.type === PipeConstants.Constants.get('TYPE_TOOL')
+    return state.type === PipeConstants.Constants.get('TYPE_TOOL') || state.type === PipeConstants.Constants.get('TYPE_APP')
   },
 }

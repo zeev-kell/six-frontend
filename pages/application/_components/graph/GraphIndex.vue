@@ -1,6 +1,6 @@
 <template>
   <div class="graph-index">
-    <component :is="graphComponent" ref="cwl" :item="item" v-bind="$attrs" :cwl="item.content" />
+    <component :is="graphComponent" ref="graph" :item="item" v-bind="$attrs" :cwl="item.content" />
   </div>
 </template>
 
@@ -8,6 +8,7 @@
 import 'cwl-svg/src/assets/styles/themes/rabix-dark/theme.scss'
 import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
 import 'cwl-svg/src/plugins/selection/theme.dark.scss'
+import { GraphEvent } from '@/constants/GraphEvent'
 import PipeConstants from '@/constants/PipeConstants'
 export default {
   name: 'GraphIndex',
@@ -27,6 +28,14 @@ export default {
       const isTool = this.item?.type ? this.item.type === PipeConstants.Constants.get('TYPE_TOOL') : true
       return isTool ? 'graph-commandline' : 'graph-workflow'
     },
+  },
+  mounted() {
+    // 事件转发到子组件
+    this.$on(GraphEvent.Dispatch, (...arg) => {
+      // eslint-disable-next-line no-console
+      console.log('onDispatchEvent', arg[0])
+      this.$refs.graph?.$emit(...arg)
+    })
   },
   methods: {
     exportCwl(...arg) {

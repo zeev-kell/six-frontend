@@ -11,8 +11,8 @@
       </template>
     </el-table-column>
     <el-table-column prop="version" label="版本" width="180"> </el-table-column>
-    <el-table-column prop="create_time" label="创建时间"> </el-table-column>
-    <el-table-column prop="updated_time" label="更新时间"> </el-table-column>
+    <el-table-column prop="create_at" label="创建时间"> </el-table-column>
+    <el-table-column prop="updated_at" label="更新时间"> </el-table-column>
   </el-table>
 </template>
 
