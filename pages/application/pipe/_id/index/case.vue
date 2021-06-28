@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      profile: undefined,
+      profile: {},
     }
   },
   computed: {

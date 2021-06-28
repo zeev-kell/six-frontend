@@ -116,7 +116,7 @@ export default {
         if (valid) {
           this.loading = true
           this.$$axios
-            .$put('/pipe/' + this.formModel.pipe_id, this.formModel)
+            .$put('/v1/pipe/' + this.formModel.pipe_id, this.formModel)
             .then(() => {
               this.$I18nRouter.push('/application/pipe/' + this.formModel.pipe_id)
             })

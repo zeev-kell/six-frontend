@@ -15,6 +15,7 @@ export const state = () => ({
   profile: null,
   content: undefined,
   create_at: undefined,
+  updated_at: undefined,
   category: undefined,
   versions: [],
 })

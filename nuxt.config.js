@@ -118,13 +118,6 @@ export default {
       callback: '/login', // 用户登录后将被重定向到此路径。
       home: '/application', // 用户登录后将被身份提供者重定向到此路径。
     },
-    cookie: {
-      prefix: 'auth.',
-      options: {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 7,
-      },
-    },
     plugins: ['~/plugins/auth.js'],
   },
 

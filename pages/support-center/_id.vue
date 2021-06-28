@@ -10,7 +10,7 @@
         </client-only>
       </el-col>
     </el-row>
-    <el-image v-if="imageList.length === 0" ref="elImage" style="width: 0; height: 0" :src="currentImage" :preview-src-list="imageList"> </el-image>
+    <el-image v-if="imageList.length !== 0" ref="elImage" style="width: 0; height: 0" :src="currentImage" :preview-src-list="imageList"> </el-image>
   </el-main>
 </template>
 

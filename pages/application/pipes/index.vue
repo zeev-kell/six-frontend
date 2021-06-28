@@ -25,7 +25,7 @@
         </div>
         <div class="action-box">
           <can-create>
-            <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-new-pipe')" custom>
+            <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-new')" custom>
               <el-button type="primary" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
             </nuxt-link>
           </can-create>

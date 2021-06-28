@@ -26,8 +26,8 @@ export default ({ app }, inject) => {
     {},
     {
       get(target, key) {
-        return function (...args) {
-          return app.router[key](app.localePath(...args))
+        return function (route, ...args) {
+          return app.router[key](app.localePath(route), ...args)
         }
       },
     }
