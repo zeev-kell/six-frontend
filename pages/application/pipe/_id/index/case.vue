@@ -8,7 +8,14 @@
           </div>
           <div class="panel-body">
             <div class="workflow-box">
-              <graph-index ref="graph" class="h-100" :item="item" config-type="run" tools="download|plus,minus,fit" />
+              <graph-index
+                ref="graph"
+                class="h-100"
+                :item="item"
+                config-type="run"
+                tools="download|plus,minus,fit"
+                @trigger-modal-create="onModalCreate"
+              />
             </div>
           </div>
         </div>
@@ -42,15 +49,6 @@ export default {
     pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
   },
   components: { GraphIndex },
-  async asyncData({ app, store }) {
-    const item = store.state.pipe
-    if (item.profile) {
-      const profile = await app.$axios.$get(`/v2/pipe/${item.profile}`)
-      return { profile }
-    } else {
-      return {}
-    }
-  },
   data() {
     return {
       profile: {},
@@ -61,13 +59,25 @@ export default {
       return this.$store.state.pipe
     },
   },
-  mounted() {
-    if (this.profile?.content) {
+  methods: {
+    async onModalCreate() {
+      const profile = this.profile
+      if (profile?.content) {
+        this.updateGraphJob()
+      } else {
+        const profileId = this.item.profile
+        if (profileId) {
+          this.profile = await this.$axios.$get(`/v2/pipe/${profileId}`)
+          this.updateGraphJob()
+        }
+      }
+    },
+    updateGraphJob() {
       const job = getObject(this.profile.content)
       this.$nextTick(() => {
         this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
       })
-    }
+    },
   },
 }
 </script>

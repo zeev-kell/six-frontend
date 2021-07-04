@@ -62,13 +62,14 @@ export default {
       workflow: null,
       cwlState: null,
       dataModel: null,
+      modelCreated: false,
       jobControl: new FormControl({}),
       validationState: {},
     }
   },
   computed: {
     pipeId() {
-      return this.item?.pipe_id || this.item?.resource_id
+      return this.item?.resource_id
     },
     isRunJob() {
       return this.configType === 'run'
@@ -192,6 +193,12 @@ export default {
         }
       }
       return { ...nullJob, ...job }
+    },
+    afterModelCreated(isFirstCreation) {
+      if (isFirstCreation) {
+        // 只有第一次催发创建
+        this.$emit(GraphEvent.TriggerModalCreate)
+      }
     },
   },
 }

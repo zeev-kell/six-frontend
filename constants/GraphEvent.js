@@ -7,6 +7,7 @@ export const GraphEvent = {
   // 触发事件（往上）
   TriggerAdd: 'trigger-add',
   TriggerEdit: 'trigger-edit',
+  TriggerModalCreate: 'trigger-modal-create',
 
   // 触发事件（往下）
   PayloadUpdateJob: 'update-job',

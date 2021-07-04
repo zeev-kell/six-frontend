@@ -1,6 +1,6 @@
 <template>
   <div class="graph-index">
-    <component :is="graphComponent" ref="graph" :item="item" v-bind="$attrs" :cwl="item.content" />
+    <component :is="graphComponent" ref="graph" :item="item" v-bind="$attrs" :cwl="item.content" v-on="$listeners" />
   </div>
 </template>
 

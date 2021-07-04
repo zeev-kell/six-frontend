@@ -62,7 +62,7 @@ export default {
   },
   computed: {
     pipeId() {
-      return this.item && this.item.pipe_id
+      return this.item && this.item.resource_id
     },
   },
   watch: {

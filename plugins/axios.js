@@ -8,9 +8,14 @@ export default function ({ $axios, store }) {
     console.log('onRequestError', error)
   })
   $axios.onResponse((response) => {
-    if (process.client && process.env.NODE_ENV === 'development') {
+    if (process.client) {
+      if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-undef,no-console
+        console.log(response)
+      }
+    } else {
       // eslint-disable-next-line no-undef,no-console
-      console.log(response)
+      console.log(response.config.url)
     }
     // $get $post 等，直接返回 data 对象
     return response

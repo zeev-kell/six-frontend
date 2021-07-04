@@ -34,9 +34,6 @@ export default {
   methods: {
     createDataModel(json) {
       this.dataModel = CommandLineToolFactory.from(json, 'document')
-      // this.dataModel.onCommandLineResult((cmdResult) => {
-      //   this.commandLineParts.next(cmdResult)
-      // })
       this.dataModel.updateCommandLine()
       this.dataModel.setValidationCallback(this.afterModelValidation.bind(this))
       this.dataModel.validate().then(this.afterModelValidation.bind(this))
@@ -64,6 +61,8 @@ export default {
     },
     createModel(json) {
       this.createDataModel(json)
+      this.afterModelCreated(!this.modelCreated)
+      this.modelCreated = true
       const plugins = this.defaultPlugins
       plugins.push(new SVGNodeMovePlugin())
       this.workflow = new Workflow({

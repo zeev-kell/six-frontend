@@ -64,18 +64,23 @@ import { getObject, stringifyObject } from '@/pages/application/_components/grap
 import { downloadStrLink } from '@/utils/download-link'
 
 export default {
+  scrollToTop: true,
   filters: {
     pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
   },
-  async fetch({ app, params, store }) {
-    // params.id = 'bd5adb8d-8615-4a09-9cf8-fa0005de6518'
-    const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
-    if (typeof item.content === 'string') {
-      // 尝试转换字段为 json 对象
-      item.content = getObject(item.content)
+  async middleware({ store, params, app }) {
+    const pipe = store.state.pipe
+    // ID 不同，需要重新请求数据
+    if (params.id !== pipe.resource_id) {
+      // params.id = 'bd5adb8d-8615-4a09-9cf8-fa0005de6518'
+      const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
+      if (typeof item.content === 'string') {
+        // 尝试转换字段为 json 对象
+        item.content = getObject(item.content)
+      }
+      item.tutorial = item.tutorial?.replace(/[↵ ]{2,}/g, '  \n')
+      store.commit('pipe/UPDATE_CURRENT_WORKFLOW', item)
     }
-    item.tutorial = item.tutorial?.replace(/[↵ ]{2,}/g, '  \n')
-    store.commit('pipe/UPDATE_CURRENT_WORKFLOW', item)
   },
   data() {
     return {

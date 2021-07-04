@@ -6,7 +6,6 @@ export const state = () => ({
   provider: undefined,
   website: undefined,
   description: undefined,
-  pipe_id: undefined,
   resource_id: undefined,
   version: undefined,
   dockerfile: null,
@@ -18,6 +17,7 @@ export const state = () => ({
   updated_at: undefined,
   category: undefined,
   versions: [],
+  _isLoaded: false,
 })
 
 export const mutations = {
@@ -26,6 +26,7 @@ export const mutations = {
     Object.keys(item).forEach((key) => {
       state[key] = item[key]
     })
+    state._isLoaded = true
   },
 }
 
