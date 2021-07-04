@@ -1,49 +1,45 @@
 <template>
-  <div class="container-fluid" style="overflow: inherit">
-    <el-row v-if="blog.id" type="flex">
-      <el-col style="width: 260px">
-        <div class="panel">
-          <div class="panel-header el-row el-row--flex is-align-middle py-5">
-            <h4>作者</h4>
-          </div>
-          <div class="panel-body">
-            <div style="font-weight: 600; margin-bottom: 10px">{{ blog.provider }}</div>
-          </div>
+  <el-container>
+    <el-aside width="240px" class="resource-aside">
+      <div class="panel">
+        <div class="panel-header el-row el-row--flex is-align-middle py-5">
+          <h4>作者</h4>
         </div>
-      </el-col>
-
-      <el-col class="marked-content el-col-equal">
-        <div class="el-row el-row--flex is-align-middle py-2">
-          <div class="el-col el-col-16 text-truncate mx-0">
-            <h1 class="title">
-              {{ blog.title }}
-            </h1>
-            <p class="caption">发布于 {{ blog.created_at }}</p>
-          </div>
-          <div class="el-col el-col-8 text-right">
-            <can-create v-if="blog.provider !== username">
-              <nuxt-link v-slot="{ navigate }" :to="localePath('/application/doc/' + blog.id + '/edit')" custom>
-                <el-button type="primary" icon="el-icon-edit" @click="navigate" @keypress.enter="navigate">编辑</el-button>
-              </nuxt-link>
-            </can-create>
-            <can-examine>
-              <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe">删除</el-button>
-            </can-examine>
-          </div>
+        <div class="panel-body">
+          <div style="font-weight: 600; margin-bottom: 10px">{{ blog.provider }}</div>
         </div>
+      </div>
+    </el-aside>
 
-        <div ref="markdown" v-html="markdown"></div>
-      </el-col>
+    <el-main class="main-container">
+      <div class="el-row el-row--flex is-align-middle py-2">
+        <div class="el-col el-col-16 text-truncate mx-0">
+          <h1 class="title">
+            {{ blog.title }}
+          </h1>
+          <p class="caption">发布于 {{ blog.created_at }}</p>
+        </div>
+        <div class="el-col el-col-8 text-right">
+          <can-create v-if="blog.provider !== username">
+            <nuxt-link v-slot="{ navigate }" :to="localePath('/application/doc/' + blog.id + '/edit')" custom>
+              <el-button type="primary" icon="el-icon-edit" @click="navigate" @keypress.enter="navigate">编辑</el-button>
+            </nuxt-link>
+          </can-create>
+          <can-examine>
+            <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe">删除</el-button>
+          </can-examine>
+        </div>
+      </div>
+      <div ref="markdown" v-html="markdown"></div>
+      <el-image v-if="imageList.length !== 0" ref="elImage" style="width: 0; height: 0" :src="currentImage" :preview-src-list="imageList"> </el-image>
+    </el-main>
 
-      <el-col style="width: 260px">
-        <client-only>
-          <markdown-toc :toc="toc"></markdown-toc>
-        </client-only>
-      </el-col>
-    </el-row>
-    <div v-else>文档找不到了！</div>
-    <el-image v-if="imageList.length !== 0" ref="elImage" style="width: 0; height: 0" :src="currentImage" :preview-src-list="imageList"> </el-image>
-  </div>
+    <el-aside width="240px" class="toc-aside">
+      <client-only>
+        <markdown-toc :toc="toc"></markdown-toc>
+      </client-only>
+    </el-aside>
+  </el-container>
 </template>
 
 <script type="text/babel">
@@ -77,23 +73,64 @@ export default {
 }
 </script>
 
-<style lang="scss">
-// .item-tip {
-// padding: 5px 0 0;
-// background-color: #ffffff;
-// color: #666666;
-// }
+<style lang="scss" scoped>
+.resource-aside {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 250px;
+  bottom: 0;
+}
+
+.toc-aside {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 150px;
+  bottom: 0;
+}
+
+.el-main {
+  position: absolute;
+  left: 240px;
+  right: 240px;
+  top: 60px;
+  bottom: 0;
+  min-height: 100%;
+  overflow: inherit;
+  // overflow-y: clip;
+}
+.header-banner {
+  background-color: #2f5c8a;
+  color: var(--light_grey);
+}
+
+.el-menu {
+  border-right: none;
+}
+
+.el-container {
+  padding-bottom: 50px;
+  bottom: 150px;
+}
+
+.aside-wrap {
+  position: sticky;
+  height: 100%;
+  top: 60px;
+  padding: 20px 0;
+}
 .title {
   margin-bottom: 1px;
   font-weight: 600;
-  font-size: 400px;
+  font-size: 40px;
 }
 
 .caption {
   padding: 5px 0 0;
   background-color: #ffffff;
   color: #666666;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 30.0001px;
   text-align: justify;
   letter-spacing: normal;
