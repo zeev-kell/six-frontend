@@ -5,7 +5,10 @@
         <div class="panel-header el-row el-row--flex is-align-middle py-5">
           <h2>{{ item.name }}</h2>
         </div>
-        <div class="panel-body">
+        <div v-if="item.readme" class="panel-body">
+          <div v-marked="item.readme"></div>
+        </div>
+        <div v-else class="panel-body">
           {{ item.description }}
         </div>
       </div>
@@ -31,7 +34,12 @@
 </template>
 
 <script type="text/babel">
+import marked from '@/directives/marked'
+
 export default {
+  directives: {
+    ...marked,
+  },
   computed: {
     item() {
       return this.$store.state.pipe

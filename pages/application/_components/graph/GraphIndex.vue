@@ -25,7 +25,8 @@ export default {
   computed: {
     graphComponent() {
       // 根据当前类型实例化不同的组件
-      const isTool = this.item?.type ? this.item.type === PipeConstants.Constants.get('TYPE_TOOL') : true
+      const type = this.item?.type
+      const isTool = type ? type === PipeConstants.Constants.get('TYPE_TOOL') : true
       return isTool ? 'graph-commandline' : 'graph-workflow'
     },
   },

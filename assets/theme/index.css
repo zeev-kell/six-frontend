@@ -4918,7 +4918,7 @@
 }
 
 .el-tabs__nav-scroll {
-    overflow: hidden
+    overflow: hidden;
 }
 
 .el-tabs__nav-next, .el-tabs__nav-prev {

@@ -2,7 +2,8 @@
   <div class="pipe-container">
     <div class="el-row el-row--flex is-align-middle py-5">
       <div class="el-col-auto px-20">
-        <i class="el-icon-s-tools" style="font-size: 36px"></i>
+        <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px"></i>
+        <i v-if="isWork" class="el-icon-reading" style="font-size: 36px"></i>
       </div>
       <div class="el-col el-col-16 text-truncate mx-0">
         <h2 class="text-truncate my-0" :title="item['name']">
@@ -47,12 +48,13 @@
         </can-examine>
       </div>
     </div>
-    <el-tabs v-model="activeTab" class="pt-15" :before-leave="onBeforeLeave">
+    <el-tabs v-model="activeTab" class="pt-15 pipe-tab" :before-leave="onBeforeLeave">
       <el-tab-pane label="资源介绍" name="application-pipe-id-index" />
-      <el-tab-pane label="工具结构" name="application-pipe-id-index-structure" />
+      <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-index-work" />
+      <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-index-structure" />
       <el-tab-pane label="使用教程" name="application-pipe-id-index-course" />
-      <el-tab-pane label="运行案例" name="application-pipe-id-index-case" />
-      <el-tab-pane label="历史版本" name="application-pipe-id-index-versions" />
+      <el-tab-pane v-if="isApp" label="运行案例" name="application-pipe-id-index-case" />
+      <el-tab-pane v-if="isApp" label="历史版本" name="application-pipe-id-index-versions" />
     </el-tabs>
     <nuxt-child />
   </div>
@@ -94,8 +96,20 @@ export default {
     username() {
       return this.$store.getters.username
     },
-    isTool() {
-      return this.$store.getters['pipe/isTool']
+    isApp() {
+      return this.$store.getters['pipe/isApp']
+    },
+    isWork() {
+      return this.$store.getters['pipe/isWork']
+    },
+  },
+  watch: {
+    '$route.params'() {
+      this.$nextTick(() => {
+        // 强制使当前 tab 切换到当前路由
+        // 会触发 onBeforeLeave onAbort
+        this.activeTab = this.getRouteBaseName()
+      })
     },
   },
   methods: {
@@ -122,9 +136,18 @@ export default {
         })
         .catch(() => {})
     },
-    onBeforeLeave(activeName) {
+    onBeforeLeave(activeName, currentName) {
       return new Promise((resolve, reject) => {
-        this.$I18nRouter.push({ name: activeName, params: this.$route.params }, resolve, reject)
+        this.$I18nRouter.push({ name: activeName, params: this.$route.params }, resolve, (...args) => {
+          // 如果是相同的路由，onAbort 会被调用，这时候需要手动 resolve，让 tab 切换
+          const activeTab = this.getRouteBaseName()
+          if (activeTab === activeName) {
+            resolve()
+          } else {
+            // eslint-disable-next-line prefer-promise-reject-errors
+            reject(...args)
+          }
+        })
       })
     },
   },

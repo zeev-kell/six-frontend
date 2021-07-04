@@ -6,6 +6,7 @@ export const state = () => ({
   provider: undefined,
   website: undefined,
   description: undefined,
+  readme: undefined,
   resource_id: undefined,
   version: undefined,
   dockerfile: null,
@@ -31,7 +32,10 @@ export const mutations = {
 }
 
 export const getters = {
-  isTool(state) {
-    return state.type === PipeConstants.Constants.get('TYPE_TOOL') || state.type === PipeConstants.Constants.get('TYPE_APP')
+  isApp(state) {
+    return [PipeConstants.Constants.get('TYPE_TOOL'), PipeConstants.Constants.get('TYPE_APP')].includes(state.type)
+  },
+  isWork(state) {
+    return [PipeConstants.Constants.get('TYPE_WORK'), PipeConstants.Constants.get('TYPE_WORKFLOW')].includes(state.type)
   },
 }
