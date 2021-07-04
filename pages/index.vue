@@ -79,23 +79,25 @@
             </a>
           </div>
           <div class="el-col-auto m-b-2 text-center pro-panel">
-            <a class="a-link" href="https://wiki-pre.sixoclock.net/" target="_blank">
-              <el-card shadow="hover" class="pro-card">
-                <div class="pro-icon">
-                  <i class="el-icon-files"></i>
-                </div>
-                <h3 class="pro-title m-y-1">
-                  <strong>知识库</strong>
-                </h3>
-                <div class="pro-content">
-                  提供系统的生物信息知识<br />
-                  检索与学习资料，<br />
-                  可尽情查阅NGS，医学统计学，<br />
-                  科研绘图等技术<br />
-                  文档与教程。
-                </div>
-              </el-card>
-            </a>
+            <nuxt-link v-slot="{ navigate }" :to="localePath('/application/docs')" custom>
+              <div class="pointer" @click="navigate" @keypress.enter="navigate">
+                <el-card shadow="hover" class="pro-card">
+                  <div class="pro-icon">
+                    <i class="el-icon-files"></i>
+                  </div>
+                  <h3 class="pro-title m-y-1">
+                    <strong>知识库</strong>
+                  </h3>
+                  <div class="pro-content">
+                    提供系统的生物信息知识<br />
+                    检索与学习资料，<br />
+                    可尽情查阅NGS，医学统计学，<br />
+                    科研绘图等技术<br />
+                    文档与教程。
+                  </div>
+                </el-card>
+              </div>
+            </nuxt-link>
           </div>
         </div>
       </div>
