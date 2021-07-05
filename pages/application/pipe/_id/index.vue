@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <nuxt-link v-slot="{ href }" :to="localePath('/graph-info/' + item['resource_id'] + '/set-run')" custom>
+        <nuxt-link v-if="isApp" v-slot="{ href }" :to="localePath('/graph-info/' + item['resource_id'] + '/set-run')" custom>
           <a :href="href" target="_blank">
             <el-button type="primary" icon="el-icon-caret-right">设置运行</el-button>
           </a>
