@@ -1,7 +1,7 @@
 <template>
   <section class="index-banner el-row is-align-middle el-row--flex">
-    <div class="el-col-20 el-col-offset-2 el-col-sm-8 el-col-offset-sm-4 text-center">
-      <h1 class="m-b-2">生物医疗大数据服务</h1>
+    <div class="el-col-20 el-col-offset-2 el-col-sm-10 el-col-offset-sm-4 text-center">
+      <h1 class="m-b-2 f-48">生物医疗大数据服务</h1>
       <div class="mb-20">
         <a href="#section-product">
           <el-button plain type="primary pass">云计算协作</el-button>
@@ -10,8 +10,8 @@
           <el-button>开始体验</el-button>
         </a>
       </div>
-      <div class="search-wrap mb-20">
-        <el-input v-model="searchInput" placeholder="提供1000+种工具和知识" @keyup.enter.native="toSearch">
+      <div class="search-wrap mb-50">
+        <el-input v-model="searchInput" style="max-width: 450px" placeholder="提供1000+种工具和知识" @keyup.enter.native="toSearch">
           <el-select slot="prepend" v-model="searchType" placeholder="请选择">
             <el-option label="工具" value="0"></el-option>
             <el-option label="流程" value="1"></el-option>
