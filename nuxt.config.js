@@ -54,6 +54,36 @@ export default {
     '@nuxtjs/dotenv',
     // https://i18n.nuxtjs.org/setup
     'nuxt-i18n',
+    [
+      'nuxt-fontawesome',
+      {
+        component: 'fa',
+        imports: [
+          // import 2 icons from set
+          // please note this is PRO set in this example,
+          // you must have it in your node_modules to actually import
+          {
+            set: '@fortawesome/free-solid-svg-icons',
+            icons: [
+              'faObjectGroup',
+              'faArchive',
+              'faIdCard',
+              'faArrowCircleDown',
+              'faUserShield',
+              'faCubes',
+              'faChartLine',
+              'faLightbulb',
+              'faDesktop',
+              'faDownload',
+            ],
+          },
+          {
+            set: '@fortawesome/free-brands-svg-icons',
+            icons: ['faGithub', 'faWeixin', 'faWindows', 'faLinux'],
+          },
+        ],
+      },
+    ],
   ],
 
   // nuxt-i18n

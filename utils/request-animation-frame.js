@@ -1,5 +1,5 @@
-const defaultAnimationFrame = function (callback, element) {
-  setTimeout(callback, 1000 / 60)
+const defaultAnimationFrame = function (callback) {
+  setTimeout(callback, 16)
 }
 
 const requestAnimationFrame = process.client

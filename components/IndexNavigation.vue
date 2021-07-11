@@ -1,24 +1,40 @@
 <template>
   <el-header id="header" class="nav-fixed nav-darken">
-    <div class="navbar-header el-row--flex">
-      <div class="navbar el-col-equal">
+    <div class="navbar-header el-row--flex pr-20">
+      <div class="navbar el-col-auto">
         <div class="navbar-logo">
           <nuxt-link class="logo" :to="localePath('/')">
             <logo-png />
           </nuxt-link>
         </div>
       </div>
-      <el-menu :default-active="$route.path" :router="true" mode="horizontal">
-        <el-menu-item :index="localePath('download-center')">相关下载</el-menu-item>
-        <el-menu-item :index="localePath('support-center')" :class="{ 'is-active': $route.name.startsWith('support-center') }">帮助中心</el-menu-item>
-        <!-- <el-menu-item index="/about-us">关于我们</el-menu-item>-->
-        <li class="el-menu-item menu-link" role="menuitem">
-          <nuxt-link class="logo" :to="localePath('/register')">注册</nuxt-link>
-        </li>
-        <li class="el-menu-item menu-link" role="menuitem">
-          <nuxt-link class="logo" :to="localePath('/login')">登录</nuxt-link>
-        </li>
-      </el-menu>
+      <div class="el-col-equal">
+        <el-menu :default-active="$route.path" :router="true" mode="horizontal" class="hidden-sm-and-down">
+          <el-menu-item :index="localePath('index')">{{ $t('nav.index') }}</el-menu-item>
+          <el-submenu>
+            <template slot="title">{{ $t('nav.product') }}</template>
+            <el-menu-item :index="localePath('/application/pipe')">云协作</el-menu-item>
+            <el-menu-item>流程组合</el-menu-item>
+            <el-menu-item :index="localePath('/application/docs')">知识库</el-menu-item>
+            <el-menu-item :index="localePath({ path: '/index?' })">数据库</el-menu-item>
+          </el-submenu>
+          <el-menu-item :index="localePath('download-center')">{{ $t('nav.download') }}</el-menu-item>
+          <el-menu-item :index="localePath('support-center')" :class="{ 'is-active': $route.name.startsWith('support-center') }">
+            {{ $t('nav.help') }}
+          </el-menu-item>
+          <el-menu-item :index="localePath('about-us')">{{ $t('nav.about') }}</el-menu-item>
+        </el-menu>
+      </div>
+      <div class="el-col-auto">
+        <el-menu mode="horizontal">
+          <li class="el-menu-item menu-link" role="menuitem">
+            <nuxt-link :to="localePath('/register')">{{ $t('nav.register') }}</nuxt-link>
+          </li>
+          <li class="el-menu-item menu-link" role="menuitem">
+            <nuxt-link :to="localePath('/login')">{{ $t('nav.login') }}</nuxt-link>
+          </li>
+        </el-menu>
+      </div>
     </div>
   </el-header>
 </template>

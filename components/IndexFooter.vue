@@ -1,6 +1,6 @@
 <template>
-  <footer class="footer text-center" :style="style">
-    <div v-if="withSubscribe" class="p-y-2 bg inset">
+  <footer class="footer" :style="style">
+    <div v-if="withSubscribe" class="p-y-2 bg inset text-center">
       <div class="container">
         <h2><span>Six<span>O</span>'clock</span> 电子报刊</h2>
         <p>将最新的新闻发送到您的收件箱，这由六点了技术团队策划。</p>
@@ -13,24 +13,85 @@
         </el-form>
       </div>
     </div>
-    <div class="p-t-2">
+    <div class="py-40">
       <div class="container">
-        <ul class="list-unstyled">
-          <li><a href="https://github.com/6-oclock" target="_blank">GitHub 仓库</a></li>
-          <!--          <li><a>实例</a></li>-->
-          <!--          <li><a>优站精选</a></li>-->
-          <!--          <li>-->
-          <!--            <nuxt-link v-slot="{ navigate }" :to="localePath('/about-us')" custom>-->
-          <!--              <a role="link" class="pointer" @click="navigate" @keypress.enter="navigate">关于我们</a>-->
-          <!--            </nuxt-link>-->
-          <!--          </li>-->
-        </ul>
+        <div class="el-row el-row-smd--flex">
+          <div class="el-col-md-4 hidden-sm-and-down">
+            <div class="title">六点了</div>
+            <ul class="list-unstyled">
+              <li><a href="https://github.com/6-oclock" target="_blank">我们是谁</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">历程</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">关注我们</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">联系我们</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">加入我们</a></li>
+            </ul>
+          </div>
+          <div class="el-col-md-4 hidden-sm-and-down">
+            <div class="title">产品</div>
+            <ul class="list-unstyled">
+              <li><a href="https://github.com/6-oclock" target="_blank">云协作</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">流程组合</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">数据集</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">知识库</a></li>
+            </ul>
+          </div>
+          <div class="el-col-md-4 hidden-sm-and-down">
+            <div class="title">下载中心</div>
+            <ul class="list-unstyled">
+              <li><a href="https://github.com/6-oclock" target="_blank">软件下载</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">数据下载</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">软件仓库</a></li>
+            </ul>
+          </div>
+          <div class="el-col-md-4 hidden-sm-and-down">
+            <div class="title">资源</div>
+            <ul class="list-unstyled">
+              <li><a href="https://github.com/6-oclock" target="_blank">帮助文档</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">常见Q&A</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">意见建议</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">使用指南</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">更新日志</a></li>
+              <li><a href="https://github.com/6-oclock" target="_blank">NewSroom</a></li>
+            </ul>
+          </div>
+          <div class="el-col-12 hidden-md-and-up">
+            <div class="el-row text-center" style="line-height: 1.5">
+              <div class="el-col-12">
+                <nuxt-link :to="localePath('download-center')">下载中心</nuxt-link>
+              </div>
+              <div class="el-col-12">资源</div>
+              <div class="el-col-12">关于我们</div>
+              <div class="el-col-12">产品</div>
+            </div>
+          </div>
+          <div class="el-col-md-8 el-col-10 el-row text-center icon-wrap">
+            <div class="el-col-8">
+              <div class="icon">
+                <fa icon="download" class="fa-2x"></fa>
+              </div>
+              <div class="hidden-sm-and-down">下载</div>
+            </div>
+            <div class="el-col-8">
+              <div class="icon">
+                <fa :icon="['fab', 'weixin']" class="fa-2x"></fa>
+              </div>
+              <div class="hidden-sm-and-down">官方微信</div>
+            </div>
+            <div class="el-col-8">
+              <div class="icon">
+                <fa :icon="['fab', 'github']" class="fa-2x"></fa>
+              </div>
+              <div class="hidden-sm-and-down">GitHub 仓库</div>
+            </div>
+          </div>
+        </div>
         <p id="copyright" class="copyright">
-          ©2021 六点了技术
+          ©2021 六点了技术-生物医疗健康提供最便捷的数据挖掘云平台
           <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021047962号-1&emsp;</a>
-          <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030302001909"
-            ><img src="/images/beian.png" />&ensp;粤公网安备 44030302001909号</a
-          >
+          <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030302001909">
+            <img src="/images/beian.png" />&ensp;粤公网安备 44030302001909号
+          </a>
+          服务协议
         </p>
       </div>
     </div>
@@ -54,25 +115,59 @@ export default {
 }
 </script>
 
-<style lang="scss">
-footer .bg {
+<style lang="scss" scoped>
+@import './assets/scss/variables';
+@import '/node_modules/element-theme-chalk/src/mixins/mixins';
+.title {
+  color: #3c3c3c;
+  padding: 0 50px;
+}
+.bg {
   background: rgba(248, 250, 252, 1);
 }
-
-footer .list-unstyled li {
-  display: inline-block;
-
-  & + li {
-    margin-left: 1rem;
+.list-unstyled {
+  border-right: 1px solid #cccccc;
+  min-height: 120px;
+  padding: 0 50px;
+}
+.list-unstyled li {
+  display: block;
+  margin-top: 12px;
+  color: #101010;
+  a {
+    color: inherit;
   }
 }
-
-footer .copyright {
+.copyright {
   text-align: center;
   font-size: 14px;
   font-weight: 100;
-  padding-top: 1rem;
-  padding-bottom: 2rem;
   margin: 0;
+  padding: 20px 20px 0;
+}
+
+// 小于 768px
+@include res(xs-only, $--breakpoints-spec) {
+  .el-row-smd--flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .icon svg {
+    font-size: 1.5em;
+  }
+}
+// 大于等于 768px
+@include res(sm-and-up, $--breakpoints-spec) {
+  .icon-wrap {
+    padding-top: 50px;
+  }
+  .icon {
+    margin-bottom: 20px;
+  }
+  .copyright {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
 }
 </style>

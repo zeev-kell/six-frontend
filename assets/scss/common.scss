@@ -18,6 +18,10 @@
   margin-top: 30px !important;
 }
 
+.mt-50 {
+  margin-top: 50px;
+}
+
 .mr-0 {
   margin-right: 0;
 }
@@ -32,6 +36,14 @@
 
 .mb-10 {
   margin-bottom: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-50 {
+  margin-bottom: 50px;
 }
 
 .m-b-05 {
@@ -149,6 +161,11 @@ hr {
   padding-bottom: 5px;
 }
 
+.py-40 {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
 .p-y-2 {
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -255,6 +272,10 @@ a:hover {
   color: white;
 }
 
+.text-primary {
+  color: $--color-primary;
+}
+
 .text-danger {
   color: $--color-danger;
 }
@@ -312,8 +333,14 @@ img {
 }
 
 //
-// font
+// font-size
+// f-5   使用像素
+// fr-5  使用 rem
 //
+.f-36 {
+  font-size: 36px;
+}
+
 .f-b {
   font-weight: bold;
 }

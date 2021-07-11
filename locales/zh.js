@@ -23,4 +23,13 @@ export default {
   TYPE_DOCKER: 'Dockerfile',
   TYPE_WORK: '工作',
   TYPE_WORKFLOW: '工作流',
+  nav: {
+    index: '主页',
+    product: '产品',
+    download: '下载中心',
+    about: '关于我们',
+    help: '帮助中心',
+    login: '登录',
+    register: '注册',
+  },
 }

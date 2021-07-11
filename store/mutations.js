@@ -10,4 +10,7 @@ export default {
   SET_HELP_MENUS(state, helpMenus) {
     state.helpMenus = helpMenus
   },
+  SET_MOBILE(state) {
+    state.isMobile = true
+  },
 }
