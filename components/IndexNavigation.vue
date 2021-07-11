@@ -11,18 +11,20 @@
       <div class="el-col-equal">
         <el-menu :default-active="$route.path" :router="true" mode="horizontal" class="hidden-sm-and-down">
           <el-menu-item :index="localePath('index')">{{ $t('nav.index') }}</el-menu-item>
-          <el-submenu>
+          <el-submenu index="index-product">
             <template slot="title">{{ $t('nav.product') }}</template>
-            <el-menu-item :index="localePath('/application/pipe')">云协作</el-menu-item>
+            <li role="menuitem" class="el-menu-item custom-menu-item">
+              <a href="#section-product">云协作</a>
+            </li>
             <el-menu-item>流程组合</el-menu-item>
-            <el-menu-item :index="localePath('/application/docs')">知识库</el-menu-item>
             <el-menu-item :index="localePath({ path: '/index?' })">数据库</el-menu-item>
+            <el-menu-item :index="localePath('/application/docs')">知识库</el-menu-item>
           </el-submenu>
           <el-menu-item :index="localePath('download-center')">{{ $t('nav.download') }}</el-menu-item>
           <el-menu-item :index="localePath('support-center')" :class="{ 'is-active': $route.name.startsWith('support-center') }">
             {{ $t('nav.help') }}
           </el-menu-item>
-          <el-menu-item :index="localePath('about-us')">{{ $t('nav.about') }}</el-menu-item>
+          <el-menu-item>{{ $t('nav.about') }}</el-menu-item>
         </el-menu>
       </div>
       <div class="el-col-auto">
@@ -94,5 +96,11 @@ export default {
 }
 .is-active {
   border-bottom-color: #409eff !important;
+}
+</style>
+<style>
+.custom-menu-item a {
+  color: inherit;
+  text-decoration: none;
 }
 </style>

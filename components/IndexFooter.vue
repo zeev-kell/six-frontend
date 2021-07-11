@@ -29,8 +29,8 @@
           <div class="el-col-md-4 hidden-sm-and-down">
             <div class="title">产品</div>
             <ul class="list-unstyled">
-              <li><a href="https://github.com/6-oclock" target="_blank">云协作</a></li>
-              <li><a href="https://github.com/6-oclock" target="_blank">流程组合</a></li>
+              <li><a href="#section-product">云协作</a></li>
+              <li><a>流程组合</a></li>
               <li><a href="https://github.com/6-oclock" target="_blank">数据集</a></li>
               <li><a href="https://github.com/6-oclock" target="_blank">知识库</a></li>
             </ul>
