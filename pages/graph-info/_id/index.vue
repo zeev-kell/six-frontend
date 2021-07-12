@@ -7,7 +7,7 @@ import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
 export default {
   components: { GraphIndex },
   async asyncData({ app, params }) {
-    const item = await app.$axios.$get(`/v1/pipe/${params.id}`)
+    const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
     return { item }
   },
   data() {

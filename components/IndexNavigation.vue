@@ -1,5 +1,5 @@
 <template>
-  <el-header id="header" class="nav-fixed nav-darken">
+  <el-header id="header" class="nav-fixed">
     <div class="navbar-header el-row--flex pr-20">
       <div class="navbar el-col-auto">
         <div class="navbar-logo">
@@ -11,23 +11,23 @@
       <div class="el-col-equal">
         <el-menu :default-active="$route.path" :router="true" mode="horizontal" class="hidden-sm-and-down">
           <el-menu-item :index="localePath('index')">{{ $t('nav.index') }}</el-menu-item>
-          <el-submenu index="index-product">
+          <el-submenu index="null" popper-class="custom-menu-item" class="no-active">
             <template slot="title">{{ $t('nav.product') }}</template>
-            <li role="menuitem" class="el-menu-item custom-menu-item">
-              <a href="#section-product">云协作</a>
+            <li role="menuitem" class="el-menu-item">
+              <a :href="localePath('index') + '#section-product'">云协作</a>
             </li>
             <el-menu-item>流程组合</el-menu-item>
             <el-menu-item :index="localePath({ path: '/index?' })">数据库</el-menu-item>
             <el-menu-item :index="localePath('/application/docs')">知识库</el-menu-item>
           </el-submenu>
           <el-menu-item :index="localePath('download-center')">{{ $t('nav.download') }}</el-menu-item>
-          <el-menu-item :index="localePath('support-center')" :class="{ 'is-active': $route.name.startsWith('support-center') }">
+          <el-menu-item :index="localePath('support-center')" :class="{ 'is-child-active': $route.name.startsWith('support-center') }">
             {{ $t('nav.help') }}
           </el-menu-item>
-          <el-menu-item>{{ $t('nav.about') }}</el-menu-item>
+          <el-menu-item index="about">{{ $t('nav.about') }}</el-menu-item>
         </el-menu>
       </div>
-      <div class="el-col-auto">
+      <div class="el-col-auto hidden-sm-and-down">
         <el-menu mode="horizontal">
           <li class="el-menu-item menu-link" role="menuitem">
             <nuxt-link :to="localePath('/register')">{{ $t('nav.register') }}</nuxt-link>
@@ -37,6 +37,44 @@
           </li>
         </el-menu>
       </div>
+      <div class="el-col-auto d-flex is-align-middle hidden-md-and-up">
+        <ul class="el-menu--horizontal el-menu">
+          <li class="el-menu-item menu-link" role="menuitem">
+            <nuxt-link :to="localePath('/login')">{{ $t('nav.login') }}</nuxt-link>
+          </li>
+          <li class="el-menu-item menu-link" role="menuitem">
+            <a @click="showMobileMenu = true"><fa icon="bars" class="fa-2x"></fa></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="nav-wrap" :class="{ active: showMobileMenu }">
+      <div class="d-flex flex-justify-end border-bottom">
+        <button type="button" class="el-dialog__headerbtn" @click="showMobileMenu = false">
+          <i class="el-dialog__close el-icon el-icon-close"></i>
+        </button>
+      </div>
+      <el-menu :default-active="$route.path" :router="true">
+        <el-menu-item :index="localePath('index')">{{ $t('nav.index') }}</el-menu-item>
+        <el-submenu index="null" popper-class="custom-menu-item" class="no-active">
+          <template slot="title">{{ $t('nav.product') }}</template>
+          <li role="menuitem" class="el-menu-item">
+            <a :href="localePath('index') + '#section-product'" @click="showMobileMenu = false">云协作</a>
+          </li>
+          <el-menu-item>流程组合</el-menu-item>
+          <el-menu-item :index="localePath({ path: '/index?' })">数据库</el-menu-item>
+          <el-menu-item :index="localePath('/application/docs')">知识库</el-menu-item>
+        </el-submenu>
+        <el-menu-item :index="localePath('download-center')">{{ $t('nav.download') }}</el-menu-item>
+        <el-menu-item :index="localePath('support-center')" :class="{ 'is-child-active': $route.name.startsWith('support-center') }">
+          {{ $t('nav.help') }}
+        </el-menu-item>
+        <el-menu-item index="about">{{ $t('nav.about') }}</el-menu-item>
+        <li class="el-menu-item menu-link d-flex is-justify-space-around">
+          <nuxt-link :to="localePath('/register')">{{ $t('nav.register') }}</nuxt-link>
+          <nuxt-link :to="localePath('/login')">{{ $t('nav.login') }}</nuxt-link>
+        </li>
+      </el-menu>
     </div>
   </el-header>
 </template>
@@ -50,9 +88,22 @@ export default {
   components: {
     LogoPng,
   },
+  data() {
+    return {
+      showMobileMenu: false,
+    }
+  },
+  watch: {
+    '$route.name'() {
+      this.$nextTick(this.onWindowScroll)
+    },
+  },
   mounted() {
     this.onWindowScroll()
     window.addEventListener('scroll', this.onWindowScroll, true)
+    if (window.location.hash) {
+      this.goAnchor(window.location.hash)
+    }
   },
   beforeDestroy() {
     window.removeEventListener('scroll', this.onWindowScroll, true)
@@ -60,6 +111,9 @@ export default {
   methods: {
     onWindowScroll() {
       const header = document.querySelector('#header')
+      if (!header) {
+        return
+      }
       if (this.getRouteBaseName() === 'index') {
         header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)'
         header.classList.add('nav-white')
@@ -70,11 +124,50 @@ export default {
         scrollTop >= SCROLL_TRANSPORT ? header.classList.add('nav-white') : header.classList.remove('nav-white')
       }
     },
+    goAnchor(selector) {
+      // 最好加个定时器给页面缓冲时间
+      setTimeout(() => {
+        // 获取锚点元素
+        const anchor = document.querySelector(selector)
+        anchor.scrollIntoView()
+      }, 300)
+    },
   },
 }
 </script>
 <style lang="scss" scoped>
-.nav-fixed {
+::v-deep {
+  .is-child-active {
+    border-bottom-color: #409eff !important;
+  }
+  .no-active .el-submenu__title {
+    border-bottom: none !important;
+  }
+  .nav-wrap {
+    height: 100vh;
+    position: fixed;
+    width: 280px;
+    top: 0;
+    right: 0;
+    background: #ffffff;
+    transform: translate(100%);
+    transition: all 0.5s ease 0s;
+    &.active {
+      transform: translate(0, 0);
+    }
+    > .d-flex {
+      height: 59px;
+      background: rgb(250, 251, 252);
+      border-bottom: 1px solid #eeeeee;
+    }
+    .el-menu-item,
+    .el-submenu__title,
+    .el-submenu {
+      border-bottom: 1px solid #eeeeee;
+    }
+  }
+}
+#header.nav-fixed ::v-deep {
   width: 100%;
   z-index: 1001;
   position: fixed;
@@ -82,24 +175,35 @@ export default {
   right: 0;
   padding: 0;
   color: #fff;
-}
 
-::v-deep {
   .el-menu {
     background-color: transparent;
   }
-
-  .el-menu-item {
-    color: white;
-    background-color: transparent !important;
+  .el-menu-item,
+  .el-submenu__title {
+    color: inherit;
+    background-color: transparent;
+  }
+  .el-submenu__title i {
+    color: inherit;
   }
 }
-.is-active {
-  border-bottom-color: #409eff !important;
+#header.nav-white ::v-deep {
+  color: var(--s-theme-color--dark);
+  box-shadow: 0 0 2px #e4e4e4;
+  .el-menu .el-menu-item:hover,
+  .el-menu .el-menu-item:focus {
+    color: var(--s-theme-color--dark);
+  }
 }
 </style>
 <style>
 .custom-menu-item a {
+  width: 100%;
+  display: inline-block;
+}
+.custom-menu-item a,
+.custom-menu-item .el-menu-item {
   color: inherit;
   text-decoration: none;
 }

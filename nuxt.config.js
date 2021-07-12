@@ -75,6 +75,7 @@ export default {
               'faLightbulb',
               'faDesktop',
               'faDownload',
+              'faBars',
             ],
           },
           {

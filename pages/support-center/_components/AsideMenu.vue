@@ -2,7 +2,7 @@
   <div class="aside-wrap__scroll">
     <div class="aside-wrap__inner">
       <h2 class="pl-20">帮助文档</h2>
-      <el-menu class="menu-normal" :default-active="$route.path" :router="true">
+      <el-menu class="support-menu" :default-active="$route.path" :router="true">
         <menu-item v-for="menu in menus" :key="menu.key" :menu="menu"></menu-item>
       </el-menu>
     </div>
@@ -44,6 +44,22 @@ export default {
 
   &::-webkit-scrollbar-thumb:hover {
     background-color: hsla(231, 99%, 66%, 1);
+  }
+}
+
+.support-menu ::v-deep {
+  .is-active .el-submenu__title,
+  .el-menu-item.is-active {
+    font-weight: bold;
+  }
+
+  .is-active .el-submenu__title,
+  .el-submenu__title:hover,
+  .el-menu-item.is-active,
+  .el-menu-item:hover,
+  .el-menu-item:focus {
+    background-color: transparent;
+    color: $theme-color;
   }
 }
 </style>

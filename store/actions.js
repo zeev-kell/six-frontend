@@ -3,17 +3,15 @@ const actions = {
   // 初始化服务端的信息，only from the server-side
   // nuxtServerInit({ commit }, { req, app }) {},
   // 初始化客户端的信息，需要自己手动触发
-  nuxtClientInit({ getters, commit, store }) {
+  nuxtClientInit({ getters, commit }) {
     if (getters.loggedIn) {
       const user = localStorage.getItem('auth.user')
       if (user) {
         commit('SET_USER_INFO', JSON.parse(user))
       }
     }
-    // eslint-disable-next-line no-console
-    console.log(document.documentElement.clientWidth)
-    if (process.client && document.documentElement.clientWidth <= 991) {
-      store.commit('SET_MOBILE')
+    if (document.documentElement.clientWidth <= 991) {
+      commit('SET_MOBILE')
     }
   },
   // 登录，目前需要手动保存 user 信息

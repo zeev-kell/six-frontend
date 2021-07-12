@@ -4,7 +4,7 @@
       <h1 class="m-b-2 f-48">生物医疗大数据服务</h1>
       <div class="mb-20">
         <a href="#section-product">
-          <el-button plain type="primary pass">云计算协作</el-button>
+          <el-button type="primary">云计算协作</el-button>
         </a>
         <a href="http://www.sixoclock.net/support-center/get_started" target="_blank" class="m-l-1">
           <el-button>开始体验</el-button>
@@ -12,9 +12,10 @@
       </div>
       <div class="search-wrap mb-50">
         <el-input v-model="searchInput" style="max-width: 450px" placeholder="提供1000+种工具和知识" @keyup.enter.native="toSearch">
-          <el-select slot="prepend" v-model="searchType" placeholder="请选择">
+          <el-select slot="prepend" v-model="searchType" placeholder="请选择" style="width: 80px">
             <el-option label="工具" value="0"></el-option>
             <el-option label="流程" value="1"></el-option>
+            <el-option label="文档" value="2"></el-option>
           </el-select>
         </el-input>
       </div>
@@ -48,20 +49,32 @@ export default {
     toSearch() {
       const name = this.searchInput.trim()
       if (name) {
-        this.$I18nRouter.push({
-          path: '/application/pipes',
-          query: {
-            name,
-            type: this.searchType,
-          },
-        })
+        if (this.searchType === '2') {
+          this.$I18nRouter.push({
+            path: '/application/docs',
+            query: {
+              name,
+            },
+          })
+        } else {
+          this.$I18nRouter.push({
+            path: '/application/pipes',
+            query: {
+              name,
+              type: this.searchType,
+            },
+          })
+        }
       }
     },
   },
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import './assets/scss/variables';
+@import '/node_modules/element-theme-chalk/src/mixins/mixins';
+
 .index-banner {
   background: url('/images/banner-3.png') no-repeat;
   background-size: cover;
@@ -70,6 +83,11 @@ export default {
   // color: var(--light_grey);
   color: #333333;
   position: relative;
+  // 小于 768px
+  @include res(xs-only, $--breakpoints-spec) {
+    height: 70vh;
+    min-height: 70vh;
+  }
 }
 
 .search-wrap .el-select .el-input {
@@ -93,6 +111,13 @@ export default {
   border-right: 2px solid #333333;
   border-bottom: 2px solid #333333;
   transform: rotate(45deg);
+}
+
+// 小于 768px
+@include res(xs-only, $--breakpoints-spec) {
+  .f-48 {
+    font-size: 2em;
+  }
 }
 
 @keyframes shake {

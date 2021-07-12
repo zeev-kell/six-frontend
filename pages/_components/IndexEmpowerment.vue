@@ -3,8 +3,8 @@
     <div class="section-title">
       <h1>赋能工作和学习</h1>
     </div>
-    <div class="container">
-      <el-carousel v-if="false" height="250px" :autoplay="false">
+    <div v-if="isMobile" class="container">
+      <el-carousel height="250px">
         <el-carousel-item v-for="(item, index) of content2" :key="index">
           <div class="text-center">
             <div>
@@ -17,6 +17,8 @@
           </div>
         </el-carousel-item>
       </el-carousel>
+    </div>
+    <div v-if="!isMobile" class="container">
       <div v-for="(content_1, i) of content1" :key="i" class="el-row mb-50">
         <div v-for="(item, j) of content_1" :key="j" class="el-col-12 el-row">
           <div class="el-col-12 text-right image">
@@ -68,6 +70,9 @@ export default {
   computed: {
     content2() {
       return [...this.content1[0], ...this.content1[1]]
+    },
+    isMobile() {
+      return this.$store.state.isMobile
     },
   },
 }

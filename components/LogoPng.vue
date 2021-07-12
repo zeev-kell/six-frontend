@@ -2,7 +2,7 @@
   <div class="logo-wrap el-row--flex is-align-middle">
     <img src="/images/logo-white.png" class="logo-white" />
     <img src="/images/logo-black.png" class="logo-black" />
-    <span class="hidden-sm-and-down">六点了技术</span>
+    <span>六点了技术</span>
   </div>
 </template>
 <script type="text/babel">
@@ -26,6 +26,7 @@ img {
   height: 30px;
   font-weight: bold;
   margin-top: 15px;
+  color: inherit;
 }
 </style>
 <style lang="scss">
@@ -35,9 +36,6 @@ img {
   }
   .logo-black {
     display: inline-block;
-  }
-  .logo-wrap {
-    color: var(--s-theme-color--dark);
   }
 }
 </style>

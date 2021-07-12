@@ -1,6 +1,6 @@
 <template>
-  <el-header>
-    <div class="navbar-header el-row--flex nav-darken">
+  <el-header id="header" class="nav-app">
+    <div class="navbar-header el-row--flex">
       <div class="navbar">
         <div class="navbar-logo">
           <nuxt-link class="logo" :to="localePath('/')">
@@ -34,7 +34,7 @@
           </nuxt-link>
         </li>
         <template v-if="loggedIn">
-          <el-submenu index="1" popper-class="nav-darken">
+          <el-submenu index="1" popper-class="nav-app">
             <span slot="title" class="y-baseline">{{ username }}</span>
             <li role="menuitem" tabindex="-1" class="el-menu-item" @click="ACTION_LOGOUT">注销</li>
           </el-submenu>
@@ -51,6 +51,7 @@
 <script type="text/babel">
 import { mapGetters, mapActions } from 'vuex'
 import LogoPng from '@/components/LogoPng'
+
 export default {
   name: 'AppNavigation',
   components: {
@@ -64,3 +65,21 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="scss">
+@import './assets/scss/variables';
+@import '/node_modules/element-theme-chalk/src/mixins/mixins';
+
+#header.nav-app ::v-deep {
+  color: white;
+  .el-menu .el-menu-item {
+    color: white;
+    background-color: $nav-darken-bg;
+  }
+  .el-menu .el-menu-item:hover,
+  .el-menu .el-menu-item:focus {
+    color: white;
+    background-color: $nav-darken-bg-over;
+  }
+}
+</style>
