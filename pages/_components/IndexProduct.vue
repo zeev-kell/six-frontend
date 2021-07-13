@@ -41,7 +41,7 @@
                   </span>
                 </div>
                 <h3 class="pro-title m-y-1">
-                  <strong>流程组合</strong>
+                  <strong>流程协作</strong>
                 </h3>
                 <div class="pro-content">
                   通过拖拽单个软件，<br />
@@ -62,11 +62,13 @@
                   </span>
                 </div>
                 <h3 class="pro-title m-y-1">
-                  <strong>数据下载</strong>
+                  <strong>数据协作</strong>
                 </h3>
                 <div class="pro-content">
-                  通过可视化界面，算法，<br />
-                  满足个性化分析需求。
+                  创建，分享，校验数据！ <br />
+                  提供标准的 <br />
+                  生物医疗共享数据集，<br />
+                  助力算法开发，评测，与学习。
                 </div>
               </el-card>
             </div>
@@ -83,12 +85,13 @@
                   </span>
                 </div>
                 <h3 class="pro-title m-y-1">
-                  <strong>知识库</strong>
+                  <strong>知识协作</strong>
                 </h3>
                 <div class="pro-content">
-                  本地批量部署，<br />
-                  基于数据安全一站式<br />
-                  数据挖掘私有云，保证数据安全！
+                  创建，共享，审阅知识！ <br />
+                  提供系统的<br />
+                  生物医疗数据处理知识<br />
+                  涵盖NGS，统计学，科研绘图等技术文档。
                 </div>
               </el-card>
             </div>

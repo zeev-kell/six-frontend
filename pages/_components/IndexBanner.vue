@@ -19,7 +19,7 @@
           </el-select>
         </el-input>
       </div>
-      <p style="line-height: 1.5">生物医疗数据处理云平台，提供数据处理算法下载、在线组合、自动 生成功能，以及一站式生信解决方案的本地化部署服务。</p>
+      <p style="line-height: 1.5">生物医疗数据处理云平台，创建，使用，分享，团队协作。提供海量数据处理算法下载、可视化编辑与配置，在线流程组合、自动生成功能，以及基于解耦合的一站式生信解决方案私有云的本地化部署服务。</p>
     </div>
     <div class="down-btn-wrap">
       <div style="padding: 10px; cursor: pointer" @click="scrollToNext()">
