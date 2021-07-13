@@ -14,7 +14,9 @@
           <el-submenu index="null" popper-class="custom-menu-item" class="no-active">
             <template slot="title">{{ $t('nav.product') }}</template>
             <li role="menuitem" class="el-menu-item">
-              <a :href="localePath('index') + '#section-product'">云协作</a>
+              <nuxt-link v-slot="{ navigate }" :to="localePath('index') + '#section-product'" custom>
+                <a @click="navigate" @keypress.enter="navigate">云协作</a>
+              </nuxt-link>
             </li>
             <el-menu-item>流程组合</el-menu-item>
             <el-menu-item :index="localePath({ path: '/index?' })">数据库</el-menu-item>

@@ -3,12 +3,12 @@
     <div class="el-col-20 el-col-offset-2 el-col-sm-10 el-col-offset-sm-4 text-center">
       <h1 class="m-b-2 f-48">生物医疗大数据服务</h1>
       <div class="mb-20">
-        <a href="#section-product">
-          <el-button type="primary">云计算协作</el-button>
-        </a>
-        <a href="http://www.sixoclock.net/support-center/get_started" target="_blank" class="m-l-1">
-          <el-button>开始体验</el-button>
-        </a>
+        <nuxt-link v-slot="{ navigate }" :to="localePath('index') + '#section-product'" custom>
+          <el-button type="primary" @click="navigate" @keypress.enter="navigate">云计算协作</el-button>
+        </nuxt-link>
+        <nuxt-link v-slot="{ navigate }" :to="localePath({ name: 'support-center-id', params: { id: 'get_started' } })" custom>
+          <el-button class="m-l-1" @click="navigate" @keypress.enter="navigate">开始体验</el-button>
+        </nuxt-link>
       </div>
       <div class="search-wrap mb-50">
         <el-input v-model="searchInput" style="max-width: 450px" placeholder="提供1000+种工具和知识" @keyup.enter.native="toSearch">
@@ -19,7 +19,9 @@
           </el-select>
         </el-input>
       </div>
-      <p style="line-height: 1.5">生物医疗数据处理云平台，创建，使用，分享，团队协作。提供海量数据处理算法下载、可视化编辑与配置，在线流程组合、自动生成功能，以及基于解耦合的一站式生信解决方案私有云的本地化部署服务。</p>
+      <p style="line-height: 1.5">
+        生物医疗数据处理云平台，创建，使用，分享，团队协作。提供海量数据处理算法下载、可视化编辑与配置，在线流程组合、自动生成功能，以及基于解耦合的一站式生信解决方案私有云的本地化部署服务。
+      </p>
     </div>
     <div class="down-btn-wrap">
       <div style="padding: 10px; cursor: pointer" @click="scrollToNext()">

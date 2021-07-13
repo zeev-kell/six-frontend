@@ -29,27 +29,43 @@
           <div class="el-col-md-4 hidden-sm-and-down">
             <div class="title">产品</div>
             <ul class="list-unstyled">
-              <li><a href="#section-product">云协作</a></li>
+              <li>
+                <nuxt-link :to="localePath('index') + '#section-product'">云协作</nuxt-link>
+              </li>
               <li><a>流程组合</a></li>
               <li><a href="http://www.sixoclock.net/resources/data/" target="_blank">数据集</a></li>
-              <li><a href="http://www.sixoclock.net/application/docs/" target="_blank">知识库</a></li>
+              <li>
+                <nuxt-link :to="localePath('application-docs')">知识库</nuxt-link>
+              </li>
             </ul>
           </div>
           <div class="el-col-md-4 hidden-sm-and-down">
             <div class="title">下载中心</div>
             <ul class="list-unstyled">
-              <li><a href="http://www.sixoclock.net/download-center" target="_blank">客户端下载</a></li>
+              <li>
+                <nuxt-link :to="localePath('download-center')">客户端下载</nuxt-link>
+              </li>
               <li><a href="http://www.sixoclock.net/resources/data/" target="_blank">数据下载</a></li>
-              <li><a href="http://www.sixoclock.net/application/pipes" target="_blank">软件仓库</a></li>
+              <li>
+                <nuxt-link :to="localePath('application-pipes')">软件仓库</nuxt-link>
+              </li>
             </ul>
           </div>
           <div class="el-col-md-4 hidden-sm-and-down">
             <div class="title">资源</div>
             <ul class="list-unstyled">
-              <li><a href="http://www.sixoclock.net/support-center/" target="_blank">帮助文档</a></li>
-              <li><a href="http://www.sixoclock.net/support-center/Q_A" target="_blank">常见Q&A</a></li>
-              <li><a href="http://www.sixoclock.net/support-center/advice" target="_blank">意见建议</a></li>
-              <li><a href="http://www.sixoclock.net/support-center/get_started" target="_blank">使用指南</a></li>
+              <li>
+                <nuxt-link :to="localePath('support-center')">帮助文档</nuxt-link>
+              </li>
+              <li>
+                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'Q_A' } })">常见Q&A</nuxt-link>
+              </li>
+              <li>
+                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'advice' } })">意见建议</nuxt-link>
+              </li>
+              <li>
+                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'get_started' } })">使用指南</nuxt-link>
+              </li>
               <li><a href="https://github.com/6-oclock" target="_blank">更新日志</a></li>
               <li><a href="https://github.com/6-oclock" target="_blank">NewSroom</a></li>
             </ul>
