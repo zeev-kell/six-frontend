@@ -46,7 +46,7 @@ export default {
   methods: {
     scrollToNext() {
       const height = document.querySelector('.index-banner').offsetHeight
-      scrollTop(document.documentElement, height)
+      scrollTop(height)
     },
     toSearch() {
       const name = this.searchInput.trim()
