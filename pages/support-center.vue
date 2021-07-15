@@ -21,6 +21,7 @@
 import AsideMenu from '@/pages/support-center/_components/AsideMenu'
 export default {
   components: { AsideMenu },
+  scrollToTop: true,
   layout: 'IndexLayout',
   middleware: 'support-menus',
 }

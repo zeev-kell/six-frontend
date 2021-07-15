@@ -82,14 +82,8 @@ export default {
   background-size: cover;
   min-height: 100vh;
   height: 600px;
-  // color: var(--light_grey);
   color: #333333;
   position: relative;
-  // 小于 768px
-  @include res(xs-only, $--breakpoints-spec) {
-    height: 70vh;
-    min-height: 70vh;
-  }
 }
 
 .search-wrap .el-select .el-input {

@@ -31,7 +31,7 @@
           </nuxt-link>
         </div>
         <div class="el-col-auto m-b-2 text-center pro-panel el-col-sm-12">
-          <nuxt-link v-slot="{ navigate }" :to="localePath('/index')" custom>
+          <nuxt-link v-slot="{ navigate }" :to="localePath('/')" custom>
             <div class="pointer" @click="navigate" @keypress.enter="navigate">
               <el-card shadow="hover" class="pro-card">
                 <div class="pro-icon">
@@ -122,10 +122,6 @@ export default {
 <style lang="scss" scoped>
 @import './assets/scss/variables';
 @import '/node_modules/element-theme-chalk/src/mixins/mixins';
-
-.a-link {
-  text-decoration: none !important;
-}
 
 .pointer {
   height: 100%;

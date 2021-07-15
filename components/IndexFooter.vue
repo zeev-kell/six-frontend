@@ -32,8 +32,12 @@
               <li>
                 <nuxt-link :to="localePath('index') + '#section-product'">云协作</nuxt-link>
               </li>
-              <li><a>流程组合</a></li>
-              <li><a href="http://www.sixoclock.net/resources/data/" target="_blank">数据集</a></li>
+              <li>
+                <nuxt-link :to="localePath('application-pipes')">流程组合</nuxt-link>
+              </li>
+              <li>
+                <a :href="RESOURCES_URL + '/data/'" target="_blank">数据集</a>
+              </li>
               <li>
                 <nuxt-link :to="localePath('application-docs')">知识库</nuxt-link>
               </li>
@@ -45,7 +49,9 @@
               <li>
                 <nuxt-link :to="localePath('download-center')">客户端下载</nuxt-link>
               </li>
-              <li><a href="http://www.sixoclock.net/resources/data/" target="_blank">数据下载</a></li>
+              <li>
+                <a :href="RESOURCES_URL + '/data/'" target="_blank">数据下载</a>
+              </li>
               <li>
                 <nuxt-link :to="localePath('application-pipes')">软件仓库</nuxt-link>
               </li>
@@ -75,9 +81,15 @@
               <div class="el-col-12">
                 <nuxt-link :to="localePath('download-center')">下载中心</nuxt-link>
               </div>
-              <div class="el-col-12">资源</div>
-              <div class="el-col-12">关于我们</div>
-              <div class="el-col-12">产品</div>
+              <div class="el-col-12">
+                <nuxt-link :to="localePath('support-center')">资源</nuxt-link>
+              </div>
+              <div class="el-col-12">
+                <a href="https://github.com/6-oclock" target="_blank">关于我们</a>
+              </div>
+              <div class="el-col-12">
+                <nuxt-link :to="localePath('index') + '#section-product'">产品</nuxt-link>
+              </div>
             </div>
           </div>
           <div class="el-col-md-8 el-col-10 el-row text-center icon-wrap">
@@ -105,7 +117,7 @@
           ©2021 六点了技术-为生物医疗健康提供最便捷的数据挖掘云平台
           <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021047962号-1&emsp;</a>
           <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030302001909">
-            <img src="/images/beian.png" />&ensp;粤公网安备 44030302001909号
+            <img src="/images/beian.png" alt="" />&ensp;粤公网安备 44030302001909号
           </a>
           服务协议
         </p>
@@ -122,6 +134,11 @@ export default {
       default: true,
       type: Boolean,
     },
+  },
+  data() {
+    return {
+      RESOURCES_URL: process.env.RESOURCES_URL,
+    }
   },
   computed: {
     style() {

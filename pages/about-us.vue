@@ -73,6 +73,7 @@
 <script type="text/babel">
 export default {
   layout: 'IndexLayout',
+  scrollToTop: true,
 }
 </script>
 

@@ -68,6 +68,7 @@ import marked from '@/directives/marked'
 import axios from 'axios'
 
 export default {
+  scrollToTop: true,
   directives: {
     ...marked,
   },

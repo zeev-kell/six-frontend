@@ -34,6 +34,7 @@ import { mapActions } from 'vuex'
 
 /** @typedef import('vue').Component */
 export default {
+  scrollToTop: true,
   components: {
     CanvasParticle,
   },

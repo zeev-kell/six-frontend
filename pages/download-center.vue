@@ -83,6 +83,7 @@ const MSG = {
   sixrunr: [],
 }
 export default {
+  scrollToTop: true,
   layout: 'IndexLayoutBase',
   methods: {
     openMsg(type) {

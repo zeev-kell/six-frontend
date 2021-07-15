@@ -14,6 +14,7 @@ import IndexEmpowerment from '@/pages/_components/IndexEmpowerment'
 import IndexProduct from '@/pages/_components/IndexProduct'
 export default {
   layout: 'IndexLayout',
+  scrollToTop: true,
   components: {
     IndexDownload,
     IndexEmpowerment,

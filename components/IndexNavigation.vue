@@ -18,34 +18,40 @@
                 <a @click="navigate" @keypress.enter="navigate">云协作</a>
               </nuxt-link>
             </li>
-            <el-menu-item>流程组合</el-menu-item>
-            <el-menu-item :index="localePath({ path: '/index?' })">数据库</el-menu-item>
-            <el-menu-item :index="localePath('/application/docs')">知识库</el-menu-item>
+            <el-menu-item :index="localePath('application-pipes')">流程组合</el-menu-item>
+            <el-menu-item class="px-0">
+              <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link px-10">数据库</a>
+            </el-menu-item>
+            <el-menu-item :index="localePath('application-docs')">知识库</el-menu-item>
           </el-submenu>
           <el-menu-item :index="localePath('download-center')">{{ $t('nav.download') }}</el-menu-item>
           <el-menu-item :index="localePath('support-center')" :class="{ 'is-child-active': $route.name.startsWith('support-center') }">
             {{ $t('nav.help') }}
           </el-menu-item>
-          <el-menu-item index="about">{{ $t('nav.about') }}</el-menu-item>
+          <el-menu-item class="px-0">
+            <a href="https://github.com/6-oclock" target="_blank" class="a-link d-inline-b px-20"> {{ $t('nav.about') }}</a>
+          </el-menu-item>
         </el-menu>
       </div>
       <div class="el-col-auto hidden-sm-and-down">
         <el-menu mode="horizontal">
           <li class="el-menu-item menu-link" role="menuitem">
-            <nuxt-link :to="localePath('/register')">{{ $t('nav.register') }}</nuxt-link>
+            <nuxt-link :to="localePath('register')">{{ $t('nav.register') }}</nuxt-link>
           </li>
           <li class="el-menu-item menu-link" role="menuitem">
-            <nuxt-link :to="localePath('/login')">{{ $t('nav.login') }}</nuxt-link>
+            <nuxt-link :to="localePath('login')">{{ $t('nav.login') }}</nuxt-link>
           </li>
         </el-menu>
       </div>
       <div class="el-col-auto d-flex is-align-middle hidden-md-and-up">
         <ul class="el-menu--horizontal el-menu">
           <li class="el-menu-item menu-link" role="menuitem">
-            <nuxt-link :to="localePath('/login')">{{ $t('nav.login') }}</nuxt-link>
+            <nuxt-link :to="localePath('login')">{{ $t('nav.login') }}</nuxt-link>
           </li>
           <li class="el-menu-item menu-link" role="menuitem">
-            <a @click="showMobileMenu = true"><fa icon="bars" class="fa-2x"></fa></a>
+            <a @click="showMobileMenu = true">
+              <fa icon="bars" class="fa-2x"></fa>
+            </a>
           </li>
         </ul>
       </div>
@@ -63,18 +69,22 @@
           <li role="menuitem" class="el-menu-item">
             <a :href="localePath('index') + '#section-product'" @click="showMobileMenu = false">云协作</a>
           </li>
-          <el-menu-item>流程组合</el-menu-item>
-          <el-menu-item :index="localePath({ path: '/index?' })">数据库</el-menu-item>
-          <el-menu-item :index="localePath('/application/docs')">知识库</el-menu-item>
+          <el-menu-item :index="localePath('application-pipes')">流程组合</el-menu-item>
+          <el-menu-item class="px-0">
+            <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link pl-40 d-inline-b w-100">数据库</a>
+          </el-menu-item>
+          <el-menu-item :index="localePath('application-docs')">知识库</el-menu-item>
         </el-submenu>
         <el-menu-item :index="localePath('download-center')">{{ $t('nav.download') }}</el-menu-item>
         <el-menu-item :index="localePath('support-center')" :class="{ 'is-child-active': $route.name.startsWith('support-center') }">
           {{ $t('nav.help') }}
         </el-menu-item>
-        <el-menu-item index="about">{{ $t('nav.about') }}</el-menu-item>
+        <el-menu-item class="px-0">
+          <a href="https://github.com/6-oclock" target="_blank" class="a-link d-inline-b px-20"> {{ $t('nav.about') }}</a>
+        </el-menu-item>
         <li class="el-menu-item menu-link d-flex is-justify-space-around">
-          <nuxt-link :to="localePath('/register')">{{ $t('nav.register') }}</nuxt-link>
-          <nuxt-link :to="localePath('/login')">{{ $t('nav.login') }}</nuxt-link>
+          <nuxt-link :to="localePath('register')">{{ $t('nav.register') }}</nuxt-link>
+          <nuxt-link :to="localePath('login')">{{ $t('nav.login') }}</nuxt-link>
         </li>
       </el-menu>
     </div>
@@ -93,11 +103,13 @@ export default {
   data() {
     return {
       showMobileMenu: false,
+      RESOURCES_URL: process.env.RESOURCES_URL,
     }
   },
   watch: {
     '$route.name'() {
       this.$nextTick(this.onWindowScroll)
+      this.showMobileMenu = false
     },
   },
   mounted() {
