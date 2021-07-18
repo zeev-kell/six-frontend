@@ -3,7 +3,7 @@ module.exports = {
     // add this plugin here:
     'stylelint-scss',
   ],
-  extends: ['stylelint-config-standard', 'stylelint-order'],
+  extends: ['stylelint-config-standard', 'stylelint-order', 'stylelint-config-prettier'],
   // add your custom config here
   // https://stylelint.io/user-guide/configuration
   rules: {

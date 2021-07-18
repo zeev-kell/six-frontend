@@ -137,6 +137,7 @@ export default {
           { required: true, message: 'ID must be set', trigger: 'blur' },
           {
             trigger: 'change',
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             validator: (rule, value, callback) => {
               try {
                 if (this.step.id === value) {

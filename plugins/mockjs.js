@@ -1,8 +1,8 @@
 import Mock from 'better-mock'
 // eslint-disable-next-line import/named
-import { Pipe, Pipes, PipeUrl, PipesUrl, addPipeUrl } from '../plugins/mock/pipe'
 import _tool from '../plugins/mock/commandline.json'
 import _workflow from '../plugins/mock/workflow.json'
+import { Pipe, Pipes, PipeUrl, PipesUrl, addPipeUrl } from '~/plugins/mock/pipe'
 // import { Workflow, WorkflowUrl, WorkflowList, WorkflowListUrl } from '../plugins/mock/workflow'
 // NOTE 由 Node.js 发起请求需要同步修改 modules 至 mock
 Mock.mock(/\/api\/v1\/login/, 'post', function (options) {
@@ -21,9 +21,9 @@ Mock.mock(/\/api\/v1\/login/, 'post', function (options) {
     msg: '登陆成功',
   })
 })
-Mock.mock(/\/api\/v1\/logout/, 'get', function (options) {})
-Mock.mock(/\/api\/v1\/register/, 'post', function (options) {})
-Mock.mock(/\/api\/v1\/user/, 'get', function (options) {
+Mock.mock(/\/api\/v1\/logout/, 'get', function () {})
+Mock.mock(/\/api\/v1\/register/, 'post', function () {})
+Mock.mock(/\/api\/v1\/user/, 'get', function () {
   return Mock.mock({
     admin: false,
     uid: Mock.Random.string('lower', 32),

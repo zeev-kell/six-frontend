@@ -3,6 +3,7 @@ const BLOG_URL = process.env.RESOURCES_URL + '/blog'
 
 export function resourceHelp(data = '') {
   const imageList = []
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const str = data.replace(/(!\[.*?]\()img\/(.*?)\)/gi, (matchStr, subStr, imageName) => {
     // 替换图片的地址
     const imageSrc = BLOG_URL + '/img/' + imageName

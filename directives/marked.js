@@ -6,7 +6,7 @@ import '@/assets/scss/marked.scss'
 
 let toc = []
 const renderer = new marked.Renderer()
-renderer.heading = function (text, level, raw) {
+renderer.heading = function (text, level) {
   // const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-')
   const id = `toc_${level}_${toc.length}`
   toc.push({

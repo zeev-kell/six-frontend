@@ -10,7 +10,7 @@ Vue.directive('focus', {
   },
 })
 Vue.directive('permission', {
-  inserted(el, binding, vnode) {
+  inserted(el, binding) {
     const { value } = binding
     if (value && Array.isArray(value) && value.length > 0) {
       const permissionRoles = value

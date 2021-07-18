@@ -109,7 +109,7 @@ class FormControl extends AbstractControl {
     return !this.enabled
   }
 
-  _forEachChild(cb) {}
+  _forEachChild() {}
 
   _applyFormState(formState) {
     if (this._isBoxedValue(formState)) {

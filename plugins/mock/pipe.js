@@ -12,7 +12,7 @@ export const Pipe = {
     'A Multi-Center Evaluation of Wavefront Aberrations in a Pseudophakic Population',
   ].map((v) => {
     return Array.from({ length: Math.ceil(Math.random() * 10) })
-      .map((k) => v)
+      .map(() => v)
       .join('')
   }),
   'category|1': ['序列比对', '去重', '分割'],

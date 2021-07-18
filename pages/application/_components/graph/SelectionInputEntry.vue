@@ -227,6 +227,7 @@ export default {
       // We need some kind of convention to broadcast information
       // that an array element should be deleted
       if (data === undefined) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         this.onUpdateJob(this.value.filter((e, i) => i !== index))
         return
       }

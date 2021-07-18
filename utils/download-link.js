@@ -6,6 +6,7 @@ export function downloadStrLink(data, filename) {
   if (typeof data === 'object') {
     data = JSON.stringify(
       data,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       (key, value) => {
         if (typeof value === 'string') {
           return value.replace(/\u2002/g, ' ')

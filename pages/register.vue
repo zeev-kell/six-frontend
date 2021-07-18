@@ -92,6 +92,7 @@ export default {
           { required: true, message: '账号不能为空', trigger: 'blur' },
           { min: 6, message: '长度在6到20个字符', trigger: 'blur' },
           {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             validator: (rule, value, callback) => {
               if (!/^[a-zA-Z0-9_-]{6,20}$/.test(value)) {
                 callback(new Error('至少6个字符（字母，数字，下划线）'))
@@ -106,6 +107,7 @@ export default {
           { required: true, message: '密码不能为空', trigger: 'blur' },
           { min: 6, message: '长度在 6 到 20 个字符', trigger: 'blur' },
           {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             validator: (rule, value, callback) => {
               // 密码强度正则，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
               // const reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/
@@ -146,6 +148,7 @@ export default {
         checked: [
           {
             required: true,
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             validator: (rule, value, callback) => {
               if (value === false) {
                 callback(new Error('请同意产品使用协议'))

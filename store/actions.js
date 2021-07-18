@@ -15,6 +15,7 @@ const actions = {
     }
   },
   // 登录，目前需要手动保存 user 信息
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ACTION_LOGIN({ commit }, data) {
     return this.$auth
       .loginWith('local', { data })

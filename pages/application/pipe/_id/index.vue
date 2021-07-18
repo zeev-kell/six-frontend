@@ -136,7 +136,7 @@ export default {
         })
         .catch(() => {})
     },
-    onBeforeLeave(activeName, currentName) {
+    onBeforeLeave(activeName) {
       return new Promise((resolve, reject) => {
         this.$I18nRouter.push({ name: activeName, params: this.$route.params }, resolve, (...args) => {
           // 如果是相同的路由，onAbort 会被调用，这时候需要手动 resolve，让 tab 切换

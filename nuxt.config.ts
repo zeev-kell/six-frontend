@@ -1,4 +1,6 @@
-export default {
+import { NuxtConfig } from '@nuxt/types'
+
+const config: NuxtConfig = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: '六点了技术',
@@ -28,8 +30,8 @@ export default {
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
-    // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
+    // https://go.nuxtjs.dev/typescript
+    '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
     // https://github.com/nuxt-community/style-resources-module
@@ -117,7 +119,6 @@ export default {
       baseURL: process.env.BASE_URL,
     },
   },
-
   // auth-next
   auth: {
     strategies: {
@@ -165,3 +166,4 @@ export default {
     parallel: process.env.NODE_ENV === 'development',
   },
 }
+export default config

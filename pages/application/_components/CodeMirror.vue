@@ -105,7 +105,7 @@ export default {
 
       // 所有有效事件（驼峰命名）+ 去重
       const tmpEvents = {}
-      // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
       const allEvents = [
         'scroll',
         'changes',

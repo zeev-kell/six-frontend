@@ -25,6 +25,7 @@ export default ({ app }, inject) => {
   const $I18nRouter = new Proxy(
     {},
     {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       get(target, key) {
         return function (route, ...args) {
           return app.router[key](app.localePath(route), ...args)

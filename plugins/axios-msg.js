@@ -4,6 +4,7 @@ export default ({ $axios }, inject) => {
   const $$axios = new Proxy(
     {},
     {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       get(target, key) {
         return function (...args) {
           return $axios[key](...args).catch((e) => {

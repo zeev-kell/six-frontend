@@ -4,10 +4,7 @@ module.exports = {
     browser: true,
     node: true,
   },
-  parserOptions: {
-    parser: 'babel-eslint',
-  },
-  extends: ['@nuxtjs', 'prettier', 'prettier/vue', 'plugin:prettier/recommended', 'plugin:nuxt/recommended'],
+  extends: ['@nuxtjs/eslint-config-typescript', 'prettier', 'prettier/vue', 'plugin:prettier/recommended', 'plugin:nuxt/recommended'],
   plugins: ['prettier'],
   // add your custom rules here
   rules: {
@@ -15,6 +12,7 @@ module.exports = {
     'nuxt/no-cjs-in-config': 'off',
     'vue/no-v-html': 'off',
     'no-unused-vars': 'warn',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
   overrides: [
     {
@@ -28,6 +26,14 @@ module.exports = {
         'no-sequences': 0,
         yoda: 0,
         'no-void': 0,
+      },
+    },
+    {
+      files: ['**/*.d.ts'],
+      rules: {
+        '@typescript-eslint/no-empty-interface': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
       },
     },
   ],

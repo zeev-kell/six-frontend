@@ -1,5 +1,22 @@
 {
   "compilerOptions": {
-    "types": ["@nuxtjs/auth-next", "@nuxt/types", "nuxt-i18n"]
-  }
+    "target": "ES2018",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
+    "esModuleInterop": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "strict": true,
+    "noEmit": true,
+    "importHelpers": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"]
+    },
+    "types": ["@nuxtjs/auth-next", "@types/node", "@nuxt/types", "nuxt-i18n"]
+  },
+  "exclude": ["node_modules", ".nuxt", "dist"]
 }

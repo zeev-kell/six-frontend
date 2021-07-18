@@ -10,6 +10,7 @@ export function stringifyObject(object, asYaml = true) {
   // 转成 json 格式字符
   return JSON.stringify(
     object,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (key, value) => {
       if (typeof value === 'string') {
         return value.replace(/\u2002/g, ' ')

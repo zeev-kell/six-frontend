@@ -25,7 +25,7 @@ export default {
           children: [],
         }
         let preLevel
-        toc.forEach((item, index) => {
+        toc.forEach((item) => {
           let levelIndex = levelStack.indexOf(item.level)
           if (levelIndex === -1) {
             if (levelStack.length === 0) {

@@ -21,6 +21,7 @@ export function serializeModel(model, embedReferences = true, asYaml = false, de
 
   return JSON.stringify(
     obj,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (key, value) => {
       if (typeof value === 'string') {
         return value.replace(/\u2002/g, ' ')

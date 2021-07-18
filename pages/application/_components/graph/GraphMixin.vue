@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     pipeId() {
-      return this.item?.resource_id
+      return this.item?.['resource_id']
     },
     isRunJob() {
       return this.configType === 'run'
