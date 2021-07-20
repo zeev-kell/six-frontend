@@ -126,7 +126,7 @@ export default {
         type: 'warning',
       })
         .then(() => {
-          return this.$$axios.delete('/v1/pipe/' + this.$route.params.id).then(() => {
+          return this.$$axios.delete('/v2/pipe/' + this.$route.params.id).then(() => {
             this.$message({
               type: 'success',
               message: '删除成功!',
