@@ -1,5 +1,5 @@
 <script type="text/babel">
-// 可以审核
+// 检查是否可以审核
 import CheckPermission from '@/components/common/CheckPermission'
 
 export default {

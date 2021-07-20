@@ -1,5 +1,5 @@
 <script type="text/babel">
-// 可以创建
+// 检查是否可以创建
 import CheckPermission from '@/components/common/CheckPermission'
 
 export default {

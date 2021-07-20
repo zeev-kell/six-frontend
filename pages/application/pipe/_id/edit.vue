@@ -15,7 +15,7 @@
             </el-form-item>
             <el-form-item label="类别" prop="type">
               <el-select v-model="formModel.type" placeholder="请选择类别" clearable style="width: 100%">
-                <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value" />
+                <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value" />
               </el-select>
             </el-form-item>
             <el-form-item label="地址" prop="description">
@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="panel">
+    <!-- <div class="panel">
       <div class="panel-header">
         <h2 class="mx-0">示例教程</h2>
       </div>
@@ -37,14 +37,14 @@
           <markdown v-model="formModel.tutorial" />
         </client-only>
       </div>
-    </div>
+    </div> -->
     <div class="panel">
       <div class="panel-header">
-        <h2 class="mx-0">软件结构与参数配置</h2>
+        <h2 class="mx-0">软件结构(CWL)或参数配置(YML)</h2>
       </div>
       <div class="panel-body">
         <client-only placeholder="Codemirror Loading...">
-          <codemirror v-model="formModel.cwl" :options="cmOptions" />
+          <codemirror v-model="formModel.content" :options="cmOptions" />
         </client-only>
       </div>
     </div>
@@ -59,13 +59,13 @@ import pipeConstants from '@/constants/PipeConstants'
 export default {
   components: {
     codemirror: () => import('@/pages/application/_components/CodeMirror'),
-    Markdown: () => import('@/pages/application/_components/markdown/simple'),
+    // Markdown: () => import('@/pages/application/_components/markdown/simple'),
   },
   async asyncData({ app, params }) {
     const item = await app.$axios.$get(`/v1/pipe/${params.id}`)
-    if (typeof item.cwl !== 'string') {
+    if (typeof item.content !== 'string') {
       // 尝试转换字段为字符串
-      item.cwl = JSON.stringify(item.cwl, null, 2)
+      item.content = JSON.stringify(item.content, null, 2)
     }
     item.tutorial = item.tutorial?.replace(/[↵ ]{2,}/g, '  \n')
     return { formModel: item }
@@ -80,12 +80,12 @@ export default {
         website: '',
         tutorial: '',
         type: '',
-        cwl: '',
+        content: '',
       },
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' },
-          { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' },
+          { min: 2, max: 128, message: '长度在 2 到 128 个字符', trigger: 'blur' },
         ],
         version: [
           { required: true, message: '请输入版本', trigger: 'blur' },
@@ -116,7 +116,7 @@ export default {
         if (valid) {
           this.loading = true
           this.$$axios
-            .$put('/v1/pipe/' + this.formModel.resource_id, this.formModel)
+            .$put('/v2/pipe/' + this.formModel.resource_id, this.formModel)
             .then(() => {
               this.$I18nRouter.push('/application/pipe/' + this.formModel.resource_id)
             })
