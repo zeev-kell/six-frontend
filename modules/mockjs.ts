@@ -2,12 +2,13 @@ import path from 'path'
 import axios from 'axios'
 import Mock from 'better-mock'
 import MockAdapter from 'axios-mock-adapter'
-import _tool from '../plugins/mock/commandline.json'
-import _workflow from '../plugins/mock/workflow.json'
-import { Pipe, PipeUrl, Pipes, PipesUrl } from '../plugins/mock/pipe'
+import { Module } from '@nuxt/types'
+import { Pipe, PipeUrl, Pipes, PipesUrl } from '@/plugins/mock/pipe'
+import _tool from '@/plugins/mock/commandline.json'
+import _workflow from '@/plugins/mock/workflow.json'
 // import { Workflow, WorkflowUrl, WorkflowList, WorkflowListUrl } from '../plugins/mock/workflow'
 
-export default function () {
+const MockModule: Module = function () {
   // 这个是配置服务器的拦截，一般都在 asyncData 函数里面起效，由 Node.js 发起请求
   // This sets the mock adapter on the default instance
   const mock = new MockAdapter(axios)
@@ -50,3 +51,5 @@ export default function () {
   /** @function addPlugin */
   this.addPlugin(path.resolve(__dirname, '..', 'plugins', 'mockjs.js'))
 }
+
+export default MockModule

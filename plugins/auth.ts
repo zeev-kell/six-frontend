@@ -1,7 +1,7 @@
-/**
- * Created by keziyuan on 2021/6/27 1:48.
- */
-export default function ({ $auth, i18n }) {
+import { Plugin } from '@nuxt/types'
+import { Context } from '@nuxt/types/app'
+
+const AuthPlugin: Plugin = ({ $auth, i18n }: Context) => {
   $auth.onRedirect(function (to) {
     const local = i18n.getLocaleCookie()
     // 如果是默认的语言，不需要修改
@@ -13,3 +13,5 @@ export default function ({ $auth, i18n }) {
     return to.startsWith(lang) ? to : lang + to
   })
 }
+
+export default AuthPlugin

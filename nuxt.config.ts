@@ -1,6 +1,4 @@
-import { NuxtConfig } from '@nuxt/types'
-
-const config: NuxtConfig = {
+const config = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: '六点了技术',
@@ -17,12 +15,12 @@ const config: NuxtConfig = {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    { src: '@/plugins/element-ui', ssr: true },
-    { src: '@/plugins/axios', ssr: true },
-    { src: '@/plugins/axios-msg.js', mode: 'client' },
-    { src: '@/plugins/nuxt-client-init.client.js' },
-    { src: '@/plugins/components' },
-    { src: '@/plugins/i18n-router' },
+    { src: '@/plugins/element-ui.ts', ssr: true },
+    { src: '@/plugins/axios.ts', ssr: true },
+    { src: '@/plugins/axios-msg.ts', mode: 'client' },
+    { src: '@/plugins/nuxt-client-init.client.ts' },
+    { src: '@/plugins/components.ts' },
+    { src: '@/plugins/i18n-router.ts' },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -92,8 +90,8 @@ const config: NuxtConfig = {
   // nuxt-i18n
   i18n: {
     locales: [
-      { code: 'zh', iso: 'zh-CN', file: 'zh.js' },
-      { code: 'en', iso: 'en-US', file: 'en.js' },
+      { code: 'zh', iso: 'zh-CN', file: 'zh.ts' },
+      { code: 'en', iso: 'en-US', file: 'en.ts' },
     ],
     defaultLocale: 'zh',
     lazy: true,
@@ -150,7 +148,7 @@ const config: NuxtConfig = {
       callback: '/login', // 用户登录后将被重定向到此路径。
       home: '/application', // 用户登录后将被身份提供者重定向到此路径。
     },
-    plugins: ['~/plugins/auth.js'],
+    plugins: ['@/plugins/auth.ts'],
   },
 
   router: {

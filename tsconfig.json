@@ -1,22 +1,29 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "sourceMap": true,
-    "strict": true,
-    "noEmit": true,
-    "importHelpers": true,
-    "experimentalDecorators": true,
     "baseUrl": ".",
+    "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
+    "noEmit": true,
     "paths": {
-      "~/*": ["./*"],
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "~/*": ["./*"]
     },
-    "types": ["@nuxtjs/auth-next", "@types/node", "@nuxt/types", "nuxt-i18n"]
+    "resolveJsonModule": true,
+    "types": ["@types/node", "@nuxt/types", "nuxt-i18n", "@nuxtjs/auth-next"],
+    "typeRoots": ["node_modules/@types", "typings/**/*"]
   },
+  "compileOnSave": false,
+  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"],
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

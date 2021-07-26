@@ -1,5 +1,8 @@
+import { Plugin } from '@nuxt/types'
+
 const DEFAULT_RESPONSE = { status: 500, msg: '服务器异常' }
-export default function ({ $axios, store }) {
+
+const AxiosPlugin: Plugin = ({ $axios, store }) => {
   $axios.onRequest((config) => {
     return config
   })
@@ -35,5 +38,7 @@ export default function ({ $axios, store }) {
     }
     return Promise.reject(error.response.data || {})
   })
-  // $axios.onError(() => {})
+  // $axios.onError(() => {})}
 }
+
+export default AxiosPlugin

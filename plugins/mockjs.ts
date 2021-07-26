@@ -1,12 +1,12 @@
-import Mock from 'better-mock'
+import Mock, { MockCbOptions } from 'better-mock'
 // eslint-disable-next-line import/named
-import _tool from '../plugins/mock/commandline.json'
-import _workflow from '../plugins/mock/workflow.json'
-import { Pipe, Pipes, PipeUrl, PipesUrl, addPipeUrl } from '~/plugins/mock/pipe'
+import { Pipe, Pipes, PipeUrl, PipesUrl, addPipeUrl } from '@/plugins/mock/pipe'
+import _tool from '@/plugins/mock/commandline.json'
+import _workflow from '@/plugins/mock/workflow.json'
 // import { Workflow, WorkflowUrl, WorkflowList, WorkflowListUrl } from '../plugins/mock/workflow'
 // NOTE 由 Node.js 发起请求需要同步修改 modules 至 mock
-Mock.mock(/\/api\/v1\/login/, 'post', function (options) {
-  const body = JSON.parse(options.body)
+Mock.mock(/\/api\/v1\/login/, 'post', function (options: MockCbOptions) {
+  const body = JSON.parse(options.body!)
   return Mock.mock({
     code: 100,
     data: {
