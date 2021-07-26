@@ -28,45 +28,52 @@
     <canvas-particle></canvas-particle>
   </div>
 </template>
-<script type="text/babel">
-import CanvasParticle from '@/components/CanvasParticle'
-import { mapActions } from 'vuex'
 
-/** @typedef import('vue').Component */
-export default {
-  scrollToTop: true,
+<script lang="ts">
+import { Component, Vue, Action } from 'nuxt-property-decorator'
+import CanvasParticle from '@/components/CanvasParticle.vue'
+import Copyright from '@/components/Copyright.vue'
+
+@Component({
   components: {
+    Copyright,
     CanvasParticle,
   },
-  data() {
-    return {
-      form: {
-        username: '',
-        password: '',
-      },
-      isLoading: false,
-      rules: {
-        username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
-        password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
-      },
-    }
-  },
+  scrollToTop: true,
   middleware: ['check-login'],
-  methods: {
-    ...mapActions(['ACTION_LOGIN']),
-    onSubmit() {
-      this.$refs.form.validate((valid) => {
-        if (valid) {
-          this.isLoading = true
-          this.ACTION_LOGIN(this.form).catch(() => {
-            this.isLoading = false
-          })
-        }
-      })
-    },
-  },
+})
+export default class LoginPage extends Vue {
+  $refs!: {
+    form: HTMLFormElement
+  }
+
+  @Action('ACTION_LOGIN')
+  ACTION_LOGIN!: (form: { username: string; password: string }) => Promise<void>
+
+  isLoading = false
+  form = {
+    username: '',
+    password: '',
+  }
+
+  rules = {
+    username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
+    password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
+  }
+
+  onSubmit(): void {
+    this.$refs.form.validate((valid: boolean) => {
+      if (valid) {
+        this.isLoading = true
+        this.ACTION_LOGIN(this.form).catch(() => {
+          this.isLoading = false
+        })
+      }
+    })
+  }
 }
 </script>
+
 <style scoped lang="scss">
 .login-container {
   width: 400px;

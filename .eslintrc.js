@@ -29,7 +29,7 @@ module.exports = {
       },
     },
     {
-      files: ['**/*.d.ts'],
+      files: ['./**/*.d.ts'],
       rules: {
         '@typescript-eslint/no-empty-interface': 'off',
         '@typescript-eslint/no-explicit-any': 'off',

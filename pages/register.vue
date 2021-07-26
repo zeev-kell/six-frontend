@@ -62,177 +62,186 @@
     <canvas-particle></canvas-particle>
   </div>
 </template>
-<script>
-import CanvasParticle from '@/components/CanvasParticle'
+
+<script lang="ts">
+import CanvasParticle from '@/components/CanvasParticle.vue'
+import Copyright from '@/components/Copyright.vue'
 import marked from '@/directives/marked'
 import axios from 'axios'
+import { Component, Vue } from 'nuxt-property-decorator'
 
-export default {
-  scrollToTop: true,
+@Component({
+  components: {
+    Copyright,
+    CanvasParticle,
+  },
   directives: {
     ...marked,
   },
-  components: {
-    CanvasParticle,
-  },
-  data() {
-    return {
-      form: {
-        username: '',
-        password: '',
-        // surepassword: '',
-        // phone: '',
-        email: '',
-        code: '',
-        checked: false,
+})
+export default class RegisterPage extends Vue {
+  $refs!: {
+    form: HTMLFormElement
+  }
+
+  form = {
+    username: '',
+    password: '',
+    // surepassword: '',
+    // phone: '',
+    email: '',
+    code: '',
+    checked: false,
+  }
+
+  rules = {
+    username: [
+      { required: true, message: '账号不能为空', trigger: 'blur' },
+      { min: 6, message: '长度在6到20个字符', trigger: 'blur' },
+      {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        validator: (rule: never, value: string, callback: (e?: Error) => void) => {
+          if (!/^[a-zA-Z0-9_-]{6,20}$/.test(value)) {
+            callback(new Error('至少6个字符（字母，数字，下划线）'))
+          } else {
+            callback()
+          }
+        },
+        trigger: 'blur',
       },
-      isLoading: false,
-      rules: {
-        username: [
-          { required: true, message: '账号不能为空', trigger: 'blur' },
-          { min: 6, message: '长度在6到20个字符', trigger: 'blur' },
-          {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            validator: (rule, value, callback) => {
-              if (!/^[a-zA-Z0-9_-]{6,20}$/.test(value)) {
-                callback(new Error('至少6个字符（字母，数字，下划线）'))
-              } else {
-                callback()
-              }
-            },
-            trigger: 'blur',
-          },
-        ],
-        password: [
-          { required: true, message: '密码不能为空', trigger: 'blur' },
-          { min: 6, message: '长度在 6 到 20 个字符', trigger: 'blur' },
-          {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            validator: (rule, value, callback) => {
-              // 密码强度正则，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
-              // const reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/
-              const flag = [/[a-zA-Z]/, /[0-9]/, /[!@#$%^&*?.]/].map((r) => r.test(value)).filter((r) => r)
-              if (flag.length < 2) {
-                callback(new Error('至少包含字母、数字和特殊字符(半角)中的两种'))
-              } else {
-                callback()
-              }
-            },
-            trigger: 'blur',
-          },
-        ],
-        // surepassword: [
-        //   {
-        //     validator: (rule, value, callback) => {
-        //       if (value === '') {
-        //         callback(new Error('请再次输入密码'))
-        //       } else if (value !== this.form.password) {
-        //         callback(new Error('两次输入密码不一致!'))
-        //       } else {
-        //         callback()
-        //       }
-        //     },
-        //     trigger: 'blur',
-        //   },
-        // ],
-        phone: [
-          {
-            required: true,
-            pattern: /^0{0,1}(13[0-9]|14[0-9]|15[0-9]|16[0-9]|17[0-9]|18[0-9]|19[0-9])[0-9]{8}$/,
-            message: '手机号格式不正确',
-            trigger: ['change', 'blur'],
-          },
-        ],
-        email: [{ required: true, type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }],
-        code: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
-        checked: [
-          {
-            required: true,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            validator: (rule, value, callback) => {
-              if (value === false) {
-                callback(new Error('请同意产品使用协议'))
-              } else {
-                callback()
-              }
-            },
-          },
-        ],
+    ],
+    password: [
+      { required: true, message: '密码不能为空', trigger: 'blur' },
+      { min: 6, message: '长度在 6 到 20 个字符', trigger: 'blur' },
+      {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        validator: (rule: never, value: string, callback: (e?: Error) => void) => {
+          // 密码强度正则，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
+          // const reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/
+          const flag = [/[a-zA-Z]/, /[0-9]/, /[!@#$%^&*?.]/].map((r) => r.test(value)).filter((r) => r)
+          if (flag.length < 2) {
+            callback(new Error('至少包含字母、数字和特殊字符(半角)中的两种'))
+          } else {
+            callback()
+          }
+        },
+        trigger: 'blur',
       },
-      showUAVisible: false,
-      userAgreement: undefined,
-      isLoadingCode: false,
-      loadingCodeText: '获取验证码',
-      loadingUA: false,
+    ],
+    // surepassword: [
+    //   {
+    //     validator: (rule, value, callback) => {
+    //       if (value === '') {
+    //         callback(new Error('请再次输入密码'))
+    //       } else if (value !== this.form.password) {
+    //         callback(new Error('两次输入密码不一致!'))
+    //       } else {
+    //         callback()
+    //       }
+    //     },
+    //     trigger: 'blur',
+    //   },
+    // ],
+    phone: [
+      {
+        required: true,
+        pattern: /^0{0,1}(13[0-9]|14[0-9]|15[0-9]|16[0-9]|17[0-9]|18[0-9]|19[0-9])[0-9]{8}$/,
+        message: '手机号格式不正确',
+        trigger: ['change', 'blur'],
+      },
+    ],
+    email: [{ required: true, type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }],
+    code: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
+    checked: [
+      {
+        required: true,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        validator: (rule: never, value: boolean, callback: (e?: Error) => void) => {
+          if (!value) {
+            callback(new Error('请同意产品使用协议'))
+          } else {
+            callback()
+          }
+        },
+      },
+    ],
+  }
+
+  isLoading = false
+  showUAVisible = false
+  userAgreement = null
+  isLoadingCode = false
+  loadingCodeText = '获取验证码'
+  loadingUA = false
+
+  register(): void {
+    this.$refs.form.validate((valid: boolean) => {
+      if (valid) {
+        this.isLoading = true
+        this.$$axios
+          .$post('/register', {
+            username: this.form.username,
+            password: this.form.password,
+            // phone: this.form.phone,
+            email: this.form.email,
+            code: this.form.code,
+          })
+          .then(() => {
+            this.$message.success('注册成功，正在跳转至登录...')
+            setTimeout(() => {
+              this.$I18nRouter.push('/login')
+            }, 3000)
+          })
+          .finally(() => {
+            this.isLoading = false
+          })
+      }
+    })
+  }
+
+  onClickGetCode(): void {
+    if (this.isLoadingCode) {
+      return
     }
-  },
-  methods: {
-    register() {
-      this.$refs.form.validate((valid) => {
-        if (valid) {
-          this.isLoading = true
-          this.$$axios
-            .$post('/register', {
-              username: this.form.username,
-              password: this.form.password,
-              // phone: this.form.phone,
-              email: this.form.email,
-              code: this.form.code,
-            })
-            .then(() => {
-              this.$message.success('注册成功，正在跳转至登录...')
-              setTimeout(() => {
-                this.$I18nRouter.push('/login')
-              }, 3000)
-            })
-            .finally(() => {
-              this.isLoading = false
-            })
-        }
-      })
-    },
-    onClickGetCode() {
-      if (this.isLoadingCode === true) {
-        return
+    this.$refs.form.validateField('email', (error: string) => {
+      if (error === '') {
+        this.isLoadingCode = true
+        this.$$axios
+          .$post('/register/getcode', { email: this.form.email })
+          .then(() => {
+            this.$message.success('验证码已发送，请注意查收...')
+            this.loadingCodeText = '发送成功'
+            let time = 60
+            const timeout = setInterval(() => {
+              time--
+              this.loadingCodeText = `重发(${time}s)`
+              if (time < 0) {
+                this.isLoadingCode = false
+                this.loadingCodeText = '获取验证码'
+                clearInterval(timeout)
+              }
+            }, 1000)
+          })
+          .catch(() => {
+            this.isLoadingCode = false
+            this.loadingCodeText = '获取验证码'
+          })
       }
-      this.$refs.form.validateField('email', (error) => {
-        if (error === '') {
-          this.isLoadingCode = true
-          this.$$axios
-            .$post('/register/getcode', { email: this.form.email })
-            .then(() => {
-              this.$message.success('验证码已发送，请注意查收...')
-              this.loadingCodeText = '发送成功'
-              let time = 60
-              const timeout = setInterval(() => {
-                time--
-                this.loadingCodeText = `重发(${time}s)`
-                if (time < 0) {
-                  this.isLoadingCode = false
-                  this.loadingCodeText = '获取验证码'
-                  clearInterval(timeout)
-                }
-              }, 1000)
-            })
-            .catch(() => {
-              this.isLoadingCode = false
-              this.loadingCodeText = '获取验证码'
-            })
-        }
-      })
-    },
-    async showUserAgreement() {
-      if (this.userAgreement === undefined) {
-        this.loadingUA = true
-        const response = await axios.get('/user-agreement.md')
-        this.userAgreement = response.data
-        this.loadingUA = false
-      }
-      this.showUAVisible = true
-    },
-  },
+    })
+  }
+
+  async showUserAgreement(): Promise<void> {
+    if (this.userAgreement === null) {
+      this.loadingUA = true
+      const response = await axios.get('/user-agreement.md')
+      this.userAgreement = response.data
+      this.loadingUA = false
+    }
+    this.showUAVisible = true
+  }
 }
 </script>
+
 <style lang="scss">
 .register-container {
   width: 400px;

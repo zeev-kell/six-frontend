@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import { Plugin } from '@nuxt/types'
 import { Route } from 'vue-router'
-import { ComponentOptions } from 'vue/types/options'
 
 // Make sure to pick a unique name for the flag
 // so it won't conflict with any other mixin.
@@ -23,11 +22,10 @@ if (!Vue.__i18n_mixin__) {
       const filters = this.$options.filters
       delete filters.t
     },
-  } as ComponentOptions<Vue>)
+  } as any)
 }
 
 // 处理路由的语言前缀
-
 const i18nRouterPlugin: Plugin = ({ app }, inject) => {
   const $I18nRouter = new Proxy(
     {},

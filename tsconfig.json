@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ES2018",
+    "module": "ESNext",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
@@ -21,9 +21,8 @@
     },
     "resolveJsonModule": true,
     "types": ["@types/node", "@nuxt/types", "nuxt-i18n", "@nuxtjs/auth-next"],
-    "typeRoots": ["node_modules/@types", "typings/**/*"]
+    "typeRoots": ["./node_modules/@types", "./typings/**/*", "./types/**/*"]
   },
   "compileOnSave": false,
-  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"],
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

@@ -5,8 +5,9 @@
   </div>
 </template>
 
-<script type="text/babel">
-export default {
-  name: 'Copyright',
-}
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class Copyright extends Vue {}
 </script>

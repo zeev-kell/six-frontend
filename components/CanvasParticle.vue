@@ -2,26 +2,31 @@
   <canvas class="canvas-particle"></canvas>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import Particle from '@/assets/js/particle'
 
-export default {
-  name: 'CanvasParticle',
+@Component({
   data() {
     return {
       particle: undefined,
     }
   },
-  mounted() {
+})
+export default class CanvasParticle extends Vue {
+  particle!: Particle
+
+  beforeDestroy(): void {
+    this.particle.destroy()
+    window.removeEventListener('resize', this.particle.resize.bind(this.particle))
+  }
+
+  mounted(): void {
     this.particle = new Particle(this.$el, {
       drawType: ['circle'],
     })
     window.addEventListener('resize', this.particle.resize.bind(this.particle), false)
-  },
-  beforeDestroy() {
-    this.particle.destroy()
-    window.removeEventListener('resize', this.particle.resize.bind(this.particle))
-  },
+  }
 }
 </script>
 
