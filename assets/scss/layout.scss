@@ -16,36 +16,41 @@
 }
 
 //
-// panel
+// card
 //
-.panel {
+.card {
   border: 1px solid #eeeeee;
 
   &.no-border {
     border: none;
   }
 
-  & + .panel {
+  & + .card {
     margin-top: 15px;
   }
 }
 
-.panel-body {
+.card-body {
   padding: 15px;
 
-  & + .panel-body {
+  & + .card-body {
     padding-top: 0;
   }
 }
 
-.panel-header {
+.card-header {
   padding: 15px;
   border-bottom: 1px solid #eeeeee;
 }
 
-.panel-title {
+.card-title {
   font-weight: bold;
   margin-bottom: 10px;
+}
+
+.card-footer {
+  padding: 15px;
+  border-top: 1px solid #eeeeee;
 }
 
 //

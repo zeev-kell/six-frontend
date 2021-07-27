@@ -1,4 +1,4 @@
-/deep/ .markdown-theme-dark pre {
+::v-deep .markdown-theme-dark pre {
   display: block;
   padding: 20px 10px !important;
   border-radius: 4px;
@@ -8,98 +8,98 @@
   overflow-y: hidden !important;
   overflow-x: auto !important;
 }
-/deep/ .markdown-theme-dark pre * {
+::v-deep .markdown-theme-dark pre * {
   line-height: 1.6 !important;
   font-size: 14px;
 }
-/deep/ .markdown-theme-dark code {
+::v-deep .markdown-theme-dark code {
   padding: 0 !important;
   margin: 0 !important;
 }
-/deep/ .markdown-theme-dark .hljs-literal,
-/deep/ .markdown-theme-dark .hljs-name,
-/deep/ .markdown-theme-dark .hljs-symbol {
+::v-deep .markdown-theme-dark .hljs-literal,
+::v-deep .markdown-theme-dark .hljs-name,
+::v-deep .markdown-theme-dark .hljs-symbol {
   color: #659bd1;
 }
-/deep/ .markdown-theme-dark .hljs-keyword {
+::v-deep .markdown-theme-dark .hljs-keyword {
   color: #bc89bd;
 }
-/deep/ .markdown-theme-dark .hljs-link {
+::v-deep .markdown-theme-dark .hljs-link {
   color: #569cd6;
   text-decoration: underline;
 }
-/deep/ .markdown-theme-dark .hljs-built_in,
-/deep/ .markdown-theme-dark .hljs-type {
+::v-deep .markdown-theme-dark .hljs-built_in,
+::v-deep .markdown-theme-dark .hljs-type {
   color: #4ec9b0;
 }
-/deep/ .markdown-theme-dark .hljs-class,
-/deep/ .markdown-theme-dark .hljs-number {
+::v-deep .markdown-theme-dark .hljs-class,
+::v-deep .markdown-theme-dark .hljs-number {
   color: #b8d7a3;
 }
-/deep/ .markdown-theme-dark .hljs-meta-string,
-/deep/ .markdown-theme-dark .hljs-string {
+::v-deep .markdown-theme-dark .hljs-meta-string,
+::v-deep .markdown-theme-dark .hljs-string {
   color: #d69d85;
 }
-/deep/ .markdown-theme-dark .hljs-regexp,
-/deep/ .markdown-theme-dark .hljs-template-tag {
+::v-deep .markdown-theme-dark .hljs-regexp,
+::v-deep .markdown-theme-dark .hljs-template-tag {
   color: #9a5334;
 }
-/deep/ .markdown-theme-dark .hljs-formula,
-/deep/ .markdown-theme-dark .hljs-function,
-/deep/ .markdown-theme-dark .hljs-params,
-/deep/ .markdown-theme-dark .hljs-subst,
-/deep/ .markdown-theme-dark .hljs-title {
+::v-deep .markdown-theme-dark .hljs-formula,
+::v-deep .markdown-theme-dark .hljs-function,
+::v-deep .markdown-theme-dark .hljs-params,
+::v-deep .markdown-theme-dark .hljs-subst,
+::v-deep .markdown-theme-dark .hljs-title {
   color: #dcdcdc;
 }
-/deep/ .markdown-theme-dark .hljs-comment,
-/deep/ .markdown-theme-dark .hljs-quote {
+::v-deep .markdown-theme-dark .hljs-comment,
+::v-deep .markdown-theme-dark .hljs-quote {
   color: #57a64a;
   font-style: italic;
 }
-/deep/ .markdown-theme-dark .hljs-doctag {
+::v-deep .markdown-theme-dark .hljs-doctag {
   color: #608b4e;
 }
-/deep/ .markdown-theme-dark .hljs-meta,
-/deep/ .markdown-theme-dark .hljs-meta-keyword,
-/deep/ .markdown-theme-dark .hljs-tag {
+::v-deep .markdown-theme-dark .hljs-meta,
+::v-deep .markdown-theme-dark .hljs-meta-keyword,
+::v-deep .markdown-theme-dark .hljs-tag {
   color: #9b9b9b;
 }
-/deep/ .markdown-theme-dark .hljs-template-variable,
-/deep/ .markdown-theme-dark .hljs-variable {
+::v-deep .markdown-theme-dark .hljs-template-variable,
+::v-deep .markdown-theme-dark .hljs-variable {
   color: #bd63c5;
 }
-/deep/ .markdown-theme-dark .hljs-attr,
-/deep/ .markdown-theme-dark .hljs-attribute,
-/deep/ .markdown-theme-dark .hljs-builtin-name {
+::v-deep .markdown-theme-dark .hljs-attr,
+::v-deep .markdown-theme-dark .hljs-attribute,
+::v-deep .markdown-theme-dark .hljs-builtin-name {
   color: #9cdcfe;
 }
-/deep/ .markdown-theme-dark .hljs-section {
+::v-deep .markdown-theme-dark .hljs-section {
   color: gold;
 }
-/deep/ .markdown-theme-dark .hljs-emphasis {
+::v-deep .markdown-theme-dark .hljs-emphasis {
   font-style: italic;
 }
-/deep/ .markdown-theme-dark .hljs-strong {
+::v-deep .markdown-theme-dark .hljs-strong {
   font-weight: bold;
 }
-/deep/ .markdown-theme-dark .hljs-bullet,
-/deep/ .markdown-theme-dark .hljs-selector-attr,
-/deep/ .markdown-theme-dark .hljs-selector-class,
-/deep/ .markdown-theme-dark .hljs-selector-id,
-/deep/ .markdown-theme-dark .hljs-selector-pseudo,
-/deep/ .markdown-theme-dark .hljs-selector-tag {
+::v-deep .markdown-theme-dark .hljs-bullet,
+::v-deep .markdown-theme-dark .hljs-selector-attr,
+::v-deep .markdown-theme-dark .hljs-selector-class,
+::v-deep .markdown-theme-dark .hljs-selector-id,
+::v-deep .markdown-theme-dark .hljs-selector-pseudo,
+::v-deep .markdown-theme-dark .hljs-selector-tag {
   color: #d7ba7d;
 }
-/deep/ .markdown-theme-dark .hljs-addition {
+::v-deep .markdown-theme-dark .hljs-addition {
   background-color: #144212;
   display: inline-block;
   width: 100%;
 }
-/deep/ .markdown-theme-dark .hljs-deletion {
+::v-deep .markdown-theme-dark .hljs-deletion {
   background-color: #600;
   display: inline-block;
   width: 100%;
 }
-/deep/ .markdown-theme-dark .hljs-comment {
+::v-deep .markdown-theme-dark .hljs-comment {
   font-style: normal;
 }

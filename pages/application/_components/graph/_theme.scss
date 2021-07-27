@@ -75,11 +75,11 @@ $t-color: #409eff;
   flex: 0 0 auto;
   height: 100%;
 
-  .panel-header {
+  .card-header {
     border-color: $b-color;
     color: $color1;
   }
-  .panel-body {
+  .card-body {
     height: calc(100% - 47px);
   }
   .form-control {

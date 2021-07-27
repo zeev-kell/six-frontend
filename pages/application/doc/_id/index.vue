@@ -1,11 +1,11 @@
 <template>
   <el-container>
     <el-aside width="240px" class="resource-aside">
-      <div class="panel">
-        <div class="panel-header el-row el-row--flex is-align-middle py-5">
+      <div class="card">
+        <div class="card-header el-row el-row--flex is-align-middle py-5">
           <h4>作者</h4>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div style="font-weight: 600; margin-bottom: 10px">{{ blog.provider }}</div>
         </div>
       </div>

@@ -1,9 +1,9 @@
 <template>
-  <div class="panel">
-    <div class="panel-header el-row--flex is-align-middle">
+  <div class="card">
+    <div class="card-header el-row--flex is-align-middle">
       <h2 class="mx-0 el-col-equal">软件结构与参数配置（双击图标查看配置）</h2>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
       <div class="workflow-box">
         <graph-index :item="item" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
       </div>

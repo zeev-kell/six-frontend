@@ -5,5 +5,6 @@ declare module 'vue/types/vue' {
   interface Vue {
     $$axios: NuxtAxiosInstance
     $I18nRouter: VueRouter
+    __i18n_mixin__: boolean
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div v-if="showPanel" class="cwl-params-panel right-panel">
-    <div class="panel-header">
+    <div class="card-header">
       <div class="f-b text-truncate" :title="labelName">
         {{ labelName }}
       </div>
@@ -8,7 +8,7 @@
         <i class="el-dialog__close el-icon el-icon-close"></i>
       </button>
     </div>
-    <div class="panel-body scrollbar">
+    <div class="card-body scrollbar">
       <el-tabs v-if="isStep" v-model="activeTabName">
         <el-tab-pane label="详情" name="info">
           <selection-step-info :step="selectionNode" />

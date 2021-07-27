@@ -1,6 +1,6 @@
 <template>
   <div v-if="showPanel" class="cwl-run-panel right-panel">
-    <div class="panel-header">
+    <div class="card-header">
       <div class="f-b text-truncate" :title="labelName">
         {{ labelName }}
       </div>
@@ -8,7 +8,7 @@
         <i class="el-dialog__close el-icon el-icon-close"></i>
       </button>
     </div>
-    <div class="panel-body scrollbar">
+    <div class="card-body scrollbar">
       <job-step-inspector :workflow-model="workflow.model" :step-inputs="inspectedInputs" :relative-path-root="relativePathRoot" />
     </div>
   </div>
