@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
-    <div class="panel">
-      <div class="panel-body el-row">
+    <div class="card">
+      <div class="card-body el-row">
         <div class="el-col-12">
           <el-form ref="formModel" label-width="80px" :model="formModel" :rules="rules" size="medium">
             <el-form-item label="输入标题" prop="name">
@@ -14,11 +14,11 @@
         </div>
       </div>
     </div>
-    <div class="panel">
-      <div class="panel-header">
+    <div class="card">
+      <div class="card-header">
         <h2 class="mx-0">拟写正文</h2>
       </div>
-      <div class="panel-body marked-content">
+      <div class="card-body marked-content">
         <client-only placeholder="Codemirror Loading...">
           <markdown v-model="formModel.content" />
         </client-only>

@@ -1,134 +1,155 @@
 <template>
-  <div class="container-fluid">
-    <div class="panel">
-      <div class="panel-body el-row">
-        <div class="el-col-12">
-          <el-form ref="formModel" label-width="80px" :model="formModel" :rules="rules" size="medium">
-            <el-form-item label="名称" prop="name">
-              <el-input v-model="formModel.name" placeholder="请输入名称" />
-            </el-form-item>
-            <el-form-item label="版本" prop="version">
-              <el-input v-model="formModel.version" placeholder="请输入版本" />
-            </el-form-item>
-            <el-form-item label="分类" prop="category">
-              <el-input v-model="formModel.category" placeholder="请输入分类" />
-            </el-form-item>
-            <el-form-item label="类别" prop="type">
-              <el-select v-model="formModel.type" placeholder="请选择类别" clearable style="width: 100%">
-                <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="地址" prop="description">
-              <el-input v-model="formModel.website" placeholder="请输入地址" />
-            </el-form-item>
-            <el-form-item label="描述" prop="description">
-              <el-input v-model="formModel.description" type="textarea" :rows="4" placeholder="请输入描述" />
-            </el-form-item>
-          </el-form>
+  <div class="pipe-container">
+    <div class="el-row el-row--flex is-align-middle py-5">
+      <div class="el-col-auto px-20">
+        <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px"></i>
+        <i v-if="isWork" class="el-icon-reading" style="font-size: 36px"></i>
+      </div>
+      <div class="el-col el-col-16 text-truncate mx-0">
+        <h2 class="text-truncate my-0" :title="item['name']">
+          {{ item['name'] }}
+        </h2>
+        <p class="m-y-05">ID: {{ item.resource_id }}</p>
+        <div class="el-row el-row--flex item-tip">
+          <div class="el-col">
+            <div class="title">类别</div>
+            <div>{{ item.type | pipeTypeTranslate | t }}</div>
+          </div>
+          <div class="el-col">
+            <div class="title">版本</div>
+            <div>{{ item.version }}</div>
+          </div>
+          <div class="el-col">
+            <div class="title">最近更新</div>
+            <div>{{ item.updated_at }}</div>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- <div class="panel">
-      <div class="panel-header">
-        <h2 class="mx-0">示例教程</h2>
-      </div>
-      <div class="panel-body marked-content">
-        <client-only placeholder="Codemirror Loading...">
-          <markdown v-model="formModel.tutorial" />
-        </client-only>
-      </div>
-    </div> -->
-    <div class="panel">
-      <div class="panel-header">
-        <h2 class="mx-0">软件结构(CWL)或参数配置(YML)</h2>
-      </div>
-      <div class="panel-body">
-        <client-only placeholder="Codemirror Loading...">
-          <codemirror v-model="formModel.content" :options="cmOptions" />
-        </client-only>
+      <div class="el-col el-col-8 text-right">
+        <can-examine>
+          <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe">删除</el-button>
+        </can-examine>
       </div>
     </div>
-    <div class="el-row text-right mt-20">
-      <el-button type="success" icon="el-icon-plus" :loading="loading" @click="onSubmit"> 保存 </el-button>
-    </div>
+    <el-tabs v-model="activeTab" class="pt-15 pipe-tab" :before-leave="onBeforeLeave">
+      <el-tab-pane label="资源介绍" name="application-pipe-id-edit" />
+      <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-edit-work" />
+      <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-edit-structure" />
+      <el-tab-pane label="使用教程" name="application-pipe-id-edit-course" />
+      <el-tab-pane v-if="isApp" label="运行案例" name="application-pipe-id-edit-case" />
+      <el-tab-pane v-if="isApp" label="历史版本" name="application-pipe-id-edit-versions" />
+      <el-tab-pane label="管理" name="application-pipe-id-edit-setting" />
+    </el-tabs>
+    <nuxt-child />
   </div>
 </template>
 
 <script type="text/babel">
 import pipeConstants from '@/constants/PipeConstants'
+import { getObject, stringifyObject } from '@/pages/application/_components/graph/plugins/yaml-handle'
+import { downloadStrLink } from '@/utils/download-link'
+
 export default {
-  components: {
-    codemirror: () => import('@/pages/application/_components/CodeMirror'),
-    // Markdown: () => import('@/pages/application/_components/markdown/simple'),
+  scrollToTop: true,
+  filters: {
+    pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
   },
-  async asyncData({ app, params }) {
-    const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
-    if (typeof item.content !== 'string') {
-      // 尝试转换字段为字符串
-      item.content = JSON.stringify(item.content, null, 2)
+  async middleware({ store, params, app }) {
+    const pipe = store.state.pipe
+    // ID 不同，需要重新请求数据
+    if (params.id !== pipe.resource_id) {
+      // params.id = 'bd5adb8d-8615-4a09-9cf8-fa0005de6518'
+      const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
+      if (typeof item.content === 'string') {
+        // 尝试转换字段为 json 对象
+        item.content = getObject(item.content)
+      }
+      item.tutorial = item.tutorial?.replace(/[↵ ]{2,}/g, '  \n')
+      store.commit('pipe/UPDATE_CURRENT_WORKFLOW', item)
     }
-    item.tutorial = item.tutorial?.replace(/[↵ ]{2,}/g, '  \n')
-    return { formModel: item }
   },
   data() {
     return {
-      formModel: {
-        name: '',
-        version: '',
-        description: '',
-        category: '',
-        website: '',
-        tutorial: '',
-        type: '',
-        content: '',
-      },
-      rules: {
-        name: [
-          { required: true, message: '请输入名称', trigger: 'blur' },
-          { min: 2, max: 128, message: '长度在 2 到 128 个字符', trigger: 'blur' },
-        ],
-        version: [
-          { required: true, message: '请输入版本', trigger: 'blur' },
-          { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
-        ],
-        type: [{ required: true, message: '请选择类型', trigger: 'change' }],
-        category: [
-          { required: true, message: '请输入分类', trigger: 'blue' },
-          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-        ],
-      },
-      cmOptions: {
-        tabSize: 4,
-        styleActiveLine: true,
-        lineNumbers: true,
-        line: true,
-        mode: 'text/yaml',
-        lineWrapping: true,
-        theme: 'default',
-      },
-      loading: false,
-      typeList: pipeConstants.items,
+      activeTab: this.getRouteBaseName(),
     }
   },
+  computed: {
+    item() {
+      return this.$store.state.pipe
+    },
+    username() {
+      return this.$store.getters.username
+    },
+    isApp() {
+      return this.$store.getters['pipe/isApp']
+    },
+    isWork() {
+      return this.$store.getters['pipe/isWork']
+    },
+  },
+  watch: {
+    '$route.params'() {
+      this.$nextTick(() => {
+        // 强制使当前 tab 切换到当前路由
+        // 会触发 onBeforeLeave onAbort
+        this.activeTab = this.getRouteBaseName()
+      })
+    },
+  },
   methods: {
-    onSubmit() {
-      this.$refs.formModel.validate((valid) => {
-        if (valid) {
-          this.loading = true
-          this.$$axios
-            .$put('/v2/pipe/' + this.formModel.resource_id, this.formModel)
-            .then(() => {
-              this.$I18nRouter.push('/application/pipe/' + this.formModel.resource_id)
+    handleDownload(format = 'yaml') {
+      const asYaml = format === 'yaml'
+      const data = stringifyObject(this.item.content, asYaml)
+      const name = this.item?.name + `.${asYaml ? 'cwl' : format}`
+      downloadStrLink(data, name)
+    },
+    handleDeletePipe() {
+      this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          return this.$$axios.delete('/v2/pipe/' + this.$route.params.id).then(() => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!',
             })
-            .finally(() => {
-              this.loading = false
-            })
-        } else {
-          this.$message.warning('请填写完整信息')
-          return false
-        }
+            this.$I18nRouter.push('/application/pipes')
+          })
+        })
+        .catch(() => {})
+    },
+    onBeforeLeave(activeName) {
+      return new Promise((resolve, reject) => {
+        this.$I18nRouter.push({ name: activeName, params: this.$route.params }, resolve, (...args) => {
+          // 如果是相同的路由，onAbort 会被调用，这时候需要手动 resolve，让 tab 切换
+          const activeTab = this.getRouteBaseName()
+          if (activeTab === activeName) {
+            resolve()
+          } else {
+            // eslint-disable-next-line prefer-promise-reject-errors
+            reject(...args)
+          }
+        })
       })
     },
   },
 }
 </script>
+<style lang="scss">
+.item-tip {
+  padding: 5px 0 0;
+  > div {
+    padding-right: 20px;
+    + div {
+      padding-left: 20px;
+      border-left: 1px solid #cccccc;
+    }
+  }
+  .title {
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+}
+</style>

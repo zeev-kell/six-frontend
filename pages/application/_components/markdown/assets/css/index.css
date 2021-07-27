@@ -519,36 +519,36 @@ ul.shift input[type='radio'] {
 ul.shift input[type='radio']:checked + label {
   color: #292d35;
 }
-/deep/ .markdown-preview {
+::v-deep .markdown-preview {
   flex: 1;
   overflow: hidden;
   overflow-y: scroll;
   background: #fff;
   padding: 12px 8px !important;
 }
-/deep/ .markdown-preview * {
+::v-deep .markdown-preview * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-/deep/ .markdown-preview > div {
+::v-deep .markdown-preview > div {
   padding: 10px 12px !important;
   background: #fff;
 }
-/deep/ .markdown-preview > div::-webkit-scrollbar {
+::v-deep .markdown-preview > div::-webkit-scrollbar {
   display: none;
 }
-/deep/ .markdown-preview::-webkit-scrollbar {
+::v-deep .markdown-preview::-webkit-scrollbar {
   display: none;
 }
-/deep/ .markdown-preview ul {
+::v-deep .markdown-preview ul {
   list-style: none;
   padding: 0 20px;
 }
-/deep/ .markdown-preview ul li {
+::v-deep .markdown-preview ul li {
   position: relative;
 }
-/deep/ .markdown-preview ul li:after {
+::v-deep .markdown-preview ul li:after {
   display: block;
   content: '';
   width: 8px;
@@ -560,12 +560,12 @@ ul.shift input[type='radio']:checked + label {
   left: -8px;
   background: #262626;
 }
-/deep/ .markdown-preview ol,
-/deep/ .markdown-preview ul {
+::v-deep .markdown-preview ol,
+::v-deep .markdown-preview ul {
   margin: 10px 0;
 }
-/deep/ .markdown-preview ol li,
-/deep/ .markdown-preview ul li {
+::v-deep .markdown-preview ol li,
+::v-deep .markdown-preview ul li {
   font-size: 14px !important;
   color: #262626;
   line-height: 22px !important;
@@ -573,8 +573,8 @@ ul.shift input[type='radio']:checked + label {
   padding-left: 6px;
   min-height: 28px;
 }
-/deep/ .markdown-preview ol li input[type='checkbox'],
-/deep/ .markdown-preview ul li input[type='checkbox'] {
+::v-deep .markdown-preview ol li input[type='checkbox'],
+::v-deep .markdown-preview ul li input[type='checkbox'] {
   position: relative;
   cursor: pointer;
   overflow: visible;
@@ -582,8 +582,8 @@ ul.shift input[type='radio']:checked + label {
   left: -14px;
   top: 5px;
 }
-/deep/ .markdown-preview ol li input[type='checkbox']:before,
-/deep/ .markdown-preview ul li input[type='checkbox']:before {
+::v-deep .markdown-preview ol li input[type='checkbox']:before,
+::v-deep .markdown-preview ul li input[type='checkbox']:before {
   font-family: 'iconfont' !important;
   color: #999;
   display: block;
@@ -600,15 +600,15 @@ ul.shift input[type='radio']:checked + label {
   text-align: center;
   line-height: 18px;
 }
-/deep/ .markdown-preview ol li input[type='checkbox']:checked:before,
-/deep/ .markdown-preview ul li input[type='checkbox']:checked:before {
+::v-deep .markdown-preview ol li input[type='checkbox']:checked:before,
+::v-deep .markdown-preview ul li input[type='checkbox']:checked:before {
   content: '\E683';
 }
-/deep/ .markdown-preview ol {
+::v-deep .markdown-preview ol {
   list-style-type: decimal;
   padding-left: 20px;
 }
-/deep/ .markdown-preview hr {
+::v-deep .markdown-preview hr {
   color: #d9d9d9;
   height: 1px;
   border: 0;
@@ -616,12 +616,12 @@ ul.shift input[type='radio']:checked + label {
   margin: 20px 0;
   padding: 0;
 }
-/deep/ .markdown-preview del,
-/deep/ .markdown-preview em,
-/deep/ .markdown-preview strong {
+::v-deep .markdown-preview del,
+::v-deep .markdown-preview em,
+::v-deep .markdown-preview strong {
   display: inline-block;
 }
-/deep/ .markdown-preview blockquote {
+::v-deep .markdown-preview blockquote {
   position: relative;
   background: #f7f7f7;
   padding: 6px 12px;
@@ -630,21 +630,21 @@ ul.shift input[type='radio']:checked + label {
   margin: 8px 0;
   /*基本样式*/
 }
-/deep/ .markdown-preview h1,
-/deep/ .markdown-preview h2,
-/deep/ .markdown-preview h3,
-/deep/ .markdown-preview h4,
-/deep/ .markdown-preview h5,
-/deep/ .markdown-preview h6 {
+::v-deep .markdown-preview h1,
+::v-deep .markdown-preview h2,
+::v-deep .markdown-preview h3,
+::v-deep .markdown-preview h4,
+::v-deep .markdown-preview h5,
+::v-deep .markdown-preview h6 {
   color: #262626;
 }
-/deep/ .markdown-preview img {
+::v-deep .markdown-preview img {
   display: block;
   max-width: 100%;
   margin: 20px 0;
   cursor: pointer;
 }
-/deep/ .markdown-preview table {
+::v-deep .markdown-preview table {
   width: 100%;
   border: 1px solid #d9d9d9;
   border-bottom: 0;
@@ -653,12 +653,12 @@ ul.shift input[type='radio']:checked + label {
   border-collapse: collapse;
   margin: 20px 0;
 }
-/deep/ .markdown-preview table tr {
+::v-deep .markdown-preview table tr {
   -webkit-transition: background 0.1s;
   transition: background 0.1s;
 }
-/deep/ .markdown-preview table tr td,
-/deep/ .markdown-preview table tr th {
+::v-deep .markdown-preview table tr td,
+::v-deep .markdown-preview table tr th {
   padding: 4px 8px;
   font-size: 14px;
   line-height: 24px;
@@ -666,38 +666,38 @@ ul.shift input[type='radio']:checked + label {
   border-bottom: 1px solid #d9d9d9;
   cursor: pointer;
 }
-/deep/ .markdown-preview table th {
+::v-deep .markdown-preview table th {
   background: #f8f8f9;
   text-align: left;
   font-weight: bold;
 }
-/deep/ .markdown-preview table tr:nth-of-type(even) td {
+::v-deep .markdown-preview table tr:nth-of-type(even) td {
   background: #fafafa;
 }
-/deep/ .markdown-preview table tr:hover td {
+::v-deep .markdown-preview table tr:hover td {
   background: #f5f5f5;
 }
-/deep/ .markdown-preview table td,
-/deep/ .markdown-preview table th {
+::v-deep .markdown-preview table td,
+::v-deep .markdown-preview table th {
   border: 1px solid #d9d9d9;
   word-break: break-all;
 }
-/deep/ .markdown-preview input[type='checkbox'] {
+::v-deep .markdown-preview input[type='checkbox'] {
   display: inline-block;
   border-radius: 0;
   margin-right: 8px;
 }
-/deep/ .markdown-preview a {
+::v-deep .markdown-preview a {
   text-decoration: none;
   color: #1890ff;
   font-size: 14px;
   line-height: 22px;
 }
-/deep/ .markdown-preview .code-block {
+::v-deep .markdown-preview .code-block {
   position: relative;
   padding: 0 !important;
 }
-/deep/ .markdown-preview .code-block .copy-code {
+::v-deep .markdown-preview .code-block .copy-code {
   position: absolute;
   z-index: 999;
   top: 5px;
@@ -710,10 +710,10 @@ ul.shift input[type='radio']:checked + label {
   transition: all 0.3s;
   opacity: 0;
 }
-/deep/ .markdown-preview .code-block .copy-code:hover {
+::v-deep .markdown-preview .code-block .copy-code:hover {
   color: #1890ff;
 }
-/deep/ .markdown-preview .code-block:hover .copy-code {
+::v-deep .markdown-preview .code-block:hover .copy-code {
   opacity: 1;
 }
 .preview-img {

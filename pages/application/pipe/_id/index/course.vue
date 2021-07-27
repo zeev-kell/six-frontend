@@ -5,11 +5,11 @@
         <div ref="markdown" v-html="markdown"></div>
       </el-col>
       <el-col style="width: 260px">
-        <div class="panel">
-          <div class="panel-header el-row el-row--flex is-align-middle py-5">
+        <div class="card">
+          <div class="card-header el-row el-row--flex is-align-middle py-5">
             <h4>引用自</h4>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div style="font-weight: 600; margin-bottom: 10px">知识库文档</div>
             {{ item.instruction }}
           </div>

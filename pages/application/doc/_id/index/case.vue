@@ -2,11 +2,11 @@
   <div class="container-fluid">
     <div v-if="item.profile" class="el-row el-row--flex">
       <div class="el-col el-col-18 pr-20">
-        <div class="panel">
-          <div class="panel-header el-row--flex is-align-middle">
+        <div class="card">
+          <div class="card-header el-row--flex is-align-middle">
             <h2 class="mx-0 el-col-equal">双击图标查看案例参数</h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="workflow-box">
               <graph-index ref="graph" class="h-100" :item="item" config-type="run" tools="download|plus,minus,fit" />
             </div>
@@ -14,11 +14,11 @@
         </div>
       </div>
       <div class="el-col- el-col-6">
-        <div class="panel">
-          <div class="panel-header el-row el-row--flex is-align-middle py-5">
+        <div class="card">
+          <div class="card-header el-row el-row--flex is-align-middle py-5">
             <h4>引用自</h4>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div style="font-weight: 600; margin-bottom: 10px">{{ profile.type | pipeTypeTranslate | t }}</div>
             <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + item.profile)" :title="item.profile">
               {{ profile.name }}

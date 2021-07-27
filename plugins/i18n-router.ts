@@ -4,10 +4,8 @@ import { Route } from 'vue-router'
 
 // Make sure to pick a unique name for the flag
 // so it won't conflict with any other mixin.
-// noinspection TypeScriptUnresolvedVariable
-if (!Vue.__i18n_mixin__) {
-  // noinspection TypeScriptUnresolvedVariable
-  Vue.__i18n_mixin__ = true
+if (!Vue.__i18nMixin__) {
+  Vue.__i18nMixin__ = true
 
   Vue.mixin({
     beforeCreate() {

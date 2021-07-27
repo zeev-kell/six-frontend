@@ -10,12 +10,6 @@
           <el-form-item prop="password">
             <el-input v-model="form.password" placeholder="请输入密码，长度在6到20个字符" type="password"></el-input>
           </el-form-item>
-          <!--          <el-form-item prop="surepassword">-->
-          <!--            <el-input v-model="form.surepassword" placeholder="再次输入密码" type="password"></el-input>-->
-          <!--          </el-form-item>-->
-          <!--          <el-form-item prop="phone">-->
-          <!--            <el-input v-model="form.phone" placeholder="请输入手机号"></el-input>-->
-          <!--          </el-form-item>-->
           <el-form-item prop="email">
             <el-input v-model="form.email" placeholder="请输入邮箱" />
           </el-form-item>
@@ -87,8 +81,6 @@ export default class RegisterPage extends Vue {
   form = {
     username: '',
     password: '',
-    // surepassword: '',
-    // phone: '',
     email: '',
     code: '',
     checked: false,
@@ -126,28 +118,6 @@ export default class RegisterPage extends Vue {
           }
         },
         trigger: 'blur',
-      },
-    ],
-    // surepassword: [
-    //   {
-    //     validator: (rule, value, callback) => {
-    //       if (value === '') {
-    //         callback(new Error('请再次输入密码'))
-    //       } else if (value !== this.form.password) {
-    //         callback(new Error('两次输入密码不一致!'))
-    //       } else {
-    //         callback()
-    //       }
-    //     },
-    //     trigger: 'blur',
-    //   },
-    // ],
-    phone: [
-      {
-        required: true,
-        pattern: /^0{0,1}(13[0-9]|14[0-9]|15[0-9]|16[0-9]|17[0-9]|18[0-9]|19[0-9])[0-9]{8}$/,
-        message: '手机号格式不正确',
-        trigger: ['change', 'blur'],
       },
     ],
     email: [{ required: true, type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }],

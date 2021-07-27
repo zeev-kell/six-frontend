@@ -1,7 +1,7 @@
 import marked from 'marked'
 import hljs from 'highlight.js'
 
-hljs.initHighlightingOnLoad()
+hljs.highlightAll()
 
 const renderer = new marked.Renderer()
 

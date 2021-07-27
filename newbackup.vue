@@ -1,10 +1,6 @@
 <template>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header is-align-middle" style="padding-left: 95px">
-        <h2 class="mx-0">创建新的应用</h2>
-        <div class="sub--title">一个应用一般包含元信息，核心内容和关联资源以及该应用的子版本。</div>
-      </div>
       <div class="card-body el-row">
         <div class="el-col-12">
           <el-form ref="formModel" label-width="80px" :model="formModel" :rules="rules" size="medium">
@@ -31,9 +27,29 @@
           </el-form>
         </div>
       </div>
-      <div class="card-footer text-right">
-        <el-button type="success" icon="el-icon-plus" :loading="loading" @click="onSubmit"> 保存 </el-button>
+    </div>
+    <!-- <div class="card">
+      <div class="card-header">
+        <h2 class="mx-0">示例教程</h2>
       </div>
+      <div class="card-body marked-content">
+        <client-only placeholder="Codemirror Loading...">
+          <markdown v-model="formModel.tutorial" />
+        </client-only>
+      </div>
+    </div> -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="mx-0">软件结构(CWL)或参数配置(YML)</h2>
+      </div>
+      <div class="card-body">
+        <client-only placeholder="Codemirror Loading...">
+          <codemirror v-model="formModel.content" :options="cmOptions" />
+        </client-only>
+      </div>
+    </div>
+    <div class="el-row text-right mt-20">
+      <el-button type="success" icon="el-icon-plus" :loading="loading" @click="onSubmit"> 保存 </el-button>
     </div>
   </div>
 </template>
@@ -41,6 +57,10 @@
 <script type="text/babel">
 import pipeConstants from '@/constants/PipeConstants'
 export default {
+  components: {
+    codemirror: () => import('@/pages/application/_components/CodeMirror'),
+    // Markdown: () => import('@/pages/application/_components/markdown/simple'),
+  },
   data() {
     return {
       formModel: {
@@ -88,9 +108,8 @@ export default {
           this.loading = true
           this.$$axios
             .post('/v2/pipe', this.formModel)
-            .then((data) => {
-              const id = data?.id || 'ae2ea105-c3c4-47e8-9aa6-e770512edfcd'
-              this.$I18nRouter.push(`/application/pipe/${id}/edit`)
+            .then(() => {
+              this.$I18nRouter.push('/application/pipes')
             })
             .finally(() => {
               this.loading = false
