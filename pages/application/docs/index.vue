@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid p-20">
     <div class="card card-body">
       <div class="el-row--flex is-justify-space-between pb-10">
         <div class="search-box">
@@ -35,23 +35,13 @@
         <el-table ref="multipleTable" :data="tableDate" style="width: 100%" :row-style="{ height: '100px' }" :cell-style="{ padding: '2' }">
           <el-table-column label="名称" prop="name" sortable width="280">
             <template slot-scope="{ row }">
-              <div class="el-row--flex is-align-middle">
-                <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
-                  <el-button type="text" icon="el-icon-search" class="px-5 py-0" @click.stop="showVisualModal(row['id'])"></el-button>
-                </el-tooltip>
-                <nuxt-link class="text-truncate" :to="localePath('/application/doc/' + row['id'])" :title="row.name">
-                  {{ row.title }}
-                </nuxt-link>
-              </div>
+              <nuxt-link class="text-truncate" :to="localePath('/application/doc/' + row['id'])" :title="row.name">
+                {{ row.title }}
+              </nuxt-link>
             </template>
           </el-table-column>
-          <el-table-column label="类别" prop="type" sortable width="120">
-            <template slot-scope="{ row }">
-              {{ row.type | pipeTypeTranslate | t }}
-            </template>
-          </el-table-column>
+          <el-table-column label="类别" prop="type" sortable width="120"> </el-table-column>
           <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
-          <!-- <el-table-column label="最近版本" prop="version" width="120"></el-table-column> -->
           <el-table-column label="摘要" prop="description">
             <template slot-scope="{ row }">
               {{ row.content | intercept }}
@@ -71,7 +61,6 @@ export default {
   components: { CanCreate },
   filters: {
     ...intercept,
-    pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
   },
   async asyncData({ app }) {
     const items = await app.$axios.$get('/v1/blogs')
@@ -124,12 +113,6 @@ export default {
       }
       return data
     },
-    selection() {
-      return this.$refs.multipleTable ? this.$refs.multipleTable.selection : []
-    },
-    hasSelection() {
-      return this.selection.length > 0
-    },
   },
   methods: {
     createFilter(str) {
@@ -141,10 +124,6 @@ export default {
       const nameList = this.nameList
       const results = str ? nameList.filter(this.createFilter(str)) : nameList
       cb(results)
-    },
-    showVisualModal(id) {
-      // window.open(`/graph-info/${id}`, '_blank', 'toolbar=0,location=0,menubar=0')
-      window.open(`/graph-info/${id}`, '_blank')
     },
   },
 }

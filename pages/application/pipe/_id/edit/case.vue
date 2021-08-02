@@ -6,7 +6,7 @@
         <el-button type="primary" @click="navigate" @keypress.enter="navigate">新建</el-button>
       </nuxt-link>
       <span class="m-x-1">或</span>
-      <el-select v-model="value" filterable placeholder="引用工作">
+      <el-select v-model="value" filterable :placeholder="placeholder">
         <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value"></el-option>
       </el-select>
     </div>
@@ -19,9 +19,10 @@ import pipeConstants from '@/constants/PipeConstants'
 export default {
   async asyncData({ app, store }) {
     const item = store.state.pipe
+    const type = store.getters['pipe/isTool'] ? pipeConstants.Constants.get('TYPE_WORK') : pipeConstants.Constants.get('TYPE_WORKFLOW')
     const items = await app.$axios.$get('/v1/pipes', {
       params: {
-        type: pipeConstants.Constants.get('TYPE_WORK'),
+        type,
       },
     })
     const options = items.map((d) => {
@@ -42,6 +43,9 @@ export default {
   computed: {
     item() {
       return this.$store.state.pipe
+    },
+    placeholder() {
+      return '引用工作' + (this.$store.getters['pipe/isTool'] ? '' : '流')
     },
   },
 }

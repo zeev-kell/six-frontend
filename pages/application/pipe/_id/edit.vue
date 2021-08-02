@@ -1,6 +1,6 @@
 <template>
   <div class="pipe-container">
-    <div class="el-row el-row--flex is-align-middle py-5">
+    <div class="el-row el-row--flex is-align-middle pipe-info">
       <div class="el-col-auto px-20">
         <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px"></i>
         <i v-if="isWork" class="el-icon-reading" style="font-size: 36px"></i>
@@ -10,7 +10,7 @@
           {{ item['name'] }}
         </h2>
         <p class="m-y-05">ID: {{ item.resource_id }}</p>
-        <div class="el-row el-row--flex item-tip">
+        <div class="el-row el-row--flex pipe-tip">
           <div class="el-col">
             <div class="title">类别</div>
             <div>{{ item.type | pipeTypeTranslate | t }}</div>
@@ -26,15 +26,12 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <can-create v-if="item.provider !== username">
-          <loading-button type="success" :callback="onSubmit" icon="el-icon-check">保存</loading-button>
-        </can-create>
         <can-examine>
-          <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe">删除</el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="handleDelete">删除</el-button>
         </can-examine>
       </div>
     </div>
-    <el-tabs v-model="activeTab" class="pt-15 pipe-tab" :before-leave="onBeforeLeave">
+    <el-tabs v-model="activeTab" class="pipe-el-tabs" :before-leave="onBeforeLeave">
       <el-tab-pane label="资源介绍" name="application-pipe-id-edit" />
       <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-edit-work" />
       <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-edit-structure" />
@@ -43,7 +40,9 @@
       <el-tab-pane v-if="isApp" label="历史版本" name="application-pipe-id-edit-versions" />
       <el-tab-pane label="管理" name="application-pipe-id-edit-setting" />
     </el-tabs>
-    <nuxt-child />
+    <div class="px-20 mt-5">
+      <nuxt-child />
+    </div>
   </div>
 </template>
 
@@ -84,10 +83,10 @@ export default {
       return this.$store.getters.username
     },
     isApp() {
-      return this.$store.getters['pipe/isApp']
+      return this.$store.getters['pipe/isSoftware']
     },
     isWork() {
-      return this.$store.getters['pipe/isWork']
+      return this.$store.getters['pipe/isOperation']
     },
   },
   watch: {
@@ -100,8 +99,8 @@ export default {
     },
   },
   methods: {
-    handleDeletePipe() {
-      this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
+    handleDelete() {
+      return this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
@@ -135,20 +134,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-.item-tip {
-  padding: 5px 0 0;
-  > div {
-    padding-right: 20px;
-    + div {
-      padding-left: 20px;
-      border-left: 1px solid #cccccc;
-    }
-  }
-  .title {
-    margin-bottom: 5px;
-    font-weight: 600;
-  }
-}
-</style>

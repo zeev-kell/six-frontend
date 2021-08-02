@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid p-20">
     <div class="card">
       <div class="card-body el-row">
         <div class="el-col-12">

@@ -22,7 +22,7 @@ export default function ({ $axios, store }) {
   })
   $axios.onResponseError(async (error) => {
     // eslint-disable-next-line no-console
-    console.log('onResponseError', error)
+    console.log('onResponseError', error.response)
     if (!error.response || !error.response.status) {
       return Promise.reject(DEFAULT_RESPONSE)
     }
@@ -33,7 +33,12 @@ export default function ({ $axios, store }) {
         await store.dispatch('logout')
       }
     }
-    return Promise.reject(error.response.data || {})
+    const res = {
+      status: error.response.status,
+      statusCode: error.response.status,
+      ...(error.response.data || {}),
+    }
+    return Promise.reject(res)
   })
   // $axios.onError(() => {})
 }

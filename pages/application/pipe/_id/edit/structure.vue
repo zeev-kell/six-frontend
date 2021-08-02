@@ -49,10 +49,10 @@ export default {
       return this.$store.state.pipe
     },
     title() {
-      if (this.$store.getters['pipe/isApp']) {
+      if (this.$store.getters['pipe/isSoftware']) {
         // 选择新建类型为”工具”或“工具流”时标题显示为“应用参数结构CWL”
         return '应用参数结构CWL'
-      } else if (this.$store.getters['pipe/isWork']) {
+      } else if (this.$store.getters['pipe/isOperation']) {
         // “工作”或“工作流”时标题显示为“应用参数配置YML”
         return '应用参数配置YML'
       } else if (this.$store.getters['pipe/isDocker']) {

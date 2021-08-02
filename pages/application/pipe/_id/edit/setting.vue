@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid card">
     <div class="card-body el-row">
       <div class="el-col-12">
         <el-form ref="formModel" label-width="80px" :model="formModel" :rules="rules" size="medium">
@@ -20,6 +20,9 @@
           </el-form-item>
         </el-form>
       </div>
+    </div>
+    <div class="card-footer">
+      <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
     </div>
   </div>
 </template>
@@ -52,6 +55,11 @@ export default {
   },
   mounted() {
     this.formModel = Object.assign({}, this.item)
+  },
+  methods: {
+    async onSubmit() {
+      await console.log(11)
+    },
   },
 }
 </script>
