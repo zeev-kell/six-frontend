@@ -2,7 +2,7 @@
   <div :class="[`body-${$store.state.bodyClass}`]">
     <el-container class="app-container">
       <app-navigation />
-      <el-main>
+      <el-main style="padding: 0">
         <Nuxt />
       </el-main>
     </el-container>

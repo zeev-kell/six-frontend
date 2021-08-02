@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div v-else>暂无运行案例</div>
+    <div v-else>暂无工作结构</div>
   </div>
 </template>
 

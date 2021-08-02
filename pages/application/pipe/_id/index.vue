@@ -1,6 +1,6 @@
 <template>
   <div class="pipe-container">
-    <div class="el-row el-row--flex is-align-middle py-5">
+    <div class="el-row el-row--flex is-align-middle pipe-info">
       <div class="el-col-auto px-20">
         <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px"></i>
         <i v-if="isWork" class="el-icon-reading" style="font-size: 36px"></i>
@@ -10,7 +10,7 @@
           {{ item['name'] }}
         </h2>
         <p class="m-y-05">ID: {{ item.resource_id }}</p>
-        <div class="el-row el-row--flex item-tip">
+        <div class="el-row el-row--flex pipe-tip">
           <div class="el-col">
             <div class="title">类别</div>
             <div>{{ item.type | pipeTypeTranslate | t }}</div>
@@ -38,7 +38,7 @@
             <el-dropdown-item command="yaml">YAML 格式</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <can-create v-if="item.provider !== username">
+        <can-create>
           <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipe/' + item['resource_id'] + '/edit')" custom>
             <el-button type="primary" icon="el-icon-edit" @click="navigate" @keypress.enter="navigate">编辑</el-button>
           </nuxt-link>
@@ -48,7 +48,7 @@
         </can-examine>
       </div>
     </div>
-    <el-tabs v-model="activeTab" class="pt-15 pipe-tab" :before-leave="onBeforeLeave">
+    <el-tabs v-model="activeTab" class="pipe-el-tabs" :before-leave="onBeforeLeave">
       <el-tab-pane label="资源介绍" name="application-pipe-id-index" />
       <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-index-work" />
       <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-index-structure" />
@@ -56,7 +56,9 @@
       <el-tab-pane v-if="isApp" label="运行案例" name="application-pipe-id-index-case" />
       <el-tab-pane v-if="isApp" label="历史版本" name="application-pipe-id-index-versions" />
     </el-tabs>
-    <nuxt-child />
+    <div class="px-20 mt-5">
+      <nuxt-child />
+    </div>
   </div>
 </template>
 
@@ -76,10 +78,14 @@ export default {
     if (params.id !== pipe.resource_id) {
       // params.id = 'bd5adb8d-8615-4a09-9cf8-fa0005de6518'
       const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
+      // eslint-disable-next-line camelcase
       if (item.readme?.by_system) {
+        // eslint-disable-next-line camelcase
         item.readme.by_system = item.readme.by_system?.replace(/[↵ ]{2,}/g, '  \n')
       }
+      // eslint-disable-next-line camelcase
       if (item.readme?.by_author) {
+        // eslint-disable-next-line camelcase
         item.readme.by_author = item.readme.by_author?.replace(/[↵ ]{2,}/g, '  \n')
       }
       item.tutorial = item.tutorial?.replace(/[↵ ]{2,}/g, '  \n')
@@ -99,10 +105,10 @@ export default {
       return this.$store.getters.username
     },
     isApp() {
-      return this.$store.getters['pipe/isApp']
+      return this.$store.getters['pipe/isSoftware']
     },
     isWork() {
-      return this.$store.getters['pipe/isWork']
+      return this.$store.getters['pipe/isOperation']
     },
   },
   watch: {
@@ -155,20 +161,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-.item-tip {
-  padding: 5px 0 0;
-  > div {
-    padding-right: 20px;
-    + div {
-      padding-left: 20px;
-      border-left: 1px solid #cccccc;
-    }
-  }
-  .title {
-    margin-bottom: 5px;
-    font-weight: 600;
-  }
-}
-</style>

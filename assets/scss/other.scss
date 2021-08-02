@@ -1,3 +1,43 @@
-.pipe-tab .el-tabs__nav-scroll {
-  padding-left: 75px;
+.pipe-el-tabs {
+  .el-tabs__header {
+    background-color: #FCFCFC;
+  }
+
+  .el-tabs__nav-scroll {
+    padding-left: 95px;
+  }
+
+  .el-tabs__nav-wrap::after {
+    height: 1px;
+  }
+
+  .el-tabs__active-bar {
+    padding-left: 15px;
+    padding-right: 15px;
+    left: -15px;
+    box-sizing: content-box;
+  }
+}
+
+.pipe-info {
+  background-color: #fcfcfc;
+  padding: 20px;
+}
+
+.pipe-tip {
+  padding: 5px 0 0;
+
+  > div {
+    padding-right: 20px;
+
+    + div {
+      padding-left: 20px;
+      border-left: 1px solid #cccccc;
+    }
+  }
+
+  .title {
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
 }

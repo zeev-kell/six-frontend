@@ -32,13 +32,27 @@ export const mutations = {
 }
 
 export const getters = {
-  isApp(state) {
-    return [PipeConstants.Constants.get('TYPE_TOOL'), PipeConstants.Constants.get('TYPE_APP')].includes(state.type)
+  isTool(state) {
+    return state.type === PipeConstants.Constants.get('TYPE_TOOL')
   },
-  isWork(state) {
-    return [PipeConstants.Constants.get('TYPE_WORK'), PipeConstants.Constants.get('TYPE_WORKFLOW')].includes(state.type)
+  isApp(state) {
+    return state.type === PipeConstants.Constants.get('TYPE_APP')
   },
   isDocker(state) {
     return PipeConstants.Constants.get('TYPE_DOCKER') === state.type
+  },
+  isWork(state) {
+    return PipeConstants.Constants.get('TYPE_WORK') === state.type
+  },
+  isWorkflow(state) {
+    return PipeConstants.Constants.get('TYPE_WORKFLOW') === state.type
+  },
+  // 是否是软件应用
+  isSoftware(state) {
+    return [PipeConstants.Constants.get('TYPE_TOOL'), PipeConstants.Constants.get('TYPE_APP')].includes(state.type)
+  },
+  // 是否是运行工作
+  isOperation(state) {
+    return [PipeConstants.Constants.get('TYPE_WORK'), PipeConstants.Constants.get('TYPE_WORKFLOW')].includes(state.type)
   },
 }

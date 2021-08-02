@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid p-20">
     <div class="card">
       <div class="card-header is-align-middle" style="padding-left: 95px">
         <h2 class="mx-0">创建新的应用</h2>
@@ -31,8 +31,8 @@
           </el-form>
         </div>
       </div>
-      <div class="card-footer text-right">
-        <el-button type="success" icon="el-icon-plus" :loading="loading" @click="onSubmit"> 保存 </el-button>
+      <div class="card-footer">
+        <loading-button :callback="onSubmit" type="success" icon="el-icon-plus"> 保存 </loading-button>
       </div>
     </div>
   </div>
@@ -82,27 +82,11 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
-      this.$refs.formModel.validate((valid) => {
-        if (valid) {
-          this.loading = true
-          this.$$axios
-            .$post('/v2/pipe', this.formModel)
-            .then((data) => {
-              const id = data?.data?.id
-              if (id) {
-                this.$I18nRouter.push(`/application/pipe/${id}/edit`)
-              } else {
-                this.$message.warning('数据提交成功，但返回有误')
-              }
-            })
-            .finally(() => {
-              this.loading = false
-            })
-        } else {
-          this.$message.warning('请填写完整信息')
-          return false
-        }
+    async onSubmit() {
+      await this.$refs.formModel.validate()
+      await this.$$axios.$post('/v2/pipe', this.formModel).then((data) => {
+        const id = data?.data?.id
+        this.$I18nRouter.push(`/application/pipe/${id}/edit`)
       })
     },
   },

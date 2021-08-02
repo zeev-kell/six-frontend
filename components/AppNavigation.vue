@@ -83,6 +83,7 @@ export default {
   }
 }
 </style>
+
 <style lang="scss">
 .nav-app {
   color: white;

@@ -20,7 +20,6 @@ import { FormControl } from '@/pages/application/_components/FormControl'
 import { DblclickPlugin } from '@/pages/application/_components/graph/plugins/dblclick-plugin'
 import { downloadStrLink } from '@/utils/download-link'
 import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, ZoomPlugin } from 'cwl-svg'
-import * as Yaml from 'js-yaml'
 
 export default {
   components: { CwlPanelRun, GraphTool, CwlPanelParams },

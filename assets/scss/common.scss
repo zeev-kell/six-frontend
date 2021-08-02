@@ -11,6 +11,10 @@
 //
 // common
 //
+.mt-5 {
+  margin-top: 5px;
+}
+
 .mt-20 {
   margin-top: 20px;
 }
@@ -426,6 +430,10 @@ img {
 
   &.is-justify-space-around {
     justify-content: space-around;
+  }
+
+  &.is-justify-space-between {
+    justify-content: space-between;
   }
 }
 

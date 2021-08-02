@@ -53,9 +53,11 @@ export default {
       return this.$store.getters.username
     },
     readmeByAuthor() {
+      // eslint-disable-next-line camelcase
       return this.item?.readme.by_author
     },
     readmeBySystem() {
+      // eslint-disable-next-line camelcase
       return this.item?.readme.by_system
     },
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid p-20">
     <div class="card card-body">
       <div class="el-row--flex is-justify-space-between pb-10">
         <div class="search-box">
@@ -123,12 +123,6 @@ export default {
         })
       }
       return data
-    },
-    selection() {
-      return this.$refs.multipleTable ? this.$refs.multipleTable.selection : []
-    },
-    hasSelection() {
-      return this.selection.length > 0
     },
   },
   methods: {
