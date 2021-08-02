@@ -75,11 +75,26 @@ export default {
   .el-menu .el-menu-item {
     color: white;
     background-color: $nav-darken-bg;
+    &:hover,
+    &:focus {
+      color: white;
+      background-color: $nav-darken-bg-over;
+    }
   }
-  .el-menu .el-menu-item:hover,
-  .el-menu .el-menu-item:focus {
+}
+</style>
+
+<style lang="scss">
+.nav-app {
+  color: white;
+  .el-menu .el-menu-item {
     color: white;
-    background-color: $nav-darken-bg-over;
+    background-color: $nav-darken-bg;
+    &:hover,
+    &:focus {
+      color: white;
+      background-color: $nav-darken-bg-over;
+    }
   }
 }
 </style>

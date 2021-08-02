@@ -427,6 +427,10 @@ img {
   &.is-justify-space-around {
     justify-content: space-around;
   }
+
+  &.is-justify-space-between {
+    justify-content: space-between;
+  }
 }
 
 //

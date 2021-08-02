@@ -28,25 +28,28 @@
           <el-menu-item :index="localePath('support-center')" :class="{ 'is-child-active': $route.name.startsWith('support-center') }">
             {{ $t('nav.help') }}
           </el-menu-item>
-          <el-menu-item class="px-0">
+          <el-menu-item index="about-us" class="px-0">
             <a href="https://github.com/6-oclock" target="_blank" class="a-link d-inline-b px-20"> {{ $t('nav.about') }}</a>
           </el-menu-item>
         </el-menu>
       </div>
       <div class="el-col-auto hidden-sm-and-down">
         <el-menu mode="horizontal">
-          <li class="el-menu-item menu-link" role="menuitem">
+          <li v-if="!username" class="el-menu-item menu-link" role="menuitem">
             <nuxt-link :to="localePath('register')">{{ $t('nav.register') }}</nuxt-link>
           </li>
-          <li class="el-menu-item menu-link" role="menuitem">
+          <li v-if="!username" class="el-menu-item menu-link" role="menuitem">
             <nuxt-link :to="localePath('login')">{{ $t('nav.login') }}</nuxt-link>
+          </li>
+          <li v-else class="el-menu-item menu-link" role="menuitem">
+            <nuxt-link :to="localePath('application')">{{ username }}</nuxt-link>
           </li>
         </el-menu>
       </div>
       <div class="el-col-auto d-flex is-align-middle hidden-md-and-up">
         <ul class="el-menu--horizontal el-menu">
           <li class="el-menu-item menu-link" role="menuitem">
-            <nuxt-link :to="localePath('login')">{{ $t('nav.login') }}</nuxt-link>
+            <nuxt-link :to="localePath('login')">{{ username || $t('nav.login') }}</nuxt-link>
           </li>
           <li class="el-menu-item menu-link" role="menuitem">
             <a @click="showMobileMenu = true">
@@ -83,8 +86,9 @@
           <a href="https://github.com/6-oclock" target="_blank" class="a-link d-inline-b px-20"> {{ $t('nav.about') }}</a>
         </el-menu-item>
         <li class="el-menu-item menu-link d-flex is-justify-space-around">
-          <nuxt-link :to="localePath('register')">{{ $t('nav.register') }}</nuxt-link>
-          <nuxt-link :to="localePath('login')">{{ $t('nav.login') }}</nuxt-link>
+          <nuxt-link v-if="!username" :to="localePath('register')">{{ $t('nav.register') }}</nuxt-link>
+          <nuxt-link v-if="!username" :to="localePath('login')">{{ $t('nav.login') }}</nuxt-link>
+          <nuxt-link v-else :to="localePath('application')">{{ username }}</nuxt-link>
         </li>
       </el-menu>
     </div>
@@ -105,6 +109,11 @@ export default {
       showMobileMenu: false,
       RESOURCES_URL: process.env.RESOURCES_URL,
     }
+  },
+  computed: {
+    username() {
+      return this.$store.getters.username
+    },
   },
   watch: {
     '$route.name'() {
