@@ -4,10 +4,10 @@
       <div class="card-body el-row">
         <div class="el-col-12">
           <el-form ref="formModel" label-width="80px" :model="formModel" :rules="rules" size="medium">
-            <el-form-item label="输入标题" prop="name">
+            <el-form-item label="标题" prop="name">
               <el-input v-model="formModel.title" placeholder="请输入标题（2到50个汉字）" />
             </el-form-item>
-            <el-form-item label="输入分类" prop="category">
+            <el-form-item label="分类" prop="category">
               <el-input v-model="formModel.category" placeholder="请输入分类" />
             </el-form-item>
           </el-form>
@@ -19,7 +19,7 @@
         <h2 class="mx-0">拟写正文</h2>
       </div>
       <div class="card-body marked-content">
-        <client-only placeholder="Codemirror Loading...">
+        <client-only placeholder="Loading...">
           <markdown v-model="formModel.content" />
         </client-only>
       </div>
@@ -29,7 +29,7 @@
         <h2 class="mx-0">软件结构与参数配置</h2>
       </div>
       <div class="card-body">
-        <client-only placeholder="Codemirror Loading...">
+        <client-only placeholder="Loading...">
           <codemirror v-model="formModel.cwl" :options="cmOptions" />
         </client-only>
       </div>

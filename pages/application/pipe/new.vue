@@ -87,10 +87,14 @@ export default {
         if (valid) {
           this.loading = true
           this.$$axios
-            .post('/v2/pipe', this.formModel)
+            .$post('/v2/pipe', this.formModel)
             .then((data) => {
-              const id = data?.id || 'ae2ea105-c3c4-47e8-9aa6-e770512edfcd'
-              this.$I18nRouter.push(`/application/pipe/${id}/edit`)
+              const id = data?.data?.id
+              if (id) {
+                this.$I18nRouter.push(`/application/pipe/${id}/edit`)
+              } else {
+                this.$message.warning('数据提交成功，但返回有误')
+              }
             })
             .finally(() => {
               this.loading = false

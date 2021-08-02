@@ -33,7 +33,7 @@
         <h2 class="mx-0">示例教程</h2>
       </div>
       <div class="card-body marked-content">
-        <client-only placeholder="Codemirror Loading...">
+        <client-only placeholder="Loading...">
           <markdown v-model="formModel.tutorial" />
         </client-only>
       </div>
@@ -43,7 +43,7 @@
         <h2 class="mx-0">软件结构(CWL)或参数配置(YML)</h2>
       </div>
       <div class="card-body">
-        <client-only placeholder="Codemirror Loading...">
+        <client-only placeholder="Loading...">
           <codemirror v-model="formModel.content" :options="cmOptions" />
         </client-only>
       </div>

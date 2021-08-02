@@ -57,8 +57,6 @@ export default {
       const blog = await app.$axios.$get(`/v1/blog/${params.id}`)
       const { markdown, toc, imageList } = resourceHelp(blog.content)
       return { blog, markdown, toc, imageList }
-    } else {
-      return {}
     }
   },
   data() {

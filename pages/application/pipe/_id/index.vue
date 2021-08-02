@@ -62,7 +62,7 @@
 
 <script type="text/babel">
 import pipeConstants from '@/constants/PipeConstants'
-import { getObject, stringifyObject } from '@/pages/application/_components/graph/plugins/yaml-handle'
+import { stringifyObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 import { downloadStrLink } from '@/utils/download-link'
 
 export default {
@@ -76,9 +76,11 @@ export default {
     if (params.id !== pipe.resource_id) {
       // params.id = 'bd5adb8d-8615-4a09-9cf8-fa0005de6518'
       const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
-      if (typeof item.content === 'string') {
-        // 尝试转换字段为 json 对象
-        item.content = getObject(item.content)
+      if (item.readme?.by_system) {
+        item.readme.by_system = item.readme.by_system?.replace(/[↵ ]{2,}/g, '  \n')
+      }
+      if (item.readme?.by_author) {
+        item.readme.by_author = item.readme.by_author?.replace(/[↵ ]{2,}/g, '  \n')
       }
       item.tutorial = item.tutorial?.replace(/[↵ ]{2,}/g, '  \n')
       store.commit('pipe/UPDATE_CURRENT_WORKFLOW', item)
@@ -153,6 +155,7 @@ export default {
   },
 }
 </script>
+
 <style lang="scss">
 .item-tip {
   padding: 5px 0 0;

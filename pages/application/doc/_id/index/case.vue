@@ -35,7 +35,7 @@
 import { GraphEvent } from '@/constants/GraphEvent'
 import pipeConstants from '@/constants/PipeConstants'
 import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
-import { getObject } from '@/pages/application/_components/graph/plugins/yaml-handle'
+import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 
 export default {
   filters: {
@@ -47,8 +47,6 @@ export default {
     if (item.profile) {
       const profile = await app.$axios.$get(`/v2/pipe/${item.profile}`)
       return { profile }
-    } else {
-      return {}
     }
   },
   data() {

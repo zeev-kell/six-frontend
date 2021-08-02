@@ -5,7 +5,7 @@
 <script type="text/babel">
 import { GraphEvent } from '@/constants/GraphEvent'
 import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
-import { getObject } from '@/pages/application/_components/graph/plugins/yaml-handle'
+import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 export default {
   components: { GraphIndex },
   async asyncData({ app, params }) {
