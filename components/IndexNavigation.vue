@@ -28,9 +28,11 @@
           <el-menu-item :index="localePath('support-center')" :class="{ 'is-child-active': $route.name.startsWith('support-center') }">
             {{ $t('nav.help') }}
           </el-menu-item>
-          <el-menu-item index="about-us" class="px-0">
-            <a href="https://github.com/6-oclock" target="_blank" class="a-link d-inline-b px-20"> {{ $t('nav.about') }}</a>
-          </el-menu-item>
+          <li role="menuitem" tabindex="0" class="el-menu-item el-menu-item-blank">
+            <a href="https://github.com/6-oclock" target="_blank" class="a-link" style="vertical-align: baseline">
+              {{ $t('nav.about') }}
+            </a>
+          </li>
         </el-menu>
       </div>
       <div class="el-col-auto hidden-sm-and-down">
@@ -82,9 +84,9 @@
         <el-menu-item :index="localePath('support-center')" :class="{ 'is-child-active': $route.name.startsWith('support-center') }">
           {{ $t('nav.help') }}
         </el-menu-item>
-        <el-menu-item class="px-0">
-          <a href="https://github.com/6-oclock" target="_blank" class="a-link d-inline-b px-20"> {{ $t('nav.about') }}</a>
-        </el-menu-item>
+        <li role="menuitem" tabindex="0" class="el-menu-item el-menu-item-blank">
+          <a href="https://github.com/6-oclock" target="_blank" class="a-link"> {{ $t('nav.about') }}</a>
+        </li>
         <li class="el-menu-item menu-link d-flex is-justify-space-around">
           <nuxt-link v-if="!username" :to="localePath('register')">{{ $t('nav.register') }}</nuxt-link>
           <nuxt-link v-if="!username" :to="localePath('login')">{{ $t('nav.login') }}</nuxt-link>

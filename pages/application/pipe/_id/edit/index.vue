@@ -51,7 +51,16 @@ export default {
   },
   methods: {
     async onSubmit() {
-      await console.log(11)
+      const data = Object.assign({}, this.item)
+      data.readme = {
+        by_system: data.readme.by_system,
+        by_author: this.readmeByAuthor,
+      }
+      delete data._isLoaded
+      await this.$$axios.$put('/v1/pipe/' + this.item.resource_id, data).then(() => {
+        this.$message.success('保存成功')
+        this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { readme: data.readme })
+      })
     },
   },
 }

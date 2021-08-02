@@ -55,10 +55,15 @@ export default {
   },
   mounted() {
     this.formModel = Object.assign({}, this.item)
+    delete this.formModel._isLoaded
   },
   methods: {
     async onSubmit() {
-      await console.log(11)
+      await this.$refs.formModel.validate()
+      await this.$$axios.$put('/v1/pipe/' + this.item.resource_id, this.formModel).then(() => {
+        this.$message.success('保存成功')
+        this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', this.formModel)
+      })
     },
   },
 }
