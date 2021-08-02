@@ -60,6 +60,43 @@ body {
   background-color: #bbb;
 }
 
+.nuxt-progress {
+  background-color: transparent;
+
+  &::after,
+  &::before {
+    content: '';
+    background: linear-gradient(-135deg, #1de9b6 0%, #409eff 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, right;
+  }
+  &::before {
+    animation: m_s 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  }
+  &::after {
+    animation: m_s 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+    animation-delay: 1.15s;
+  }
+}
+
+@keyframes m_s {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  80% {
+    left: 108%;
+    right: -8%;
+  }
+  100% {
+    left: 108%;
+    right: -8%;
+  }
+}
+
 /* 滚动条美化：end */
 
 @import 'layout';

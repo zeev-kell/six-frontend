@@ -26,6 +26,9 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
+        <can-create v-if="item.provider !== username">
+          <loading-button type="success" :callback="onSubmit" icon="el-icon-check">保存</loading-button>
+        </can-create>
         <can-examine>
           <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe">删除</el-button>
         </can-examine>
@@ -46,8 +49,6 @@
 
 <script type="text/babel">
 import pipeConstants from '@/constants/PipeConstants'
-import { getObject, stringifyObject } from '@/pages/application/_components/graph/plugins/yaml-handle'
-import { downloadStrLink } from '@/utils/download-link'
 
 export default {
   scrollToTop: true,
@@ -60,9 +61,11 @@ export default {
     if (params.id !== pipe.resource_id) {
       // params.id = 'bd5adb8d-8615-4a09-9cf8-fa0005de6518'
       const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
-      if (typeof item.content === 'string') {
-        // 尝试转换字段为 json 对象
-        item.content = getObject(item.content)
+      if (item.readme?.by_system) {
+        item.readme.by_system = item.readme.by_system?.replace(/[↵ ]{2,}/g, '  \n')
+      }
+      if (item.readme?.by_author) {
+        item.readme.by_author = item.readme.by_author?.replace(/[↵ ]{2,}/g, '  \n')
       }
       item.tutorial = item.tutorial?.replace(/[↵ ]{2,}/g, '  \n')
       store.commit('pipe/UPDATE_CURRENT_WORKFLOW', item)
@@ -97,12 +100,6 @@ export default {
     },
   },
   methods: {
-    handleDownload(format = 'yaml') {
-      const asYaml = format === 'yaml'
-      const data = stringifyObject(this.item.content, asYaml)
-      const name = this.item?.name + `.${asYaml ? 'cwl' : format}`
-      downloadStrLink(data, name)
-    },
     handleDeletePipe() {
       this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -134,9 +131,11 @@ export default {
         })
       })
     },
+    onSubmit() {},
   },
 }
 </script>
+
 <style lang="scss">
 .item-tip {
   padding: 5px 0 0;

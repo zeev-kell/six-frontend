@@ -36,8 +36,6 @@ export default {
       const instruction = await app.$axios.$get(`/v1/blog/${item.instruction}`)
       const { markdown, toc, imageList } = resourceHelp(instruction.content)
       return { instruction, markdown, toc, imageList }
-    } else {
-      return {}
     }
   },
   data() {

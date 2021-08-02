@@ -38,4 +38,7 @@ export const getters = {
   isWork(state) {
     return [PipeConstants.Constants.get('TYPE_WORK'), PipeConstants.Constants.get('TYPE_WORKFLOW')].includes(state.type)
   },
+  isDocker(state) {
+    return PipeConstants.Constants.get('TYPE_DOCKER') === state.type
+  },
 }

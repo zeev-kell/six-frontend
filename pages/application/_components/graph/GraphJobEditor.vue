@@ -15,7 +15,7 @@
 import CwlPanelParams from '@/pages/application/_components/graph/CwlPanelParams'
 import CwlPanelRun from '@/pages/application/_components/graph/CwlPanelRun'
 import GraphTool from '@/pages/application/_components/graph/GraphTool'
-import { stringifyObject } from '@/pages/application/_components/graph/plugins/yaml-handle'
+import { getObject, stringifyObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 import { FormControl } from '@/pages/application/_components/FormControl'
 import { DblclickPlugin } from '@/pages/application/_components/graph/plugins/dblclick-plugin'
 import { downloadStrLink } from '@/utils/download-link'
@@ -83,7 +83,7 @@ export default {
   mounted() {
     // FIX 第一次没有监听到变化
     if (this.cwl && this.cwlState === null) {
-      this.cwlState = this.load(this.cwl)
+      this.cwlState = getObject(this.cwl)
     }
     // FIX 鼠标滚动事件捕抓
     this.$refs.svg.addEventListener(
@@ -116,13 +116,6 @@ export default {
         return { data, name }
       }
       downloadStrLink(data, name)
-    },
-    // 处理 yaml 格式为 json 格式
-    load(cwl) {
-      if (typeof cwl === 'string') {
-        return Yaml.load(cwl, { json: true })
-      }
-      return cwl
     },
     getDefaultPlugins() {
       return [new SVGArrangePlugin(), new SVGEdgeHoverPlugin(), new SelectionPlugin(), new DblclickPlugin(), new ZoomPlugin()]

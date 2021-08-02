@@ -18,14 +18,13 @@ import CwlPanelRun from '@/pages/application/_components/graph/CwlPanelRun'
 import GraphTool from '@/pages/application/_components/graph/GraphTool'
 import { SVGJobFileDropPlugin } from '@/pages/application/_components/graph/plugins/job-file-drop'
 import { SVGRequiredInputMarkup } from '@/pages/application/_components/graph/plugins/required-input-markup'
-import { stringifyObject } from '@/pages/application/_components/graph/plugins/yaml-handle'
+import { getObject, stringifyObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 import { FormControl } from '@/pages/application/_components/FormControl'
 import { DblclickPlugin } from '@/pages/application/_components/graph/plugins/dblclick-plugin'
 import { downloadStrLink } from '@/utils/download-link'
 import { SelectionPlugin, SVGArrangePlugin, SVGEdgeHoverPlugin, ZoomPlugin } from 'cwl-svg'
 import { WorkflowModel } from 'cwlts/models/generic/WorkflowModel'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
-import * as Yaml from 'js-yaml'
 
 export default {
   components: { CwlPanelRun, GraphTool, CwlPanelParams },
@@ -106,7 +105,8 @@ export default {
   mounted() {
     // FIX 第一次没有监听到变化
     if (this.cwl && this.cwlState === null) {
-      this.cwlState = this.load(this.cwl)
+      // 处理 yaml 格式为 json 格式
+      this.cwlState = getObject(this.cwl)
       this.$nextTick(() => {
         // 自动放缩 并且 调整排版
         this.workflow?.getPlugin(SVGArrangePlugin).arrange()
@@ -149,13 +149,6 @@ export default {
         return { data, name }
       }
       downloadStrLink(data, name)
-    },
-    // 处理 yaml 格式为 json 格式
-    load(cwl) {
-      if (typeof cwl === 'string') {
-        return Yaml.load(cwl, { json: true })
-      }
-      return cwl
     },
     getDefaultPlugins() {
       // 默认可以放缩，选择节点，线条悬浮，自动放缩

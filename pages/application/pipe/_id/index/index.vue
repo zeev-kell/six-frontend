@@ -5,8 +5,13 @@
         <div class="card-header el-row el-row--flex is-align-middle py-5">
           <h2>{{ item.name }}</h2>
         </div>
-        <div v-if="item.readme" class="card-body">
-          <div v-marked="item.readme"></div>
+        <div v-if="item.readme">
+          <div v-if="readmeBySystem" class="card-body">
+            <div v-marked="readmeBySystem"></div>
+          </div>
+          <div v-if="readmeByAuthor" class="card-body">
+            <div v-marked="readmeByAuthor"></div>
+          </div>
         </div>
         <div v-else class="card-body">
           {{ item.description }}
@@ -46,6 +51,12 @@ export default {
     },
     username() {
       return this.$store.getters.username
+    },
+    readmeByAuthor() {
+      return this.item?.readme.by_author
+    },
+    readmeBySystem() {
+      return this.item?.readme.by_system
     },
   },
 }

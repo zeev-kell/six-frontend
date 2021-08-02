@@ -1,51 +1,40 @@
 <template>
   <div class="container-fluid" style="overflow: inherit">
-    <el-row v-if="item.instruction" type="flex">
-      <el-col class="marked-content el-col-equal">
-        <div ref="markdown" v-html="markdown"></div>
-      </el-col>
-      <el-col style="width: 260px">
-        <div class="card">
-          <div class="card-header el-row el-row--flex is-align-middle py-5">
-            <h4>引用自</h4>
-          </div>
-          <div class="card-body">
-            <div style="font-weight: 600; margin-bottom: 10px">知识库文档</div>
-            {{ item.instruction }}
-          </div>
-        </div>
-        <client-only>
-          <markdown-toc :toc="toc"></markdown-toc>
-        </client-only>
-      </el-col>
-    </el-row>
-    <div v-else>暂无使用教程</div>
-    <el-image v-if="imageList.length !== 0" ref="elImage" style="width: 0; height: 0" :src="currentImage" :preview-src-list="imageList"> </el-image>
+    <div class="px-15 text-muted">使用教程为一个使用该应用进行计算的完整文档教程。</div>
+    <div class="card-body">
+      <nuxt-link v-slot="{ navigate }" :to="localePath('application-doc-new')" custom>
+        <el-button type="primary" @click="navigate" @keypress.enter="navigate">新建</el-button>
+      </nuxt-link>
+      <span class="m-x-1">或</span>
+      <el-select v-model="value" filterable placeholder="引用知识库文档">
+        <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value"></el-option>
+      </el-select>
+    </div>
   </div>
 </template>
 
 <script type="text/babel">
-import MarkdownToc from '@/pages/support-center/_components/MarkdownToc'
-import { resourceHelp } from '@/utils/resource-help'
+import marked from '@/directives/marked'
 
 export default {
-  components: { MarkdownToc },
+  directives: {
+    ...marked,
+  },
   async asyncData({ app, store }) {
     const item = store.state.pipe
-    if (item.instruction) {
-      const instruction = await app.$axios.$get(`/v1/blog/${item.instruction}`)
-      const { markdown, toc, imageList } = resourceHelp(instruction.content)
-      return { instruction, markdown, toc, imageList }
-    } else {
-      return {}
-    }
+    const docs = await app.$axios.$get('/v1/blogs')
+    const options = docs.map((d) => {
+      return {
+        value: d.id,
+        label: d.title,
+      }
+    })
+    return { options, value: item.instruction }
   },
   data() {
     return {
-      markdown: undefined,
-      toc: [],
-      imageList: [],
-      currentImage: undefined,
+      options: [],
+      value: '',
     }
   },
   computed: {
