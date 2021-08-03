@@ -38,7 +38,7 @@
             <el-dropdown-item command="yaml">YAML 格式</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <can-create>
+        <can-create v-if="item.provider === username">
           <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipe/' + item['resource_id'] + '/edit')" custom>
             <el-button type="primary" icon="el-icon-edit" @click="navigate" @keypress.enter="navigate">编辑</el-button>
           </nuxt-link>

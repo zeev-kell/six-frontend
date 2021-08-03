@@ -48,9 +48,7 @@ export default {
     async onSubmit() {
       const data = Object.assign({}, this.item)
       data.instruction = this.value
-      delete data._isLoaded
-      await this.$$axios.$put('/v2/pipe/' + this.item.resource_id, data).then(() => {
-        this.$message.success('保存成功')
+      await this.$api.pipe.update(this.item.resource_id, data).then(() => {
         this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { instruction: data.instruction })
       })
     },

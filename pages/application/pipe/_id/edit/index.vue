@@ -56,9 +56,7 @@ export default {
         by_system: data.readme.by_system,
         by_author: this.readmeByAuthor,
       }
-      delete data._isLoaded
-      await this.$$axios.$put('/v2/pipe/' + this.item.resource_id, data).then(() => {
-        this.$message.success('保存成功')
+      await this.$api.pipe.update(this.item.resource_id, data).then(() => {
         this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { readme: data.readme })
       })
     },

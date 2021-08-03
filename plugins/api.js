@@ -1,7 +1,5 @@
 ﻿const request = {}
 export default (context, inject) => {
-  // eslint-disable-next-line no-console
-  console.log(1)
   const $api = new Proxy(
     {},
     {
@@ -9,8 +7,9 @@ export default (context, inject) => {
         let api = request[serverName]
         if (!api) {
           // 还没加载
-          api = import(/* webpackChunkName: "api-[request]" */ `@/assets/api/${serverName}.js`).then(function (server) {
-            request[serverName] = server
+          api = import(/* webpackChunkName: "api-[request]" */ `@/assets/api/${serverName}.js`).then(function (ModuleClass) {
+            request[serverName] = new ModuleClass.Module(context)
+            return request[serverName]
           })
         }
         // 已经加载完毕，可正常使用
@@ -22,8 +21,10 @@ export default (context, inject) => {
           {},
           {
             get(target, method) {
-              return async function (...args) {
-                return (await api)[method](...args)
+              return function (...args) {
+                return api.then(function (server) {
+                  return server[method](...args)
+                })
               }
             },
           }
