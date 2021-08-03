@@ -60,7 +60,7 @@ export default {
   methods: {
     async onSubmit() {
       await this.$refs.formModel.validate()
-      await this.$$axios.$put('/v1/pipe/' + this.item.resource_id, this.formModel).then(() => {
+      await this.$$axios.$put('/v2/pipe/' + this.item.resource_id, this.formModel).then(() => {
         this.$message.success('保存成功')
         this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', this.formModel)
       })

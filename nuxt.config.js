@@ -30,7 +30,9 @@ export default {
   plugins: [
     { src: '@/plugins/element-ui', ssr: true },
     { src: '@/plugins/axios', ssr: true },
-    { src: '@/plugins/axios-msg.js', mode: 'client' },
+    // { src: '@/plugins/axios-msg.js', mode: 'client' },
+    { src: '@/plugins/axios-msg.js' },
+    { src: '@/plugins/api' },
     { src: '@/plugins/nuxt-client-init.client.js' },
     { src: '@/plugins/components' },
     { src: '@/plugins/i18n-router' },
