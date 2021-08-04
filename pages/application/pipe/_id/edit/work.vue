@@ -1,71 +1,84 @@
 <template>
   <div class="container-fluid">
-    <div v-if="graphItem" class="el-row el-row--flex">
-      <div class="el-col el-col-18 pr-20">
-        <div class="card">
-          <div class="card-header el-row--flex is-align-middle">
-            <h2 class="mx-0 el-col-equal">双击图标查看案例参数</h2>
-          </div>
-          <div class="card-body">
-            <div class="workflow-box">
-              <graph-index
-                ref="graph"
-                class="h-100"
-                :item="graphItem"
-                config-type="run"
-                tools="download|plus,minus,fit"
-                @trigger-modal-create="onModalCreate"
-              />
-            </div>
-          </div>
+    <div class="card-body">
+      <div class="el-row el-row--flex">
+        <div class="el-col-full">
+          <el-select ref="pipeSelect" v-model="value" filterable :placeholder="placeholder" @change="onValueChange">
+            <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value"></el-option>
+          </el-select>
         </div>
-      </div>
-      <div class="el-col- el-col-6">
-        <div class="card">
-          <div class="card-header el-row el-row--flex is-align-middle py-5">
-            <h4>引用自</h4>
-          </div>
-          <div class="card-body">
-            <div style="font-weight: 600; margin-bottom: 10px">{{ graphItem.type | pipeTypeTranslate | t }}</div>
-            <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + item.cwl)" :title="item.cwl">
-              {{ graphItem.name }}
-            </nuxt-link>
-          </div>
+        <div class="el-col-auto">
+          <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
         </div>
       </div>
     </div>
-    <div v-else>暂无运行案例</div>
+    <div class="card-body">
+      <div class="codemirror-box">
+        <client-only placeholder="Loading...">
+          <codemirror v-model="content" :options="cmOptions" />
+        </client-only>
+      </div>
+    </div>
   </div>
 </template>
 
 <script type="text/babel">
 import { GraphEvent } from '@/constants/GraphEvent'
 import pipeConstants from '@/constants/PipeConstants'
-import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
-import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
+import { getObject, stringifyObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
+import { CommandLineToolFactory, WorkflowFactory } from 'cwlts/models'
+import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 
 export default {
   filters: {
     pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
   },
-  components: { GraphIndex },
+  components: { codemirror: () => import('@/pages/application/_components/CodeMirror') },
   async asyncData({ app, store }) {
     const item = store.state.pipe
-    if (item.cwl) {
-      // 请求 graph 数据
-      const graphItem = await app.$axios.$get(`/v2/pipe/${item.cwl}`)
-      return { graphItem }
-    }
+    const type = store.getters['pipe/isWork'] ? pipeConstants.Constants.get('TYPE_TOOL') : pipeConstants.Constants.get('TYPE_APP')
+    const items = await app.$axios.$get('/v1/pipes', {
+      params: {
+        type,
+      },
+    })
+    const options = items.map((d) => {
+      return {
+        value: d.pipe_id,
+        label: d.name,
+      }
+    })
+    const value = item.cwl
+    const graphItem = value ? await app.$axios.$get(`/v2/pipe/${value}`) : undefined
+    return { options, value, graphItem }
   },
   data() {
     return {
       graphItem: undefined,
+      cmOptions: {
+        tabSize: 4,
+        styleActiveLine: true,
+        lineNumbers: true,
+        line: true,
+        mode: 'text/yaml',
+        lineWrapping: true,
+        theme: 'default',
+      },
+      options: [],
+      content: '',
+      value: '',
     }
   },
   computed: {
     item() {
       return this.$store.state.pipe
     },
+    placeholder() {
+      return '引用工作' + (this.$store.getters['pipe/isTool'] ? '' : '流')
+    },
+  },
+  mounted() {
+    this.content = this.item?.content.toString()
   },
   methods: {
     onModalCreate() {
@@ -73,6 +86,41 @@ export default {
       this.$nextTick(() => {
         this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
       })
+    },
+    async onSubmit() {
+      const data = Object.assign({}, this.item)
+      data.cwl = this.value
+      data.content = this.content
+      await this.$api.pipe.update(this.item.resource_id, data).then(() => {
+        this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { cwl: data.cwl, content: data.content })
+      })
+    },
+    onValueChange(value) {
+      if (this.content && this.content !== '') {
+        this.$confirm('是否替换新的软件运行模板？')
+          .then(() => {
+            // 不使用 async
+            this.$api.pipe.get(value).then((pipe) => {
+              let content = pipe?.content
+              if (content) {
+                // TODO 修改成新的类
+                content = getObject(content)
+                const model =
+                  pipe.type === pipeConstants.Constants.get('TYPE_TOOL')
+                    ? CommandLineToolFactory.from(content, 'document')
+                    : WorkflowFactory.from(content)
+                let nullJob = JobHelper.getNullJobInputs(model)
+                nullJob = stringifyObject(nullJob, true)
+                this.content = nullJob
+              } else {
+                this.$message.warning('该软件信息不完整')
+              }
+            })
+          })
+          .finally(() => {
+            this.$refs.pipeSelect.blur()
+          })
+      }
     },
   },
 }

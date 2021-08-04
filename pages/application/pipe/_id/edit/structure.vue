@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card container-fluid">
     <div class="card-header el-row--flex is-align-middle">
       <h2 class="mx-0 el-col-equal">{{ title }}</h2>
     </div>

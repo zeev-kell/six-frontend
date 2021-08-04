@@ -6,13 +6,17 @@ class Pipe {
     this.$$axios = $$axios
   }
 
-  update(resourceId, data) {
+  update(pipeId, data) {
     delete data._isLoaded
     delete data.versions
-    return this.$$axios.$put('/v2/pipe/' + resourceId, data).then((response) => {
+    return this.$$axios.$put('/v2/pipe/' + pipeId, data).then((response) => {
       Element.Message.success('保存成功')
       return response
     })
+  }
+
+  get(pipeId) {
+    return this.$$axios.$get('/v2/pipe/' + pipeId)
   }
 }
 

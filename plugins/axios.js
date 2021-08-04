@@ -27,7 +27,9 @@ export default function ({ $axios, store }) {
       return Promise.reject(DEFAULT_RESPONSE)
     }
     if (error.response.status === 401) {
-      alert(JSON.stringify(error.response))
+      if (process.env.NODE_ENV === 'development') {
+        alert(JSON.stringify(error.response))
+      }
       // eslint-disable-next-line no-console
       console.error(error.response.config?.url)
       if (error.response.config?.url !== '/logout') {

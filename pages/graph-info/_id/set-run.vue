@@ -8,9 +8,9 @@ import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
 import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 export default {
   components: { GraphIndex },
-  async asyncData({ app, params }) {
+  async asyncData({ app, params, query }) {
     const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
-    const profileId = item.profile
+    const profileId = query.profile ?? item.profile
     if (profileId) {
       const profile = await app.$axios.$get(`/v2/pipe/${profileId}`)
       return { item, profile }

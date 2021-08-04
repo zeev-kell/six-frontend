@@ -31,6 +31,26 @@
             <el-button type="primary" icon="el-icon-caret-right">设置运行</el-button>
           </a>
         </nuxt-link>
+        <nuxt-link
+          v-else-if="isWork && item['cwl']"
+          v-slot="{ href }"
+          :to="
+            localePath({
+              name: 'graph-info-id-set-run',
+              params: {
+                id: item['cwl'],
+              },
+              query: {
+                profile: item['resource_id'],
+              },
+            })
+          "
+          custom
+        >
+          <a :href="href" target="_blank">
+            <el-button type="primary" icon="el-icon-caret-right">设置运行</el-button>
+          </a>
+        </nuxt-link>
         <el-dropdown trigger="click" size="medium" @command="handleDownload">
           <el-button type="info" icon="el-icon-download">下载</el-button>
           <el-dropdown-menu slot="dropdown" class="el-dropdown-info">
