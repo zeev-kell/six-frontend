@@ -32,7 +32,7 @@ const config = {
     { src: '@/plugins/axios.ts', ssr: true },
     // { src: '@/plugins/axios-msg.ts', mode: 'client' },
     { src: '@/plugins/axios-msg.ts' },
-    { src: '@/plugins/api.ts' },
+    { src: '@/plugins/api.js' },
     { src: '@/plugins/nuxt-client-init.client.ts' },
     { src: '@/plugins/components.ts' },
     { src: '@/plugins/i18n-router.ts' },
