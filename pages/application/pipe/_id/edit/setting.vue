@@ -6,8 +6,8 @@
           <el-form-item label="名称" prop="name">
             <el-input v-model="formModel.name" placeholder="请输入名称" />
           </el-form-item>
-          <el-form-item label="默认版本" prop="version">
-            <el-select v-model="formModel.version" placeholder="请输入版本">
+          <el-form-item label="版本" prop="version">
+            <el-select v-model="formModel.version" placeholder="请输入版本" disabled>
               <el-option v-for="version in versions" :key="version.value" :label="version.label" :value="version.value"> </el-option>
             </el-select>
           </el-form-item>
@@ -39,7 +39,7 @@ export default {
           { required: true, message: '请输入名称', trigger: 'blur' },
           { min: 2, max: 128, message: '长度在 2 到 128 个字符', trigger: 'blur' },
         ],
-        version: [{ required: true, message: '请选择默认版本', trigger: 'blur' }],
+        // version: [{ required: true, message: '请选择默认版本', trigger: 'blur' }],
         category: [
           { required: true, message: '请输入分类', trigger: 'blue' },
           { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },

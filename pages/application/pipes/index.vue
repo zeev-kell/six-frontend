@@ -74,7 +74,7 @@ export default {
     pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
   },
   async asyncData({ app }) {
-    const items = await app.$axios.$get('/v1/pipes')
+    const items = await app.$api.pipe.getList()
     return { items }
   },
   data() {

@@ -100,7 +100,7 @@ export default {
         this.$confirm('是否替换新的软件运行模板？')
           .then(() => {
             // 不使用 async
-            this.$api.pipe.get(value).then((pipe) => {
+            this.$api.pipe.getVersion(value).then((pipe) => {
               let content = pipe?.content
               if (content) {
                 // TODO 修改成新的类
