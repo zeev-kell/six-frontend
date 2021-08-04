@@ -36,6 +36,7 @@ const config = {
     { src: '@/plugins/nuxt-client-init.client.ts' },
     { src: '@/plugins/components.ts' },
     { src: '@/plugins/i18n-router.ts' },
+    // { src: '@/plugins/vue-mavon-editor', ssr: false, mode: 'client' },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -49,6 +50,8 @@ const config = {
     '@nuxtjs/stylelint-module',
     // https://github.com/nuxt-community/style-resources-module
     '@nuxtjs/style-resources',
+    // https://github.com/Developmint/nuxt-purgecss
+    'nuxt-purgecss',
   ],
 
   styleResources: {
@@ -100,6 +103,7 @@ const config = {
         ],
       },
     ],
+    '@nuxtjs/sitemap',
   ],
 
   // nuxt-i18n
@@ -164,6 +168,12 @@ const config = {
       home: '/application', // 用户登录后将被身份提供者重定向到此路径。
     },
     plugins: ['@/plugins/auth.ts'],
+  },
+
+  // nuxt-sitemap (https://sitemap.nuxtjs.org/usage/sitemap)
+  sitemap: {
+    hostname: 'http://www.sixoclock.net/',
+    gzip: true,
   },
 
   router: {
