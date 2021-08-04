@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card container-fluid">
     <div class="card-header el-row--flex is-align-middle">
       <h2 class="mx-0 el-col-equal">{{ title }}</h2>
     </div>
@@ -14,10 +14,13 @@
         </el-tab-pane>
         <el-tab-pane label="预览内容" name="2">
           <div v-if="activeName === '2'" class="workflow-box">
-            <graph-index :item="item" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
+            <graph-index :item="graph" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
           </div>
         </el-tab-pane>
       </el-tabs>
+    </div>
+    <div class="card-footer">
+      <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
     </div>
   </div>
 </template>
@@ -62,9 +65,24 @@ export default {
         return ''
       }
     },
+    graph() {
+      return {
+        content: this.content,
+        type: this.item.type,
+        resource_id: this.item.resource_id,
+      }
+    },
   },
   mounted() {
     this.content = this.item.content.toString()
+  },
+  methods: {
+    async onSubmit() {
+      const data = Object.assign({}, this.item, { content: this.content })
+      await this.$api.pipe.update(this.item.resource_id, data).then(() => {
+        this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { content: data.content })
+      })
+    },
   },
 }
 </script>
@@ -73,7 +91,7 @@ export default {
 .workflow-box,
 .codemirror-box {
   min-height: 450px;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 130px);
 }
 .codemirror-box ::v-deep > .vue-codemirror {
   height: 100%;

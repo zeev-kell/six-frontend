@@ -55,10 +55,14 @@ export default {
   },
   mounted() {
     this.formModel = Object.assign({}, this.item)
+    delete this.formModel._isLoaded
   },
   methods: {
     async onSubmit() {
-      await console.log(11)
+      await this.$refs.formModel.validate()
+      await this.$api.pipe.update(this.item.resource_id, this.formModel).then(() => {
+        this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', this.formModel)
+      })
     },
   },
 }
