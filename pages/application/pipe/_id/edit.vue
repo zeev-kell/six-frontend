@@ -26,6 +26,9 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
+        <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipe/' + item['resource_id'])" custom>
+          <el-button type="warning" icon="el-icon-back" @click="navigate" @keypress.enter="navigate">详情</el-button>
+        </nuxt-link>
         <can-examine>
           <el-button type="danger" icon="el-icon-delete" @click="handleDelete">删除</el-button>
         </can-examine>

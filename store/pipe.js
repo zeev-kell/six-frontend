@@ -1,6 +1,7 @@
 import PipeConstants from '@/constants/PipeConstants'
 
 export const state = () => ({
+  pipe_id: undefined,
   name: undefined,
   type: 0,
   provider: undefined,
@@ -18,7 +19,6 @@ export const state = () => ({
   updated_at: undefined,
   category: undefined,
   versions: [],
-  _isLoaded: false,
 })
 
 export const mutations = {
@@ -27,7 +27,6 @@ export const mutations = {
     Object.keys(item).forEach((key) => {
       state[key] = item[key]
     })
-    state._isLoaded = true
   },
 }
 

@@ -51,13 +51,9 @@ export default {
   },
   methods: {
     async onSubmit() {
-      const data = Object.assign({}, this.item)
-      data.readme = {
-        by_system: data.readme.by_system,
-        by_author: this.readmeByAuthor,
-      }
-      await this.$api.pipe.update(this.item.resource_id, data).then(() => {
-        this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { readme: data.readme })
+      const data = { readme: this.readmeByAuthor }
+      await this.$api.pipe.update(this.item.pipe_id, data).then(() => {
+        this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', data)
       })
     },
   },

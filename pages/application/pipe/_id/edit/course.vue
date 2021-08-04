@@ -48,7 +48,7 @@ export default {
     async onSubmit() {
       const data = Object.assign({}, this.item)
       data.instruction = this.value
-      await this.$api.pipe.update(this.item.resource_id, data).then(() => {
+      await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
         this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { instruction: data.instruction })
       })
     },

@@ -6,10 +6,10 @@
           <h2>{{ item.name }}</h2>
         </div>
         <div v-if="item.readme">
-          <div v-if="readmeBySystem" class="card-body">
+          <div v-if="readmeBySystem" class="card-body marked-content">
             <div v-marked="readmeBySystem"></div>
           </div>
-          <div v-if="readmeByAuthor" class="card-body">
+          <div v-if="readmeByAuthor" class="card-body marked-content">
             <div v-marked="readmeByAuthor"></div>
           </div>
         </div>

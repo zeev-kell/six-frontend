@@ -173,6 +173,6 @@ export default markdown
 
 <style scoped lang="scss">
 @import '../../assets/font/iconfont.css';
-@import '../../assets/css/light.css';
 @import '../../assets/css/index.css';
+@import '../../assets/css/github.css';
 </style>

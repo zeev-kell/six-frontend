@@ -79,7 +79,7 @@ export default {
   methods: {
     async onSubmit() {
       const data = Object.assign({}, this.item, { content: this.content })
-      await this.$api.pipe.update(this.item.resource_id, data).then(() => {
+      await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
         this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { content: data.content })
       })
     },
