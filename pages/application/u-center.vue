@@ -23,7 +23,10 @@
 </template>
 
 <script type="text/babel">
-export default {}
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class UCenterPage extends Vue {}
 </script>
 
 <style scoped lang="scss">

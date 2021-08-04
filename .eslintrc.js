@@ -8,10 +8,14 @@ module.exports = {
   plugins: ['prettier'],
   // add your custom rules here
   rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'prettier/prettier': 'warn',
     'nuxt/no-cjs-in-config': 'off',
+    'lines-between-class-members': 'off',
     'vue/no-v-html': 'off',
     'no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-vars': ['warn'],
     '@typescript-eslint/no-explicit-any': 'off',
   },
   overrides: [

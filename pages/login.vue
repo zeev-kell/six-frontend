@@ -11,9 +11,7 @@
             <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button :loading="isLoading" class="el-button-block" round type="primary" native-type="submit" @click.prevent="onSubmit">
-              登 录
-            </el-button>
+            <loading-button class="el-button-block" round type="primary" native-type="submit" :callback="onSubmit">登录</loading-button>
           </el-form-item>
           <el-form-item>
             <div class="text-right">
@@ -33,13 +31,15 @@
 import { Component, Vue, Action } from 'nuxt-property-decorator'
 import CanvasParticle from '@/components/CanvasParticle.vue'
 import Copyright from '@/components/Copyright.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
+  scrollToTop: true,
   components: {
+    LoadingButton,
     Copyright,
     CanvasParticle,
   },
-  scrollToTop: true,
   middleware: ['check-login'],
 })
 export default class LoginPage extends Vue {
@@ -50,7 +50,6 @@ export default class LoginPage extends Vue {
   @Action('ACTION_LOGIN')
   ACTION_LOGIN!: (form: { username: string; password: string }) => Promise<void>
 
-  isLoading = false
   form = {
     username: '',
     password: '',
@@ -61,15 +60,9 @@ export default class LoginPage extends Vue {
     password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
   }
 
-  onSubmit(): void {
-    this.$refs.form.validate((valid: boolean) => {
-      if (valid) {
-        this.isLoading = true
-        this.ACTION_LOGIN(this.form).catch(() => {
-          this.isLoading = false
-        })
-      }
-    })
+  async onSubmit(): Promise<void> {
+    await this.$refs.form.validate()
+    await this.ACTION_LOGIN(this.form)
   }
 }
 </script>

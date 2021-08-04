@@ -15,15 +15,13 @@
           </el-form-item>
           <el-form-item prop="code">
             <el-input v-model="form.code" placeholder="请输入验证码">
-              <el-button slot="append" :disabled="isLoadingCode" @click="onClickGetCode">
+              <el-button slot="append" :disabled="isDisabledCode" @click="onClickGetCode">
                 {{ loadingCodeText }}
               </el-button>
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button :loading="isLoading" class="el-button-block" round type="primary" native-type="submit" @click.prevent="register">
-              立即注册
-            </el-button>
+            <loading-button class="el-button-block" round type="primary" native-type="submit" :callback="register"> 立即注册 </loading-button>
           </el-form-item>
           <el-form-item class="text-center mb-0 el-form_error_rl" prop="checked">
             <el-checkbox v-model="form.checked">注册即代表同意</el-checkbox>
@@ -58,14 +56,17 @@
 </template>
 
 <script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import CanvasParticle from '@/components/CanvasParticle.vue'
 import Copyright from '@/components/Copyright.vue'
 import marked from '@/directives/marked'
 import axios from 'axios'
-import { Component, Vue } from 'nuxt-property-decorator'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
+  scrollToTop: true,
   components: {
+    LoadingButton,
     Copyright,
     CanvasParticle,
   },
@@ -137,45 +138,37 @@ export default class RegisterPage extends Vue {
     ],
   }
 
-  isLoading = false
   showUAVisible = false
   userAgreement = null
-  isLoadingCode = false
+  isDisabledCode = false
   loadingCodeText = '获取验证码'
   loadingUA = false
 
-  register(): void {
-    this.$refs.form.validate((valid: boolean) => {
-      if (valid) {
-        this.isLoading = true
-        this.$$axios
-          .$post('/register', {
-            username: this.form.username,
-            password: this.form.password,
-            // phone: this.form.phone,
-            email: this.form.email,
-            code: this.form.code,
-          })
-          .then(() => {
-            this.$message.success('注册成功，正在跳转至登录...')
-            setTimeout(() => {
-              this.$I18nRouter.push('/login')
-            }, 3000)
-          })
-          .finally(() => {
-            this.isLoading = false
-          })
-      }
-    })
+  async register(): Promise<void> {
+    await this.$refs.form.validate()
+    await this.$$axios
+      .$post('/register', {
+        username: this.form.username,
+        password: this.form.password,
+        // phone: this.form.phone,
+        email: this.form.email,
+        code: this.form.code,
+      })
+      .then(() => {
+        this.$message.success('注册成功，正在跳转至登录...')
+        setTimeout(() => {
+          this.$I18nRouter.push('/login')
+        }, 3000)
+      })
   }
 
   onClickGetCode(): void {
-    if (this.isLoadingCode) {
+    if (this.isDisabledCode) {
       return
     }
     this.$refs.form.validateField('email', (error: string) => {
       if (error === '') {
-        this.isLoadingCode = true
+        this.isDisabledCode = true
         this.$$axios
           .$post('/register/getcode', { email: this.form.email })
           .then(() => {
@@ -186,14 +179,14 @@ export default class RegisterPage extends Vue {
               time--
               this.loadingCodeText = `重发(${time}s)`
               if (time < 0) {
-                this.isLoadingCode = false
+                this.isDisabledCode = false
                 this.loadingCodeText = '获取验证码'
                 clearInterval(timeout)
               }
             }, 1000)
           })
           .catch(() => {
-            this.isLoadingCode = false
+            this.isDisabledCode = false
             this.loadingCodeText = '获取验证码'
           })
       }

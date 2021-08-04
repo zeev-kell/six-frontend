@@ -3,42 +3,36 @@
     <slot></slot>
   </el-button>
 </template>
-<script type="text/babel">
-export default {
-  name: 'LoadingButton',
-  props: {
-    callback: {
-      type: Function,
-      required: true,
+
+<script lang="ts">
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class LoadingButton extends Vue {
+  @Prop({ required: true })
+  callback!: ($event: Event, ...args: string[]) => Promise<void>
+  @Prop({
+    default() {
+      return []
     },
-    args: {
-      type: Array,
-      required: false,
-      default() {
-        return []
-      },
-    },
-  },
-  data() {
-    return {
-      loading: false,
+  })
+  args!: string[]
+
+  loading = false
+
+  onClick($event: Event): void {
+    if (!this.loading) {
+      this.loading = true
+      this.callback($event, ...this.args)
+        .finally(() => {
+          this.loading = false
+        })
+        .catch((e) => {
+          // eslint-disable-next-line no-console
+          console.log(e)
+          return Promise.reject(e)
+        })
     }
-  },
-  methods: {
-    onClick($event) {
-      if (!this.loading) {
-        this.loading = true
-        this.callback($event, ...this.args)
-          .finally(() => {
-            this.loading = false
-          })
-          .catch((e) => {
-            // eslint-disable-next-line no-console
-            console.log(e)
-            return Promise.reject(e)
-          })
-      }
-    },
-  },
+  }
 }
 </script>

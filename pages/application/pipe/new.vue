@@ -38,57 +38,60 @@
   </div>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import pipeConstants from '@/constants/PipeConstants'
-export default {
-  data() {
-    return {
-      formModel: {
-        name: '',
-        version: '',
-        description: '',
-        category: '',
-        website: '',
-        tutorial: '',
-        type: '',
-        content: '',
-      },
-      rules: {
-        name: [
-          { required: true, message: '请输入名称', trigger: 'blur' },
-          { min: 2, max: 128, message: '长度在 2 到 128 个字符', trigger: 'blur' },
-        ],
-        version: [
-          { required: true, message: '请输入版本', trigger: 'blur' },
-          { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
-        ],
-        type: [{ required: true, message: '请选择类型', trigger: 'change' }],
-        category: [
-          { required: true, message: '请输入分类', trigger: 'blue' },
-          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-        ],
-      },
-      cmOptions: {
-        tabSize: 4,
-        styleActiveLine: true,
-        lineNumbers: true,
-        line: true,
-        mode: 'text/yaml',
-        lineWrapping: true,
-        theme: 'default',
-      },
-      loading: false,
-      typeList: pipeConstants.items,
-    }
-  },
-  methods: {
-    async onSubmit() {
-      await this.$refs.formModel.validate()
-      await this.$$axios.$post('/v2/pipe', this.formModel).then((data) => {
-        const id = data?.data?.id
-        this.$I18nRouter.push(`/application/pipe/${id}/edit`)
-      })
-    },
-  },
+import LoadingButton from '@/components/LoadingButton.vue'
+
+@Component({
+  components: { LoadingButton },
+})
+export default class PipeNewPage extends Vue {
+  $refs!: {
+    formModel: HTMLFormElement
+  }
+  formModel = {
+    name: '',
+    version: '',
+    description: '',
+    category: '',
+    website: '',
+    tutorial: '',
+    type: '',
+    content: '',
+  }
+  rules = {
+    name: [
+      { required: true, message: '请输入名称', trigger: 'blur' },
+      { min: 2, max: 128, message: '长度在 2 到 128 个字符', trigger: 'blur' },
+    ],
+    version: [
+      { required: true, message: '请输入版本', trigger: 'blur' },
+      { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
+    ],
+    type: [{ required: true, message: '请选择类型', trigger: 'change' }],
+    category: [
+      { required: true, message: '请输入分类', trigger: 'blue' },
+      { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
+    ],
+  }
+  cmOptions = {
+    tabSize: 4,
+    styleActiveLine: true,
+    lineNumbers: true,
+    line: true,
+    mode: 'text/yaml',
+    lineWrapping: true,
+    theme: 'default',
+  }
+  loading = false
+  typeList = pipeConstants.items
+  async onSubmit() {
+    await this.$refs.formModel.validate()
+    await this.$$axios.$post('/v2/pipe', this.formModel).then((data) => {
+      const id = data?.data?.id
+      this.$I18nRouter.push(`/application/pipe/${id}/edit`)
+    })
+  }
 }
 </script>

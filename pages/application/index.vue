@@ -53,13 +53,16 @@
   </div>
 </template>
 
-<script type="text/babel">
-export default {
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({
   asyncData({ redirect, app }) {
     // 现阶段默认直接进入列表
     redirect(app.localePath('/application/pipes'))
   },
-}
+})
+export default class IndexPage extends Vue {}
 </script>
 
 <style lang="scss" scoped>

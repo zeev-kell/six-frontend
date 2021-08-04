@@ -1,9 +1,12 @@
 <template>
-  <div>project</div>
+  <div>u-project.vue</div>
 </template>
 
-<script type="text/babel">
-export default {}
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component
+export default class UProjectPage extends Vue {}
 </script>
 
-<style scoped lang="scss" rel="stylesheet"></style>
+<style lang="scss"></style>

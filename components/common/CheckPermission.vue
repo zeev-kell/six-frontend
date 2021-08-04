@@ -4,15 +4,17 @@
   </client-only>
 </template>
 
-<script type="text/babel">
-import { mapGetters } from 'vuex'
-export default {
-  name: 'CheckPermission',
-  computed: {
-    ...mapGetters(['permissions']),
-    hadPermissive() {
-      return this.permissions & this.verification
-    },
-  },
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class CheckPermission extends Vue {
+  protected verification = 0
+  get hadPermissive() {
+    return this.permissions & this.verification
+  }
+  get permissions() {
+    return this.$store.getters.permissions
+  }
 }
 </script>

@@ -1,14 +1,10 @@
-<script type="text/babel">
-// 检查是否可以审核
-import CheckPermission from '@/components/common/CheckPermission'
+<script lang="ts">
+import { Component } from 'nuxt-property-decorator'
+import CheckPermission from '@/components/common/CheckPermission.vue'
 
-export default {
-  name: 'CanExamine',
-  mixins: [CheckPermission],
-  data() {
-    return {
-      verification: 8,
-    }
-  },
+@Component
+export default class CanCreate extends CheckPermission {
+  // 检查是否可以审核
+  verification = 8
 }
 </script>
