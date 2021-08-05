@@ -26,8 +26,9 @@
     </g>
   </svg>
 </template>
-<script type="text/babel">
-export default {
-  name: 'LogoSvg',
-}
+
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+@Component
+export default class LogoSvg extends Vue {}
 </script>

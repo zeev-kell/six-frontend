@@ -28,7 +28,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import GraphIndex from '@/pages/application/_components/graph/GraphIndex.vue'
-import LoadingButton from '../../../../../components/LoadingButton.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
 @Component({
   components: {
     LoadingButton,

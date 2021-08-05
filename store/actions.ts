@@ -1,5 +1,8 @@
 import Element from 'element-ui'
-const actions = {
+import { ActionTree } from 'vuex'
+import { RootState } from '@/types/store'
+
+const actions: ActionTree<RootState, RootState> = {
   // 初始化服务端的信息，only from the server-side
   // nuxtServerInit({ commit }, { req, app }) {},
   // 初始化客户端的信息，需要自己手动触发
@@ -19,7 +22,7 @@ const actions = {
   ACTION_LOGIN({ commit }, data) {
     return this.$auth
       .loginWith('local', { data })
-      .then((response) => {
+      .then((response: any) => {
         this.$auth.setUser(response.data.data)
         this.$auth.$storage.setLocalStorage('user', response.data.data)
       })

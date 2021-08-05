@@ -8,11 +8,15 @@
     </el-container>
   </div>
 </template>
-<script>
-import AppNavigation from '@/components/AppNavigation'
-export default {
+
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import AppNavigation from '@/components/AppNavigation.vue'
+
+@Component({
   components: { AppNavigation },
   // 使用 auth 中间健作为登录的判断跳转
   middleware: ['auth'],
-}
+})
+export default class AppLayout extends Vue {}
 </script>

@@ -1,14 +1,15 @@
 <template>
-  <div class="logo-wrap el-row--flex is-align-middle">
-    <img src="/images/logo-white.png" class="logo-white" />
-    <img src="/images/logo-black.png" class="logo-black" />
+  <div v-once class="logo-wrap el-row--flex is-align-middle">
+    <img src="/images/logo-white.png" class="logo-white" alt="six-o-clock" />
+    <img src="/images/logo-black.png" class="logo-black" alt="six-o-clock" />
     <span>六点了技术</span>
   </div>
 </template>
-<script type="text/babel">
-export default {
-  name: 'LogoPng',
-}
+
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+@Component
+export default class LogoPng extends Vue {}
 </script>
 
 <style lang="scss" scoped>
@@ -29,6 +30,7 @@ img {
   color: inherit;
 }
 </style>
+
 <style lang="scss">
 .nav-white {
   .logo-white {

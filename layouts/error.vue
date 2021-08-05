@@ -22,10 +22,16 @@
   </div>
 </template>
 
-<script>
-export default {
-  // eslint-disable-next-line vue/require-prop-types
-  props: ['error'],
+<script lang="ts">
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import LogoPng from '../components/LogoPng'
+
+@Component({
+  components: { LogoPng },
+})
+export default class Error extends Vue {
+  @Prop({ required: true })
+  error: any
 }
 </script>
 <style>

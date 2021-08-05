@@ -23,7 +23,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import pipeConstants from '@/constants/PipeConstants'
-import LoadingButton from '../../../../../components/LoadingButton.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
   components: { LoadingButton },

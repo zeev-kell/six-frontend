@@ -5,10 +5,14 @@
     <index-footer :with-subscribe="false" />
   </div>
 </template>
-<script>
+
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import IndexFooter from '@/components/IndexFooter'
 import IndexNavigation from '@/components/IndexNavigation'
-export default {
+
+@Component({
   components: { IndexFooter, IndexNavigation },
-}
+})
+export default class IndexLayoutBase extends Vue {}
 </script>

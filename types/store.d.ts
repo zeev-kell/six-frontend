@@ -3,6 +3,7 @@ import { Auth } from '@nuxtjs/auth-next/dist'
 export interface RootState {
   bodyClass: string
   helpMenus: string[]
+  isMobile: boolean
 }
 
 declare module 'vuex/types/index' {

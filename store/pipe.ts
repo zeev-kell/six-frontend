@@ -23,7 +23,7 @@ export const state = () => ({
 
 export const mutations = {
   // 更新当前的 workflow
-  UPDATE_CURRENT_WORKFLOW(state, item) {
+  UPDATE_CURRENT_WORKFLOW(state: any, item: any) {
     Object.keys(item).forEach((key) => {
       state[key] = item[key]
     })
@@ -31,27 +31,27 @@ export const mutations = {
 }
 
 export const getters = {
-  isTool(state) {
+  isTool(state: any) {
     return state.type === PipeConstants.Constants.get('TYPE_TOOL')
   },
-  isApp(state) {
+  isApp(state: any) {
     return state.type === PipeConstants.Constants.get('TYPE_APP')
   },
-  isDocker(state) {
+  isDocker(state: any) {
     return PipeConstants.Constants.get('TYPE_DOCKER') === state.type
   },
-  isWork(state) {
+  isWork(state: any) {
     return PipeConstants.Constants.get('TYPE_WORK') === state.type
   },
-  isWorkflow(state) {
+  isWorkflow(state: any) {
     return PipeConstants.Constants.get('TYPE_WORKFLOW') === state.type
   },
   // 是否是软件应用
-  isSoftware(state) {
+  isSoftware(state: any) {
     return [PipeConstants.Constants.get('TYPE_TOOL'), PipeConstants.Constants.get('TYPE_APP')].includes(state.type)
   },
   // 是否是运行工作
-  isOperation(state) {
+  isOperation(state: any) {
     return [PipeConstants.Constants.get('TYPE_WORK'), PipeConstants.Constants.get('TYPE_WORKFLOW')].includes(state.type)
   },
 }

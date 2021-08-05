@@ -48,21 +48,22 @@
   </el-header>
 </template>
 
-<script type="text/babel">
-import { mapGetters, mapActions } from 'vuex'
-import LogoPng from '@/components/LogoPng'
+<script lang="ts">
+import { Action, Component, Vue, Getter } from 'nuxt-property-decorator'
+import LogoPng from '@/components/LogoPng.vue'
 
-export default {
-  name: 'AppNavigation',
+@Component({
   components: {
     LogoPng,
   },
-  computed: {
-    ...mapGetters(['username', 'loggedIn']),
-  },
-  methods: {
-    ...mapActions(['ACTION_LOGOUT']),
-  },
+})
+export default class AppNavigation extends Vue {
+  @Getter('username')
+  username
+  @Getter('loggedIn')
+  loggedIn
+  @Action('ACTION_LOGOUT')
+  ACTION_LOGOUT
 }
 </script>
 
@@ -85,6 +86,7 @@ export default {
 </style>
 
 <style lang="scss">
+@import './assets/scss/variables';
 .nav-app {
   color: white;
   .el-menu .el-menu-item {
