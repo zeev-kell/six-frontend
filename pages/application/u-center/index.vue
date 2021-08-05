@@ -6,7 +6,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class Index extends Vue {}
+export default class UCenterIndex extends Vue {}
 </script>
 
 <style lang="scss"></style>

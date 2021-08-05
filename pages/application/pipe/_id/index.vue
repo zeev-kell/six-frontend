@@ -117,7 +117,7 @@ import CanExamine from '@/components/common/CanExamine.vue'
     }
   },
 })
-export default class IdIndex extends Vue {
+export default class PipeIdIndex extends Vue {
   activeTab = this.getRouteBaseName()
 
   get item() {

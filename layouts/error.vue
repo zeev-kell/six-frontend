@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import LogoPng from '../components/LogoPng'
+import LogoPng from '../components/LogoPng.vue'
 
 @Component({
   components: { LogoPng },

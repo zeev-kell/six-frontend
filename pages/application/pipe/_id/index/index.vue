@@ -47,7 +47,7 @@ import marked from '@/directives/marked'
     ...marked,
   },
 })
-export default class Index extends Vue {
+export default class PipeIndex extends Vue {
   get item() {
     return this.$store.state.pipe
   }

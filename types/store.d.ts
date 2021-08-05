@@ -1,14 +1,7 @@
-import { Auth } from '@nuxtjs/auth-next/dist'
+import { NuxtState } from '@nuxt/types/app'
 
-export interface RootState {
+export interface RootState extends NuxtState {
   bodyClass: string
   helpMenus: string[]
   isMobile: boolean
-}
-
-declare module 'vuex/types/index' {
-  // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-  interface Store<S> {
-    $auth: Auth
-  }
 }

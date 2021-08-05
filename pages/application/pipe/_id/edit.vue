@@ -52,8 +52,10 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'nuxt-property-decorator'
 import pipeConstants from '@/constants/PipeConstants'
+import CanExamine from '@/components/common/CanExamine.vue'
 
 @Component({
+  components: { CanExamine },
   scrollToTop: true,
   filters: {
     pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
@@ -79,7 +81,7 @@ import pipeConstants from '@/constants/PipeConstants'
     }
   },
 })
-export default class Edit extends Vue {
+export default class PipeIdEdit extends Vue {
   activeTab = this.getRouteBaseName()
   get item() {
     return this.$store.state.pipe

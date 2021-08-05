@@ -102,7 +102,7 @@
 </template>
 
 <script type="text/babel">
-import LogoPng from '@/components/LogoPng'
+import LogoPng from '@/components/LogoPng.vue'
 
 const SCROLL_TRANSPORT = 100
 export default {

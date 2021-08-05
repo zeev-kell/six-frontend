@@ -38,7 +38,7 @@ import LoadingButton from '@/components/LoadingButton.vue'
     Markdown: () => import('@/pages/application/_components/markdown/simple'),
   },
 })
-export default class Index extends Vue {
+export default class PipeEditIndex extends Vue {
   readmeByAuthor = undefined
   readmeBySystem = undefined
   get item() {

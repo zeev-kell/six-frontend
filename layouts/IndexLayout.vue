@@ -8,8 +8,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import IndexFooter from '@/components/IndexFooter'
-import IndexNavigation from '@/components/IndexNavigation'
+import IndexFooter from '@/components/IndexFooter.vue'
+import IndexNavigation from '@/components/IndexNavigation.vue'
 
 @Component({
   components: { IndexFooter, IndexNavigation },

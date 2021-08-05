@@ -59,11 +59,11 @@ import LogoPng from '@/components/LogoPng.vue'
 })
 export default class AppNavigation extends Vue {
   @Getter('username')
-  username
+  username: string | undefined
   @Getter('loggedIn')
-  loggedIn
+  loggedIn: boolean | undefined
   @Action('ACTION_LOGOUT')
-  ACTION_LOGOUT
+  ACTION_LOGOUT!: () => void
 }
 </script>
 

@@ -1,8 +1,8 @@
 import vue from 'vue'
 import { MutationTree } from 'vuex'
-import { NuxtState } from '@nuxt/types/app'
+import { RootState } from '@/types/store'
 
-const mutations: MutationTree<NuxtState> = {
+const mutations: MutationTree<RootState> = {
   SET_BODY_CLASS(state, bodyClass) {
     state.bodyClass = bodyClass
   },
