@@ -32,44 +32,40 @@
   </section>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import scrollTop from '@/utils/animate-scroll'
 
-export default {
-  name: 'IndexBanner',
-  data() {
-    return {
-      searchInput: '',
-      searchType: '0',
-    }
-  },
-  methods: {
-    scrollToNext() {
-      const height = document.querySelector('.index-banner').offsetHeight
-      scrollTop(height)
-    },
-    toSearch() {
-      const name = this.searchInput.trim()
-      if (name) {
-        if (this.searchType === '2') {
-          this.$I18nRouter.push({
-            path: '/application/docs',
-            query: {
-              name,
-            },
-          })
-        } else {
-          this.$I18nRouter.push({
-            path: '/application/pipes',
-            query: {
-              name,
-              type: this.searchType,
-            },
-          })
-        }
+@Component
+export default class IndexBanner extends Vue {
+  searchInput = ''
+  searchType = '0'
+
+  scrollToNext() {
+    const height = (document.querySelector('.index-banner') as HTMLElement).offsetHeight
+    scrollTop(height)
+  }
+  toSearch() {
+    const name = this.searchInput.trim()
+    if (name) {
+      if (this.searchType === '2') {
+        this.$I18nRouter.push({
+          path: '/application/docs',
+          query: {
+            name,
+          },
+        })
+      } else {
+        this.$I18nRouter.push({
+          path: '/application/pipes',
+          query: {
+            name,
+            type: this.searchType,
+          },
+        })
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

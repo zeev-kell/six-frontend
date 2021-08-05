@@ -1,19 +1,19 @@
-<script type="text/babel">
-export default {
-  name: 'MenuItem',
-  props: {
-    menu: {
-      type: Object,
-      require: true,
-      default() {
-        return {}
-      },
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
+@Component
+export default class MenuItem extends Vue {
+  @Prop({
+    required: true,
+    default() {
+      return {}
     },
-  },
-  render(createElement) {
+  })
+  menu!: any
+  render(createElement: any) {
     const menu = this.menu
     const isSubmenu = menu?.children.length > 0
-    function createMenuItem(item) {
+    function createMenuItem(item: any) {
       return createElement(
         'el-menu-item',
         {
@@ -42,6 +42,6 @@ export default {
         ...[isSubmenu ? menu.children.map(createMenuItem) : []],
       ]
     )
-  },
+  }
 }
 </script>

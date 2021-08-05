@@ -20,10 +20,13 @@
   </div>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import pipeConstants from '@/constants/PipeConstants'
+import LoadingButton from '../../../../../components/LoadingButton.vue'
 
-export default {
+@Component({
+  components: { LoadingButton },
   async asyncData({ app, store }) {
     const item = store.state.pipe
     const type = store.getters['pipe/isTool'] ? pipeConstants.Constants.get('TYPE_WORK') : pipeConstants.Constants.get('TYPE_WORKFLOW')
@@ -32,7 +35,7 @@ export default {
         type,
       },
     })
-    const options = items.map((d) => {
+    const options = items.map((d: any) => {
       return {
         value: d.pipe_id,
         label: d.name,
@@ -40,30 +43,24 @@ export default {
     })
     return { options, value: item.profile }
   },
-  data() {
-    return {
-      profile: {},
-      options: [],
-      value: '',
-    }
-  },
-  computed: {
-    item() {
-      return this.$store.state.pipe
-    },
-    placeholder() {
-      return '引用工作' + (this.$store.getters['pipe/isTool'] ? '' : '流')
-    },
-  },
-  methods: {
-    async onSubmit() {
-      const data = Object.assign({}, this.item)
-      data.profile = this.value
-      await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
-        this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { profile: data.profile })
-      })
-    },
-  },
+})
+export default class Case extends Vue {
+  profile = {}
+  options = []
+  value = ''
+  get item() {
+    return this.$store.state.pipe
+  }
+  get placeholder() {
+    return '引用工作' + (this.$store.getters['pipe/isTool'] ? '' : '流')
+  }
+  async onSubmit() {
+    const data = Object.assign({}, this.item)
+    data.profile = this.value
+    await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
+      this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { profile: data.profile })
+    })
+  }
 }
 </script>
 

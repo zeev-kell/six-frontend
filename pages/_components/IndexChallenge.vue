@@ -1,5 +1,5 @@
 <template>
-  <section class="section-challenge">
+  <section v-once class="section-challenge">
     <div class="section-title">
       <h1>精准医疗时代下制药行业的挑战和机遇</h1>
     </div>
@@ -24,10 +24,10 @@
   </section>
 </template>
 
-<script type="text/babel">
-export default {
-  name: 'IndexChallenge',
-}
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+@Component
+export default class IndexChallenge extends Vue {}
 </script>
 
 <style scoped lang="scss" rel="stylesheet">

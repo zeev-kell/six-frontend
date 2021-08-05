@@ -1,5 +1,5 @@
 <template>
-  <section id="section-product" class="section-product">
+  <section v-once id="section-product" class="section-product">
     <div class="section-title">
       <h1>云协作解决方案</h1>
     </div>
@@ -102,20 +102,17 @@
   </section>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import { sixSquare } from '@/components/sixSquare'
-export default {
-  name: 'IndexProduct',
-  data() {
-    return {
-      RESOURCES_URL: process.env.RESOURCES_URL,
-    }
-  },
-  computed: {
-    sixSquare() {
-      return sixSquare
-    },
-  },
+
+@Component
+export default class IndexProduct extends Vue {
+  RESOURCES_URL = process.env.RESOURCES_URL
+
+  get sixSquare() {
+    return sixSquare
+  }
 }
 </script>
 
@@ -160,6 +157,7 @@ export default {
   #section-product {
     .pro-card {
       width: 100%;
+
       &:hover {
         transform: translateY(0);
         border: transparent;

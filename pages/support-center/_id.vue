@@ -14,16 +14,17 @@
   </el-main>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import dMarked from '@/directives/marked'
 import { resourceHelp } from '@/utils/resource-help'
 import axios from 'axios'
 const BLOG_URL = process.env.RESOURCES_URL + '/blog'
 
-export default {
+@Component({
   scrollToTop: true,
   components: {
-    MarkdownToc: () => import('@/pages/support-center/_components/MarkdownToc'),
+    MarkdownToc: () => import('@/components/MarkdownToc.vue'),
   },
   directives: {
     marked: dMarked.marked,
@@ -31,10 +32,10 @@ export default {
   async asyncData({ params, store }) {
     const helpMenus = store.state.helpMenus
     // TODO 修改 key 为可追溯的格式，可以直接找到对应的数据
-    const helpMenusObj = helpMenus.reduce((obj, h) => {
+    const helpMenusObj = helpMenus.reduce((obj: any, h: any) => {
       obj[h.key] = h
       if (h.children?.length) {
-        h.children.forEach((c) => {
+        h.children.forEach((c: any) => {
           obj[c.key] = c
         })
       }
@@ -45,22 +46,24 @@ export default {
     const currentImage = imageList[0] || undefined
     return { markdown, toc, imageList, currentImage }
   },
-  data() {
-    return {
-      markdown: undefined,
-      toc: [],
-      imageList: [],
-      currentImage: undefined,
-    }
-  },
+})
+export default class IdPage extends Vue {
+  $refs!: {
+    elImage: HTMLFormElement
+    markdown: HTMLFormElement
+  }
+  markdown = ''
+  toc = []
+  imageList = []
+  currentImage = ''
   mounted() {
-    this.$refs.markdown.querySelectorAll('img').forEach((el) => {
+    this.$refs.markdown.querySelectorAll('img').forEach((el: HTMLImageElement) => {
       el.addEventListener('click', () => {
         this.currentImage = el.src
         this.$refs.elImage.clickHandler()
       })
     })
-  },
+  }
 }
 </script>
 

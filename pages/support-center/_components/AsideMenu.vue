@@ -9,16 +9,17 @@
   </div>
 </template>
 
-<script type="text/babel">
-import MenuItem from '@/pages/support-center/_components/MenuItem'
-export default {
-  name: 'AsideMenu',
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import MenuItem from '@/pages/support-center/_components/MenuItem.vue'
+
+@Component({
   components: { MenuItem },
-  computed: {
-    menus() {
-      return this.$store.state.helpMenus
-    },
-  },
+})
+export default class AsideMenu extends Vue {
+  get menus() {
+    return this.$store.state.helpMenus
+  }
 }
 </script>
 

@@ -42,7 +42,7 @@
 </template>
 
 <script type="text/babel">
-import MarkdownToc from '@/pages/support-center/_components/MarkdownToc'
+import MarkdownToc from '@/components/MarkdownToc.vue'
 import { resourceHelp } from '@/utils/resource-help'
 
 export default {

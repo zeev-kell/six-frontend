@@ -14,15 +14,17 @@
   </div>
 </template>
 
-<script type="text/babel">
-import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
-export default {
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import GraphIndex from '@/pages/application/_components/graph/GraphIndex.vue'
+
+@Component({
   components: { GraphIndex },
-  computed: {
-    item() {
-      return this.$store.state.pipe
-    },
-  },
+})
+export default class Structure extends Vue {
+  get item() {
+    return this.$store.state.pipe
+  }
 }
 </script>
 

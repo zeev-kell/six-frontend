@@ -24,38 +24,35 @@
   </div>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import marked from '@/directives/marked'
+import LoadingButton from '../../../../../components/LoadingButton.vue'
 
-export default {
+@Component({
   directives: {
     ...marked,
   },
   components: {
+    LoadingButton,
     Markdown: () => import('@/pages/application/_components/markdown/simple'),
   },
-  data() {
-    return {
-      readmeByAuthor: undefined,
-      readmeBySystem: undefined,
-    }
-  },
-  computed: {
-    item() {
-      return this.$store.state.pipe
-    },
-  },
+})
+export default class Index extends Vue {
+  readmeByAuthor = undefined
+  readmeBySystem = undefined
+  get item() {
+    return this.$store.state.pipe
+  }
   mounted() {
     this.readmeBySystem = this.item.readme.by_system || ''
     this.readmeByAuthor = this.item.readme.by_author || ''
-  },
-  methods: {
-    async onSubmit() {
-      const data = { readme: this.readmeByAuthor }
-      await this.$api.pipe.update(this.item.pipe_id, data).then(() => {
-        this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', data)
-      })
-    },
-  },
+  }
+  async onSubmit() {
+    const data = { readme: this.readmeByAuthor }
+    await this.$api.pipe.update(this.item.pipe_id, data).then(() => {
+      this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', data)
+    })
+  }
 }
 </script>

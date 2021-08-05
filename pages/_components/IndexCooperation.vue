@@ -1,5 +1,5 @@
 <template>
-  <section class="section-cooperation">
+  <section v-once class="section-cooperation">
     <div class="section-title">
       <h1>合作案例</h1>
     </div>
@@ -24,10 +24,10 @@
   </section>
 </template>
 
-<script type="text/babel">
-export default {
-  name: 'IndexCooperation',
-}
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+@Component
+export default class IndexCooperation extends Vue {}
 </script>
 
 <style scoped lang="scss" rel="stylesheet">

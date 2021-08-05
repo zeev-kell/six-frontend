@@ -63,7 +63,7 @@
   </div>
 </template>
 
-<script type="ts">
+<script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
@@ -73,7 +73,7 @@ import pipeConstants from '@/constants/PipeConstants'
   components: { CanCreate },
   filters: {
     ...intercept,
-    pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants)
+    pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
   },
   async asyncData({ app }) {
     const items = await app.$api.pipe.getList()
@@ -82,15 +82,15 @@ import pipeConstants from '@/constants/PipeConstants'
 })
 export default class IndexPage extends Vue {
   items = []
-  query= {
+  query = {
     name: this.$route.query.name || '',
     category: this.$route.query.category || '',
-    type: this.$route.query.type ? Number(this.$route.query.type) : ''
+    type: this.$route.query.type ? Number(this.$route.query.type) : '',
   }
   typeList = pipeConstants.items
 
   get categoryList() {
-    return this.items.reduce((list, item) => {
+    return this.items.reduce((list: any, item: any) => {
       if (!list.includes(item.category)) {
         list.push(item.category)
       }
@@ -98,7 +98,7 @@ export default class IndexPage extends Vue {
     }, [])
   }
   get nameList() {
-    return this.items.reduce((list, item) => {
+    return this.items.reduce((list: any, item: any) => {
       if (!list.includes(item.name)) {
         list.push({ value: item.name })
       }
@@ -108,34 +108,34 @@ export default class IndexPage extends Vue {
   get tableDate() {
     let data = this.items
     if (this.query.category !== '') {
-      data = data.filter((item) => {
+      data = data.filter((item: any) => {
         return item.category === this.query.category
       })
     }
     if (this.query.name !== '') {
-      data = data.filter((item) => {
+      data = data.filter((item: any) => {
         return item.name.includes(this.query.name)
       })
     }
     if (this.query.type !== '') {
-      data = data.filter((item) => {
+      data = data.filter((item: any) => {
         return item.type === this.query.type
       })
     }
     return data
   }
 
-  createFilter(str) {
-    return (name) => {
+  createFilter(str: string) {
+    return (name: any) => {
       return name.value.toLowerCase().includes(str.toLowerCase())
     }
   }
-  queryName(str, cb) {
+  queryName(str: string, cb: any) {
     const nameList = this.nameList
     const results = str ? nameList.filter(this.createFilter(str)) : nameList
     cb(results)
   }
-  showVisualModal(id) {
+  showVisualModal(id: string) {
     // window.open(`/graph-info/${id}`, '_blank', 'toolbar=0,location=0,menubar=0')
     window.open(`/graph-info/${id}`, '_blank')
   }

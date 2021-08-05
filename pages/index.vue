@@ -7,12 +7,14 @@
   </div>
 </template>
 
-<script type="text/babel">
-import IndexBanner from '@/pages/_components/IndexBanner'
-import IndexDownload from '@/pages/_components/IndexDownload'
-import IndexEmpowerment from '@/pages/_components/IndexEmpowerment'
-import IndexProduct from '@/pages/_components/IndexProduct'
-export default {
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import IndexBanner from '@/pages/_components/IndexBanner.vue'
+import IndexDownload from '@/pages/_components/IndexDownload.vue'
+import IndexEmpowerment from '@/pages/_components/IndexEmpowerment.vue'
+import IndexProduct from '@/pages/_components/IndexProduct.vue'
+
+@Component({
   layout: 'IndexLayout',
   scrollToTop: true,
   components: {
@@ -21,5 +23,6 @@ export default {
     IndexBanner,
     IndexProduct,
   },
-}
+})
+export default class IndexPage extends Vue {}
 </script>

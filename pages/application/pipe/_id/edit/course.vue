@@ -20,12 +20,16 @@
   </div>
 </template>
 
-<script type="text/babel">
-export default {
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import LoadingButton from '../../../../../components/LoadingButton.vue'
+
+@Component({
+  components: { LoadingButton },
   async asyncData({ app, store }) {
     const item = store.state.pipe
     const docs = await app.$axios.$get('/v1/blogs')
-    const options = docs.map((d) => {
+    const options = docs.map((d: any) => {
       return {
         value: d.id,
         label: d.title,
@@ -33,25 +37,19 @@ export default {
     })
     return { options, value: item.instruction }
   },
-  data() {
-    return {
-      options: [],
-      value: '',
-    }
-  },
-  computed: {
-    item() {
-      return this.$store.state.pipe
-    },
-  },
-  methods: {
-    async onSubmit() {
-      const data = Object.assign({}, this.item)
-      data.instruction = this.value
-      await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
-        this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { instruction: data.instruction })
-      })
-    },
-  },
+})
+export default class Course extends Vue {
+  options = []
+  value = ''
+  get item() {
+    return this.$store.state.pipe
+  }
+  async onSubmit() {
+    const data = Object.assign({}, this.item)
+    data.instruction = this.value
+    await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
+      this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { instruction: data.instruction })
+    })
+  }
 }
 </script>

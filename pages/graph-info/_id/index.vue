@@ -2,18 +2,17 @@
   <graph-index class="h-100v" :item="item" :readonly="true" tools="run|plus,minus,fit|auto" />
 </template>
 
-<script type="text/babel">
-import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
-export default {
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import GraphIndex from '@/pages/application/_components/graph/GraphIndex.vue'
+@Component({
   components: { GraphIndex },
   async asyncData({ app, params }) {
     const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
     return { item }
   },
-  data() {
-    return {
-      item: undefined,
-    }
-  },
+})
+export default class IndexPage extends Vue {
+  item = null
 }
 </script>

@@ -16,15 +16,15 @@
   </el-table>
 </template>
 
-<script type="text/babel">
-export default {
-  computed: {
-    item() {
-      return this.$store.state.pipe
-    },
-    versions() {
-      return this.item?.versions || []
-    },
-  },
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+@Component
+export default class Versions extends Vue {
+  get item() {
+    return this.$store.state.pipe
+  }
+  get versions() {
+    return this.item?.versions || []
+  }
 }
 </script>

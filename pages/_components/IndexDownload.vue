@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-once>
     <div class="section-title">
       <h1>数据处理从未如此简单</h1>
       <div class="sub-title">你可以在Windows电脑、Linux系统、以及六点了网站上使用sixOClock</div>
@@ -34,10 +34,11 @@
   </section>
 </template>
 
-<script type="text/babel">
-export default {
-  name: 'IndexDownload',
-}
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class IndexDownload extends Vue {}
 </script>
 
 <style lang="scss" scoped>

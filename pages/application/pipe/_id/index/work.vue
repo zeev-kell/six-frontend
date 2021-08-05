@@ -38,13 +38,14 @@
   </div>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
 import pipeConstants from '@/constants/PipeConstants'
-import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
+import GraphIndex from '@/pages/application/_components/graph/GraphIndex.vue'
 import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 
-export default {
+@Component({
   filters: {
     pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
   },
@@ -57,24 +58,21 @@ export default {
       return { graphItem }
     }
   },
-  data() {
-    return {
-      graphItem: undefined,
-    }
-  },
-  computed: {
-    item() {
-      return this.$store.state.pipe
-    },
-  },
-  methods: {
-    onModalCreate() {
-      const job = getObject(this.item?.content || {})
-      this.$nextTick(() => {
-        this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
-      })
-    },
-  },
+})
+export default class Work extends Vue {
+  $refs!: {
+    graph: HTMLFormElement
+  }
+  graphItem = null
+  get item() {
+    return this.$store.state.pipe
+  }
+  onModalCreate() {
+    const job = getObject(this.item?.content || {})
+    this.$nextTick(() => {
+      this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
+    })
+  }
 }
 </script>
 

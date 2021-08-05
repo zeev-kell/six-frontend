@@ -17,14 +17,17 @@
   </div>
 </template>
 
-<script type="text/babel">
-import AsideMenu from '@/pages/support-center/_components/AsideMenu'
-export default {
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import AsideMenu from '@/pages/support-center/_components/AsideMenu.vue'
+
+@Component({
   components: { AsideMenu },
   scrollToTop: true,
   layout: 'IndexLayout',
-  middleware: 'support-menus',
-}
+  middleware: ['support-menus'],
+})
+export default class SupportCenterPage extends Vue {}
 </script>
 
 <style lang="scss" scoped>

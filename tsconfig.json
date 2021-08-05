@@ -24,5 +24,6 @@
     "typeRoots": ["./node_modules/@types", "./typings/**/*", "./types/**/*"]
   },
   "compileOnSave": false,
+  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"],
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

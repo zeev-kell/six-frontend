@@ -1,9 +1,12 @@
-<template>
-  <div>authorization</div>
+﻿<template>
+  <div>authorize</div>
 </template>
 
-<script type="text/babel">
-export default {}
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component
+export default class Authorize extends Vue {}
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss"></style>

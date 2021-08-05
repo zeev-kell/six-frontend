@@ -38,47 +38,45 @@
   </div>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
 import pipeConstants from '@/constants/PipeConstants'
-import GraphIndex from '@/pages/application/_components/graph/GraphIndex'
+import GraphIndex from '@/pages/application/_components/graph/GraphIndex.vue'
 import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 
-export default {
+@Component({
   filters: {
     pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
   },
   components: { GraphIndex },
-  data() {
-    return {
-      profile: {},
-    }
-  },
-  computed: {
-    item() {
-      return this.$store.state.pipe
-    },
-  },
-  methods: {
-    async onModalCreate() {
-      const profile = this.profile
-      if (profile?.content) {
+})
+export default class Case extends Vue {
+  $refs!: {
+    graph: HTMLFormElement
+  }
+  profile: any = {}
+  get item() {
+    return this.$store.state.pipe
+  }
+  async onModalCreate() {
+    const profile = this.profile
+    if (profile?.content) {
+      this.updateGraphJob()
+    } else {
+      const profileId = this.item.profile
+      if (profileId) {
+        this.profile = await this.$axios.$get(`/v2/pipe/${profileId}`)
         this.updateGraphJob()
-      } else {
-        const profileId = this.item.profile
-        if (profileId) {
-          this.profile = await this.$axios.$get(`/v2/pipe/${profileId}`)
-          this.updateGraphJob()
-        }
       }
-    },
-    updateGraphJob() {
-      const job = getObject(this.profile.content)
-      this.$nextTick(() => {
-        this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
-      })
-    },
-  },
+    }
+  }
+  updateGraphJob() {
+    const job = getObject(this.profile.content)
+    this.$nextTick(() => {
+      this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
+    })
+  }
 }
 </script>
 

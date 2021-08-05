@@ -70,11 +70,14 @@
   </div>
 </template>
 
-<script type="text/babel">
-export default {
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({
   layout: 'IndexLayout',
   scrollToTop: true,
-}
+})
+export default class AboutUsPage extends Vue {}
 </script>
 
 <style lang="scss" scoped>

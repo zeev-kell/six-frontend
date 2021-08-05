@@ -38,28 +38,29 @@
   </div>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import marked from '@/directives/marked'
 
-export default {
+@Component({
   directives: {
     ...marked,
   },
-  computed: {
-    item() {
-      return this.$store.state.pipe
-    },
-    username() {
-      return this.$store.getters.username
-    },
-    readmeByAuthor() {
-      // eslint-disable-next-line camelcase
-      return this.item?.readme.by_author
-    },
-    readmeBySystem() {
-      // eslint-disable-next-line camelcase
-      return this.item?.readme.by_system
-    },
-  },
+})
+export default class Index extends Vue {
+  get item() {
+    return this.$store.state.pipe
+  }
+  get username() {
+    return this.$store.getters.username
+  }
+  get readmeByAuthor() {
+    // eslint-disable-next-line camelcase
+    return this.item?.readme.by_author
+  }
+  get readmeBySystem() {
+    // eslint-disable-next-line camelcase
+    return this.item?.readme.by_system
+  }
 }
 </script>

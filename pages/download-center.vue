@@ -70,8 +70,10 @@
   </div>
 </template>
 
-<script type="text/babel">
-const MSG = {
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+const MSG: any = {
   installer: [
     '<div><p>链接：<a href="https://pan.baidu.com/s/1NccGp4VEr8YBoXcYUg73kQ" target="_blank">https://pan.baidu.com/s/1NccGp4VEr8YBoXcYUg73kQ</a></p><p>提取码：6666</p></div>',
     'sixoclock运行环境安装器installer.exe',
@@ -82,22 +84,23 @@ const MSG = {
   ],
   sixrunr: [],
 }
-export default {
+
+@Component({
   scrollToTop: true,
   layout: 'IndexLayoutBase',
-  methods: {
-    openMsg(type) {
-      if (type === 'installer') {
-        window.open(process.env.RESOURCES_URL + '/dist/latest/installer.exe')
-        return
-      }
-      if (type === 'sixbox_linux') {
-        window.open(process.env.RESOURCES_URL + '/dist/latest/Sixbox_linux64_latest.sh')
-        return
-      }
-      this.$alert(...MSG[type], { dangerouslyUseHTMLString: true })
-    },
-  },
+})
+export default class DownloadCenterPage extends Vue {
+  openMsg(type: string) {
+    if (type === 'installer') {
+      window.open(process.env.RESOURCES_URL + '/dist/latest/installer.exe')
+      return
+    }
+    if (type === 'sixbox_linux') {
+      window.open(process.env.RESOURCES_URL + '/dist/latest/Sixbox_linux64_latest.sh')
+      return
+    }
+    ;(this.$alert as any)(...MSG[type], { dangerouslyUseHTMLString: true })
+  }
 }
 </script>
 
