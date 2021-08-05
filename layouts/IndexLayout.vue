@@ -1,5 +1,5 @@
 <template>
-  <div :class="[`body-${$store.state.bodyClass}`]">
+  <div :class="[`body-${bodyClass}`]">
     <index-navigation />
     <Nuxt />
     <index-footer />
@@ -7,12 +7,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, namespace } from 'nuxt-property-decorator'
 import IndexFooter from '@/components/IndexFooter.vue'
 import IndexNavigation from '@/components/IndexNavigation.vue'
+const systemModule = namespace('system')
 
 @Component({
   components: { IndexFooter, IndexNavigation },
 })
-export default class IndexLayout extends Vue {}
+export default class IndexLayout extends Vue {
+  @systemModule.State('bodyClass')
+  bodyClass!: string
+}
 </script>

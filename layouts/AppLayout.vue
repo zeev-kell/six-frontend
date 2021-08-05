@@ -21,6 +21,6 @@ const systemModule = namespace('system')
 })
 export default class AppLayout extends Vue {
   @systemModule.State('bodyClass')
-  bodyClass: string
+  bodyClass!: string
 }
 </script>

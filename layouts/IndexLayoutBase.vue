@@ -1,5 +1,5 @@
 <template>
-  <div :class="[`body-${$store.state.bodyClass}`]">
+  <div :class="[`body-${$store.state.system.bodyClass}`]">
     <index-navigation />
     <Nuxt />
     <index-footer :with-subscribe="false" />

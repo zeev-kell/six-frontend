@@ -72,7 +72,7 @@ export default class IndexEmpowerment extends Vue {
     return [...this.content1[0], ...this.content1[1]]
   }
   @systemModule.State('isMobile')
-  isMobile: boolean
+  isMobile!: boolean
 }
 </script>
 
