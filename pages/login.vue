@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Action } from 'nuxt-property-decorator'
+import { Component, Vue, Action, namespace } from 'nuxt-property-decorator'
 import CanvasParticle from '@/components/CanvasParticle.vue'
 import Copyright from '@/components/Copyright.vue'
 import LoadingButton from '@/components/LoadingButton.vue'

@@ -37,7 +37,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, namespace } from 'nuxt-property-decorator'
+const systemModule = namespace('system')
 
 @Component
 export default class IndexEmpowerment extends Vue {
@@ -70,9 +71,8 @@ export default class IndexEmpowerment extends Vue {
   get content2() {
     return [...this.content1[0], ...this.content1[1]]
   }
-  get isMobile() {
-    return this.$store.state.isMobile
-  }
+  @systemModule.State('isMobile')
+  isMobile: boolean
 }
 </script>
 

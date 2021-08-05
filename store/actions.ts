@@ -1,4 +1,3 @@
-import Element from 'element-ui'
 import { ActionTree } from 'vuex'
 import { RootState } from '@/types/store'
 
@@ -14,35 +13,8 @@ const actions: ActionTree<RootState, RootState> = {
       }
     }
     if (document.documentElement.clientWidth <= 991) {
-      commit('SET_MOBILE')
+      commit('system/SET_MOBILE')
     }
-  },
-  // 登录，目前需要手动保存 user 信息
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ACTION_LOGIN({ commit }, data) {
-    return this.$auth
-      .loginWith('local', { data })
-      .then((response: any) => {
-        this.$auth.setUser(response.data.data)
-        this.$auth.$storage.setLocalStorage('user', response.data.data)
-      })
-      .catch((e) => {
-        Element.Message.error(e.msg || e)
-        return Promise.reject(e)
-      })
-  },
-  // 登出，无论是否异常，清空自身保存的 user 信息
-  ACTION_LOGOUT() {
-    return this.$auth
-      .logout()
-      .finally(() => {
-        this.$auth.setUser(null)
-        this.$auth.$storage.setLocalStorage('user', undefined)
-      })
-      .catch(() => {
-        this.$auth.setUser(null)
-        this.$auth.$storage.setLocalStorage('user', null)
-      })
   },
 }
 export default actions

@@ -49,8 +49,9 @@
 </template>
 
 <script lang="ts">
-import { Action, Component, Vue, Getter } from 'nuxt-property-decorator'
+import { Component, Vue, namespace, Action } from 'nuxt-property-decorator'
 import LogoPng from '@/components/LogoPng.vue'
+const userModule = namespace('user')
 
 @Component({
   components: {
@@ -58,12 +59,12 @@ import LogoPng from '@/components/LogoPng.vue'
   },
 })
 export default class AppNavigation extends Vue {
-  @Getter('username')
-  username: string | undefined
-  @Getter('loggedIn')
-  loggedIn: boolean | undefined
+  @userModule.Getter('username')
+  username: string
+  @userModule.Getter('loggedIn')
+  loggedIn: boolean
   @Action('ACTION_LOGOUT')
-  ACTION_LOGOUT!: () => void
+  ACTION_LOGOUT: () => void
 }
 </script>
 
