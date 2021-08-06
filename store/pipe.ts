@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
+import { Module, VuexModule, VuexMutation } from 'nuxt-property-decorator'
 import PipeConstants from '@/constants/PipeConstants'
 
 @Module({
@@ -51,7 +51,7 @@ export default class PipeModule extends VuexModule {
     return [PipeConstants.Constants.get('TYPE_WORK'), PipeConstants.Constants.get('TYPE_WORKFLOW')].includes(this.type)
   }
 
-  @Mutation
+  @VuexMutation
   UPDATE_CURRENT_WORKFLOW(item: any) {
     Object.keys(item).forEach((key) => {
       ;(this as any)[key] = item[key]

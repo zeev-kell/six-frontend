@@ -1,5 +1,5 @@
 ﻿/* eslint-disable camelcase */
-import { Module, Mutation, VuexModule } from 'vuex-module-decorators'
+import { Module, VuexMutation, VuexModule } from 'nuxt-property-decorator'
 
 @Module({
   name: 'system',
@@ -10,11 +10,11 @@ export default class SystemModule extends VuexModule {
   bodyClass = ''
   isMobile = false
 
-  @Mutation
+  @VuexMutation
   SET_BODY_CLASS(bodyClass: string) {
     this.bodyClass = bodyClass
   }
-  @Mutation
+  @VuexMutation
   SET_MOBILE() {
     this.isMobile = true
   }
