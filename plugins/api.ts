@@ -1,9 +1,13 @@
-﻿const request = {}
-export default (context, inject) => {
+﻿// 增加处理异常的 message 提示
+import { Context, Plugin } from '@nuxt/types'
+const request: { [index: string]: any } = {}
+
+const ApiPlugin: Plugin = (context: Context, inject) => {
   const $api = new Proxy(
     {},
     {
-      get(target, serverName) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      get(target: never, serverName: string) {
         let api = request[serverName]
         if (!api) {
           // 还没加载
@@ -20,9 +24,10 @@ export default (context, inject) => {
         return new Proxy(
           {},
           {
-            get(target, method) {
-              return function (...args) {
-                return api.then(function (server) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            get(target: never, method) {
+              return function (...args: string[]) {
+                return api.then(function (server: any) {
                   return server[method](...args)
                 })
               }
@@ -34,3 +39,5 @@ export default (context, inject) => {
   )
   inject('api', $api)
 }
+
+export default ApiPlugin

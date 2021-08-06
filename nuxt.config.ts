@@ -32,7 +32,7 @@ const config = {
     { src: '@/plugins/axios.ts', ssr: true },
     // { src: '@/plugins/axios-msg.ts', mode: 'client' },
     { src: '@/plugins/axios-msg.ts' },
-    { src: '@/plugins/api.js' },
+    { src: '@/plugins/api.ts' },
     { src: '@/plugins/nuxt-client-init.client.ts' },
     { src: '@/plugins/components.ts' },
     { src: '@/plugins/i18n-router.ts' },
@@ -187,6 +187,9 @@ const config = {
     transpile: [/^element-ui/],
     cache: true,
     parallel: process.env.NODE_ENV === 'development',
+    babel: {
+      plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
+    },
   },
 }
 export default config

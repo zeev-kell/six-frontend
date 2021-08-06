@@ -83,7 +83,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'nuxt-property-decorator'
+import { Component, Getter, Vue, Watch } from 'nuxt-property-decorator'
 import pipeConstants from '@/constants/PipeConstants'
 import { stringifyObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 import { downloadStrLink } from '@/utils/download-link'
@@ -119,12 +119,10 @@ import CanExamine from '@/components/common/CanExamine.vue'
 })
 export default class PipeIdIndex extends Vue {
   activeTab = this.getRouteBaseName()
-
+  @Getter('user/username')
+  username!: number
   get item() {
     return this.$store.state.pipe
-  }
-  get username() {
-    return this.$store.getters.username
   }
   get isApp() {
     return this.$store.getters['pipe/isSoftware']

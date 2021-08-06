@@ -28,11 +28,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, getModule } from 'nuxt-property-decorator'
+import { Action, Component, Vue } from 'nuxt-property-decorator'
 import CanvasParticle from '@/components/CanvasParticle.vue'
 import Copyright from '@/components/Copyright.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
-import UserModule from '~/store/users'
 
 @Component({
   scrollToTop: true,
@@ -47,24 +46,20 @@ export default class LoginPage extends Vue {
   $refs!: {
     form: HTMLFormElement
   }
-
-  ACTION_LOGIN(data: any) {
-    this.$store.dispatch('user/ACTION_LOGIN', data)
-  }
-
   form = {
     username: '',
     password: '',
   }
-
   rules = {
     username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
     password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
   }
-
+  @Action('user/ACTION_LOGIN')
+  ACTION_LOGIN!: (data: any) => Promise<void>
   async onSubmit(): Promise<void> {
     await this.$refs.form.validate()
-    await this.ACTION_LOGIN(this.form)
+    await this.$store.dispatch('user/ACTION_LOGIN', this.form)
+    // await this.ACTION_LOGIN(this.form)
   }
 }
 </script>

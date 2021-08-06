@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'nuxt-property-decorator'
+import { Component, Getter, Vue, Watch } from 'nuxt-property-decorator'
 import pipeConstants from '@/constants/PipeConstants'
 import CanExamine from '@/components/common/CanExamine.vue'
 
@@ -86,9 +86,8 @@ export default class PipeIdEdit extends Vue {
   get item() {
     return this.$store.state.pipe
   }
-  get username() {
-    return this.$store.getters.username
-  }
+  @Getter('user/username')
+  username!: number
   get isApp() {
     return this.$store.getters['pipe/isSoftware']
   }

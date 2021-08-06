@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Getter } from 'nuxt-property-decorator'
 
 @Component
 export default class CheckPermission extends Vue {
@@ -13,8 +13,7 @@ export default class CheckPermission extends Vue {
   get hadPermissive() {
     return this.permissions & this.verification
   }
-  get permissions() {
-    return this.$store.getters.permissions
-  }
+  @Getter('user/permissions')
+  permissions!: number
 }
 </script>

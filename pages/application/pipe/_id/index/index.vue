@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Getter, Vue } from 'nuxt-property-decorator'
 import marked from '@/directives/marked'
 
 @Component({
@@ -51,9 +51,8 @@ export default class PipeIndex extends Vue {
   get item() {
     return this.$store.state.pipe
   }
-  get username() {
-    return this.$store.getters.username
-  }
+  @Getter('user/username')
+  username!: number
   get readmeByAuthor() {
     // eslint-disable-next-line camelcase
     return this.item?.readme.by_author
