@@ -29,6 +29,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import GraphIndex from '@/pages/application/_components/graph/GraphIndex.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
+
 @Component({
   components: {
     LoadingButton,
@@ -76,7 +77,7 @@ export default class Structure extends Vue {
     this.content = this.item.content.toString()
   }
   async onSubmit() {
-    const data = Object.assign({}, this.item, { content: this.content })
+    const data = { content: this.content }
     await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
       this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { content: data.content })
     })

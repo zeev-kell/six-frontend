@@ -39,8 +39,8 @@ import LoadingButton from '@/components/LoadingButton.vue'
   },
 })
 export default class PipeEditIndex extends Vue {
-  readmeByAuthor = undefined
-  readmeBySystem = undefined
+  readmeByAuthor = null
+  readmeBySystem = null
   get item() {
     return this.$store.state.pipe
   }

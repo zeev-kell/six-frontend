@@ -20,7 +20,14 @@
       "~/*": ["./*"]
     },
     "resolveJsonModule": true,
-    "types": ["@types/node", "@nuxt/types", "nuxt-i18n", "@nuxtjs/auth-next", "vue-class-component"],
+    "types": [
+      "@types/node",
+      "@nuxt/types",
+      "nuxt-i18n",
+      "@nuxtjs/auth-next",
+      "@nuxtjs/axios",
+      "@nuxt/content",
+    ],
     "typeRoots": ["./node_modules/@types", "./types"]
   },
   "compileOnSave": false,

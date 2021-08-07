@@ -55,8 +55,7 @@ export default class Case extends Vue {
     return '引用工作' + (this.$store.getters['pipe/isTool'] ? '' : '流')
   }
   async onSubmit() {
-    const data = Object.assign({}, this.item)
-    data.profile = this.value
+    const data = { profile: this.value }
     await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
       this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { profile: data.profile })
     })

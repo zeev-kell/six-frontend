@@ -6,14 +6,7 @@ import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import VueRouter from 'vue-router'
 import { NuxtI18nInstance } from 'nuxt-i18n'
 
-interface $ElMessage extends ElMessage {
-  (text: string, type?: string): ElMessageComponent
-  (options?: ElMessageOptions, type?: string): ElMessageComponent
-  success(text?: string): ElMessageComponent
-  warning(text?: string): ElMessageComponent
-  info(text?: string): ElMessageComponent
-  error(text?: string): ElMessageComponent
-}
+interface $ElMessage extends ElMessage {}
 
 interface VueMethod {
   created(): Promise<any> | void

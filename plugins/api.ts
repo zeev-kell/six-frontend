@@ -11,7 +11,7 @@ const ApiPlugin: Plugin = (context: Context, inject) => {
         let api = request[serverName]
         if (!api) {
           // 还没加载
-          api = import(/* webpackChunkName: "api-[request]" */ `@/assets/api/${serverName}.js`).then(function (ModuleClass) {
+          api = import(/* webpackChunkName: "api-[request]" */ `@/assets/api/${serverName}.ts`).then(function (ModuleClass) {
             request[serverName] = new ModuleClass.Module(context)
             return request[serverName]
           })

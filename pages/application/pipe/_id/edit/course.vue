@@ -45,8 +45,7 @@ export default class Course extends Vue {
     return this.$store.state.pipe
   }
   async onSubmit() {
-    const data = Object.assign({}, this.item)
-    data.instruction = this.value
+    const data = { instruction: this.value }
     await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
       this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { instruction: data.instruction })
     })
