@@ -9,7 +9,6 @@
     "generate": "nuxt-ts generate",
     "build-theme": "et",
     "lint:ts": "eslint --ext .ts,.vue --ignore-path .gitignore .",
-    "lintfix": "eslint --fix --ext .ts,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint **/*.{vue,scss} --ignore-path .gitignore",
     "lint": "yarn lint:ts && yarn lint:style"
   },

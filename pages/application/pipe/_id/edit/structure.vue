@@ -85,7 +85,7 @@ export default class Structure extends Vue {
       this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { content: data.content })
     })
   }
-  onBeforeLeave(activeName) {
+  onBeforeLeave(activeName: string) {
     if (activeName === '3') {
       window.open(`/graph-info/${this.item.resource_id}/edit`, '_blank')
       return false

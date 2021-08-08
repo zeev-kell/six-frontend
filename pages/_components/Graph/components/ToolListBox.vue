@@ -35,16 +35,16 @@ export default class TaskBox extends TableMixins<any> {
 
   async getTableData(listQuery: tableQuery): Promise<void> {
     let response = await this.$api.pipe.getList()
-    response = response.filter((r) => r.type === 0 || r.type === 1)
-    response.forEach((r) => {
+    response = response.filter((r: any) => r.type === 0 || r.type === 1)
+    response.forEach((r: any) => {
       r.content = cwl
     })
     this.tableData = response
   }
   async created(): Promise<void> {
     let response = await this.$api.pipe.getList()
-    response = response.filter((r) => r.type === 0 || r.type === 1)
-    response.forEach((r) => {
+    response = response.filter((r: any) => r.type === 0 || r.type === 1)
+    response.forEach((r: any) => {
       r.content = cwl
     })
     this.tableData = response
