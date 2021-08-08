@@ -9,9 +9,6 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
-}
-
-body {
   color: #333;
 }
 
@@ -61,7 +58,7 @@ body {
 }
 
 .nuxt-progress {
-  background-color: transparent;
+  background-color: transparent !important;
 
   &::after,
   &::before {
@@ -101,6 +98,6 @@ body {
 
 @import 'layout';
 @import 'common';
-@import '../iconfont/iconfont.css';
-@import 'transition';
+//@import '../iconfont/iconfont.css';
+//@import 'transition';
 @import 'other';

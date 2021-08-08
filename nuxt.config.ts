@@ -28,7 +28,7 @@ const config = {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    { src: '@/plugins/element-ui.ts', ssr: true },
+    { src: '@/plugins/element-ui.ts', ssr: false },
     { src: '@/plugins/axios.ts', ssr: true },
     // { src: '@/plugins/axios-msg.ts', mode: 'client' },
     { src: '@/plugins/axios-msg.ts' },
@@ -190,6 +190,7 @@ const config = {
     babel: {
       plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
     },
+    vendor: ['element-ui'],
   },
 }
 export default config

@@ -1,14 +1,15 @@
-/* 改变 icon 字体路径变量，必需 */
-//$--font-path: '~element-ui/lib/theme-chalk/fonts';
-//$--border-radius-base: 0;
-//$--card-border-radius: 0;
-//
-//@import '~element-ui/packages/theme-chalk/src/index';
+/*
+Write your variables here. All available variables can be
+found in element-ui/packages/theme-chalk/src/common/var.scss.
+For example, to overwrite the theme color:
+*/
 
-@import '../element-variables';
-@import '../theme/index.css';
-@import './node_modules/element-theme-chalk/src/mixins/mixins';
-@import './node_modules/element-theme-chalk/src/mixins/_button';
+/* icon font path, required */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+$--border-radius-base: 0;
+$--card-border-radius: 0;
+@import '~element-ui/packages/theme-chalk/src/index';
+@import "../../node_modules/element-ui/lib/theme-chalk/display.css";
 @import './variables';
 
 .el-button--normal {

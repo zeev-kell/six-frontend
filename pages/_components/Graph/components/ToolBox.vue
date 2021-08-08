@@ -50,7 +50,7 @@ export default class ToolBox extends Vue {
       action: 'actionDownscale',
     },
     fit: {
-      icon: 'iconfont icon-fullscreen',
+      icon: 'feather icon-maximize-2',
       title: '适应窗口',
       action: 'actionFitToViewport',
     },
