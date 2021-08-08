@@ -3,15 +3,15 @@
     <el-aside width="240px">
       <el-menu :default-active="$route.path" :router="true">
         <el-menu-item index="/application/u-center">
-          <i class="el-icon-menu"></i>
+          <i class="el-icon-menu" />
           <span slot="title">基本信息</span>
         </el-menu-item>
         <el-menu-item index="/application/u-center/security">
-          <i class="el-icon-document"></i>
+          <i class="el-icon-document" />
           <span slot="title">账户安全</span>
         </el-menu-item>
         <el-menu-item index="/application/u-center/authorize">
-          <i class="el-icon-setting"></i>
+          <i class="el-icon-setting" />
           <span slot="title">授权管理</span>
         </el-menu-item>
       </el-menu>
@@ -22,7 +22,7 @@
   </el-container>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component

@@ -17,7 +17,7 @@
                         <span class="value">{{ input.description }}</span>
                       </div>
                     </div>
-                    <i class="fa fa-info-circle text-muted"> </i>
+                    <i class="fa fa-info-circle text-muted" />
                   </el-tooltip>
                   {{ input.label || getInputSource(input) }}
                   <span class="text-muted">({{ input.type.type }})</span>
@@ -25,7 +25,7 @@
                 <div>
                   <el-dropdown trigger="click" @command="onPortOptionChange($event, input)">
                     <span class="pointer text-white">
-                      <i class="el-icon-more"></i>
+                      <i class="el-icon-more" />
                     </span>
                     <el-dropdown-menu slot="dropdown" class="input-dropdown-menu">
                       <el-dropdown-item> {{ $t('cwl.SetNull') }} </el-dropdown-item>
@@ -46,7 +46,9 @@
               />
 
               <div v-else class="text-center m-b-1">
-                <p class="text-muted">{{ $t('cwl.NoValue') }}</p>
+                <p class="text-muted">
+                  {{ $t('cwl.NoValue') }}
+                </p>
                 <el-button v-if="isFileOrDirectory(input)" type="primary" size="mini" class="el-button-dark-border" @click="enableFileEditing(input)">
                   {{ $t('cwl.Browse') }}
                 </el-button>
@@ -61,8 +63,8 @@
               <div v-if="input.source">
                 <!--No connections-->
                 <div v-if="input.source.length === 0 && input.isVisible">
-                  <span v-if="input.type.isNullable" class="text-warning"> <i class="el-icon-warning"></i> This port is not connected </span>
-                  <span v-if="!input.type.isNullable" class="text-danger"> <i class="el-icon-error"></i> This required port is not connected </span>
+                  <span v-if="input.type.isNullable" class="text-warning"> <i class="el-icon-warning" /> This port is not connected </span>
+                  <span v-if="!input.type.isNullable" class="text-danger"> <i class="el-icon-error" /> This required port is not connected </span>
                 </div>
                 <!--List of connections-->
                 <div v-if="input.source.length > 0" class="text-muted">{{ $t('cwl.Connections') }}: {{ input.source.join(', ') }}</div>
@@ -72,7 +74,9 @@
         </collapse-item>
       </div>
     </div>
-    <div v-else>{{ $t('cwl.NoAppParams') }}</div>
+    <div v-else>
+      {{ $t('cwl.NoAppParams') }}
+    </div>
   </div>
 </template>
 

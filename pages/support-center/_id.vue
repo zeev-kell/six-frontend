@@ -2,15 +2,15 @@
   <el-main class="main-container">
     <el-row type="flex">
       <el-col class="marked-content el-col-equal">
-        <div ref="markdown" v-html="markdown"></div>
+        <div ref="markdown" v-html="markdown" />
       </el-col>
       <el-col style="width: 260px">
         <client-only>
-          <markdown-toc :toc="toc"></markdown-toc>
+          <markdown-toc :toc="toc" />
         </client-only>
       </el-col>
     </el-row>
-    <el-image v-if="imageList.length !== 0" ref="elImage" style="width: 0; height: 0" :src="currentImage" :preview-src-list="imageList"> </el-image>
+    <el-image v-if="imageList.length !== 0" ref="elImage" style="width: 0; height: 0" :src="currentImage" :preview-src-list="imageList" />
   </el-main>
 </template>
 

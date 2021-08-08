@@ -3,13 +3,13 @@
     <div role="tab" aria-expanded="true" @click="collapsed = !collapsed">
       <div role="button" class="el-collapse-item__header text-uppercase" :class="[!collapsed && 'is-active']">
         {{ $t('cwl.' + title) }}
-        <i class="el-collapse-item__arrow el-icon-arrow-right" :class="[!collapsed && 'is-active']"></i>
+        <i class="el-collapse-item__arrow el-icon-arrow-right" :class="[!collapsed && 'is-active']" />
       </div>
     </div>
     <el-collapse-transition>
       <div v-show="!collapsed" role="tabpanel" class="el-collapse-item__wrap">
         <div class="el-collapse-item__content">
-          <slot></slot>
+          <slot />
         </div>
       </div>
     </el-collapse-transition>

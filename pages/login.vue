@@ -5,25 +5,25 @@
         <h1 class="text-center">六点了技术</h1>
         <el-form ref="form" size="large" :model="form" :rules="rules" @submit.native.prevent>
           <el-form-item prop="username">
-            <el-input v-model="form.username" placeholder="请输入账号"></el-input>
+            <el-input v-model="form.username" placeholder="请输入账号" />
           </el-form-item>
           <el-form-item prop="password">
-            <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
+            <el-input v-model="form.password" placeholder="请输入密码" type="password" />
           </el-form-item>
           <el-form-item>
-            <loading-button class="el-button-block" round type="primary" native-type="submit" :callback="onSubmit">登录</loading-button>
+            <loading-button class="el-button-block" round type="primary" native-type="submit" :callback="onSubmit"> 登录 </loading-button>
           </el-form-item>
           <el-form-item>
             <div class="text-right">
               <span class="text-muted">没有账号？</span>
-              <nuxt-link :to="localePath('register')">立即注册</nuxt-link>
+              <nuxt-link :to="localePath('register')"> 立即注册 </nuxt-link>
             </div>
           </el-form-item>
         </el-form>
       </div>
       <copyright />
     </div>
-    <canvas-particle></canvas-particle>
+    <canvas-particle />
   </div>
 </template>
 

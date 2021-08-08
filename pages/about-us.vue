@@ -15,7 +15,7 @@
       <div class="container">
         <div class="el-row el-row--flex is-justify-space-around">
           <div v-for="item in 4" :key="item" class="el-col el-col-6 m-b-2 text-center">
-            <el-image style="width: 100px; height: 100px" src="/images/banner.jpg" fit="cover"></el-image>
+            <el-image style="width: 100px; height: 100px" src="/images/banner.jpg" fit="cover" />
             <h3 class="pro-title m-y-1">
               <strong>云计算</strong>
             </h3>
@@ -62,7 +62,7 @@
       <div class="container">
         <div class="el-row el-row--flex is-justify-space-around">
           <div v-for="item in 5" :key="item" class="el-col el-col-auto m-b-2 text-center">
-            <el-image style="width: 200px; height: 100px" src="/images/banner.jpg" fit="cover"></el-image>
+            <el-image style="width: 200px; height: 100px" src="/images/banner.jpg" fit="cover" />
           </div>
         </div>
       </div>

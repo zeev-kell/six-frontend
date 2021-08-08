@@ -1,4 +1,4 @@
-﻿// 增加处理异常的 message 提示
+// 增加处理异常的 message 提示
 import { Context, Plugin } from '@nuxt/types'
 const request: { [index: string]: any } = {}
 

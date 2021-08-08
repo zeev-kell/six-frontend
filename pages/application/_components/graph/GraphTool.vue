@@ -2,27 +2,19 @@
   <div class="graph-tool">
     <div v-for="(group, index) of toolList" :key="index" class="d-inline-b">
       <div class="el-button-group">
-        <el-button
-          v-for="btn of group"
-          :key="btn.title"
-          :title="btn.title"
-          :icon="btn.icon"
-          type="dark"
-          size="mini"
-          @click="onClick(btn.action)"
-        ></el-button>
+        <el-button v-for="btn of group" :key="btn.title" :title="btn.title" :icon="btn.icon" type="dark" size="mini" @click="onClick(btn.action)" />
       </div>
     </div>
     <el-dialog title="下载文件" :append-to-body="true" :visible.sync="downloadVisible" center class="el-dialog-dark">
       <div>
         <p>选择需要下载的内容</p>
-        <el-checkbox v-model="dMain">主文件</el-checkbox>
-        <el-checkbox v-model="dJob">运行参数文件</el-checkbox>
+        <el-checkbox v-model="dMain"> 主文件 </el-checkbox>
+        <el-checkbox v-model="dJob"> 运行参数文件 </el-checkbox>
       </div>
       <div>
         <p>选择下载内容的格式</p>
-        <el-radio v-model="dType" label="json">JSON 格式</el-radio>
-        <el-radio v-model="dType" label="yaml">YAML 格式</el-radio>
+        <el-radio v-model="dType" label="json"> JSON 格式 </el-radio>
+        <el-radio v-model="dType" label="yaml"> YAML 格式 </el-radio>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button size="mini" @click="downloadVisible = false">取 消</el-button>

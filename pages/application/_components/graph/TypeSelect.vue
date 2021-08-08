@@ -12,7 +12,7 @@
       <label class="el-col-full">{{ $t('cwl.AllowArrayAsSingle') }}</label>
       <div class="el-col-auto">
         {{ ruleForm.isItemOrArray ? $t('common.yes') : $t('common.no') }}
-        <el-switch v-model="ruleForm.isItemOrArray" :disabled="readonly" @change="onFormChange"></el-switch>
+        <el-switch v-model="ruleForm.isItemOrArray" :disabled="readonly" @change="onFormChange" />
       </div>
     </div>
     <!--Item type-->

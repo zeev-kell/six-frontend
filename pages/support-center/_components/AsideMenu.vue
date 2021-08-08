@@ -3,7 +3,7 @@
     <div class="aside-wrap__inner">
       <h2 class="pl-20">帮助文档</h2>
       <el-menu class="support-menu" :default-active="$route.path" :router="true">
-        <menu-item v-for="menu in menus" :key="menu.key" :menu="menu"></menu-item>
+        <menu-item v-for="menu in menus" :key="menu.key" :menu="menu" />
       </el-menu>
     </div>
   </div>

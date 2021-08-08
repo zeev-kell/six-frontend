@@ -5,9 +5,6 @@
 </template>
 
 <script type="text/babel">
-import 'cwl-svg/src/assets/styles/themes/rabix-dark/theme.scss'
-import 'cwl-svg/src/plugins/port-drag/theme.dark.scss'
-import 'cwl-svg/src/plugins/selection/theme.dark.scss'
 import { GraphEvent } from '@/constants/GraphEvent'
 import PipeConstants from '@/constants/PipeConstants'
 export default {

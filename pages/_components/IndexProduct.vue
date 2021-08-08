@@ -12,9 +12,9 @@
                 <div class="pro-icon">
                   <span class="fa-stack fa-3x text-primary">
                     <fa :icon="sixSquare" class="fa-stack-2x" />
-                    <fa icon="arrow-circle-down" class="fa-stack-1x fa-inverse"></fa>
+                    <fa icon="arrow-circle-down" class="fa-stack-1x fa-inverse" />
                   </span>
-                  <i class="arrow-circle-down"></i>
+                  <i class="arrow-circle-down" />
                 </div>
                 <h3 class="pro-title m-y-1">
                   <strong>软件下载</strong>
@@ -37,7 +37,7 @@
                 <div class="pro-icon">
                   <span class="fa-stack fa-3x text-primary">
                     <fa :icon="sixSquare" class="fa-stack-2x" />
-                    <fa icon="cubes" class="fa-stack-1x fa-inverse"></fa>
+                    <fa icon="cubes" class="fa-stack-1x fa-inverse" />
                   </span>
                 </div>
                 <h3 class="pro-title m-y-1">
@@ -58,7 +58,7 @@
                 <div class="pro-icon">
                   <span class="fa-stack fa-3x text-primary">
                     <fa :icon="sixSquare" class="fa-stack-2x" />
-                    <fa icon="chart-line" class="fa-stack-1x fa-inverse"></fa>
+                    <fa icon="chart-line" class="fa-stack-1x fa-inverse" />
                   </span>
                 </div>
                 <h3 class="pro-title m-y-1">
@@ -81,7 +81,7 @@
                 <div class="pro-icon">
                   <span class="fa-stack fa-3x text-primary">
                     <fa :icon="sixSquare" class="fa-stack-2x" />
-                    <fa icon="lightbulb" class="fa-stack-1x fa-inverse"></fa>
+                    <fa icon="lightbulb" class="fa-stack-1x fa-inverse" />
                   </span>
                 </div>
                 <h3 class="pro-title m-y-1">

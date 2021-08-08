@@ -9,7 +9,7 @@
     "generate": "nuxt-ts generate",
     "build-theme": "et",
     "lint:ts": "eslint --ext .ts,.vue --ignore-path .gitignore .",
-    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lintfix": "eslint --fix --ext .ts,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint **/*.{vue,scss} --ignore-path .gitignore",
     "lint": "yarn lint:ts && yarn lint:style"
   },
@@ -71,7 +71,6 @@
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "axios-mock-adapter": "^1.19.0",
-    "babel-eslint": "^10.1.0",
     "better-mock": "^0.2.8",
     "element-theme": "^2.0.1",
     "element-theme-chalk": "^2.15.0",

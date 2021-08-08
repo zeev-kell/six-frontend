@@ -1,4 +1,4 @@
-﻿import { GetterTree, ActionTree } from 'vuex'
+import { GetterTree, ActionTree } from 'vuex'
 import Element from 'element-ui'
 import { NuxtState } from '@nuxt/types/app'
 
@@ -21,9 +21,8 @@ export const getters: GetterTree<UserModuleState, NuxtState> = {
 
 export const actions: ActionTree<UserModuleState, NuxtState> = {
   // 登录，目前需要手动保存 user 信息
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ACTION_LOGIN(store, data): Promise<any> {
-    return this.$auth
+  async ACTION_LOGIN(store, data) {
+    return await this.$auth
       .loginWith('local', { data })
       .then((response: any) => {
         this.$auth.setUser(response.data.data)
@@ -36,8 +35,8 @@ export const actions: ActionTree<UserModuleState, NuxtState> = {
   },
 
   // 登出，无论是否异常，清空自身保存的 user 信息
-  ACTION_LOGOUT(): Promise<any> {
-    return this.$auth
+  async ACTION_LOGOUT(): Promise<any> {
+    return await this.$auth
       .logout()
       .finally(() => {
         this.$auth.setUser(null)

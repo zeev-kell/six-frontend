@@ -10,7 +10,7 @@
             <template slot="title">
               <b>系统自动生成部分（只读）</b>
             </template>
-            <div v-marked="readmeBySystem"></div>
+            <div v-marked="readmeBySystem" />
           </el-collapse-item>
         </el-collapse>
         <client-only placeholder="Loading...">

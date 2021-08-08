@@ -8,13 +8,13 @@
       <div class="el-row">
         <div class="el-col-md-12 el-col-md-offset-6 el-row el-row--flex text-center el-col-24">
           <div class="el-col-equal">
-            <fa :icon="['fab', 'windows']" class="fa-4x"></fa>
+            <fa :icon="['fab', 'windows']" class="fa-4x" />
           </div>
           <div class="el-col-equal">
-            <fa :icon="['fab', 'linux']" class="fa-4x"></fa>
+            <fa :icon="['fab', 'linux']" class="fa-4x" />
           </div>
           <div class="el-col-equal">
-            <fa icon="desktop" class="fa-4x"></fa>
+            <fa icon="desktop" class="fa-4x" />
           </div>
         </div>
       </div>
@@ -22,10 +22,10 @@
         <div class="el-col-md-6 el-col-md-offset-9 text-center el-col-12 el-col-offset-6">
           <div class="el-row el-row--flex is-justify-space-around">
             <nuxt-link v-slot="{ navigate }" :to="localePath('application')" custom>
-              <el-button type="primary" @click="navigate" @keypress.enter="navigate">使用</el-button>
+              <el-button type="primary" @click="navigate" @keypress.enter="navigate"> 使用 </el-button>
             </nuxt-link>
             <nuxt-link v-slot="{ navigate }" :to="localePath('download-center')" custom>
-              <el-button type="primary" @click="navigate" @keypress.enter="navigate">下载</el-button>
+              <el-button type="primary" @click="navigate" @keypress.enter="navigate"> 下载 </el-button>
             </nuxt-link>
           </div>
         </div>

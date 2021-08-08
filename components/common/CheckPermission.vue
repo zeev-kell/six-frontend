@@ -1,6 +1,6 @@
 <template>
   <client-only v-if="hadPermissive">
-    <slot></slot>
+    <slot />
   </client-only>
 </template>
 

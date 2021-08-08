@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <slot :onBlur="onBlur"></slot>
+    <slot :onBlur="onBlur" />
   </div>
 </template>
 

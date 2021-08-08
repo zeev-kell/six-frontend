@@ -7,7 +7,7 @@
         <el-form class="el-row el-row--flex is-justify-center" @submit.native.prevent>
           <el-form-item style="min-width: 300px">
             <el-input placeholder="请输入邮箱">
-              <el-button slot="append" icon="el-icon-search"></el-button>
+              <el-button slot="append" icon="el-icon-search" />
             </el-input>
           </el-form-item>
         </el-form>
@@ -30,16 +30,16 @@
             <div class="title">产品</div>
             <ul class="list-unstyled">
               <li>
-                <nuxt-link :to="localePath('index') + '#section-product'">云协作</nuxt-link>
+                <nuxt-link :to="localePath('index') + '#section-product'"> 云协作 </nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath('application-pipes')">流程组合</nuxt-link>
+                <nuxt-link :to="localePath('application-pipes')"> 流程组合 </nuxt-link>
               </li>
               <li>
                 <a :href="RESOURCES_URL + '/data/'" target="_blank">数据集</a>
               </li>
               <li>
-                <nuxt-link :to="localePath('application-docs')">知识库</nuxt-link>
+                <nuxt-link :to="localePath('application-docs')"> 知识库 </nuxt-link>
               </li>
             </ul>
           </div>
@@ -47,13 +47,13 @@
             <div class="title">下载中心</div>
             <ul class="list-unstyled">
               <li>
-                <nuxt-link :to="localePath('download-center')">客户端下载</nuxt-link>
+                <nuxt-link :to="localePath('download-center')"> 客户端下载 </nuxt-link>
               </li>
               <li>
                 <a :href="RESOURCES_URL + '/data/'" target="_blank">数据下载</a>
               </li>
               <li>
-                <nuxt-link :to="localePath('application-pipes')">软件仓库</nuxt-link>
+                <nuxt-link :to="localePath('application-pipes')"> 软件仓库 </nuxt-link>
               </li>
             </ul>
           </div>
@@ -61,16 +61,16 @@
             <div class="title">资源</div>
             <ul class="list-unstyled">
               <li>
-                <nuxt-link :to="localePath('support-center')">帮助文档</nuxt-link>
+                <nuxt-link :to="localePath('support-center')"> 帮助文档 </nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'Q_A' } })">常见Q&A</nuxt-link>
+                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'Q_A' } })"> 常见Q&A </nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'advice' } })">意见建议</nuxt-link>
+                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'advice' } })"> 意见建议 </nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'get_started' } })">使用指南</nuxt-link>
+                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'get_started' } })"> 使用指南 </nuxt-link>
               </li>
               <li><a href="https://github.com/6-oclock" target="_blank">更新日志</a></li>
               <li><a href="https://github.com/6-oclock" target="_blank">NewSroom</a></li>
@@ -79,35 +79,35 @@
           <div class="el-col-12 hidden-md-and-up">
             <div class="el-row text-center" style="line-height: 1.5">
               <div class="el-col-12">
-                <nuxt-link :to="localePath('download-center')">下载中心</nuxt-link>
+                <nuxt-link :to="localePath('download-center')"> 下载中心 </nuxt-link>
               </div>
               <div class="el-col-12">
-                <nuxt-link :to="localePath('support-center')">资源</nuxt-link>
+                <nuxt-link :to="localePath('support-center')"> 资源 </nuxt-link>
               </div>
               <div class="el-col-12">
                 <a href="https://github.com/6-oclock" target="_blank">关于我们</a>
               </div>
               <div class="el-col-12">
-                <nuxt-link :to="localePath('index') + '#section-product'">产品</nuxt-link>
+                <nuxt-link :to="localePath('index') + '#section-product'"> 产品 </nuxt-link>
               </div>
             </div>
           </div>
           <div class="el-col-md-8 el-col-10 el-row text-center icon-wrap">
             <div class="el-col-8">
               <div class="icon">
-                <fa icon="download" class="fa-2x"></fa>
+                <fa icon="download" class="fa-2x" />
               </div>
               <div class="hidden-sm-and-down">下载</div>
             </div>
             <div class="el-col-8">
               <div class="icon">
-                <fa :icon="['fab', 'weixin']" class="fa-2x"></fa>
+                <fa :icon="['fab', 'weixin']" class="fa-2x" />
               </div>
               <div class="hidden-sm-and-down">官方微信</div>
             </div>
             <div class="el-col-8">
               <div class="icon">
-                <fa :icon="['fab', 'github']" class="fa-2x"></fa>
+                <fa :icon="['fab', 'github']" class="fa-2x" />
               </div>
               <div class="hidden-sm-and-down">GitHub 仓库</div>
             </div>

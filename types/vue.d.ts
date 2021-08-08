@@ -1,4 +1,4 @@
-﻿import 'nuxt-property-decorator'
+import 'nuxt-property-decorator'
 import 'vue/types/vue'
 import { MessageBoxData } from 'element-ui/types/message-box'
 import { ElMessage, ElMessageComponent, ElMessageOptions } from 'element-ui/types/message'

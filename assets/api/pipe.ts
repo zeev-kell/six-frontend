@@ -1,4 +1,4 @@
-﻿// 增加处理异常的 message 提示
+// 增加处理异常的 message 提示
 import Element from 'element-ui'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { Context } from '@nuxt/types'

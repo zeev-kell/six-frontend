@@ -5,11 +5,11 @@
       <div class="el-row el-row--flex">
         <div class="el-col-full">
           <nuxt-link v-slot="{ navigate }" :to="localePath('application-doc-new')" custom>
-            <el-button type="primary" @click="navigate" @keypress.enter="navigate">新建</el-button>
+            <el-button type="primary" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
           </nuxt-link>
           <span class="m-x-1">或</span>
           <el-select v-model="value" filterable placeholder="引用知识库文档">
-            <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value"></el-option>
+            <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
           </el-select>
         </div>
         <div class="el-col-auto">

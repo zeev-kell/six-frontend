@@ -2,8 +2,8 @@
   <div class="pipe-container">
     <div class="el-row el-row--flex is-align-middle pipe-info">
       <div class="el-col-auto px-20">
-        <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px"></i>
-        <i v-if="isWork" class="el-icon-reading" style="font-size: 36px"></i>
+        <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px" />
+        <i v-if="isWork" class="el-icon-reading" style="font-size: 36px" />
       </div>
       <div class="el-col el-col-16 text-truncate mx-0">
         <h2 class="text-truncate my-0" :title="item['name']">
@@ -27,10 +27,10 @@
       </div>
       <div class="el-col el-col-8 text-right">
         <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipe/' + item['resource_id'])" custom>
-          <el-button type="warning" icon="el-icon-back" @click="navigate" @keypress.enter="navigate">详情</el-button>
+          <el-button type="warning" icon="el-icon-back" @click="navigate" @keypress.enter="navigate"> 详情 </el-button>
         </nuxt-link>
         <can-examine>
-          <el-button type="danger" icon="el-icon-delete" @click="handleDelete">删除</el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="handleDelete"> 删除 </el-button>
         </can-examine>
       </div>
     </div>

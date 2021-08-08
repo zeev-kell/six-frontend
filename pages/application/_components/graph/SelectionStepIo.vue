@@ -4,7 +4,7 @@
     <div v-if="isInput" class="el-form-item el-row--flex">
       <label class="el-col-full">{{ $t('cwl.Required') }}</label>
       <div class="el-col-auto">
-        <el-switch v-model="ruleForm.isRequired" :disabled="readonly" @change="step.type.isNullable = $event"></el-switch>
+        <el-switch v-model="ruleForm.isRequired" :disabled="readonly" @change="step.type.isNullable = $event" />
       </div>
     </div>
     <!--ID-->
@@ -15,7 +15,7 @@
     <div v-if="!isInput" class="m-b-05">
       <!--No connections-->
       <div v-if="step['source'].length === 0">
-        <span class="text-warning small"> <i class="el-icon-warning"></i> This port is not connected </span>
+        <span class="text-warning small"> <i class="el-icon-warning" /> This port is not connected </span>
       </div>
       <!--List of connections-->
       <div v-if="step['source'].length > 0" class="text-muted small">{{ $t('cwl.Connections') }}: {{ step['source'].join(', ') }}</div>
@@ -25,7 +25,7 @@
       <input v-model="ruleForm.label" class="form-control" :disabled="readonly" @input="onLabelChange" />
     </el-form-item>
     <!--Input Type -->
-    <type-select :param-type="ruleForm.typeForm" :readonly="readonly" @onUpdate="onParamTypeChange"></type-select>
+    <type-select :param-type="ruleForm.typeForm" :readonly="readonly" @onUpdate="onParamTypeChange" />
     <!--Symbols-->
     <el-form-item v-if="isEnumType" label="Symbols" prop="symbols">
       <el-select
@@ -38,7 +38,7 @@
         no-data-text="无推荐数据"
         placeholder=""
         @change="onSymbolsChange"
-      ></el-select>
+      />
     </el-form-item>
     <!--File Types-->
     <el-form-item v-if="isFileType" label="File types" prop="fileTypes">
@@ -52,7 +52,7 @@
         no-data-text="无推荐数据"
         placeholder=""
         @change="onFileTypeChange"
-      ></el-select>
+      />
     </el-form-item>
     <!--Batch group-->
     <el-form-item v-if="isHasBatch" prop="batchType">
@@ -60,7 +60,7 @@
         Create batch group
         <el-tooltip v-if="customValueIsNotSelected">
           <span class="text-warning small">
-            <i class="el-icon-warning"></i>
+            <i class="el-icon-warning" />
           </span>
           <div slot="content">
             This workflow has a batch criteria which has been set via the API. If you change it, you won't be able to restore the custom batch
@@ -76,14 +76,14 @@
       </select>
       <!--Warning when some other input is already configured as batch-->
       <div v-else class="text-warning small" style="line-height: 1">
-        <i class="el-icon-warning"></i>
+        <i class="el-icon-warning" />
         Only one input per workflow can be configured as batch. Grouping criteria has already been set on #
         {{ workflowModel['batchInput'] }}.
       </div>
     </el-form-item>
     <!--Description-->
     <el-form-item :label="$t('cwl.Description')" prop="description">
-      <textarea v-model="ruleForm.description" class="form-control" rows="4" :disabled="readonly" @change="onChange('description')"></textarea>
+      <textarea v-model="ruleForm.description" class="form-control" rows="4" :disabled="readonly" @change="onChange('description')" />
     </el-form-item>
     <!-- TODO -->
     <!--Secondary Files-->

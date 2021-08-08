@@ -4,7 +4,14 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: ['@nuxtjs/eslint-config-typescript', 'prettier', 'prettier/vue', 'plugin:prettier/recommended', 'plugin:nuxt/recommended'],
+  extends: [
+    '@nuxtjs/eslint-config-typescript',
+    'prettier',
+    'prettier/vue',
+    'eslint:recommended',
+    'plugin:prettier/recommended',
+    'plugin:nuxt/recommended',
+  ],
   plugins: ['prettier'],
   // add your custom rules here
   rules: {
@@ -14,8 +21,20 @@ module.exports = {
     'nuxt/no-cjs-in-config': 'off',
     'lines-between-class-members': 'off',
     'vue/no-v-html': 'off',
-    'no-unused-vars': 'warn',
-    '@typescript-eslint/no-unused-vars': ['warn'],
+    'no-unused-vars': [
+      process.env.NODE_ENV === 'production' ? 1 : 0,
+      {
+        // 参数不检查
+        args: 'none',
+      },
+    ],
+    '@typescript-eslint/no-unused-vars': [
+      process.env.NODE_ENV === 'production' ? 1 : 0,
+      {
+        // 参数不检查
+        args: 'none',
+      },
+    ],
     '@typescript-eslint/no-explicit-any': 'off',
   },
   overrides: [

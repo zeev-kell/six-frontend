@@ -17,7 +17,7 @@
           text-color="#fff"
           active-text-color="#ffd04b"
         >
-          <el-menu-item :index="localePath('application-pipes')">主页</el-menu-item>
+          <el-menu-item :index="localePath('application-pipes')"> 主页 </el-menu-item>
         </el-menu>
       </div>
       <el-menu
@@ -40,8 +40,8 @@
           </el-submenu>
         </template>
         <template v-else>
-          <el-menu-item index="/register">注册</el-menu-item>
-          <el-menu-item index="/login">登录</el-menu-item>
+          <el-menu-item index="/register"> 注册 </el-menu-item>
+          <el-menu-item index="/login"> 登录 </el-menu-item>
         </template>
       </el-menu>
     </div>

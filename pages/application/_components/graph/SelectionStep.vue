@@ -41,10 +41,10 @@
 
       <!--Description-->
       <el-form-item :label="$t('cwl.Description')">
-        <textarea v-model="ruleForm.description" class="form-control" rows="4" :disabled="readonly"></textarea>
+        <textarea v-model="ruleForm.description" class="form-control" rows="4" :disabled="readonly" />
       </el-form-item>
 
-      <selection-step-hints :step="step" :readonly="readonly"></selection-step-hints>
+      <selection-step-hints :step="step" :readonly="readonly" />
     </el-form>
   </div>
 </template>

@@ -31,12 +31,12 @@ const AxiosPlugin: Plugin = ({ $axios, store }) => {
     }
     if (error.response.status === 401) {
       if (process.env.NODE_ENV === 'development') {
-        alert(JSON.stringify(error.response))
+        console.log(error.response.data)
       }
       // eslint-disable-next-line no-console
       console.error(error.response.config?.url)
       if (error.response.config?.url !== '/logout') {
-        await store.dispatch('logout')
+        await store.dispatch('user/ACTION_LOGOUT')
       }
     }
     const res = {

@@ -5,7 +5,7 @@
         {{ labelName }}
       </div>
       <button type="button" class="el-dialog__headerbtn" style="top: 15px" @click="showPanel = false">
-        <i class="el-dialog__close el-icon el-icon-close"></i>
+        <i class="el-dialog__close el-icon el-icon-close" />
       </button>
     </div>
     <div class="card-body scrollbar">

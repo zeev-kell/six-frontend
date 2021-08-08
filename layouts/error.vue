@@ -1,7 +1,7 @@
 <template>
   <div class="error-page container">
     <p class="nav-white" style="box-shadow: none">
-      <logo-png></logo-png>
+      <logo-png />
     </p>
     <div style="margin-top: 20px">
       <div v-if="error.statusCode === 401">
@@ -16,7 +16,7 @@
         <p>您可以尝试刷新页面或者重新打开。</p>
       </div>
       <p>
-        <nuxt-link class="logo" :to="localePath('/')">返回主页</nuxt-link>
+        <nuxt-link class="logo" :to="localePath('/')"> 返回主页 </nuxt-link>
       </p>
     </div>
   </div>

@@ -7,18 +7,20 @@
             <el-form-item>
               <el-autocomplete v-model="query.name" :fetch-suggestions="queryName" placeholder="按名字筛选">
                 <template slot-scope="{ item }">
-                  <div class="name">{{ item.value }}</div>
+                  <div class="name">
+                    {{ item.value }}
+                  </div>
                 </template>
               </el-autocomplete>
             </el-form-item>
             <el-form-item>
               <el-select v-model="query.type" placeholder="按类别筛选" clearable>
-                <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value"></el-option>
+                <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value" />
               </el-select>
             </el-form-item>
             <el-form-item>
               <el-select v-model="query.category" placeholder="按类型筛选" clearable>
-                <el-option v-for="item in categoryList" :key="item" :label="item" :value="item"></el-option>
+                <el-option v-for="item in categoryList" :key="item" :label="item" :value="item" />
               </el-select>
             </el-form-item>
           </el-form>
@@ -40,8 +42,8 @@
               </nuxt-link>
             </template>
           </el-table-column>
-          <el-table-column label="类别" prop="type" sortable width="120"> </el-table-column>
-          <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
+          <el-table-column label="类别" prop="type" sortable width="120" />
+          <el-table-column label="分类" prop="category" sortable width="120" />
           <el-table-column label="摘要" prop="description">
             <template slot-scope="{ row }">
               {{ row.content | intercept }}

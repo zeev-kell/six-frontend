@@ -1,7 +1,7 @@
 <template>
   <div class="graph-job-editor h-100 el-row el-row--flex">
     <div class="h-100 el-col-full p-r">
-      <svg ref="svg" class="cwl-workflow h-100"></svg>
+      <svg ref="svg" class="cwl-workflow h-100" />
       <graph-tool :workflow="workflow" :tools="tools || undefined" />
     </div>
     <transition name="el-fade-in-linear">

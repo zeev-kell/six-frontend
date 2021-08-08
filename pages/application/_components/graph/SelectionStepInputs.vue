@@ -31,7 +31,7 @@
                     </span>
                   </div>
                 </div>
-                <i class="el-icon-info text-muted"></i>
+                <i class="el-icon-info text-muted" />
               </el-tooltip>
               {{ input.label || input.id }}
               <span class="text-muted">({{ input.type.type }})</span>
@@ -52,7 +52,7 @@
               <el-dropdown trigger="click" @command="onPortOptionChange($event, input)">
                 <span class="pointer">
                   {{ input.status }}
-                  <i class="el-icon-arrow-down el-icon--right"></i>
+                  <i class="el-icon-arrow-down el-icon--right" />
                 </span>
                 <el-dropdown-menu slot="dropdown" class="input-dropdown-menu">
                   <el-dropdown-item
@@ -63,7 +63,9 @@
                     :class="{ active: input.status === c.value }"
                   >
                     <div>{{ c.caption }}</div>
-                    <div class="text-muted small">{{ c.description }}</div>
+                    <div class="text-muted small">
+                      {{ c.description }}
+                    </div>
                   </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
@@ -78,18 +80,18 @@
             :type="input.type"
             :readonly="readonly"
             @onUpdate="stepValueUpdate($event, input.id + '.default')"
-          ></selection-input-entry>
+          />
           <!--Link Merge Method Group-->
           <div class="el-form-item">
             <label class="input-label text-muted">Link Merge Method</label>
-            <link-merge-select :readonly="readonly" :value="input.linkMerge.value" @onUpdate="input.linkMerge.value = $event"></link-merge-select>
+            <link-merge-select :readonly="readonly" :value="input.linkMerge.value" @onUpdate="input.linkMerge.value = $event" />
           </div>
           <!--Connections-->
           <div class="connections">
             <!--No connections-->
             <div v-if="input.source.length === 0 && input.isVisible">
-              <span v-if="input.type.isNullable" class="text-warning"> <i class="el-icon-warning"></i> This port is not connected </span>
-              <span v-else-if="!input.type.isNullable" class="text-danger"> <i class="el-icon-error"></i> This required port is not connected </span>
+              <span v-if="input.type.isNullable" class="text-warning"> <i class="el-icon-warning" /> This port is not connected </span>
+              <span v-else-if="!input.type.isNullable" class="text-danger"> <i class="el-icon-error" /> This required port is not connected </span>
             </div>
             <!--List of connections-->
             <div v-if="input.source.length > 0" class="text-muted">{{ $t('cwl.Connections') }}: {{ input.source.join(', ') }}</div>

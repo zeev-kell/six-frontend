@@ -6,7 +6,7 @@
     <div class="container">
       <div v-for="item in 4" :key="item" class="el-row el-row--flex">
         <div class="el-col el-col-12" :class="item % 2 ? '' : 'order-2'">
-          <div class="cooperation-image"></div>
+          <div class="cooperation-image" />
         </div>
         <div class="el-col el-col-12">
           <div class="c-text">

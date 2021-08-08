@@ -4,7 +4,7 @@
       <div class="el-row el-row--flex">
         <div class="el-col-full">
           <el-select ref="pipeSelect" v-model="value" filterable :placeholder="placeholder" @change="onValueChange">
-            <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value"></el-option>
+            <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
           </el-select>
         </div>
         <div class="el-col-auto">

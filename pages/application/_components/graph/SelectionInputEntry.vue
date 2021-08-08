@@ -2,7 +2,7 @@
   <div class="selection-input-entry">
     <div v-if="warning" class="form-control-label">
       <span class="text-warning">
-        <i class="el-icon-error"></i>
+        <i class="el-icon-error" />
         {{ warning }}
       </span>
     </div>
@@ -11,7 +11,7 @@
       <span class="text-muted"> [{{ index }}] </span>
       <!--Delete button for array item if its a map-->
       <el-tooltip v-if="!readonly" content="Delete map array">
-        <i class="el-icon-delete clickable" @click="deleteFromArray()"></i>
+        <i class="el-icon-delete clickable" @click="deleteFromArray()" />
       </el-tooltip>
     </div>
 
@@ -24,7 +24,9 @@
         <template v-if="isInputType('enum')">
           <select v-model="actualValue" class="form-control" :disabled="readonly">
             <option value="">-- none --</option>
-            <option v-for="val of input.type.symbols" :key="val" :value="val">{{ val }}</option>
+            <option v-for="val of input.type.symbols" :key="val" :value="val">
+              {{ val }}
+            </option>
           </select>
         </template>
 
@@ -67,7 +69,7 @@
 
         <!--Delete button for array item if its not a map-->
         <el-tooltip v-if="index !== -1 && input.type.type !== 'map' && !readonly" content="Delete" class="m-l-05 p-5">
-          <i class="el-icon-delete" @click="deleteFromArray()"></i>
+          <i class="el-icon-delete" @click="deleteFromArray()" />
         </el-tooltip>
       </div>
       <!--Records-->
@@ -77,7 +79,7 @@
             {{ entry.label || entry.id }}
             <span class="text-muted">({{ entry.type.type }})</span>
             <el-tooltip v-if="entry.description">
-              <i class="el-icon-info text-muted"></i>
+              <i class="el-icon-info text-muted" />
               <div slot="content">
                 {{ entry.description }}
               </div>
@@ -90,7 +92,7 @@
             :value="value ? value[entry.id] : undefined"
             :readonly="readonly"
             @onUpdate="onUpdateRecord($event, entry.id)"
-          ></selection-input-entry>
+          />
         </div>
       </template>
 
@@ -106,13 +108,12 @@
               :value="entry"
               :readonly="readonly"
               @onUpdate="onUpdateArray($event, i)"
-            >
-            </selection-input-entry>
+            />
           </div>
         </div>
 
         <el-button type="text" :disabled="readonly" size="mini" @click="addArrayEntry(input)">
-          <i class="el-icon-circle-plus"></i> New {{ input.type.items }}
+          <i class="el-icon-circle-plus" /> New {{ input.type.items }}
         </el-button>
       </template>
 

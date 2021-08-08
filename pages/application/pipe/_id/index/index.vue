@@ -7,10 +7,10 @@
         </div>
         <div v-if="item.readme">
           <div v-if="readmeBySystem" class="card-body marked-content">
-            <div v-marked="readmeBySystem"></div>
+            <div v-marked="readmeBySystem" />
           </div>
           <div v-if="readmeByAuthor" class="card-body marked-content">
-            <div v-marked="readmeByAuthor"></div>
+            <div v-marked="readmeByAuthor" />
           </div>
         </div>
         <div v-else class="card-body">
@@ -23,7 +23,9 @@
         <div class="card-header el-row el-row--flex is-align-middle py-5">
           <h4>创建人</h4>
         </div>
-        <div class="card-body">{{ item.provider }}</div>
+        <div class="card-body">
+          {{ item.provider }}
+        </div>
       </div>
       <div class="card">
         <div class="card-header el-row el-row--flex is-align-middle py-5">

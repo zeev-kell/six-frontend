@@ -1,5 +1,5 @@
 <template>
-  <canvas class="canvas-particle"></canvas>
+  <canvas class="canvas-particle" />
 </template>
 
 <script lang="ts">

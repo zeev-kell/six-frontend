@@ -5,10 +5,10 @@
         <h1 class="text-center">六点了技术</h1>
         <el-form ref="form" size="large" :model="form" :rules="rules" @submit.native.prevent>
           <el-form-item prop="username">
-            <el-input v-model="form.username" placeholder="请输入账号，长度在6到20个字符"></el-input>
+            <el-input v-model="form.username" placeholder="请输入账号，长度在6到20个字符" />
           </el-form-item>
           <el-form-item prop="password">
-            <el-input v-model="form.password" placeholder="请输入密码，长度在6到20个字符" type="password"></el-input>
+            <el-input v-model="form.password" placeholder="请输入密码，长度在6到20个字符" type="password" />
           </el-form-item>
           <el-form-item prop="email">
             <el-input v-model="form.email" placeholder="请输入邮箱" />
@@ -24,13 +24,13 @@
             <loading-button class="el-button-block" round type="primary" native-type="submit" :callback="register"> 立即注册 </loading-button>
           </el-form-item>
           <el-form-item class="text-center mb-0 el-form_error_rl" prop="checked">
-            <el-checkbox v-model="form.checked">注册即代表同意</el-checkbox>
+            <el-checkbox v-model="form.checked"> 注册即代表同意 </el-checkbox>
             <el-link type="primary" :underline="false" class="y-baseline" @click="showUserAgreement()"> 《产品使用协议》 </el-link>
           </el-form-item>
           <el-form-item>
             <div class="text-right">
               <span class="text-muted">已有账号？</span>
-              <nuxt-link :to="localePath('login')">立即登录</nuxt-link>
+              <nuxt-link :to="localePath('login')"> 立即登录 </nuxt-link>
             </div>
           </el-form-item>
         </el-form>
@@ -45,13 +45,13 @@
         :close-on-click-modal="false"
         :close-on-press-escape="false"
       >
-        <div v-marked="userAgreement" v-loading="loadingUA"></div>
+        <div v-marked="userAgreement" v-loading="loadingUA" />
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" style="width: 200px" @click="showUAVisible = false">确 定</el-button>
+          <el-button type="primary" style="width: 200px" @click="showUAVisible = false"> 确 定 </el-button>
         </div>
       </el-dialog>
     </div>
-    <canvas-particle></canvas-particle>
+    <canvas-particle />
   </div>
 </template>
 

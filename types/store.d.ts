@@ -1,5 +1,8 @@
-import { NuxtState } from '@nuxt/types/app'
+import { Auth } from '@nuxtjs/auth-next'
+import 'vuex/types'
 
-export interface RootState extends NuxtState {
-  helpMenus: string[]
+declare module 'vuex/types/index' {
+  interface Store {
+    $auth: Auth
+  }
 }

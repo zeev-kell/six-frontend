@@ -8,7 +8,7 @@
           </el-form-item>
           <el-form-item label="版本" prop="version">
             <el-select v-model="formModel.version" placeholder="请输入版本" disabled>
-              <el-option v-for="version in versions" :key="version.value" :label="version.label" :value="version.value"> </el-option>
+              <el-option v-for="version in versions" :key="version.value" :label="version.label" :value="version.value" />
             </el-select>
           </el-form-item>
           <el-form-item label="分类" prop="category">

@@ -4,18 +4,18 @@
       <h1 class="m-b-2 f-48">生物医疗大数据服务</h1>
       <div class="mb-20">
         <nuxt-link v-slot="{ navigate }" :to="localePath('index') + '#section-product'" custom>
-          <el-button type="primary" @click="navigate" @keypress.enter="navigate">云计算协作</el-button>
+          <el-button type="primary" @click="navigate" @keypress.enter="navigate"> 云计算协作 </el-button>
         </nuxt-link>
         <nuxt-link v-slot="{ navigate }" :to="localePath({ name: 'support-center-id', params: { id: 'get_started' } })" custom>
-          <el-button class="m-l-1" @click="navigate" @keypress.enter="navigate">开始体验</el-button>
+          <el-button class="m-l-1" @click="navigate" @keypress.enter="navigate"> 开始体验 </el-button>
         </nuxt-link>
       </div>
       <div class="search-wrap mb-50">
         <el-input v-model="searchInput" style="max-width: 450px" placeholder="提供1000+种工具和知识" @keyup.enter.native="toSearch">
           <el-select slot="prepend" v-model="searchType" placeholder="请选择" style="width: 80px">
-            <el-option label="工具" value="0"></el-option>
-            <el-option label="流程" value="1"></el-option>
-            <el-option label="文档" value="2"></el-option>
+            <el-option label="工具" value="0" />
+            <el-option label="流程" value="1" />
+            <el-option label="文档" value="2" />
           </el-select>
         </el-input>
       </div>
@@ -25,10 +25,10 @@
     </div>
     <div class="down-btn-wrap">
       <div style="padding: 10px; cursor: pointer" @click="scrollToNext()">
-        <div class="down-btn"></div>
+        <div class="down-btn" />
       </div>
     </div>
-    <el-backtop :visibility-height="400"></el-backtop>
+    <el-backtop :visibility-height="400" />
   </section>
 </template>
 

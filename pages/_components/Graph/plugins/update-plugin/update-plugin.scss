@@ -1,0 +1,16 @@
+$node-update-fill: #f89406;
+$node-update-fill-fade: #94621b;
+
+svg.cwl-workflow.__plugin-update {
+  .node.__update-has-update .inner {
+    fill: $node-update-fill;
+  }
+
+  &.__selection-plugin-fade {
+    .node:not(.__selection-plugin-highlight) {
+      &.__update-has-update .inner {
+        fill: $node-update-fill-fade;
+      }
+    }
+  }
+}

@@ -11,12 +11,12 @@
           />
           <span class="el-input-group__append" style="background: transparent; border: none">
             <button :disabled="readonly" type="button" class="pointer el-button--text" @click="deleteSecondaryFile(idx)">
-              <i class="el-icon-delete"></i>
+              <i class="el-icon-delete" />
             </button>
           </span>
         </div>
         <div>
-          <el-button type="text" size="mini" @click="addSecondaryFile('', 'File')"> <i class="el-icon-plus"></i> Add a file </el-button>
+          <el-button type="text" size="mini" @click="addSecondaryFile('', 'File')"> <i class="el-icon-plus" /> Add a file </el-button>
           <template v-if="allowDirectories">
             or
             <el-button type="text" class="ml-0" size="mini" @click="addSecondaryFile('', 'Directory')"> a directory </el-button>
@@ -29,8 +29,8 @@
       </div>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button type="dark" size="mini" @click="onClose">取 消</el-button>
-      <el-button type="primary" size="mini" @click="onSubmit">确 定</el-button>
+      <el-button type="dark" size="mini" @click="onClose"> 取 消 </el-button>
+      <el-button type="primary" size="mini" @click="onSubmit"> 确 定 </el-button>
     </div>
   </el-dialog>
 </template>

@@ -10,7 +10,7 @@
             type of AWS instance to execute your task.
           </div>
           <div class="m-b-05 text-center">
-            <el-button type="primary" size="small" @click="addEntry()">Add a Hint</el-button>
+            <el-button type="primary" size="small" @click="addEntry()"> Add a Hint </el-button>
           </div>
           <div class="text-center">
             <el-link type="primary" href="http://docs.sevenbridges.com/docs/list-of-execution-hints" target="_blank"> Learn More </el-link>
@@ -31,7 +31,7 @@
                 <!--Actions Column-->
                 <div v-if="!readonly" class="remove-icon">
                   <el-tooltip content="Delete">
-                    <i class="el-icon-delete" @click="removeEntry(i)"></i>
+                    <i class="el-icon-delete" @click="removeEntry(i)" />
                   </el-tooltip>
                 </div>
               </div>
@@ -42,7 +42,7 @@
         <el-button v-if="!readonly && !!hints.length" type="primary" icon="el-icon-plus" size="small" @click="addEntry()"> Add a Hint </el-button>
       </div>
       <div slot="footer" class="dialog-footer text-right">
-        <el-button type="dark" size="small" @click="dialogVisible = false">Close</el-button>
+        <el-button type="dark" size="small" @click="dialogVisible = false"> Close </el-button>
       </div>
     </el-dialog>
   </div>

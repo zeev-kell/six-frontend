@@ -26,7 +26,9 @@
             <h4>引用自</h4>
           </div>
           <div class="card-body">
-            <div style="font-weight: 600; margin-bottom: 10px">{{ profile.type | pipeTypeTranslate | t }}</div>
+            <div style="font-weight: 600; margin-bottom: 10px">
+              {{ profile.type | pipeTypeTranslate | t }}
+            </div>
             <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + item.profile)" :title="item.profile">
               {{ profile.name }}
             </nuxt-link>

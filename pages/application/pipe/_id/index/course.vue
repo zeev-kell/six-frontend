@@ -2,7 +2,7 @@
   <div class="container-fluid" style="overflow: inherit">
     <el-row v-if="item.instruction" type="flex">
       <el-col class="marked-content el-col-equal">
-        <div ref="markdown" v-html="markdown"></div>
+        <div ref="markdown" v-html="markdown" />
       </el-col>
       <el-col style="width: 260px">
         <div class="card">
@@ -15,12 +15,12 @@
           </div>
         </div>
         <client-only>
-          <markdown-toc :toc="toc"></markdown-toc>
+          <markdown-toc :toc="toc" />
         </client-only>
       </el-col>
     </el-row>
     <div v-else>暂无使用教程</div>
-    <el-image v-if="imageList.length !== 0" ref="elImage" style="width: 0; height: 0" :src="currentImage" :preview-src-list="imageList"> </el-image>
+    <el-image v-if="imageList.length !== 0" ref="elImage" style="width: 0; height: 0" :src="currentImage" :preview-src-list="imageList" />
   </div>
 </template>
 

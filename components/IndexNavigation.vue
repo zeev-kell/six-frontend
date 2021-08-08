@@ -10,21 +10,27 @@
       </div>
       <div class="el-col-equal">
         <el-menu :default-active="$route.path" :router="true" mode="horizontal" class="hidden-sm-and-down">
-          <el-menu-item :index="localePath('index')">{{ $t('nav.index') }}</el-menu-item>
+          <el-menu-item :index="localePath('index')">
+            {{ $t('nav.index') }}
+          </el-menu-item>
           <el-submenu index="null" popper-class="custom-menu-item" class="no-active">
-            <template slot="title">{{ $t('nav.product') }}</template>
+            <template slot="title">
+              {{ $t('nav.product') }}
+            </template>
             <li role="menuitem" class="el-menu-item">
               <nuxt-link v-slot="{ navigate }" :to="localePath('index') + '#section-product'" custom>
                 <a @click="navigate" @keypress.enter="navigate">云协作</a>
               </nuxt-link>
             </li>
-            <el-menu-item :index="localePath('application-pipes')">流程组合</el-menu-item>
+            <el-menu-item :index="localePath('application-pipes')"> 流程组合 </el-menu-item>
             <el-menu-item class="px-0">
               <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link px-10">数据库</a>
             </el-menu-item>
-            <el-menu-item :index="localePath('application-docs')">知识库</el-menu-item>
+            <el-menu-item :index="localePath('application-docs')"> 知识库 </el-menu-item>
           </el-submenu>
-          <el-menu-item :index="localePath('download-center')">{{ $t('nav.download') }}</el-menu-item>
+          <el-menu-item :index="localePath('download-center')">
+            {{ $t('nav.download') }}
+          </el-menu-item>
           <el-menu-item :index="localePath('support-center')" :class="{ 'is-child-active': $route.name.startsWith('support-center') }">
             {{ $t('nav.help') }}
           </el-menu-item>
@@ -39,13 +45,19 @@
         <client-only>
           <el-menu mode="horizontal">
             <li v-if="!username" class="el-menu-item menu-link" role="menuitem">
-              <nuxt-link :to="localePath('register')">{{ $t('nav.register') }}</nuxt-link>
+              <nuxt-link :to="localePath('register')">
+                {{ $t('nav.register') }}
+              </nuxt-link>
             </li>
             <li v-if="!username" class="el-menu-item menu-link" role="menuitem">
-              <nuxt-link :to="localePath('login')">{{ $t('nav.login') }}</nuxt-link>
+              <nuxt-link :to="localePath('login')">
+                {{ $t('nav.login') }}
+              </nuxt-link>
             </li>
             <li v-else class="el-menu-item menu-link" role="menuitem">
-              <nuxt-link :to="localePath('application')">{{ username }}</nuxt-link>
+              <nuxt-link :to="localePath('application')">
+                {{ username }}
+              </nuxt-link>
             </li>
           </el-menu>
         </client-only>
@@ -53,11 +65,13 @@
       <div class="el-col-auto d-flex is-align-middle hidden-md-and-up">
         <ul class="el-menu--horizontal el-menu">
           <li class="el-menu-item menu-link" role="menuitem">
-            <nuxt-link :to="localePath('login')">{{ username || $t('nav.login') }}</nuxt-link>
+            <nuxt-link :to="localePath('login')">
+              {{ username || $t('nav.login') }}
+            </nuxt-link>
           </li>
           <li class="el-menu-item menu-link" role="menuitem">
             <a @click="showMobileMenu = true">
-              <fa icon="bars" class="fa-2x"></fa>
+              <fa icon="bars" class="fa-2x" />
             </a>
           </li>
         </ul>
@@ -66,23 +80,29 @@
     <div class="nav-wrap" :class="{ active: showMobileMenu }">
       <div class="d-flex flex-justify-end border-bottom">
         <button type="button" class="el-dialog__headerbtn" @click="showMobileMenu = false">
-          <i class="el-dialog__close el-icon el-icon-close"></i>
+          <i class="el-dialog__close el-icon el-icon-close" />
         </button>
       </div>
       <el-menu :default-active="$route.path" :router="true">
-        <el-menu-item :index="localePath('index')">{{ $t('nav.index') }}</el-menu-item>
+        <el-menu-item :index="localePath('index')">
+          {{ $t('nav.index') }}
+        </el-menu-item>
         <el-submenu index="null" popper-class="custom-menu-item" class="no-active">
-          <template slot="title">{{ $t('nav.product') }}</template>
+          <template slot="title">
+            {{ $t('nav.product') }}
+          </template>
           <li role="menuitem" class="el-menu-item">
             <a :href="localePath('index') + '#section-product'" @click="showMobileMenu = false">云协作</a>
           </li>
-          <el-menu-item :index="localePath('application-pipes')">流程组合</el-menu-item>
+          <el-menu-item :index="localePath('application-pipes')"> 流程组合 </el-menu-item>
           <el-menu-item class="px-0">
             <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link pl-40 d-inline-b w-100">数据库</a>
           </el-menu-item>
-          <el-menu-item :index="localePath('application-docs')">知识库</el-menu-item>
+          <el-menu-item :index="localePath('application-docs')"> 知识库 </el-menu-item>
         </el-submenu>
-        <el-menu-item :index="localePath('download-center')">{{ $t('nav.download') }}</el-menu-item>
+        <el-menu-item :index="localePath('download-center')">
+          {{ $t('nav.download') }}
+        </el-menu-item>
         <el-menu-item :index="localePath('support-center')" :class="{ 'is-child-active': $route.name.startsWith('support-center') }">
           {{ $t('nav.help') }}
         </el-menu-item>
@@ -91,9 +111,15 @@
         </li>
         <li class="el-menu-item menu-link d-flex is-justify-space-around">
           <client-only>
-            <nuxt-link v-if="!username" :to="localePath('register')">{{ $t('nav.register') }}</nuxt-link>
-            <nuxt-link v-if="!username" :to="localePath('login')">{{ $t('nav.login') }}</nuxt-link>
-            <nuxt-link v-else :to="localePath('application')">{{ username }}</nuxt-link>
+            <nuxt-link v-if="!username" :to="localePath('register')">
+              {{ $t('nav.register') }}
+            </nuxt-link>
+            <nuxt-link v-if="!username" :to="localePath('login')">
+              {{ $t('nav.login') }}
+            </nuxt-link>
+            <nuxt-link v-else :to="localePath('application')">
+              {{ username }}
+            </nuxt-link>
           </client-only>
         </li>
       </el-menu>

@@ -1,9 +1,9 @@
 <template>
   <div class="index-container">
-    <index-banner></index-banner>
-    <index-empowerment></index-empowerment>
-    <index-product></index-product>
-    <index-download></index-download>
+    <index-banner />
+    <index-empowerment />
+    <index-product />
+    <index-download />
   </div>
 </template>
 

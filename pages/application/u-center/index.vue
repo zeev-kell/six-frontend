@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div>index</div>
 </template>
 

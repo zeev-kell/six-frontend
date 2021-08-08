@@ -17,12 +17,10 @@
       <span class="add-on">:</span>
       <input v-model="ctrl.value" class="form-control" placeholder="value" />
       <el-tooltip v-if="!readonly" content="Delete">
-        <el-button icon="el-icon-delete" type="text" @click="onRemove(index)"> </el-button>
+        <el-button icon="el-icon-delete" type="text" @click="onRemove(index)" />
       </el-tooltip>
     </div>
-    <el-button v-if="children.length !== 0 && !readonly" type="text" size="mini" @click="onAdd">
-      <i class="el-icon-plus"></i> Add an Entry
-    </el-button>
+    <el-button v-if="children.length !== 0 && !readonly" type="text" size="mini" @click="onAdd"> <i class="el-icon-plus" /> Add an Entry </el-button>
   </div>
 </template>
 

@@ -9,7 +9,7 @@
     <section>
       <el-container>
         <el-aside width="240px" class="aside-wrap">
-          <aside-menu></aside-menu>
+          <aside-menu />
         </el-aside>
         <nuxt-child />
       </el-container>

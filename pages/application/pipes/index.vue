@@ -7,18 +7,20 @@
             <el-form-item>
               <el-autocomplete v-model="query.name" :fetch-suggestions="queryName" placeholder="按名字筛选">
                 <template slot-scope="{ item }">
-                  <div class="name">{{ item.value }}</div>
+                  <div class="name">
+                    {{ item.value }}
+                  </div>
                 </template>
               </el-autocomplete>
             </el-form-item>
             <el-form-item>
               <el-select v-model="query.type" placeholder="按类别筛选" clearable>
-                <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value"></el-option>
+                <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value" />
               </el-select>
             </el-form-item>
             <el-form-item>
               <el-select v-model="query.category" placeholder="按类型筛选" clearable>
-                <el-option v-for="item in categoryList" :key="item" :label="item" :value="item"></el-option>
+                <el-option v-for="item in categoryList" :key="item" :label="item" :value="item" />
               </el-select>
             </el-form-item>
           </el-form>
@@ -37,7 +39,7 @@
             <template slot-scope="{ row }">
               <div class="el-row--flex is-align-middle">
                 <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
-                  <el-button type="text" icon="el-icon-search" class="px-5 py-0" @click.stop="showVisualModal(row['pipe_id'])"></el-button>
+                  <el-button type="text" icon="el-icon-search" class="px-5 py-0" @click.stop="showVisualModal(row['pipe_id'])" />
                 </el-tooltip>
                 <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + row['pipe_id'])" :title="row.name">
                   {{ row.name }}
@@ -50,8 +52,9 @@
               {{ row.type | pipeTypeTranslate | t }}
             </template>
           </el-table-column>
-          <el-table-column label="分类" prop="category" sortable width="120"></el-table-column>
-          <el-table-column label="最近版本" prop="version" width="120"></el-table-column>
+          <el-table-column label="分类" prop="category" sortable width="120" />
+          <el-table-column label="最近版本" prop="version" width="120" />
+          <el-table-column label="所有者" prop="provider" sortable width="120" />
           <el-table-column label="介绍" prop="description">
             <template slot-scope="{ row }">
               {{ row.description | intercept }}

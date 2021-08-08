@@ -9,11 +9,13 @@
           <el-carousel-item v-for="(item, index) of content2" :key="index">
             <div class="text-center">
               <div>
-                <fa :icon="item.icon" class="fa-4x text-primary"></fa>
+                <fa :icon="item.icon" class="fa-4x text-primary" />
               </div>
               <div>
-                <h3 class="title">{{ item.title }}</h3>
-                <div class="content" v-html="item.content"></div>
+                <h3 class="title">
+                  {{ item.title }}
+                </h3>
+                <div class="content" v-html="item.content" />
               </div>
             </div>
           </el-carousel-item>
@@ -23,11 +25,13 @@
         <div v-for="(content_1, i) of content1" :key="i" class="el-row mb-50">
           <div v-for="(item, j) of content_1" :key="j" class="el-col-12 el-row">
             <div class="el-col-12 text-right image">
-              <fa :icon="item.icon" class="fa-4x text-primary"></fa>
+              <fa :icon="item.icon" class="fa-4x text-primary" />
             </div>
             <div class="el-col-12 text-left">
-              <h3 class="title">{{ item.title }}</h3>
-              <div class="content" v-html="item.content"></div>
+              <h3 class="title">
+                {{ item.title }}
+              </h3>
+              <div class="content" v-html="item.content" />
             </div>
           </div>
         </div>

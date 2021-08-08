@@ -1,10 +1,12 @@
 <template>
   <div class="card container-fluid">
     <div class="card-header el-row--flex is-align-middle">
-      <h2 class="mx-0 el-col-equal">{{ title }}</h2>
+      <h2 class="mx-0 el-col-equal">
+        {{ title }}
+      </h2>
     </div>
     <div class="card-body">
-      <el-tabs v-model="activeName" type="card">
+      <el-tabs v-model="activeName" type="card" :before-leave="onBeforeLeave">
         <el-tab-pane label="编辑内容" name="1">
           <div class="codemirror-box">
             <client-only placeholder="Loading...">
@@ -17,6 +19,7 @@
             <graph-index :item="graph" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
           </div>
         </el-tab-pane>
+        <el-tab-pane label="可视化编辑" name="3"></el-tab-pane>
       </el-tabs>
     </div>
     <div class="card-footer">
@@ -81,6 +84,13 @@ export default class Structure extends Vue {
     await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
       this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { content: data.content })
     })
+  }
+  onBeforeLeave(activeName) {
+    if (activeName === '3') {
+      window.open(`/graph-info/${this.item.resource_id}/edit`, '_blank')
+      return false
+    }
+    return true
   }
 }
 </script>

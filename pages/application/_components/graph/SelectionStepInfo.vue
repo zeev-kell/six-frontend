@@ -12,7 +12,7 @@
     <div>
       <label>{{ $t('cwl.Description') }}{{ description ? '' : ':' }}</label>
       <div class="el-form-item">
-        <div v-marked="description"></div>
+        <div v-marked="description" />
       </div>
     </div>
   </div>
