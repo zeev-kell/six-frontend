@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { Component, Getter, Vue } from 'nuxt-property-decorator'
-import marked from '@/directives/marked'
+import marked from '@/directives/marked/marked'
 
 @Component({
   directives: {

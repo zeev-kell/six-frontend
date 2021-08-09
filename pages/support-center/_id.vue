@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import dMarked from '@/directives/marked'
+import dMarked from '@/directives/marked/marked'
 import { resourceHelp } from '@/utils/resource-help'
 import axios from 'axios'
 const BLOG_URL = process.env.RESOURCES_URL + '/blog'

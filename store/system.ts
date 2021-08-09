@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { MutationTree } from 'vuex'
+import type { MutationTree } from 'vuex'
 
 export const state = () => ({
   bodyClass: '',

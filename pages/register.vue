@@ -59,7 +59,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import CanvasParticle from '@/components/CanvasParticle.vue'
 import Copyright from '@/components/Copyright.vue'
-import marked from '@/directives/marked'
+import marked from '@/directives/marked/marked'
 import axios from 'axios'
 import LoadingButton from '@/components/LoadingButton.vue'
 

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { GetterTree, MutationTree } from 'vuex'
+import type { GetterTree, MutationTree } from 'vuex'
 import PipeConstants from '@/constants/PipeConstants'
 import { NuxtState } from '@nuxt/types/app'
 

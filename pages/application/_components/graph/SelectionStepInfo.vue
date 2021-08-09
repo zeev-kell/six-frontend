@@ -19,8 +19,8 @@
 </template>
 
 <script type="text/babel">
-import marked from '@/directives/marked'
 import { AppHelper } from '@/pages/application/_components/graph/helpers/AppHelper'
+import marked from '~/directives/marked/marked'
 
 export default {
   name: 'SelectionStepInfo',

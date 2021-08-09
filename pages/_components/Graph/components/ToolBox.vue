@@ -2,7 +2,7 @@
 import { SVGArrangePlugin, Workflow } from 'cwl-svg'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
-import { CreateElement, VNode } from 'vue'
+import type { CreateElement, VNode } from 'vue'
 import { AppValidityState, graphTool, graphTools } from '../types'
 
 @Component

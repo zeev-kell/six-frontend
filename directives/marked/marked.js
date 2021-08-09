@@ -2,7 +2,7 @@ import marked from 'marked'
 import sanitizeHtml from 'sanitize-html'
 import highlight from 'highlight.js'
 import 'highlight.js/styles/darcula.css'
-import '@/assets/scss/marked.scss'
+import '@/directives/marked/marked.scss'
 
 let toc = []
 const renderer = new marked.Renderer()

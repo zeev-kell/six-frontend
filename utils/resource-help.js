@@ -1,4 +1,4 @@
-import dMarked from '@/directives/marked'
+import dMarked from '@/directives/marked/marked'
 const BLOG_URL = process.env.RESOURCES_URL + '/blog'
 
 export function resourceHelp(data = '') {

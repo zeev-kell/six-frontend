@@ -1,6 +1,6 @@
 .pipe-el-tabs {
   .el-tabs__header {
-    background-color: #FCFCFC;
+    background-color: #fcfcfc;
   }
 
   .el-tabs__nav-scroll {
@@ -40,4 +40,12 @@
     margin-bottom: 5px;
     font-weight: 600;
   }
+}
+
+//
+// marked
+//
+
+.marked-p > p:first-child {
+  margin-top: 4px;
 }

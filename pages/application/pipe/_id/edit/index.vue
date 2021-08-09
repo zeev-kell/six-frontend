@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import marked from '@/directives/marked'
+import marked from '@/directives/marked/marked'
 import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({

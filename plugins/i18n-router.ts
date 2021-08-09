@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { Plugin } from '@nuxt/types'
-import { Route } from 'vue-router'
+import type { Route } from 'vue-router'
 
 // Make sure to pick a unique name for the flag
 // so it won't conflict with any other mixin.

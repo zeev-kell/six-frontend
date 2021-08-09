@@ -1,7 +1,7 @@
 import 'nuxt-property-decorator'
 import 'vue/types/vue'
 import { MessageBoxData } from 'element-ui/types/message-box'
-import { ElMessage, ElMessageComponent, ElMessageOptions } from 'element-ui/types/message'
+import { ElMessage } from 'element-ui/types/message'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import VueRouter from 'vue-router'
 import { NuxtI18nInstance } from 'nuxt-i18n'

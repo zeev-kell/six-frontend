@@ -55,7 +55,7 @@ const config = {
     // https://github.com/nuxt-community/style-resources-module
     '@nuxtjs/style-resources',
     // https://github.com/Developmint/nuxt-purgecss
-    'nuxt-purgecss',
+    // 'nuxt-purgecss',
   ],
 
   styleResources: {

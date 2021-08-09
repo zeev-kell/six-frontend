@@ -1,4 +1,4 @@
-import { GetterTree, ActionTree } from 'vuex'
+import type { GetterTree, ActionTree } from 'vuex'
 import Element from 'element-ui'
 import { NuxtState } from '@nuxt/types/app'
 

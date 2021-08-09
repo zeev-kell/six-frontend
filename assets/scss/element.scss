@@ -1,6 +1,6 @@
 @import './variables';
 @import './assets/element-ui-build/mixins';
-@import "/node_modules/element-theme-chalk/src/mixins/_button";
+@import '/node_modules/element-theme-chalk/src/mixins/_button';
 
 .el-button--normal {
   border-color: transparent;
@@ -31,6 +31,10 @@
   &.pass {
     background-color: transparent;
   }
+}
+
+.el-button-block {
+  width: 100%;
 }
 
 .el-link {
