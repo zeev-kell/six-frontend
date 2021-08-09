@@ -2,7 +2,8 @@ svg.cwl-workflow.__plugin-empty {
   &.__plugin-is-empty {
     background-image: url('../../image/graph-empty-state.svg');
     background-repeat: no-repeat;
-    background-position: right 30%;
+    background-position: left 30%;
+    // background-position: right 30%;
     background-size: 200px;
   }
 }

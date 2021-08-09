@@ -1074,14 +1074,6 @@
   resolved "https://registry.nlark.com/@fortawesome/vue-fontawesome/download/@fortawesome/vue-fontawesome-2.0.2.tgz#5b86cd2fb7b4c17e5dede722c1c2855c97eceaea"
   integrity sha1-W4bNL7e0wX5d7eciwcKFXJfs6uo=
 
-"@fullhuman/postcss-purgecss@^2.0.5":
-  version "2.3.0"
-  resolved "https://registry.npm.taobao.org/@fullhuman/postcss-purgecss/download/@fullhuman/postcss-purgecss-2.3.0.tgz#50a954757ec78696615d3e118e3fee2d9291882e"
-  integrity sha1-UKlUdX7HhpZhXT4Rjj/uLZKRiC4=
-  dependencies:
-    postcss "7.0.32"
-    purgecss "^2.3.0"
-
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
   resolved "https://registry.nlark.com/@humanwhocodes/config-array/download/@humanwhocodes/config-array-0.5.0.tgz#1407967d4c6eecd7388f83acf1eaf4d0c6e58ef9"
@@ -3880,11 +3872,6 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.npm.taobao.org/chrome-trace-event/download/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
   integrity sha1-EBXs7UdB4V0GZkqVfbv1DQQeJqw=
 
-ci-info@^1.5.0:
-  version "1.6.0"
-  resolved "https://registry.nlark.com/ci-info/download/ci-info-1.6.0.tgz?cache=0&sync_timestamp=1622039942508&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fci-info%2Fdownload%2Fci-info-1.6.0.tgz#2ca20dbb9ceb32d4524a683303313f0304b1e497"
-  integrity sha1-LKINu5zrMtRSSmgzAzE/AwSx5Jc=
-
 ci-info@^2.0.0:
   version "2.0.0"
   resolved "https://registry.nlark.com/ci-info/download/ci-info-2.0.0.tgz?cache=0&sync_timestamp=1622039942508&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fci-info%2Fdownload%2Fci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
@@ -4141,11 +4128,6 @@ commander@^4.1.1:
   resolved "https://registry.nlark.com/commander/download/commander-4.1.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcommander%2Fdownload%2Fcommander-4.1.1.tgz#9fd602bd936294e9e9ef46a3f4d6964044b18068"
   integrity sha1-n9YCvZNilOnp70aj9NaWQESxgGg=
 
-commander@^5.0.0:
-  version "5.1.0"
-  resolved "https://registry.nlark.com/commander/download/commander-5.1.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcommander%2Fdownload%2Fcommander-5.1.0.tgz#46abbd1652f8e059bddaef99bbdcb2ad9cf179ae"
-  integrity sha1-Rqu9FlL44Fm92u+Zu9yyrZzxea4=
-
 commander@^6.2.0:
   version "6.2.1"
   resolved "https://registry.nlark.com/commander/download/commander-6.2.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcommander%2Fdownload%2Fcommander-6.2.1.tgz#0792eb682dfbc325999bb2b84fddddba110ac73c"
@@ -4218,16 +4200,6 @@ connect@^3.7.0:
     finalhandler "1.1.2"
     parseurl "~1.3.3"
     utils-merge "1.0.1"
-
-consola@^1.4.5:
-  version "1.4.5"
-  resolved "https://registry.npm.taobao.org/consola/download/consola-1.4.5.tgz#09732d07cb50af07332e54e0f42fafb92b962c4a"
-  integrity sha1-CXMtB8tQrwczLlTg9C+vuSuWLEo=
-  dependencies:
-    chalk "^2.3.2"
-    figures "^2.0.0"
-    lodash "^4.17.5"
-    std-env "^1.1.0"
 
 consola@^2.10.0, consola@^2.10.1, consola@^2.11.3, consola@^2.12.1, consola@^2.13.0, consola@^2.15.0, consola@^2.15.3, consola@^2.6.0, consola@^2.9.0:
   version "2.15.3"
@@ -5805,13 +5777,6 @@ figgy-pudding@^3.5.1:
   resolved "https://registry.npm.taobao.org/figgy-pudding/download/figgy-pudding-3.5.2.tgz#b4eee8148abb01dcf1d1ac34367d59e12fa61d6e"
   integrity sha1-tO7oFIq7Adzx0aw0Nn1Z4S+mHW4=
 
-figures@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.nlark.com/figures/download/figures-2.0.0.tgz?cache=0&sync_timestamp=1625254307578&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ffigures%2Fdownload%2Ffigures-2.0.0.tgz#3ab1a2d2a62c8bfb431a0c94cb797a2fce27c962"
-  integrity sha1-OrGi0qYsi/tDGgyUy3l6L84nyWI=
-  dependencies:
-    escape-string-regexp "^1.0.5"
-
 figures@^3.0.0:
   version "3.2.0"
   resolved "https://registry.nlark.com/figures/download/figures-3.2.0.tgz?cache=0&sync_timestamp=1625254307578&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ffigures%2Fdownload%2Ffigures-3.2.0.tgz#625c18bd293c604dc4a8ddb2febf0c88341746af"
@@ -6309,7 +6274,7 @@ github-slugger@^1.0.0:
   dependencies:
     emoji-regex ">=6.0.0 <=6.1.1"
 
-glob-all@^3.1.0, glob-all@^3.2.1:
+glob-all@^3.2.1:
   version "3.2.1"
   resolved "https://registry.npm.taobao.org/glob-all/download/glob-all-3.2.1.tgz?cache=0&sync_timestamp=1584605633699&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fglob-all%2Fdownload%2Fglob-all-3.2.1.tgz#082ca81afd2247cbd3ed2149bb2630f4dc877d95"
   integrity sha1-CCyoGv0iR8vT7SFJuyYw9NyHfZU=
@@ -7438,13 +7403,6 @@ is-callable@^1.1.4, is-callable@^1.2.3:
   version "1.2.4"
   resolved "https://registry.nlark.com/is-callable/download/is-callable-1.2.4.tgz#47301d58dd0259407865547853df6d61fe471945"
   integrity sha1-RzAdWN0CWUB4ZVR4U99tYf5HGUU=
-
-is-ci@^1.1.0:
-  version "1.2.1"
-  resolved "https://registry.npm.taobao.org/is-ci/download/is-ci-1.2.1.tgz?cache=0&sync_timestamp=1613632113074&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fis-ci%2Fdownload%2Fis-ci-1.2.1.tgz#e3779c8ee17fccf428488f6e281187f2e632841c"
-  integrity sha1-43ecjuF/zPQoSI9uKBGH8uYyhBw=
-  dependencies:
-    ci-info "^1.5.0"
 
 is-color-stop@^1.0.0:
   version "1.1.0"
@@ -9584,17 +9542,6 @@ nuxt-property-decorator@^2.9.1:
     vuex-class "^0.3.2"
     vuex-module-decorators "^1.0.1"
 
-nuxt-purgecss@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.nlark.com/nuxt-purgecss/download/nuxt-purgecss-1.0.0.tgz#7c275205f0b727a5822781908d684f2e094ff5e7"
-  integrity sha1-fCdSBfC3J6WCJ4GQjWhPLglP9ec=
-  dependencies:
-    "@fullhuman/postcss-purgecss" "^2.0.5"
-    consola "^1.4.5"
-    glob-all "^3.1.0"
-    purgecss "^2.0.5"
-    purgecss-webpack-plugin "^2.0.5"
-
 nuxt@^2.15.7:
   version "2.15.7"
   resolved "https://registry.nlark.com/nuxt/download/nuxt-2.15.7.tgz#45332e3b00ba5c1cf04688d42373c8ed7ef4dca7"
@@ -11024,15 +10971,6 @@ postcss-values-parser@^2.0.0, postcss-values-parser@^2.0.1:
     indexes-of "^1.0.1"
     uniq "^1.0.1"
 
-postcss@7.0.32:
-  version "7.0.32"
-  resolved "https://registry.nlark.com/postcss/download/postcss-7.0.32.tgz?cache=0&sync_timestamp=1626882933935&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss%2Fdownload%2Fpostcss-7.0.32.tgz#4310d6ee347053da3433db2be492883d62cec59d"
-  integrity sha1-QxDW7jRwU9o0M9sr5JKIPWLOxZ0=
-  dependencies:
-    chalk "^2.4.2"
-    source-map "^0.6.1"
-    supports-color "^6.1.0"
-
 postcss@7.x.x, postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.2, postcss@^7.0.21, postcss@^7.0.26, postcss@^7.0.27, postcss@^7.0.31, postcss@^7.0.32, postcss@^7.0.35, postcss@^7.0.36, postcss@^7.0.5, postcss@^7.0.6:
   version "7.0.36"
   resolved "https://registry.nlark.com/postcss/download/postcss-7.0.36.tgz?cache=0&sync_timestamp=1626882933935&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpostcss%2Fdownload%2Fpostcss-7.0.36.tgz#056f8cffa939662a8f5905950c07d5285644dfcb"
@@ -11238,25 +11176,6 @@ punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.npm.taobao.org/punycode/download/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha1-tYsBCsQMIsVldhbI0sLALHv0eew=
-
-purgecss-webpack-plugin@^2.0.5:
-  version "2.3.0"
-  resolved "https://registry.npm.taobao.org/purgecss-webpack-plugin/download/purgecss-webpack-plugin-2.3.0.tgz#ba50bc25524ddbc27b5ed47ef30af65ad3a10bb2"
-  integrity sha1-ulC8JVJN28J7XtR+8wr2WtOhC7I=
-  dependencies:
-    purgecss "^2.3.0"
-    webpack "^4.42.1"
-    webpack-sources "^1.4.3"
-
-purgecss@^2.0.5, purgecss@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.npm.taobao.org/purgecss/download/purgecss-2.3.0.tgz?cache=0&sync_timestamp=1616279696360&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpurgecss%2Fdownload%2Fpurgecss-2.3.0.tgz#5327587abf5795e6541517af8b190a6fb5488bb3"
-  integrity sha1-UydYer9XleZUFRevixkKb7VIi7M=
-  dependencies:
-    commander "^5.0.0"
-    glob "^7.0.0"
-    postcss "7.0.32"
-    postcss-selector-parser "^6.0.2"
 
 q@^1.1.2, q@^1.5.1:
   version "1.5.1"
@@ -12573,13 +12492,6 @@ static-extend@^0.1.1:
   version "1.5.0"
   resolved "https://registry.npm.taobao.org/statuses/download/statuses-1.5.0.tgz?cache=0&sync_timestamp=1609654014762&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fstatuses%2Fdownload%2Fstatuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
-
-std-env@^1.1.0:
-  version "1.3.1"
-  resolved "https://registry.npm.taobao.org/std-env/download/std-env-1.3.1.tgz#4e1758412439e9ece1d437b1b098551911aa44ee"
-  integrity sha1-ThdYQSQ56ezh1DexsJhVGRGqRO4=
-  dependencies:
-    is-ci "^1.1.0"
 
 std-env@^2.2.1, std-env@^2.3.0:
   version "2.3.0"
@@ -14092,7 +14004,7 @@ webpack-sources@^1.0.1, webpack-sources@^1.1.0, webpack-sources@^1.4.0, webpack-
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.42.1, webpack@^4.46.0:
+webpack@^4.46.0:
   version "4.46.0"
   resolved "https://registry.nlark.com/webpack/download/webpack-4.46.0.tgz#bf9b4404ea20a073605e0a011d188d77cb6ad542"
   integrity sha1-v5tEBOogoHNgXgoBHRiNd8tq1UI=

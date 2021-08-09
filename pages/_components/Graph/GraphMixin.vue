@@ -1,8 +1,6 @@
 <template>
   <div class="graph h-100 el-row el-row--flex">
-    <transition name="el-fade-in-linear">
-      <tool-list-box></tool-list-box>
-    </transition>
+    <tool-list-box ref="toolListBox"></tool-list-box>
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100" />
       <tool-box :graph="graph" :tools="tools" :validation-state="validationState" @toolbox-event="propagateEvent" />
@@ -58,6 +56,7 @@ export default class GraphMixin extends GraphEdit {
   $refs!: {
     svg: SVGSVGElement
     stepInspector: WorkflowStepInspector
+    toolListBox: ToolListBox
   }
   @ProvideReactive('model')
   dataModel!: CommandLineToolModel | WorkflowModel
@@ -114,14 +113,6 @@ export default class GraphMixin extends GraphEdit {
     )
   }
 
-  // 让图形聚焦
-  @Provide('setFocusOnCanvas')
-  setFocusOnCanvas(): void {
-    // TODO 目前浏览器对 svg 的聚焦是无效的
-    // 影响删除的按键操作
-    this.$refs.svg.focus()
-  }
-
   addInputToGraph(inputParam: any): void {
     const model = this.dataModel as V1WorkflowModel
     ;(model as V1WorkflowModel).addInput(inputParam.content, model.inputs.length)
@@ -137,7 +128,7 @@ export default class GraphMixin extends GraphEdit {
     Object.assign(task.content, {
       'sbg:x': coords.x,
       'sbg:y': coords.y,
-      'ztron:id': task.id,
+      'six:id': task.id,
     })
     if (task._isInput) {
       // 创建输入节点
@@ -154,7 +145,6 @@ export default class GraphMixin extends GraphEdit {
       content.id = name
     }
     const step = this.graph.model.addStepFromProcess(content)
-    this.setFocusOnCanvas()
     const selection = this.graph.getPlugin(SelectionPlugin)
     selection?.clearSelection()
     selection?.selectStep(step?.id as string)
