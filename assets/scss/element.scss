@@ -1,19 +1,8 @@
-/*
-Write your variables here. All available variables can be
-found in element-ui/packages/theme-chalk/src/common/var.scss.
-For example, to overwrite the theme color:
-*/
-
-/* icon font path, required */
-$--font-path: '~element-ui/lib/theme-chalk/fonts';
-$--border-radius-base: 0;
-$--card-border-radius: 0;
-@import '~element-ui/packages/theme-chalk/src/index';
-@import "../../node_modules/element-ui/lib/theme-chalk/display.css";
 @import './variables';
+@import './assets/element-ui-build/mixins';
+@import "/node_modules/element-theme-chalk/src/mixins/_button";
 
 .el-button--normal {
-  //@extend .el-button--text;
   border-color: transparent;
   background: 0 0;
   padding-left: 0;

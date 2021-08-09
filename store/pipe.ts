@@ -38,9 +38,9 @@ export const getters: GetterTree<PipeModuleState, NuxtState> = {
 }
 
 export const mutations: MutationTree<NuxtState> = {
-  UPDATE_CURRENT_WORKFLOW(item: any) {
+  UPDATE_CURRENT_WORKFLOW(state, item: any) {
     Object.keys(item).forEach((key) => {
-      ;(this as any)[key] = item[key]
+      ;(state as any)[key] = item[key]
     })
   },
 }

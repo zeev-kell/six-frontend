@@ -71,7 +71,7 @@ export default class IndexBanner extends Vue {
 
 <style lang="scss" scoped>
 @import './assets/scss/variables';
-@import '/node_modules/element-theme-chalk/src/mixins/mixins';
+@import './assets/element-ui-build/mixins';
 
 .index-banner {
   background: url('/images/banner-3.png') no-repeat;

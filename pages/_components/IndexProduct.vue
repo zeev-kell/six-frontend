@@ -118,7 +118,7 @@ export default class IndexProduct extends Vue {
 
 <style lang="scss" scoped>
 @import './assets/scss/variables';
-@import '/node_modules/element-theme-chalk/src/mixins/mixins';
+@import './assets/element-ui-build/mixins';
 
 .pointer {
   height: 100%;

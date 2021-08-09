@@ -24,13 +24,17 @@ const config = {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ['@/node_modules/normalize.css/normalize.css', '@/assets/scss/element.scss', '@/assets/scss/theme.scss'],
+  css: [
+    '@/node_modules/normalize.css/normalize.css',
+    '@/assets/element-ui/index.css',
+    '@/node_modules/element-ui/lib/theme-chalk/display.css',
+    '@/assets/scss/main.scss',
+  ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    { src: '@/plugins/element-ui.ts', ssr: false },
-    { src: '@/plugins/axios.ts', ssr: true },
-    // { src: '@/plugins/axios-msg.ts', mode: 'client' },
+    { src: '@/plugins/element-ui.ts' },
+    { src: '@/plugins/axios.ts' },
     { src: '@/plugins/axios-msg.ts' },
     { src: '@/plugins/api.ts' },
     { src: '@/plugins/nuxt-client-init.client.ts' },

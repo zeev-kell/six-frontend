@@ -1,68 +1,58 @@
-<script type="text/babel">
-export default {
-  name: 'MarkdownToc',
-  props: {
-    toc: {
-      type: Array,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      navList: [],
+<script lang="ts">
+import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator'
+
+@Component
+export default class MarkdownToc extends Vue {
+  @Prop({ required: true })
+  toc!: any[]
+  navList = []
+  @Watch('toc', { immediate: true })
+  onWatchToc(value: string[]) {
+    const toc = JSON.parse(JSON.stringify(value))
+    const levelStack: any[] = []
+    const root: any = {
+      level: 0,
+      text: 0,
+      index: '_root',
+      children: [],
     }
-  },
-  watch: {
-    toc: {
-      immediate: true,
-      handler(value) {
-        const toc = JSON.parse(JSON.stringify(value))
-        const levelStack = []
-        const root = {
-          level: 0,
-          text: 0,
-          index: '_root',
-          children: [],
+    let preLevel: any
+    toc.forEach((item: any) => {
+      let levelIndex = levelStack.indexOf(item.level)
+      if (levelIndex === -1) {
+        if (levelStack.length === 0) {
+          root.children.push(item)
+          item.parent = '_root'
+        } else {
+          item.parent = preLevel.index
+          preLevel.children.push(item)
         }
-        let preLevel
-        toc.forEach((item) => {
-          let levelIndex = levelStack.indexOf(item.level)
-          if (levelIndex === -1) {
-            if (levelStack.length === 0) {
-              root.children.push(item)
-              item.parent = '_root'
-            } else {
-              item.parent = preLevel.index
-              preLevel.children.push(item)
-            }
-            levelStack.unshift(item.level)
-          } else if (levelIndex === 0) {
-            item.parent = preLevel.parent
-            const parent = toc[item.parent] || root
-            parent.children.push(item)
-          } else {
-            while (levelIndex--) {
-              levelStack.shift()
-              preLevel = toc[item.parent] || root
-            }
-            const parent = toc[item.parent] || root
-            item.parent = parent.index
-            parent.children.push(item)
-          }
-          preLevel = item
-        })
-        this.navList = root.children
-      },
-    },
-  },
-  render(createElement) {
-    function createUl(nav) {
+        levelStack.unshift(item.level)
+      } else if (levelIndex === 0) {
+        item.parent = preLevel.parent
+        const parent = toc[item.parent] || root
+        parent.children.push(item)
+      } else {
+        while (levelIndex--) {
+          levelStack.shift()
+          preLevel = toc[item.parent] || root
+        }
+        const parent = toc[item.parent] || root
+        item.parent = parent.index
+        parent.children.push(item)
+      }
+      preLevel = item
+    })
+    this.navList = root.children
+  }
+  render(createElement: any) {
+    function createUl(nav: any) {
       const children =
         nav.children.length > 0
           ? createElement(
               'ul',
               { class: 'md-nav__list', key: nav.id },
-              nav.children.map((c) => createUl(c))
+              nav.children.map((c: any) => createUl(c))
             )
           : ''
       return createElement('li', { class: 'md-nav__item' }, [
@@ -87,7 +77,7 @@ export default {
         this.navList.map((c) => createUl(c))
       ),
     ])
-  },
+  }
 }
 </script>
 

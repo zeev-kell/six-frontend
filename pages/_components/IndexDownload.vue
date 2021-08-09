@@ -43,7 +43,8 @@ export default class IndexDownload extends Vue {}
 
 <style lang="scss" scoped>
 @import './assets/scss/variables';
-@import '/node_modules/element-theme-chalk/src/mixins/mixins';
+@import './assets/element-ui-build/mixins';
+
 section {
   background: #f9f9f9;
   padding-bottom: 50px;

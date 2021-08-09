@@ -126,31 +126,25 @@
   </footer>
 </template>
 
-<script type="text/babel">
-export default {
-  name: 'IndexFooter',
-  props: {
-    withSubscribe: {
-      default: true,
-      type: Boolean,
-    },
-  },
-  data() {
-    return {
-      RESOURCES_URL: process.env.RESOURCES_URL,
-    }
-  },
-  computed: {
-    style() {
-      return this.withSubscribe ? '' : 'box-shadow: 0 -8px 8px -8px rgba(0, 0, 0, 0.1)'
-    },
-  },
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { Prop } from 'vue-property-decorator'
+
+@Component
+export default class IndexFooter extends Vue {
+  @Prop({ default: true })
+  withSubscribe!: Boolean
+  RESOURCES_URL = process.env.RESOURCES_URL
+  get style() {
+    return this.withSubscribe ? '' : 'box-shadow: 0 -8px 8px -8px rgba(0, 0, 0, 0.1)'
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 @import './assets/scss/variables';
-@import '/node_modules/element-theme-chalk/src/mixins/mixins';
+@import './assets/element-ui-build/mixins';
+
 .title {
   color: #3c3c3c;
   padding: 0 50px;

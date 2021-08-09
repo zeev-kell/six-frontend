@@ -127,67 +127,60 @@
   </el-header>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue, Watch } from 'nuxt-property-decorator'
 import LogoPng from '@/components/LogoPng.vue'
 
 const SCROLL_TRANSPORT = 100
-export default {
-  name: 'IndexNavigation',
+@Component({
   components: {
     LogoPng,
   },
-  data() {
-    return {
-      showMobileMenu: false,
-      RESOURCES_URL: process.env.RESOURCES_URL,
-    }
-  },
-  computed: {
-    username() {
-      return this.$store.getters.username
-    },
-  },
-  watch: {
-    '$route.name'() {
-      this.$nextTick(this.onWindowScroll)
-      this.showMobileMenu = false
-    },
-  },
+})
+export default class IndexNavigation extends Vue {
+  showMobileMenu = false
+  RESOURCES_URL = process.env.RESOURCES_URL
+  get username() {
+    return this.$store.getters.username
+  }
+  @Watch('$route.name')
+  onWatchRouteName() {
+    this.$nextTick(this.onWindowScroll)
+    this.showMobileMenu = false
+  }
   mounted() {
     this.onWindowScroll()
     window.addEventListener('scroll', this.onWindowScroll, true)
     if (window.location.hash) {
       this.goAnchor(window.location.hash)
     }
-  },
+  }
   beforeDestroy() {
     window.removeEventListener('scroll', this.onWindowScroll, true)
-  },
-  methods: {
-    onWindowScroll() {
-      const header = document.querySelector('#header')
-      if (!header) {
-        return
-      }
-      if (this.getRouteBaseName() === 'index') {
-        header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)'
-        header.classList.add('nav-white')
-      } else {
-        const scrollTop = document.documentElement.scrollTop
-        const scrollPercent = scrollTop <= SCROLL_TRANSPORT ? scrollTop / 140 : 0.96
-        header.style.backgroundColor = 'rgba(255, 255, 255,' + scrollPercent + ')'
-        scrollTop >= SCROLL_TRANSPORT ? header.classList.add('nav-white') : header.classList.remove('nav-white')
-      }
-    },
-    goAnchor(selector) {
-      // 最好加个定时器给页面缓冲时间
-      setTimeout(() => {
-        // 获取锚点元素
-        const anchor = document.querySelector(selector)
-        anchor.scrollIntoView()
-      }, 300)
-    },
-  },
+  }
+  onWindowScroll() {
+    const header = document.querySelector('#header') as HTMLElement
+    if (!header) {
+      return
+    }
+    if (this.getRouteBaseName() === 'index') {
+      header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)'
+      header.classList.add('nav-white')
+    } else {
+      const scrollTop = document.documentElement.scrollTop
+      const scrollPercent = scrollTop <= SCROLL_TRANSPORT ? scrollTop / 140 : 0.96
+      header.style.backgroundColor = 'rgba(255, 255, 255,' + scrollPercent + ')'
+      scrollTop >= SCROLL_TRANSPORT ? header.classList.add('nav-white') : header.classList.remove('nav-white')
+    }
+  }
+  goAnchor(selector: string) {
+    // 最好加个定时器给页面缓冲时间
+    setTimeout(() => {
+      // 获取锚点元素
+      const anchor = document.querySelector(selector)
+      anchor?.scrollIntoView()
+    }, 300)
+  }
 }
 </script>
 <style lang="scss" scoped>

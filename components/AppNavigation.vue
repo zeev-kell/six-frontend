@@ -71,7 +71,6 @@ export default class AppNavigation extends Vue {
 
 <style scoped lang="scss">
 @import './assets/scss/variables';
-@import '/node_modules/element-theme-chalk/src/mixins/mixins';
 
 #header.nav-app ::v-deep {
   color: white;
