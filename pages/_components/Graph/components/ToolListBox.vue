@@ -3,7 +3,7 @@
     <div class="tool-list">
       <el-button type="dark" icon="el-icon-s-unfold" size="mini" @click.prevent="onShowPanel"></el-button>
     </div>
-    <transition name="el-zoom-in-left">
+    <transition>
       <div v-if="showPanel" class="left-panel">
         <ul class="list-unstyled">
           <drag-item v-for="item of tableData" :key="item.id" :item="item">

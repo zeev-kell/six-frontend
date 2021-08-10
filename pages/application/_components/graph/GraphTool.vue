@@ -45,7 +45,7 @@ const BUTTON_LIST = {
     action: 'downscale',
   },
   fit: {
-    icon: 'iconfont icon-fullscreen',
+    icon: 'feather icon-maximize-2',
     title: '适应窗口',
     action: 'fitToViewport',
   },

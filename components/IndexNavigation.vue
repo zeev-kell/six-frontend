@@ -131,7 +131,6 @@
 import { Component, Vue, Watch } from 'nuxt-property-decorator'
 import LogoPng from '@/components/LogoPng.vue'
 
-const SCROLL_TRANSPORT = 100
 @Component({
   components: {
     LogoPng,
@@ -140,8 +139,9 @@ const SCROLL_TRANSPORT = 100
 export default class IndexNavigation extends Vue {
   showMobileMenu = false
   RESOURCES_URL = process.env.RESOURCES_URL
+  SCROLL_TRANSPORT = 100
   get username() {
-    return this.$store.getters.username
+    return this.$store.getters['user/username']
   }
   @Watch('$route.name')
   onWatchRouteName() {
@@ -168,9 +168,9 @@ export default class IndexNavigation extends Vue {
       header.classList.add('nav-white')
     } else {
       const scrollTop = document.documentElement.scrollTop
-      const scrollPercent = scrollTop <= SCROLL_TRANSPORT ? scrollTop / 140 : 0.96
+      const scrollPercent = scrollTop <= this.SCROLL_TRANSPORT ? scrollTop / 140 : 0.96
       header.style.backgroundColor = 'rgba(255, 255, 255,' + scrollPercent + ')'
-      scrollTop >= SCROLL_TRANSPORT ? header.classList.add('nav-white') : header.classList.remove('nav-white')
+      scrollTop >= this.SCROLL_TRANSPORT ? header.classList.add('nav-white') : header.classList.remove('nav-white')
     }
   }
   goAnchor(selector: string) {
