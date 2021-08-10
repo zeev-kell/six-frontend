@@ -1,6 +1,6 @@
 ﻿// 覆盖属性
-$--card-border-radius: 0 !default;
-$--card-border-radius: 0 !default;
+$--card-border-radius: 0;
+$--card-border-radius: 0;
 // 覆盖构建警告语法
-$--group-option-flex: 0 0 0.2 * 100% !default;
+$--group-option-flex: 0 0 0.2 * 100%;
 @import '~element-theme-chalk/src/mixins/mixins';

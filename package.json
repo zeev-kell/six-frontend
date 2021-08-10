@@ -7,7 +7,6 @@
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
-    "build-theme": "et",
     "lint:ts": "eslint --ext .ts,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint **/*.{vue,scss} --ignore-path .gitignore",
     "lint": "yarn lint:ts && yarn lint:style"
@@ -70,7 +69,6 @@
     "@nuxtjs/stylelint-module": "^4.0.0",
     "axios-mock-adapter": "^1.19.0",
     "better-mock": "^0.2.8",
-    "element-theme": "^2.0.1",
     "element-theme-chalk": "^2.15.0",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.12.0",
@@ -91,15 +89,5 @@
   "resolutions": {
     "@babel/core": "7.13.15",
     "@babel/preset-env": "7.13.15"
-  },
-  "element-theme": {
-    "browsers": [
-      "ie > 9",
-      "last 2 versions"
-    ],
-    "out": "./assets/theme",
-    "config": "./assets/element-variables.scss",
-    "theme": "element-theme-chalk",
-    "minimize": true
   }
 }
