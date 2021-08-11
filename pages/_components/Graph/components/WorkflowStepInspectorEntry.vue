@@ -1,6 +1,5 @@
-<!--suppress ALL -->
 <template>
-  <div class="selection-input-entry">
+  <div class="workflow-step-inspector-entry">
     <div v-if="warning" class="form-control-label">
       <span class="text-warning">
         <i class="el-icon-error" />
@@ -123,6 +122,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputModel'

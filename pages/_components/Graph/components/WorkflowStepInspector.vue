@@ -9,9 +9,9 @@
       </button>
     </div>
     <div class="card-body scrollbar">
-      <el-tabs v-if="selectionNode" v-model="activeName" type="border-card" style="box-shadow: none">
+      <el-tabs v-if="isStep" v-model="activeName">
         <el-tab-pane label="详情" name="info">
-          <workflow-step-inspector-info :step="selectionNode"></workflow-step-inspector-info>
+          <workflow-step-inspector-info :step="selectionNode" />
         </el-tab-pane>
         <el-tab-pane label="输入" name="input">
           <step-inputs-inspector :step="selectionNode" />
@@ -31,12 +31,12 @@
 // 查看 workflow step 详情
 import { Component, InjectReactive } from 'vue-property-decorator'
 import { WorkflowModel, StepModel } from 'cwlts/models'
+import LoadingButton from '@/components/LoadingButton.vue'
 import WorkflowStepInspectorStep from '@/pages/_components/Graph/components/WorkflowStepInspectorStep.vue'
 import StepInputsInspector from '@/pages/_components/Graph/components/StepInputsInspector.vue'
-import LoadingButton from '@/components/LoadingButton.vue'
 import WorkflowStepInspectorInfo from '@/pages/_components/Graph/components/WorkflowStepInspectorInfo.vue'
 import InspectorMixins from '@/pages/_components/Graph/components/InspectorMixins'
-import { Workflow } from 'cwl-svg'
+import { SVG_TYPE } from '@/pages/_components/Graph/plugins/plugin-help'
 
 @Component({
   components: { WorkflowStepInspectorInfo, WorkflowStepInspectorStep, StepInputsInspector, LoadingButton },
@@ -48,9 +48,7 @@ import { Workflow } from 'cwl-svg'
 })
 export default class WorkflowStepInspector extends InspectorMixins {
   @InjectReactive('model')
-  private model!: WorkflowModel
-  @InjectReactive('graph')
-  private graph!: Workflow
+  model!: WorkflowModel
 
   selectionNode!: StepModel
   activeName = 'input'
@@ -63,12 +61,12 @@ export default class WorkflowStepInspector extends InspectorMixins {
     this.showPanel = true
   }
 
-  onDblClick(element: string | null): void {
-    if (element && typeof element !== 'string') {
-      // 选择了节点 node
-      const id = element.getAttribute('data-connection-id')
-      const selected = this.workflow.model.findById(id)
-      this.showNodeInfo(selected)
+  // 注册双击事件，只处理 step 的类型
+  onDblClickType: SVG_TYPE = 'step'
+  onDblClick(element: SVGElement): void {
+    const selectionNode = this.graph.model.steps.find((input) => input.id === element.getAttribute('data-id'))
+    if (selectionNode) {
+      this.showNodeInfo(selectionNode)
     }
   }
 
@@ -77,3 +75,36 @@ export default class WorkflowStepInspector extends InspectorMixins {
   }
 }
 </script>
+
+<style scoped lang="scss" rel="stylesheet">
+@import '../../../application/_components/graph/theme';
+.el-tabs ::v-deep {
+  height: 100%;
+
+  .el-tabs__nav {
+    width: 100%;
+    display: flex;
+  }
+  .el-tabs__item {
+    flex: 1;
+    color: #bbbbbb;
+    padding: 0 !important;
+    text-align: center;
+    &.is-active {
+      color: white;
+    }
+  }
+  .el-tabs__nav-wrap::after {
+    background-color: $b-color;
+    height: 1px;
+  }
+  .el-tabs__active-bar {
+    height: 1px;
+  }
+  .el-tabs__content {
+    height: calc(100% - 40px - 15px);
+
+    /*height: calc(100vh - 47px - 30px - 40px - 15px);*/
+  }
+}
+</style>

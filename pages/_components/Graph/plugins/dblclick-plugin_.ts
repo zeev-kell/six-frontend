@@ -9,7 +9,7 @@ import { PluginHelp, SVG_TYPE } from '@/pages/_components/Graph/plugins/plugin-h
 
 type callBackFn = (change: SVGElement) => void
 
-export class DblclickPlugin extends PluginHelp {
+export class DblclickPlugin_ extends PluginHelp {
   PluginCss = '__plugin-dblclick'
   private selectionChangeCallbacks: callBackFn[] = []
 
@@ -31,15 +31,14 @@ export class DblclickPlugin extends PluginHelp {
    * @param type {string?} 可选参数，只处理特定的类型的双击事件
    */
   registerOnDblClick(callback: callBackFn, type?: SVG_TYPE): void {
-    const fn =
-      type !== undefined
-        ? (change: SVGElement) => {
-            // 判断类型和需要的类型是否一致
-            if (DblclickPlugin.isType(change, type)) {
-              callback(change)
-            }
+    const fn = type
+      ? (change: SVGElement) => {
+          // 判断类型和需要的类型是否一致
+          if (DblclickPlugin_.isType(change, type as SVG_TYPE)) {
+            callback(change)
           }
-        : callback
+        }
+      : callback
     this.selectionChangeCallbacks.push(fn)
   }
 

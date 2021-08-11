@@ -40,11 +40,11 @@ export abstract class PluginHelp extends PluginBase {
 
   // 获取事件中触发的节点或者线条
   getEventElement(event: Event): SVGElement | undefined {
-    const target = event.target as Element
+    const target = event.target
     if (target === null) {
       return
     }
-    return this.workflow.findParent(target, 'node') || this.workflow.findParent(target, 'edge')
+    return this.workflow.findParent(target as Element, 'node') || this.workflow.findParent(target as Element, 'edge')
   }
 
   // 判断是否是输入节点

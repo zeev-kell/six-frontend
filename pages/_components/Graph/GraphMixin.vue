@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Provide, ProvideReactive, Watch } from 'vue-property-decorator'
+import { Component, Prop, ProvideReactive, Watch } from 'vue-property-decorator'
 import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
 import {
   SelectionPlugin,
@@ -27,7 +27,7 @@ import {
 } from 'cwl-svg'
 import { DropPlugin } from '@/pages/_components/Graph/plugins/drop-plugin/drop-plugin'
 import { EmptyPlugin } from '@/pages/_components/Graph/plugins/empty-plugin/empty-plugin'
-import { DblclickPlugin } from '@/pages/_components/Graph/plugins/dblclick-plugin'
+import { DblclickPlugin_ } from '@/pages/_components/Graph/plugins/dblclick-plugin_'
 import { MenuPlugin } from '@/pages/_components/Graph/plugins/menu-plugin/menu-plugin'
 import { GraphEvent } from '@/constants/GraphEvent'
 import { GraphEdit } from '@/pages/_components/Graph/GraphEdit'
@@ -58,10 +58,12 @@ export default class GraphMixin extends GraphEdit {
     stepInspector: WorkflowStepInspector
     toolListBox: ToolListBox
   }
+  @ProvideReactive('graph')
+  graph!: Workflow
   @ProvideReactive('model')
   dataModel!: CommandLineToolModel | WorkflowModel
   @Prop({ required: true })
-  readonly content!: V1Workflow
+  content!: V1Workflow
   @Prop({ default: false })
   readonly readonly!: boolean
   @Prop({ default: undefined })
@@ -72,9 +74,6 @@ export default class GraphMixin extends GraphEdit {
     },
   })
   readonly plugins!: GraphPlugin[]
-  // graph 必须初始化值
-  @ProvideReactive('graph')
-  graph!: Workflow
 
   @Watch('graph')
   onGraphChange(): void {
@@ -93,7 +92,7 @@ export default class GraphMixin extends GraphEdit {
         new SVGValidatePlugin(),
         new DeletionPlugin(),
         new DropPlugin(),
-        new DblclickPlugin(),
+        new DblclickPlugin_(),
         new MenuPlugin(),
         new EmptyPlugin()
       )
@@ -130,12 +129,7 @@ export default class GraphMixin extends GraphEdit {
       'sbg:y': coords.y,
       'six:id': task.id,
     })
-    if (task._isInput) {
-      // 创建输入节点
-      this.addInputToGraph(task)
-    } else {
-      this.addStepToGraph(task)
-    }
+    this.addStepToGraph(task)
   }
 
   // 往图形添加 step
@@ -182,12 +176,11 @@ export default class GraphMixin extends GraphEdit {
         this.addNodeToGraph(task, coords)
       })
       // 注册双击事件，只处理 step 的类型
-      const dblclick = this.graph.getPlugin(DblclickPlugin)
+      const dblclick = this.graph.getPlugin(DblclickPlugin_)
       dblclick?.registerOnDblClick((element: SVGElement): void => {
         const selectionNode = this.graph.model.steps.find((input) => input.id === element.getAttribute('data-id'))
         if (selectionNode) {
-          this.$refs.stepInspector.showDialog(selectionNode)
-          // this.propagateEvent(GraphEvent.TriggerEdit, element, selectionNode, this.dataModel)
+          // this.$refs.stepInspector.showDialog(selectionNode)
         }
       }, 'step')
       // 注册菜单事件

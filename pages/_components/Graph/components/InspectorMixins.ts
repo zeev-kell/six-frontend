@@ -1,33 +1,32 @@
-import { DblclickPlugin } from '@/pages/application/_components/graph/plugins/dblclick-plugin'
-import { StepModel } from 'cwlts/models/generic/StepModel'
-import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
-import { Component, Vue, Watch } from 'nuxt-property-decorator'
-import { InjectReactive, Prop } from 'vue-property-decorator'
+import { WorkflowOutputParameterModel, WorkflowInputParameterModel, StepModel } from 'cwlts/models'
+import { Component, Vue, Watch, InjectReactive, Prop } from 'nuxt-property-decorator'
 import { Workflow } from 'cwl-svg'
+import { SVG_TYPE } from '@/pages/_components/Graph/plugins/plugin-help'
+import { DblclickPlugin_ } from '@/pages/_components/Graph/plugins/dblclick-plugin_'
 
 @Component({
   data() {
     return {
       selectionNode: undefined,
+      activeTabName: undefined,
     }
   },
 })
 export default class InspectorMixins extends Vue {
+  @InjectReactive('graph')
+  graph!: Workflow
+
   @Prop({ default: false })
   readonly!: boolean
-  @Prop()
-  pipeId: string = ''
-  @InjectReactive('graph')
-  private graph!: Workflow
   showPanel = false
-  selectionNode!: StepModel | WorkflowInputParameterModel
-  activeTabName = undefined
+  selectionNode!: StepModel | WorkflowInputParameterModel | WorkflowOutputParameterModel
+  activeTabName: string | undefined
 
-  @Watch('workflow')
+  @Watch('graph')
   onWatchWorkflow(): void {
-    const selection = this.graph?.getPlugin(DblclickPlugin)
+    const selection = this.graph?.getPlugin(DblclickPlugin_)
     if (selection) {
-      selection.registerOnDblClick(this.onDblClick)
+      selection.registerOnDblClick(this.onDblClick, this.onDblClickType)
     }
   }
 
@@ -47,7 +46,8 @@ export default class InspectorMixins extends Vue {
     return this.selectionNode instanceof StepModel
   }
 
-  onDblClick(element: string | null): void {
+  onDblClickType: SVG_TYPE | undefined = undefined
+  onDblClick(element: string | SVGElement): void {
     throw new Error('Method not implemented.')
   }
 }

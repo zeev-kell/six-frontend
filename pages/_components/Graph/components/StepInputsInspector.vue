@@ -5,11 +5,12 @@
         <div v-for="input of group.inputs" :key="input.id" class="input-box py-10">
           <!--Label and port options-->
           <div class="el-row is-justify-space-between el-row--flex m-b-05 is-align-middle">
-            <label class="text-truncate">
+            <label class="text-truncate" :title="input.label || input.id">
               <span v-if="!input.type.isNullable" class="text-danger mr-2">*</span>
-              <el-tooltip v-if="hasMetadata(input)" popper-class="input-popper">
+              <el-tooltip v-if="hasMetadata(input)" :visible-arrow="false" popper-class="input-popper">
                 <div slot="content">
                   <h2>{{ input.label || input.id }}</h2>
+                  <!--Description-->
                   <div v-if="input.description" class="value">
                     {{ input.description }}
                   </div>
@@ -35,18 +36,21 @@
               <span :title="input.label || input.id"> {{ input.label || input.id }} </span>
               <span class="text-muted">({{ input.type.type }})</span>
             </label>
+            <!--Port options for File and array of Files-->
             <div v-if="isType(input, ['File', 'Directory'])" class="el-col-auto">
-              <span v-if="input.type.isNullable" class="mr-4">{{ input.isVisible ? 'Show' : 'Hide' }}</span>
+              <span v-if="input.type.isNullable"> {{ input.isVisible ? 'Show' : 'Hide' }}</span>
               <el-switch
                 v-if="input.type.isNullable"
                 :value="input.isVisible"
                 :disabled="readonly"
+                inactive-color="#333333"
                 @change="onPortOptionChange($event ? 'port' : 'default', input)"
               />
             </div>
+            <!--Port options for all other types-->
             <div v-else class="input-control el-col-auto">
               <el-dropdown trigger="click" @command="onPortOptionChange($event, input)">
-                <span class="cursor-p">
+                <span class="pointer">
                   {{ input.status }}
                   <i class="el-icon-arrow-down el-icon--right" />
                 </span>
@@ -77,6 +81,11 @@
             :readonly="readonly"
             @onUpdate="stepValueUpdate($event, input.id + '.default')"
           />
+          <!--Link Merge Method Group-->
+          <div class="el-form-item">
+            <label class="input-label text-muted">Link Merge Method</label>
+            <link-merge-select :readonly="readonly" :value="input.linkMerge.value" @onUpdate="input.linkMerge.value = $event" />
+          </div>
           <!--Connections-->
           <div class="connections">
             <transition name="el-zoom-in-top">
@@ -88,9 +97,10 @@
             </transition>
             <transition name="el-zoom-in-top">
               <!--List of connections-->
-              <div v-if="input.source.length > 0" class="text-muted">Connections: {{ input.source.join(', ') }}</div>
+              <div v-if="input.source.length > 0" class="text-muted">{{ $t('cwl.Connections') }}: {{ input.source.join(', ') }}</div>
             </transition>
           </div>
+          <!--Tooltip-->
         </div>
       </form>
     </collapse-item>
@@ -104,9 +114,10 @@ import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputMo
 import CollapseItem from '@/components/CollapseItem.vue'
 import WorkflowStepInspectorEntry from '@/pages/_components/Graph/components/WorkflowStepInspectorEntry.vue'
 import { ObjectHelper } from '@/pages/_components/Graph/helpers/ObjectHelper'
+import LinkMergeSelect from '@/pages/application/_components/graph/LinkMergeSelect.vue'
 
 @Component({
-  components: { WorkflowStepInspectorEntry, CollapseItem },
+  components: { LinkMergeSelect, WorkflowStepInspectorEntry, CollapseItem },
 })
 export default class StepInputsInspector extends Vue {
   @InjectReactive('model')
