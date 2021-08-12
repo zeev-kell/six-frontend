@@ -21,7 +21,7 @@
         </el-tab-pane>
       </el-tabs>
       <div v-else>
-        <div>Input Output</div>
+        <workflow-io-inspector :step="selectionNode" :readonly="readonly" />
       </div>
     </div>
   </div>
@@ -30,16 +30,17 @@
 <script lang="ts">
 // 查看 workflow step 详情
 import { Component, InjectReactive } from 'vue-property-decorator'
-import { WorkflowModel, StepModel } from 'cwlts/models'
+import { WorkflowModel, StepModel, WorkflowInputParameterModel, WorkflowOutputParameterModel } from 'cwlts/models'
 import LoadingButton from '@/components/LoadingButton.vue'
 import WorkflowStepInspectorStep from '@/pages/_components/Graph/components/WorkflowStepInspectorStep.vue'
 import StepInputsInspector from '@/pages/_components/Graph/components/StepInputsInspector.vue'
 import WorkflowStepInspectorInfo from '@/pages/_components/Graph/components/WorkflowStepInspectorInfo.vue'
 import InspectorMixins from '@/pages/_components/Graph/components/InspectorMixins'
 import { SVG_TYPE } from '@/pages/_components/Graph/plugins/plugin-help'
+import WorkflowIoInspector from '@/pages/_components/Graph/components/WorkflowIoInspector.vue'
 
 @Component({
-  components: { WorkflowStepInspectorInfo, WorkflowStepInspectorStep, StepInputsInspector, LoadingButton },
+  components: { WorkflowIoInspector, WorkflowStepInspectorInfo, WorkflowStepInspectorStep, StepInputsInspector, LoadingButton },
   data() {
     return {
       selectionNode: null,
@@ -50,7 +51,7 @@ export default class WorkflowStepInspector extends InspectorMixins {
   @InjectReactive('model')
   model!: WorkflowModel
 
-  selectionNode!: StepModel
+  selectionNode!: StepModel | WorkflowInputParameterModel | WorkflowOutputParameterModel
   activeName = 'input'
 
   showNodeInfo(selectionNode: StepModel): void {
@@ -62,9 +63,11 @@ export default class WorkflowStepInspector extends InspectorMixins {
   }
 
   // 注册双击事件，只处理 step 的类型
-  onDblClickType: SVG_TYPE = 'step'
+  onDblClickType: SVG_TYPE = 'node'
   onDblClick(element: SVGElement): void {
-    const selectionNode = this.graph.model.steps.find((input) => input.id === element.getAttribute('data-id'))
+    // const selectionNode = this.graph.model.steps.find((input) => input.id === element.getAttribute('data-id'))
+    const id = element.getAttribute('data-connection-id') as string
+    const selectionNode = this.graph.model.findById(id)
     if (selectionNode) {
       this.showNodeInfo(selectionNode)
     }

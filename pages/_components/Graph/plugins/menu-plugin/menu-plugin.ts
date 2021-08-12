@@ -75,9 +75,9 @@ export class MenuPlugin extends PluginHelp {
       const nodeOuter = nodeElement.querySelector('.outer') as Element
       const btnList = [MenuPlugin.BTN_TYPE.delete]
       // 输入输出节点只有删除按钮
-      if (!nodeElement.classList.contains('input') && !nodeElement.classList.contains('output')) {
-        btnList.unshift(MenuPlugin.BTN_TYPE.view, MenuPlugin.BTN_TYPE.copy, MenuPlugin.BTN_TYPE.edit)
-      }
+      // if (!nodeElement.classList.contains('input') && !nodeElement.classList.contains('output')) {
+      // btnList.unshift(MenuPlugin.BTN_TYPE.view, MenuPlugin.BTN_TYPE.copy, MenuPlugin.BTN_TYPE.edit)
+      // }
       menuElement.setAttribute(
         'transform',
         `matrix(1, 0, 0, 1, -${((btnList.length - 1) * MenuPlugin.BTN_WIDTH) / 2}, -${parseInt(nodeOuter.getAttribute('r') as string) + 24})`

@@ -15,7 +15,7 @@
       </el-tooltip>
     </div>
 
-    <div class="el-form-item" style="margin-bottom: 0">
+    <div class="el-form-item">
       <!--Each leaf field will be wrapped as an input group-->
       <!--Nested fields below should not be wrapped into other container elements-->
       <!--because it will break size and positioning-->
@@ -32,16 +32,16 @@
 
         <!--Numbers-->
         <template v-else-if="isInputType('int')">
-          <el-input v-model="actualValue" type="number" :disabled="readonly" />
+          <input v-model="actualValue" type="number" :disabled="readonly" class="form-control" />
         </template>
 
         <template v-else-if="isInputType('float')">
-          <el-input v-model="actualValue" type="number" :readonly="readonly" />
+          <input v-model="actualValue" type="number" :readonly="readonly" class="form-control" />
         </template>
 
         <!--Strings-->
         <template v-else-if="isInputType('string')">
-          <el-input v-model="actualValue" :disabled="readonly" />
+          <input v-model="actualValue" class="form-control" :disabled="readonly" />
         </template>
 
         <!--Booleans-->
@@ -100,7 +100,7 @@
       <template v-else-if="isInputType('array')">
         <div v-for="(entry, i) of value" :key="i" class="array-row">
           <div class="array-entry">
-            <workflow-step-inspector-entry
+            <selection-input-entry
               :prefix="prefix + '.[' + i + ']'"
               :index="i"
               :type="input.type"
@@ -124,12 +124,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { ObjectHelper } from '@/pages/_components/Graph/helpers/ObjectHelper'
 import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputModel'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
-import { ObjectHelper } from '@/pages/_components/Graph/helpers/ObjectHelper'
+import SelectionInputEntryMap from '@/pages/application/_components/graph/SelectionInputEntryMap.vue'
 
-@Component
+@Component({
+  components: {
+    SelectionInputEntryMap,
+  },
+})
 export default class WorkflowStepInspectorEntry extends Vue {
   @Prop({ required: true })
   input!: WorkflowStepInputModel

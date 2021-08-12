@@ -1,4 +1,115 @@
 export default {
+  // 通用
+  common: {
+    tips: 'Tips',
+    name: 'Name',
+    status: 'State',
+    creator: 'Created By',
+    createTime: 'Creation Time',
+    updater: 'Revisor',
+    updateTime: 'Modification Time',
+    operation: 'Operation',
+    type: 'Type',
+    file_type: 'File Type',
+    required: 'Required',
+    description: 'Description',
+    default: 'Default',
+    version: 'Version',
+    yes: 'Yes',
+    no: 'No',
+  },
+  TYPE_TOOL: 'Tool',
+  TYPE_APP: 'Workflow',
+  TYPE_DOCKER: 'Dockerfile',
+  TYPE_WORK: '工作',
+  TYPE_WORKFLOW: '工作流',
+  // 导航条
+  nav: {
+    home: 'Home',
+    laboratory: 'Laboratory',
+    analysis: 'Analysis',
+    data: 'Data',
+    applications: 'Applications',
+    samples: 'Samples',
+    research: 'Research',
+    setting: 'Setting',
+    exit: 'Exit',
+    personalInfo: 'Personal Information',
+  },
+  // 路由-路由标题等
+  router: {
+    task: 'Task Management',
+    task_create: 'Create Task',
+    workflow: 'Workflow Management',
+    workflow_create: 'Create Workflow',
+    workflow_edit: 'Edit Workflow',
+  },
+  // 按钮
+  btn: {
+    ok: 'Confirm',
+    cancel: 'Cancel',
+    edit: 'Edit',
+    close: 'Close',
+    on: 'On',
+    off: 'Off',
+    delete: 'Delete',
+    copy: 'Copy',
+    view: 'View',
+    add: 'Add',
+    select_file: 'Select File(s)',
+    select_all: 'Select All',
+    to_upload: 'Upload to server',
+    save: 'Save',
+    back: 'Back',
+  },
+  // 常量
+  constant: {
+    STATUS_DRAFT: 'Draft',
+    STATUS_OFF: 'Off',
+    STATUS_ON: 'On',
+  },
+  // 错误信息
+  error: {
+    // 用在捕抓未知异常
+    exception: 'Exception. Please refresh the page.',
+    upload: 'Upload failed.',
+  },
+  // 提示语
+  msg: {
+    success: 'Operation succeeded',
+    error: 'operation failed',
+    confirm_delete: 'Are you sure to delete it?',
+    confirm_off: 'Are you sure to disable it?',
+  },
+  // 参数校验提示
+  validate: {
+    key: '{0} must be set',
+    length: 'Length between {0} and {1} characters',
+  },
+  placeholder: {
+    name: 'Pls enter a name',
+    version: 'Pls enter version',
+    command: 'Pls enter execute command',
+    docker_file: 'Pls upload dockerfile',
+    min_mem: 'Pls input min memory',
+    min_cores: 'Pls input min cpu',
+    search: 'Pls enter a search',
+  },
+  graph: {
+    single_thread: 'single thread',
+    multi_thread: 'multi thread',
+    label: 'Label',
+    info: 'Info',
+    input: 'Input',
+    step: 'Step Info',
+    description: 'Description',
+    Files: 'Files',
+    app_parameters: 'App Parameters',
+    error: {
+      has_issues: 'Graphics issues need to be addressed.',
+    },
+    cpu_resources: 'Cpu Resources',
+  },
   cwl: {
     file: 'FILE',
     Files: 'Files',
@@ -14,13 +125,4 @@ export default {
     SetNull: 'Set Values to null',
     AllowArrayAsSingle: 'Allow array as well as a single item',
   },
-  common: {
-    yes: 'Yes',
-    no: 'No',
-  },
-  TYPE_TOOL: 'Tool',
-  TYPE_APP: 'Workflow',
-  TYPE_DOCKER: 'Dockerfile',
-  TYPE_WORK: '工作',
-  TYPE_WORKFLOW: '工作流',
 }
