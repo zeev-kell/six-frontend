@@ -98,6 +98,7 @@ const config = {
               'faDesktop',
               'faDownload',
               'faBars',
+              'faTerminal',
             ],
           },
           {

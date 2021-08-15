@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { Component, InjectReactive, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, InjectReactive, Prop, Vue, Watch } from 'nuxt-property-decorator'
 import { StepModel, WorkflowModel } from 'cwlts/models'
 import { Workflow } from 'cwl-svg'
 import { checkKeyWord } from '@/pages/_components/Graph/KeyWords'

@@ -12,4 +12,4 @@ const items: Items = {
   TYPE_WORKFLOW: 4, // 工作流
 }
 
-export const taskConstants = new BaseConstants(items)
+export const pipe2Constants = new BaseConstants(items)

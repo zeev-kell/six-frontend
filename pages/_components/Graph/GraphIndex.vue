@@ -6,13 +6,13 @@
 
 <script lang="ts">
 import '~/pages/application/_components/graph/_theme.scss'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import GraphWorkflow from '@/pages/_components/Graph/GraphWorkflow.vue'
 import GraphTool from '@/pages/_components/Graph/GraphTool.vue'
 import { GraphEvent } from '@/constants/GraphEvent'
 import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
 import { CommandLineTool } from 'cwlts/mappings/v1.0/CommandLineTool'
-import { Prop } from 'nuxt-property-decorator'
+
 import { PipeModel } from '@/types/model/Pipe'
 import pipeConstants from '@/constants/PipeConstants'
 

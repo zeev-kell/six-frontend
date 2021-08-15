@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import DialogResetForm from '@/pages/_components/DialogResetForm.vue'
 import { AppValidityState } from '@/pages/_components/Graph/types'
 import { Issue } from 'cwlts/models'

@@ -1,4 +1,4 @@
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 import { tableQuery, tableResponse } from '@/types/table'
 
 @Component
@@ -14,6 +14,7 @@ export default class TableMixins<T> extends Vue {
   protected tableData: T[] = []
   protected loading = false
   protected total = 0
+  protected immediate = false
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getTableData(listQuery: tableQuery): Promise<tableResponse<T> | any> {
     throw new Error('Method not implemented.')
@@ -51,7 +52,9 @@ export default class TableMixins<T> extends Vue {
     })
     this.loading = false
   }
-  created(): Promise<void> {
-    return this.refreshTable()
+  created(): Promise<void> | undefined {
+    if (this.immediate) {
+      return this.refreshTable()
+    }
   }
 }

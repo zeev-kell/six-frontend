@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import { WorkflowFactory } from 'cwlts/models'
 import { Workflow } from 'cwl-svg'
 import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
@@ -25,7 +25,6 @@ export default class GraphWorkflow extends GraphMixin {
     }
     this.recreateModel(json as V1Workflow)
     const plugins = this.getDefaultPlugins()
-    console.log(this.$refs.svg)
     this.graph = new Workflow({
       editingEnabled: !this.readonly,
       model: this.dataModel as WorkflowModel,

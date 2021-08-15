@@ -2,6 +2,9 @@
 import Element from 'element-ui'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { Context } from '@nuxt/types'
+import { response } from 'express'
+import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
+import { PipeModel } from '@/types/model/Pipe'
 
 export class Module {
   private $$axios: NuxtAxiosInstance
@@ -18,8 +21,20 @@ export class Module {
     return this.$$axios.$get('/v1/pipes')
   }
 
-  getListV2() {
-    return this.$$axios.$get('/v2/pipes')
+  getListV2(params: any): Promise<PipeModel[]> {
+    return this.$$axios.$get<PipeModel[]>('/v2/pipes', { params }).then((response) => {
+      response.forEach((r) => {
+        if (r.content) {
+          r.content = getObject(r.content)
+        }
+        r.versions?.forEach((v) => {
+          if (v.content) {
+            v.content = getObject(v.content)
+          }
+        })
+      })
+      return response
+    })
   }
 
   update(pipeId: string, data: any) {

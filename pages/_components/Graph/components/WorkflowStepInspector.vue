@@ -29,7 +29,7 @@
 
 <script lang="ts">
 // 查看 workflow step 详情
-import { Component, InjectReactive } from 'vue-property-decorator'
+import { Component, InjectReactive } from 'nuxt-property-decorator'
 import { WorkflowModel, StepModel, WorkflowInputParameterModel, WorkflowOutputParameterModel } from 'cwlts/models'
 import LoadingButton from '@/components/LoadingButton.vue'
 import WorkflowStepInspectorStep from '@/pages/_components/Graph/components/WorkflowStepInspectorStep.vue'

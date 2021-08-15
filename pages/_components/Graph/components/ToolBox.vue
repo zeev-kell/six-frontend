@@ -1,6 +1,6 @@
 <script lang="ts">
 import { SVGArrangePlugin, Workflow } from 'cwl-svg'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
 import type { CreateElement, VNode } from 'vue'
 import { AppValidityState, graphTool, graphTools } from '../types'

@@ -1,6 +1,6 @@
 <template>
   <div class="graph h-100 el-row el-row--flex">
-    <tool-list-box ref="toolListBox"></tool-list-box>
+    <drag-list-box ref="toolListBox"></drag-list-box>
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100" />
       <tool-box :graph="graph" :tools="tools" :validation-state="validationState" @toolbox-event="propagateEvent" />
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, ProvideReactive, Watch } from 'vue-property-decorator'
+import { Component, Prop, ProvideReactive, Watch } from 'nuxt-property-decorator'
 import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
 import {
   SelectionPlugin,
@@ -33,15 +33,15 @@ import { GraphEvent } from '@/constants/GraphEvent'
 import { GraphEdit } from '@/pages/_components/Graph/GraphEdit'
 import { CommandLineToolModel, WorkflowModel } from 'cwlts/models'
 import WorkflowStepInspector from '@/pages/_components/Graph/components/WorkflowStepInspector.vue'
-import { V1WorkflowModel } from 'cwlts/models/v1.0'
 import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
-import ToolListBox from '@/pages/_components/Graph/components/ToolListBox.vue'
+import DragListBox from '@/pages/_components/Graph/components/DragListBox.vue'
+import { PipeModel } from '@/types/model/Pipe'
 import { GraphPlugin } from './types'
 import ToolBox from './components/ToolBox.vue'
 
 @Component({
   components: {
-    ToolListBox,
+    DragListBox,
     WorkflowStepInspector,
     ToolBox,
   },
@@ -112,17 +112,17 @@ export default class GraphMixin extends GraphEdit {
       true
     )
   }
-  addNodeToGraph(task: any, coords: { x: number; y: number }): void {
+  addNodeToGraph(task: PipeModel, coords: { x: number; y: number }): void {
     // sbg 前缀是必须的
     Object.assign(task.content, {
       'sbg:x': coords.x,
       'sbg:y': coords.y,
-      'six:id': task.id,
+      'six:id': task.pipe_id,
     })
     this.addStepToGraph(task)
   }
   // 往图形添加 step
-  addStepToGraph(task: any): void {
+  addStepToGraph(task: PipeModel): void {
     const { content, name } = task
     if (content.id === undefined && content.label === undefined) {
       content.id = name

@@ -1,4 +1,4 @@
-import { Component, ProvideReactive } from 'vue-property-decorator'
+import { Component, ProvideReactive } from 'nuxt-property-decorator'
 import { GraphEdit } from '@/pages/_components/Graph/GraphEdit'
 import { WorkflowFactory, WorkflowModel } from 'cwlts/models'
 import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'

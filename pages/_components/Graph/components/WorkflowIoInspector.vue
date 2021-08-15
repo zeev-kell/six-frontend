@@ -97,7 +97,7 @@
 </template>
 
 <script lang="ts">
-import { Component, InjectReactive, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, InjectReactive, Prop, Vue, Watch } from 'nuxt-property-decorator'
 import TypeSelect from '@/pages/application/_components/graph/TypeSelect.vue'
 import debounce from '@/utils/debounce'
 import CollapseItem from '@/pages/application/_components/CollapseItem.vue'

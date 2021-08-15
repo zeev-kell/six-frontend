@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { StepModel } from 'cwlts/models'
 import { AppHelper } from '@/pages/_components/Graph/helpers/AppHelper'
 import marked from '@/directives/marked/marked'

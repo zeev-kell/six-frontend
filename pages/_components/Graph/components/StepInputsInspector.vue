@@ -108,7 +108,7 @@
 </template>
 
 <script lang="ts">
-import { Component, InjectReactive, Prop, Vue } from 'vue-property-decorator'
+import { Component, InjectReactive, Prop, Vue } from 'nuxt-property-decorator'
 import { StepModel, WorkflowModel } from 'cwlts/models'
 import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputModel'
 import CollapseItem from '@/components/CollapseItem.vue'

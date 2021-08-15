@@ -1,4 +1,4 @@
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 import { AppValidityState } from '@/pages/_components/Graph/types'
 import { CommandLineToolModel, WorkflowModel } from 'cwlts/models'
 import { Workflow, CommandLineTool } from 'cwlts/mappings/v1.0'

@@ -1,4 +1,4 @@
-import { Component, Mixins, ProvideReactive } from 'vue-property-decorator'
+import { Component, mixins, ProvideReactive } from 'nuxt-property-decorator'
 import { GraphEdit } from '@/pages/_components/Graph/GraphEdit'
 import { CommandLineTool } from 'cwlts/mappings/v1.0/CommandLineTool'
 import { CommandInputParameterModel, CommandLineToolFactory, CommandLineToolModel } from 'cwlts/models'
@@ -11,7 +11,7 @@ import GraphExpressionEvaluator from '@/pages/_components/Graph/GraphExpressionE
     }
   },
 })
-export default class GraphMixinTool extends Mixins<GraphEdit>(GraphEdit, GraphExpressionEvaluator) {
+export default class GraphMixinTool extends mixins<GraphEdit>(GraphEdit, GraphExpressionEvaluator) {
   @ProvideReactive('model')
   dataModel!: CommandLineToolModel
 

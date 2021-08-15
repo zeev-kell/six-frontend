@@ -1,4 +1,4 @@
-import { MapKey, Items } from '@/types/constant'
+import { MapKey, Items, ItemList } from '@/types/constant'
 
 export default class BaseConstants {
   items: Items
@@ -11,13 +11,27 @@ export default class BaseConstants {
   }
 
   // 获取对应的值，使用枚举
-  get = (value: MapKey): string | undefined => {
-    return this.Enum.get(value)
+  get = (value: MapKey): MapKey => {
+    return this.Enum.get(value) as MapKey
   }
 
   // 获取 {value label} 组成的列表
-  get itemList(): { value: MapKey; label: MapKey }[] {
+  get itemList(): ItemList {
     return Object.entries(this.items).map(([label, value]) => {
+      return {
+        value,
+        label,
+      }
+    })
+  }
+
+  // 根据 prefix 获取 {value label} 组成的列表
+  getItemsList(prefix?: string): ItemList {
+    let items = Object.entries(this.items)
+    if (prefix) {
+      items = items.filter((item) => item[0].startsWith(prefix))
+    }
+    return items.map(([label, value]) => {
       return {
         value,
         label,

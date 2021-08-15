@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'nuxt-property-decorator'
 
 // 弹窗表单组件
 @Component
