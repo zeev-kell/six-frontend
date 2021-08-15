@@ -58,22 +58,24 @@ export default class GraphMixin extends GraphEdit {
     stepInspector: WorkflowStepInspector
     toolListBox: ToolListBox
   }
+
   @ProvideReactive('graph')
   graph!: Workflow
   @ProvideReactive('model')
   dataModel!: CommandLineToolModel | WorkflowModel
+
   @Prop({ required: true })
   content!: V1Workflow
   @Prop({ default: false })
-  readonly readonly!: boolean
+  readonly!: boolean
   @Prop({ default: undefined })
-  readonly tools!: string
+  tools!: string
   @Prop({
     default() {
       return []
     },
   })
-  readonly plugins!: GraphPlugin[]
+  plugins!: GraphPlugin[]
 
   @Watch('graph')
   onGraphChange(): void {
@@ -99,7 +101,6 @@ export default class GraphMixin extends GraphEdit {
     }
     return plugins
   }
-
   // 修改滚动轮
   fixWheel(): void {
     // 修改滚动的鼠标事件
@@ -111,17 +112,6 @@ export default class GraphMixin extends GraphEdit {
       true
     )
   }
-
-  addInputToGraph(inputParam: any): void {
-    const model = this.dataModel as V1WorkflowModel
-    ;(model as V1WorkflowModel).addInput(inputParam.content, model.inputs.length)
-    const input = model.inputs[model.inputs.length - 1]
-    // 这里暂时没有找到别的替代方法，直接使用了 protected 方法，这 ts 中是不允许的
-    ;(this.dataModel as any).addInputToGraph(input)
-    ;(this.dataModel as any).eventHub.emit('input.create', input)
-    this.graph.draw(model)
-  }
-
   addNodeToGraph(task: any, coords: { x: number; y: number }): void {
     // sbg 前缀是必须的
     Object.assign(task.content, {
@@ -131,7 +121,6 @@ export default class GraphMixin extends GraphEdit {
     })
     this.addStepToGraph(task)
   }
-
   // 往图形添加 step
   addStepToGraph(task: any): void {
     const { content, name } = task
@@ -143,7 +132,6 @@ export default class GraphMixin extends GraphEdit {
     selection?.clearSelection()
     selection?.selectStep(step?.id as string)
   }
-
   // 获取 model 的 serialize
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getSerialize(): any {
@@ -151,7 +139,6 @@ export default class GraphMixin extends GraphEdit {
       return this.dataModel.serializeEmbedded(false)
     }
   }
-
   // 事件转发到父组件
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   propagateEvent(...args: any[]): void {
@@ -160,9 +147,8 @@ export default class GraphMixin extends GraphEdit {
 
   beforeDestroy(): void {
     // 销毁流程图
-    this.graph.destroy()
+    this.graph?.destroy()
   }
-
   mounted(): void {
     // 处理 yaml 格式为 json 格式
     const content = getObject(this.content)

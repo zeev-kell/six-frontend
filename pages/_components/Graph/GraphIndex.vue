@@ -1,15 +1,20 @@
 <template>
   <div class="graph-index">
-    <component :is="graphComponent" ref="graph" v-bind="$attrs" v-on="$listeners" />
+    <component :is="graphComponent" ref="graph" :content="content" v-bind="$attrs" v-on="$listeners" />
   </div>
 </template>
 
 <script lang="ts">
 import '~/pages/application/_components/graph/_theme.scss'
+import { Component, Vue } from 'vue-property-decorator'
 import GraphWorkflow from '@/pages/_components/Graph/GraphWorkflow.vue'
 import GraphTool from '@/pages/_components/Graph/GraphTool.vue'
-import { Component, Vue } from 'vue-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
+import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
+import { CommandLineTool } from 'cwlts/mappings/v1.0/CommandLineTool'
+import { Prop } from 'nuxt-property-decorator'
+import { PipeModel } from '@/types/model/Pipe'
+import pipeConstants from '@/constants/PipeConstants'
 
 @Component({
   components: {
@@ -22,17 +27,23 @@ export default class GraphIndex extends Vue {
     cwl: GraphWorkflow | GraphTool
   }
 
+  @Prop({ required: true })
+  item!: PipeModel
+
   // 根据当前类型实例化不同的组件
   get graphComponent(): string {
-    const isTool = false
+    const isTool = this.item.type === pipeConstants.Constants.get('TYPE_TOOL')
     return isTool ? 'graph-tool' : 'graph-workflow'
+  }
+
+  get content(): V1Workflow | CommandLineTool {
+    return this.item.content
   }
 
   // 执行 子组件 方法
   dispatchAction(action: string, ...args: string[]): any {
     return (this.$refs.cwl as unknown as HTMLFormElement)[action](...args)
   }
-
   // 获取 子组件 属性
   getAttributeAction(attr: string): any {
     return (this.$refs.cwl as unknown as HTMLFormElement)[attr]

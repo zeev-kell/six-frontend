@@ -20,12 +20,12 @@ export default class GraphWorkflow extends GraphMixin {
   }
 
   createModel(json: V1Workflow | null | 'null'): void {
-    console.log(json)
     if (json === null || json === 'null') {
       json = Generator.generateWorkflow()
     }
     this.recreateModel(json as V1Workflow)
     const plugins = this.getDefaultPlugins()
+    console.log(this.$refs.svg)
     this.graph = new Workflow({
       editingEnabled: !this.readonly,
       model: this.dataModel as WorkflowModel,

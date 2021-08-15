@@ -11,7 +11,11 @@ export default class ToolBox extends Vue {
   readonly graph!: Workflow
   @Prop({ default: false })
   readonly readonly!: boolean
-  @Prop({ default: 'add|plus,minus,fit|auto' })
+  @Prop({
+    default() {
+      return 'add|plus,minus,fit|auto'
+    },
+  })
   readonly tools!: string
   @Prop({
     default() {
@@ -66,7 +70,6 @@ export default class ToolBox extends Vue {
   actionAutoLayout(): void {
     this.graph.getPlugin(SVGArrangePlugin).arrange()
   }
-
   // 放大
   actionUpscale(): void {
     const scale = this.graph.scale
@@ -74,7 +77,6 @@ export default class ToolBox extends Vue {
       this.graph.scale = Math.min(scale + this.scaleStep, this.graph.maxScale)
     }
   }
-
   // 缩小
   actionDownscale(): void {
     const scale = this.graph.scale
@@ -82,17 +84,14 @@ export default class ToolBox extends Vue {
       this.graph.scale = Math.max(scale - this.scaleStep, this.graph.minScale)
     }
   }
-
   // 适应窗口
   actionFitToViewport(): void {
     this.graph.fitToViewport()
   }
-
   // 事件冒泡
   actionEmitEvent(eventName: string): void {
     this.$emit('toolbox-event', eventName)
   }
-
   // 处理每个按钮的事件
   onClick({ action, eventName }: graphTool): void {
     ;(this as any)[action](eventName)
@@ -107,7 +106,6 @@ export default class ToolBox extends Vue {
       })
     })
   }
-
   render(h: CreateElement): VNode {
     const createBtn = (btn: graphTool): VNode | string => {
       // 针对 validate 添加了判断

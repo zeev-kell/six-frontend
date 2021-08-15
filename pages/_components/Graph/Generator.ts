@@ -1,6 +1,5 @@
 // 关于 $namespaces https://www.commonwl.org/v1.0/SchemaSalad.html
 import { CommandLineTool, Workflow } from 'cwlts/mappings/v1.0'
-import { taskConstants } from '@/constants/TaskConstants'
 
 export class Generator {
   static generateWorkflow(id?: string, label?: string): Workflow {
@@ -19,7 +18,7 @@ export class Generator {
     } as Workflow
   }
 
-  static generateTask(id?: string, label?: string): CommandLineTool {
+  static generateTool(id?: string, label?: string): CommandLineTool {
     return {
       $namespaces: {
         sbg: 'https://www.sevenbridges.com/',
@@ -33,15 +32,5 @@ export class Generator {
       baseCommand: '',
       doc: '',
     } as CommandLineTool
-  }
-}
-
-// 创建新的一个新的task
-// status 可以直接创建一个对应 status 的 task
-export function createMyTask(task?: any): any {
-  return {
-    name: '',
-    status: task?.status ?? taskConstants.items.STATUS_DRAFT,
-    content: Generator.generateTask(),
   }
 }

@@ -5,7 +5,7 @@ import _tool from '@/plugins/mock/commandline.json'
 import _workflow from '@/plugins/mock/workflow.json'
 // import { Workflow, WorkflowUrl, WorkflowList, WorkflowListUrl } from '../plugins/mock/workflow'
 // NOTE 由 Node.js 发起请求需要同步修改 modules 至 mock
-Mock.mock(/\/api\/v1\/login/, 'post', function (options: Mock.MockCbOptions) {
+Mock.mock(/\/api\/v[1|2]\/login/, 'post', function (options: Mock.MockCbOptions) {
   const body = JSON.parse(options.body!)
   return Mock.mock({
     code: 100,
@@ -21,9 +21,9 @@ Mock.mock(/\/api\/v1\/login/, 'post', function (options: Mock.MockCbOptions) {
     msg: '登陆成功',
   })
 })
-Mock.mock(/\/api\/v1\/logout/, 'get', function () {})
-Mock.mock(/\/api\/v1\/register/, 'post', function () {})
-Mock.mock(/\/api\/v1\/user/, 'get', function () {
+Mock.mock(/\/api\/v[1|2]\/logout/, 'get', function () {})
+Mock.mock(/\/api\/v[1|2]\/register/, 'post', function () {})
+Mock.mock(/\/api\/v[1|2]\/user/, 'get', function () {
   return Mock.mock({
     admin: false,
     uid: Mock.Random.string('lower', 32),
@@ -33,7 +33,8 @@ Mock.mock(/\/api\/v1\/user/, 'get', function () {
 Mock.mock(PipeUrl, function () {
   const item = Mock.mock(Pipe)
   item.type = 0
-  item.cwl = item.type === 0 ? _tool : _workflow
+  item.content = item.type === 0 ? _tool : _workflow
+  item.content = JSON.stringify(item.content)
   return item
 })
 Mock.mock(PipesUrl, function () {

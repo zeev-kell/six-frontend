@@ -98,9 +98,9 @@
 
 <script lang="ts">
 import { Component, InjectReactive, Prop, Vue, Watch } from 'vue-property-decorator'
-import TypeSelect from '@/pages/application/_components/graph/TypeSelect'
+import TypeSelect from '@/pages/application/_components/graph/TypeSelect.vue'
 import debounce from '@/utils/debounce'
-import CollapseItem from '@/pages/application/_components/CollapseItem'
+import CollapseItem from '@/pages/application/_components/CollapseItem.vue'
 import { WorkflowModel, WorkflowOutputParameterModel, WorkflowInputParameterModel } from 'cwlts/models'
 import { Workflow } from 'cwl-svg'
 
@@ -134,7 +134,7 @@ export default class WorkflowIoInspector extends Vue {
       {
         trigger: 'change',
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        validator: (rule, value, callback) => {
+        validator: (rule: any, value: string, callback: any) => {
           try {
             if (this.step.id === value) {
               return
@@ -187,7 +187,7 @@ export default class WorkflowIoInspector extends Vue {
   // Value in batchByList that should be selected in DOM. This is added in order to solve the problem when we have
   // a custom value for batch by (when you type it manually in Code mode). We need this because of array values
   // (other way it will not preselect the value in DOM select input)
-  selectedBatchByOption = null
+  selectedBatchByOption: any = null
   // Initial batchByList length (to know if there is a custom value by comparing this value and current list length)
   batchByListInitialLength = 7
 
@@ -245,10 +245,10 @@ export default class WorkflowIoInspector extends Vue {
     }
   }
 
-  findBatchValueInTheList(batchTypeValue) {
+  findBatchValueInTheList(batchTypeValue: string | string[]) {
     if (!batchTypeValue) {
       // None value
-      return this.batchByList.find((item) => item.value === 'none').value
+      return this.batchByList.find((item: any) => item.value === 'none')!.value
     }
     // Find if batchTypeValue is in batchByList
     const criteriaInList = this.batchByList.find((batchBy) => {
@@ -265,7 +265,7 @@ export default class WorkflowIoInspector extends Vue {
       this.batchByList.push({
         label: 'Api: ' + batchTypeValue,
         value: batchTypeValue,
-      })
+      } as any)
       return batchTypeValue
     }
   }
@@ -277,12 +277,12 @@ export default class WorkflowIoInspector extends Vue {
     ;(this.step as any).label = val || undefined
     this.graph.draw()
   }, 500)
-  onSymbolsChange(value) {
+  onSymbolsChange(value: any[]): void {
     if (value.length > 0 && this.isEnumType) {
       this.step.type.symbols = value
     }
   }
-  onParamTypeChange() {
+  onParamTypeChange(): void {
     if (!this.isFileType) {
       this.ruleForm.secondaryFiles = []
       // this.form.controls.secondaryFiles.disable({ onlySelf: true, emitEvent: false })
@@ -291,14 +291,14 @@ export default class WorkflowIoInspector extends Vue {
     }
     this.model.validateConnectionsForIOPort(this.step)
   }
-  onFileTypeChange(value) {
+  onFileTypeChange(value?: any[]) {
     this.step.fileTypes = value || []
     this.model.validateConnectionsForIOPort(this.step)
   }
-  onChange(key) {
-    this.step[key] = this.ruleForm[key]
+  onChange(key: any): void {
+    ;(this.step as any)[key] = this.ruleForm[key]
   }
-  onBatchTypeChange() {
+  onBatchTypeChange(): void {
     this.selectedBatchByOption = this.ruleForm.batchType
     this.model.setBatch(this.step.id, this.ruleForm.batchType)
   }

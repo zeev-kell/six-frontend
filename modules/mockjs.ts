@@ -3,9 +3,9 @@ import axios from 'axios'
 import Mock from 'better-mock'
 import MockAdapter from 'axios-mock-adapter'
 import { Module } from '@nuxt/types'
-import { Pipe, PipeUrl, Pipes, PipesUrl } from '@/plugins/mock/pipe'
-import _tool from '@/plugins/mock/commandline.json'
-import _workflow from '@/plugins/mock/workflow.json'
+import { Pipe, PipeUrl, Pipes, PipesUrl } from '../plugins/mock/pipe'
+import _tool from '../plugins/mock/commandline.json'
+import _workflow from '../plugins/mock/workflow.json'
 // import { Workflow, WorkflowUrl, WorkflowList, WorkflowListUrl } from '../plugins/mock/workflow'
 
 const MockModule: Module = function () {
@@ -49,7 +49,7 @@ const MockModule: Module = function () {
   //   ]
   // })
   /** @function addPlugin */
-  this.addPlugin(path.resolve(__dirname, '..', 'plugins', 'mockjs.js'))
+  this.addPlugin(path.resolve(__dirname, '..', 'plugins', 'mockjs.ts'))
 }
 
 export default MockModule
