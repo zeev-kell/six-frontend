@@ -1,6 +1,6 @@
 <template>
   <div class="graph h-100 el-row el-row--flex">
-    <drag-list-box ref="toolListBox"></drag-list-box>
+    <drag-list-box ref="dragListBox"></drag-list-box>
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100" />
       <tool-box :graph="graph" :tools="tools" :validation-state="validationState" @toolbox-event="propagateEvent" />
@@ -56,7 +56,7 @@ export default class GraphMixin extends GraphEdit {
   $refs!: {
     svg: SVGSVGElement
     stepInspector: WorkflowStepInspector
-    toolListBox: ToolListBox
+    dragListBox: DragListBox
   }
 
   @ProvideReactive('graph')

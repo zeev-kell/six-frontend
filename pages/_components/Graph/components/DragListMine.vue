@@ -15,7 +15,7 @@ export default class DragListMine extends DragListShop {
   }
 
   async refreshTable(): Promise<void> {
-    let response = await this.$api.pipe.getListV2()
+    let response = await this.$api.pipe.getListV2(this.listQuery)
     response = response.filter((r: PipeModel) => r.type === 0 || r.type === 1)
     response.forEach((t: PipeModel) => {
       // 为每个数据增加 _loading 属性
