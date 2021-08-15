@@ -147,7 +147,7 @@ export default class RegisterPage extends Vue {
   async register(): Promise<void> {
     await this.$refs.form.validate()
     await this.$$axios
-      .$post('/register', {
+      .$post('/v1/register', {
         username: this.form.username,
         password: this.form.password,
         // phone: this.form.phone,
@@ -170,7 +170,7 @@ export default class RegisterPage extends Vue {
       if (error === '') {
         this.isDisabledCode = true
         this.$$axios
-          .$post('/register/getcode', { email: this.form.email })
+          .$post('/v1/register/getcode', { email: this.form.email })
           .then(() => {
             this.$message.success('验证码已发送，请注意查收...')
             this.loadingCodeText = '发送成功'

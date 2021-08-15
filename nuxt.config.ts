@@ -67,7 +67,7 @@ const config = {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    ...(process.env.NODE_ENV === 'development' ? ['~/modules/mockjs.ts'] : []),
+    // ...(process.env.NODE_ENV === 'development' ? ['~/modules/mockjs.ts'] : []),
     // ...['@/modules/mockjs'],
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',

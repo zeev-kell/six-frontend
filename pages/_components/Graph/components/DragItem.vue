@@ -1,6 +1,6 @@
 <template>
   <li draggable="true" :class="itemClass" @dragstart="onDragStart($event)" @dragend="onDragEnd()">
-    {{ item.name }}
+    <slot></slot>
     <div style="position: fixed; top: -1000px">
       <div ref="image" :class="imageClass"></div>
     </div>

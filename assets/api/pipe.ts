@@ -18,6 +18,10 @@ export class Module {
     return this.$$axios.$get('/v1/pipes')
   }
 
+  getListV2() {
+    return this.$$axios.$get('/v2/pipes')
+  }
+
   update(pipeId: string, data: any) {
     return this.$$axios.$put('/v2/pipe/repository/' + pipeId, data).then((response) => {
       Element.Message.success('保存成功')
