@@ -1,5 +1,5 @@
 <template>
-  <section v-once id="section-empowerment">
+  <section id="section-empowerment">
     <div class="section-title">
       <h1>赋能工作和学习</h1>
     </div>
