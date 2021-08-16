@@ -41,7 +41,6 @@
 </template>
 
 <script type="text/babel">
-import pipeConstants from '@/constants/PipeConstants'
 export default {
   components: {
     // codemirror: () => import('@/pages/application/_components/CodeMirror'),
@@ -74,7 +73,6 @@ export default {
         theme: 'default',
       },
       loading: false,
-      typeList: pipeConstants.items,
     }
   },
   methods: {

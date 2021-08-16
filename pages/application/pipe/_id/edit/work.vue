@@ -25,19 +25,19 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
-import pipeConstants from '@/constants/PipeConstants'
+import { pipeConstants } from '@/constants/PipeConstants'
 import { getObject, stringifyObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 import { CommandLineToolFactory, WorkflowFactory } from 'cwlts/models'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 
 @Component({
   filters: {
-    pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
+    pipeTypeTranslate: pipeConstants.get,
   },
   components: { codemirror: () => import('@/pages/application/_components/CodeMirror.vue') },
   async asyncData({ app, store }) {
     const item = store.state.pipe
-    const type = store.getters['pipe/isWork'] ? pipeConstants.Constants.get('TYPE_TOOL') : pipeConstants.Constants.get('TYPE_APP')
+    const type = store.getters['pipe/isWork'] ? pipeConstants.items.TYPE_TOOL : pipeConstants.items.TYPE_APP
     const items = await app.$axios.$get('/v1/pipes', {
       params: {
         type,
@@ -106,9 +106,7 @@ export default class Work extends Vue {
               // TODO 修改成新的类
               content = getObject(content)
               const model =
-                pipe.type === pipeConstants.Constants.get('TYPE_TOOL')
-                  ? CommandLineToolFactory.from(content, 'document')
-                  : WorkflowFactory.from(content)
+                pipe.type === pipeConstants.items.TYPE_TOOL ? CommandLineToolFactory.from(content, 'document') : WorkflowFactory.from(content)
               let nullJob = JobHelper.getNullJobInputs(model)
               nullJob = stringifyObject(nullJob, true)
               this.content = nullJob

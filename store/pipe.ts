@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import type { GetterTree, MutationTree } from 'vuex'
-import PipeConstants from '@/constants/PipeConstants'
+import { pipeConstants } from '@/constants/PipeConstants'
 import { NuxtState } from '@nuxt/types/app'
 
 export const state = () => ({
@@ -27,14 +27,14 @@ export const state = () => ({
 export type PipeModuleState = ReturnType<typeof state>
 
 export const getters: GetterTree<PipeModuleState, NuxtState> = {
-  isTool: (state) => state.type === PipeConstants.Constants.get('TYPE_TOOL'),
-  isApp: (state) => state.type === PipeConstants.Constants.get('TYPE_APP'),
-  isDocker: (state) => state.type === PipeConstants.Constants.get('TYPE_DOCKER'),
-  isWork: (state) => state.type === PipeConstants.Constants.get('TYPE_WORK'),
-  isWorkflow: (state) => state.type === PipeConstants.Constants.get('TYPE_WORKFLOW'),
+  isTool: (state) => state.type === pipeConstants.items.TYPE_TOOL,
+  isApp: (state) => state.type === pipeConstants.items.TYPE_APP,
+  isDocker: (state) => state.type === pipeConstants.items.TYPE_DOCKER,
+  isWork: (state) => state.type === pipeConstants.items.TYPE_WORK,
+  isWorkflow: (state) => state.type === pipeConstants.items.TYPE_WORKFLOW,
   // 是否是软件应用
-  isSoftware: (state) => [PipeConstants.Constants.get('TYPE_TOOL'), PipeConstants.Constants.get('TYPE_APP')].includes(state.type),
-  isOperation: (state) => [PipeConstants.Constants.get('TYPE_WORK'), PipeConstants.Constants.get('TYPE_WORKFLOW')].includes(state.type),
+  isSoftware: (state) => [pipeConstants.items.TYPE_TOOL, pipeConstants.items.TYPE_APP].includes(state.type),
+  isOperation: (state) => [pipeConstants.items.TYPE_WORK, pipeConstants.items.TYPE_WORKFLOW].includes(state.type),
 }
 
 export const mutations: MutationTree<NuxtState> = {

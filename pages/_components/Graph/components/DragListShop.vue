@@ -18,7 +18,7 @@ import { Component } from 'nuxt-property-decorator'
 import TableMixins from '@/components/TableMixins'
 import { tableQuery } from '@/types/table'
 import { PipeModel } from '@/types/model/Pipe'
-import { pipe2Constants } from '@/constants/Pipe2Constants'
+import { pipeConstants } from '@/constants/PipeConstants'
 import DragItemCollapse from '@/pages/_components/Graph/components/DragItemCollapse.vue'
 import DragItem from './DragItem.vue'
 
@@ -33,12 +33,16 @@ export default class DragListShop extends TableMixins<PipeModel> {
     page: 1,
     size: 10000,
     name: undefined,
-    status: pipe2Constants.items.STATUS_ON,
+    status: pipeConstants.items.STATUS_ON,
+  }
+
+  protected filterPipe(p: PipeModel): boolean {
+    return (p.type === 0 || p.type === 1) && (p.content || p.versions?.length > 0)
   }
 
   async refreshTable(): Promise<void> {
     let response = await this.$api.pipe.getListV2(this.listQuery)
-    response = response.filter((p: PipeModel) => p.type === 0 || p.type === 1).filter((p: PipeModel) => p.content || p.versions?.length > 0)
+    response = response.filter(this.filterPipe)
     response.forEach((p: PipeModel) => {
       if (p.versions?.length === 1) {
         p.content = p.versions[0].content

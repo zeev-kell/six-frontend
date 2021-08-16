@@ -13,11 +13,11 @@ export interface graphTool {
 
 export interface graphTools {
   validate: graphTool
-  add: graphTool
   auto: graphTool
   plus: graphTool
   minus: graphTool
   fit: graphTool
+  download: graphTool
   [index: string]: graphTool
 }
 

@@ -3,7 +3,7 @@
     <drag-list-box ref="dragListBox"></drag-list-box>
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100" />
-      <tool-box :graph="graph" :tools="tools" :validation-state="validationState" @toolbox-event="propagateEvent" />
+      <tool-box :tools="tools" :validation-state="validationState" @toolbox-event="propagateEvent" />
     </div>
     <transition name="el-fade-in-linear">
       <workflow-step-inspector ref="stepInspector" />
@@ -119,7 +119,12 @@ export default class GraphMixin extends GraphEdit {
       'sbg:y': coords.y,
       'six:id': task.pipe_id,
     })
-    this.addStepToGraph(task)
+    try {
+      this.addStepToGraph(task)
+    } catch (e: unknown) {
+      this.$message.error('软件内容不规范')
+      throw e
+    }
   }
   // 往图形添加 step
   addStepToGraph(task: PipeModel): void {

@@ -70,13 +70,13 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
-import pipeConstants from '@/constants/PipeConstants'
+import { pipeConstants } from '@/constants/PipeConstants'
 
 @Component({
   components: { CanCreate },
   filters: {
     ...intercept,
-    pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
+    pipeTypeTranslate: pipeConstants.get,
   },
   async asyncData({ app }) {
     const items = await app.$api.pipe.getList()
@@ -90,7 +90,7 @@ export default class IndexPage extends Vue {
     category: this.$route.query.category || '',
     type: this.$route.query.type ? Number(this.$route.query.type) : '',
   }
-  typeList = pipeConstants.items
+  typeList = pipeConstants.getItemsList('TYPE_')
 
   get categoryList() {
     return this.items.reduce((list: any, item: any) => {

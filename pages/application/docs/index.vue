@@ -58,7 +58,6 @@
 <script type="text/babel">
 import CanCreate from '@/components/common/CanCreate'
 import intercept from '@/filters/intercept'
-import pipeConstants from '@/constants/PipeConstants'
 export default {
   components: { CanCreate },
   filters: {
@@ -76,7 +75,7 @@ export default {
         type: this.$route.query.type || '',
       },
       items: [],
-      typeList: pipeConstants.items,
+      typeList: [],
     }
   },
   computed: {

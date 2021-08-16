@@ -22,14 +22,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import pipeConstants from '@/constants/PipeConstants'
+import { pipeConstants } from '@/constants/PipeConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
   components: { LoadingButton },
   async asyncData({ app, store }) {
     const item = store.state.pipe
-    const type = store.getters['pipe/isTool'] ? pipeConstants.Constants.get('TYPE_WORK') : pipeConstants.Constants.get('TYPE_WORKFLOW')
+    const type = store.getters['pipe/isTool'] ? pipeConstants.items.TYPE_WORK : pipeConstants.items.TYPE_WORKFLOW
     const items = await app.$axios.$get('/v1/pipes', {
       params: {
         type,

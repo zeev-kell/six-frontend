@@ -43,13 +43,13 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
-import pipeConstants from '@/constants/PipeConstants'
+import { pipeConstants } from '@/constants/PipeConstants'
 import GraphIndex from '@/pages/application/_components/graph/GraphIndex.vue'
 import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 
 @Component({
   filters: {
-    pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
+    pipeTypeTranslate: pipeConstants.get,
   },
   components: { GraphIndex },
   async asyncData({ app, store }) {

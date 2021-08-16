@@ -1,4 +1,4 @@
-import BaseConstants from '@/constants/Base2Constants'
+import BaseConstants from '@/constants/BaseConstants'
 import { Items } from '@/types/constant'
 const items: Items = {
   STATUS_DRAFT: '0', // 草稿
@@ -12,4 +12,4 @@ const items: Items = {
   TYPE_WORKFLOW: 4, // 工作流
 }
 
-export const pipe2Constants = new BaseConstants(items)
+export const pipeConstants = new BaseConstants(items)

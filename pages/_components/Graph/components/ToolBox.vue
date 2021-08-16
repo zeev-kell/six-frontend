@@ -1,14 +1,23 @@
 <script lang="ts">
 import { SVGArrangePlugin, Workflow } from 'cwl-svg'
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { Component, InjectReactive, Prop, Vue } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
 import type { CreateElement, VNode } from 'vue'
 import { AppValidityState, graphTool, graphTools } from '../types'
 
-@Component
+@Component({
+  components: {
+    ToolDownload: () => import('@/pages/_components/Graph/components/ToolBoxHelper/ToolDownload.vue'),
+  },
+})
 export default class ToolBox extends Vue {
-  @Prop({ required: true })
+  $refs!: {
+    toolDownload: HTMLFormElement
+  }
+
+  @InjectReactive('graph')
   readonly graph!: Workflow
+
   @Prop({ default: false })
   readonly readonly!: boolean
   @Prop({
@@ -32,11 +41,10 @@ export default class ToolBox extends Vue {
       eventName: GraphEvent.TriggerWarning,
       type: 'warning',
     },
-    add: {
-      icon: 'el-icon-plus',
-      title: '新增Task',
-      action: 'actionEmitEvent',
-      eventName: GraphEvent.TriggerAdd,
+    download: {
+      icon: 'el-icon-download',
+      title: '下载',
+      action: 'download',
     },
     auto: {
       icon: 'el-icon-magic-stick',
@@ -88,8 +96,13 @@ export default class ToolBox extends Vue {
   actionFitToViewport(): void {
     this.graph.fitToViewport()
   }
+  // 下载
+  download() {
+    this.$refs.toolDownload.downloadVisible = true
+  }
   // 事件冒泡
   actionEmitEvent(eventName: string): void {
+    console.log('ToolBox:', eventName)
     this.$emit('toolbox-event', eventName)
   }
   // 处理每个按钮的事件
@@ -108,10 +121,6 @@ export default class ToolBox extends Vue {
   }
   render(h: CreateElement): VNode {
     const createBtn = (btn: graphTool): VNode | string => {
-      // 针对 validate 添加了判断
-      if (btn.name === 'validate' && !this.showValidation) {
-        return ''
-      }
       return h(
         'ElButton',
         {
@@ -130,6 +139,24 @@ export default class ToolBox extends Vue {
         []
       )
     }
+    const renderBtnHelp = (btn: graphTool): VNode | VNode[] | string => {
+      // 针对 validate 添加了判断
+      if (btn.name === 'validate' && !this.showValidation) {
+        return ''
+      }
+      // 添加 download 的下载窗口
+      if (btn.name === 'download') {
+        const create = this.$createElement
+        const dom = create('tool-download', {
+          on: {
+            'action-emit-event': this.actionEmitEvent,
+          },
+          ref: 'toolDownload',
+        })
+        return [createBtn(btn), dom] as VNode[]
+      }
+      return createBtn(btn)
+    }
     return h(
       'div',
       {
@@ -147,7 +174,7 @@ export default class ToolBox extends Vue {
               {
                 class: 'el-button-group',
               },
-              group.map(createBtn)
+              group.map(renderBtnHelp)
             ),
           ]
         )

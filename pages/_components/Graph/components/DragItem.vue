@@ -12,7 +12,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { PipeModel } from '@/types/model/Pipe'
-import pipeConstants from '@/constants/PipeConstants'
+import { pipeConstants } from '@/constants/PipeConstants'
 
 @Component
 export default class DragItem extends Vue {
@@ -26,7 +26,7 @@ export default class DragItem extends Vue {
   itemClass = ''
 
   get isTool(): boolean {
-    return this.item.type === pipeConstants.Constants.get('TYPE_TOOL')
+    return this.item.type === pipeConstants.items.TYPE_TOOL
   }
   get imageClass(): string {
     return 'icon-' + (this.isTool ? 'tool' : 'workflow')

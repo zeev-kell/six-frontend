@@ -5,8 +5,7 @@
 </template>
 
 <script type="text/babel">
-import { GraphEvent } from '@/constants/GraphEvent'
-import PipeConstants from '@/constants/PipeConstants'
+import { GraphEvent } from '../GraphEvent'
 export default {
   name: 'GraphIndex',
   components: {
@@ -23,7 +22,7 @@ export default {
     graphComponent() {
       // 根据当前类型实例化不同的组件
       const type = this.item?.type
-      const isTool = type ? type === PipeConstants.Constants.get('TYPE_TOOL') : true
+      const isTool = type ? type === 0 : true
       return isTool ? 'graph-commandline' : 'graph-workflow'
     },
   },

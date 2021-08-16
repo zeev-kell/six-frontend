@@ -2,7 +2,7 @@
 import { Component } from 'nuxt-property-decorator'
 import { tableQuery } from '@/types/table'
 import { PipeModel } from '@/types/model/Pipe'
-import { pipe2Constants } from '@/constants/Pipe2Constants'
+import { pipeConstants } from '@/constants/PipeConstants'
 import DragListShop from '@/pages/_components/Graph/components/DragListShop.vue'
 
 @Component
@@ -11,22 +11,12 @@ export default class DragListMine extends DragListShop {
     page: 1,
     size: 10000,
     name: undefined,
-    status: pipe2Constants.items.STATUS_ON,
+    status: pipeConstants.items.STATUS_ON,
+    provider: this.$store.getters['user/username'],
   }
 
-  async refreshTable(): Promise<void> {
-    let response = await this.$api.pipe.getListV2(this.listQuery)
-    response = response.filter((r: PipeModel) => r.type === 0 || r.type === 1)
-    response.forEach((t: PipeModel) => {
-      // 为每个数据增加 _loading 属性
-      Object.defineProperty(t, '_expanded', {
-        value: false,
-        enumerable: true,
-        configurable: true,
-        writable: true,
-      })
-    })
-    this.tableData = response
+  protected filterPipe(p: PipeModel): boolean {
+    return (p.type === 0 || p.type === 1) && (p.content || p.versions?.length > 0) && p.provider === this.listQuery.provider
   }
 }
 </script>

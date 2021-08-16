@@ -51,14 +51,14 @@
 
 <script lang="ts">
 import { Component, Getter, Vue, Watch } from 'nuxt-property-decorator'
-import pipeConstants from '@/constants/PipeConstants'
+import { pipeConstants } from '@/constants/PipeConstants'
 import CanExamine from '@/components/common/CanExamine.vue'
 
 @Component({
   components: { CanExamine },
   scrollToTop: true,
   filters: {
-    pipeTypeTranslate: pipeConstants.translate.bind(pipeConstants),
+    pipeTypeTranslate: pipeConstants.get,
   },
   async middleware({ store, params, app }) {
     const pipe = store.state.pipe

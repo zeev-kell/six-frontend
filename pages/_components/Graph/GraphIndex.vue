@@ -12,9 +12,8 @@ import GraphTool from '@/pages/_components/Graph/GraphTool.vue'
 import { GraphEvent } from '@/constants/GraphEvent'
 import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
 import { CommandLineTool } from 'cwlts/mappings/v1.0/CommandLineTool'
-
 import { PipeModel } from '@/types/model/Pipe'
-import pipeConstants from '@/constants/PipeConstants'
+import { pipeConstants } from '@/constants/PipeConstants'
 
 @Component({
   components: {
@@ -32,7 +31,7 @@ export default class GraphIndex extends Vue {
 
   // 根据当前类型实例化不同的组件
   get graphComponent(): string {
-    const isTool = this.item.type === pipeConstants.Constants.get('TYPE_TOOL')
+    const isTool = this.item.type === pipeConstants.items.TYPE_TOOL
     return isTool ? 'graph-tool' : 'graph-workflow'
   }
 
