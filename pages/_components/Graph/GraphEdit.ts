@@ -3,6 +3,8 @@ import { AppValidityState } from '@/pages/_components/Graph/types'
 import { CommandLineToolModel, WorkflowModel } from 'cwlts/models'
 import { Workflow, CommandLineTool } from 'cwlts/mappings/v1.0'
 import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
+import { FormControl } from '@/pages/application/_components/FormControl'
+import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 
 @Component({
   data() {
@@ -20,6 +22,7 @@ import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
 export class GraphEdit extends Vue {
   dataModel!: CommandLineToolModel | WorkflowModel
   validationState!: AppValidityState
+  jobControl = new FormControl({})
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   recreateModel(json: string | CommandLineTool | V1Workflow): void {
     throw new Error('Method not implemented.')

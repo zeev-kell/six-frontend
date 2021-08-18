@@ -18,24 +18,22 @@
 </template>
 
 <script lang="ts">
-import { Component, InjectReactive, Vue } from 'nuxt-property-decorator'
-import { Workflow } from 'cwl-svg'
+import { Component } from 'nuxt-property-decorator'
+import ToolBoxHelper from '@/pages/_components/Graph/components/ToolBoxHelper/ToolBoxHelper'
+import { GraphEvent } from '@/constants/GraphEvent'
 
 @Component
-export default class ToolDownload extends Vue {
-  @InjectReactive('graph')
-  graph!: Workflow
-
+export default class ToolDownload extends ToolBoxHelper {
   downloadVisible = false
   dMain = true
   dJob = true
   dType = 'yaml'
 
-  async onDownload(): Promise<void> {
+  onDownload(): void {
     if (!this.dMain && !this.dJob) {
       return
     }
-    await this.$emit('action-emit-event', 'toolDownload')
+    this.toolEvent(GraphEvent.TriggerDownload, this.dType, this.dMain, this.dJob)
   }
 }
 </script>

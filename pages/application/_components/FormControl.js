@@ -18,6 +18,7 @@ function _find(control, path, delimiter) {
 }
 
 class AbstractControl {
+  value = undefined
   constructor() {
     this.value = undefined
     this.enabled = true

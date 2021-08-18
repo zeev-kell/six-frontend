@@ -33,7 +33,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import CollapseItem from '@/components/CollapseItem.vue'
 import DragListShop from '@/pages/_components/Graph/components/DragListShop.vue'
 import DragListMine from '@/pages/_components/Graph/components/DragListMine.vue'
 import DragItem from './DragItem.vue'
@@ -42,7 +41,6 @@ import DragItem from './DragItem.vue'
   components: {
     DragListMine,
     DragListShop,
-    CollapseItem,
     DragItem,
   },
 })
@@ -111,7 +109,7 @@ export default class DragListBox extends Vue {
     height: 1px;
   }
   .el-tabs__content {
-    height: calc(100vh - 56px);
+    height: calc(100vh - 60px);
   }
   .el-tabs__nav {
     width: 100%;

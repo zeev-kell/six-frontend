@@ -1,5 +1,5 @@
 <template>
-  <section v-once id="section-product" class="section-product">
+  <section id="section-product" class="section-product">
     <div class="section-title">
       <h1>云协作解决方案</h1>
     </div>

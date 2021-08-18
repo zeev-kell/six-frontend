@@ -3,7 +3,8 @@
     <div class="task-search">
       <el-form @submit.native.prevent>
         <el-form-item>
-          <el-input v-model="listQuery.name" :placeholder="$t('placeholder.search')" clearable @keyup.enter.native="searchQuery"> </el-input>
+          <el-input v-model="listQuery.name" size="mini" :placeholder="$t('placeholder.search')" clearable @keyup.enter.native="searchQuery">
+          </el-input>
         </el-form-item>
       </el-form>
     </div>

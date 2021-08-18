@@ -5,13 +5,10 @@ export const GraphEvent = {
   Propagate: 'propagate-event',
 
   // 触发事件（往上）
-  TriggerAdd: 'trigger-add',
-  TriggerEdit: 'trigger-edit',
   TriggerModalCreate: 'trigger-modal-create',
 
   // 触发事件（往下）
   PayloadUpdateJob: 'update-job',
 
   // 回调事件（往下）
-  CallAddStep: 'call-add-step',
 }

@@ -4,14 +4,15 @@ export const enum GraphEvent {
   // 往上传播事件
   Propagate = 'propagate-event',
 
+  // 工具事件
+  ToolEvent = 'tool-event',
+
   // 触发事件（往上）
-  TriggerAdd = 'trigger-add',
-  TriggerEdit = 'trigger-edit',
   TriggerWarning = 'trigger-warning',
+  TriggerDownload = 'trigger-download',
 
   // 触发事件（往下）
   PayloadUpdateJob = 'update-job',
 
   // 回调事件（往下）
-  CallAddStep = 'call-add-step',
 }

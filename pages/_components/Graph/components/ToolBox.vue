@@ -34,17 +34,22 @@ export default class ToolBox extends Vue {
   readonly validationState!: AppValidityState
 
   private BUTTON_LIST: graphTools = {
+    run: {
+      icon: 'el-icon-video-play',
+      title: '运行',
+      action: 'actionToRun',
+    },
     validate: {
       icon: 'el-icon-warning-outline f-16',
       title: '异常',
-      action: 'actionEmitEvent',
+      action: 'toolEvent',
       eventName: GraphEvent.TriggerWarning,
       type: 'warning',
     },
     download: {
       icon: 'el-icon-download',
       title: '下载',
-      action: 'download',
+      action: 'actionDownload',
     },
     auto: {
       icon: 'el-icon-magic-stick',
@@ -96,15 +101,23 @@ export default class ToolBox extends Vue {
   actionFitToViewport(): void {
     this.graph.fitToViewport()
   }
+  // 跳转至运行
+  actionToRun(): void {
+    // 不存在 pipeId，需要把数据保存然后跳转
+    if (!this.$route.params.id) {
+      return
+    }
+    this.$I18nRouter.push(`/graph-info/${this.$route.params.id}/set-run`)
+  }
   // 下载
-  download() {
+  actionDownload() {
     this.$refs.toolDownload.downloadVisible = true
   }
   // 事件冒泡
-  actionEmitEvent(eventName: string): void {
-    console.log('ToolBox:', eventName)
-    this.$emit('toolbox-event', eventName)
+  toolEvent(...args: any[]): void {
+    this.$emit(GraphEvent.ToolEvent, ...args)
   }
+
   // 处理每个按钮的事件
   onClick({ action, eventName }: graphTool): void {
     ;(this as any)[action](eventName)
@@ -149,7 +162,7 @@ export default class ToolBox extends Vue {
         const create = this.$createElement
         const dom = create('tool-download', {
           on: {
-            'action-emit-event': this.actionEmitEvent,
+            [GraphEvent.ToolEvent]: this.toolEvent,
           },
           ref: 'toolDownload',
         })

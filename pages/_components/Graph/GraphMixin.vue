@@ -1,9 +1,8 @@
 <template>
   <div class="graph h-100 el-row el-row--flex">
-    <drag-list-box ref="dragListBox"></drag-list-box>
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100" />
-      <tool-box :tools="tools" :validation-state="validationState" @toolbox-event="propagateEvent" />
+      <tool-box :tools="tools" :validation-state="validationState" @tool-event="toolEvent" />
     </div>
     <transition name="el-fade-in-linear">
       <workflow-step-inspector ref="stepInspector" />
@@ -15,6 +14,7 @@
 import { Component, Prop, ProvideReactive, Watch } from 'nuxt-property-decorator'
 import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
 import {
+  DeletionPlugin,
   SelectionPlugin,
   SVGArrangePlugin,
   SVGEdgeHoverPlugin,
@@ -23,8 +23,8 @@ import {
   SVGValidatePlugin,
   Workflow,
   ZoomPlugin,
-  DeletionPlugin,
 } from 'cwl-svg'
+import { SVGJobFileDropPlugin } from '@/pages/application/_components/graph/plugins/job-file-drop'
 import { DropPlugin } from '@/pages/_components/Graph/plugins/drop-plugin/drop-plugin'
 import { EmptyPlugin } from '@/pages/_components/Graph/plugins/empty-plugin/empty-plugin'
 import { DblclickPlugin_ } from '@/pages/_components/Graph/plugins/dblclick-plugin_'
@@ -33,15 +33,16 @@ import { GraphEvent } from '@/constants/GraphEvent'
 import { GraphEdit } from '@/pages/_components/Graph/GraphEdit'
 import { CommandLineToolModel, WorkflowModel } from 'cwlts/models'
 import WorkflowStepInspector from '@/pages/_components/Graph/components/WorkflowStepInspector.vue'
-import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
-import DragListBox from '@/pages/_components/Graph/components/DragListBox.vue'
+import { getObject, stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { PipeModel } from '@/types/model/Pipe'
+import { downloadBlobLink, downloadStrLink } from '@/utils/download-link'
+import JSZip from 'jszip'
+import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 import { GraphPlugin } from './types'
 import ToolBox from './components/ToolBox.vue'
 
 @Component({
   components: {
-    DragListBox,
     WorkflowStepInspector,
     ToolBox,
   },
@@ -56,7 +57,6 @@ export default class GraphMixin extends GraphEdit {
   $refs!: {
     svg: SVGSVGElement
     stepInspector: WorkflowStepInspector
-    dragListBox: DragListBox
   }
 
   @ProvideReactive('graph')
@@ -76,6 +76,12 @@ export default class GraphMixin extends GraphEdit {
     },
   })
   plugins!: GraphPlugin[]
+  @Prop({
+    default() {
+      return 'download'
+    },
+  })
+  name!: string
 
   @Watch('graph')
   onGraphChange(): void {
@@ -147,7 +153,68 @@ export default class GraphMixin extends GraphEdit {
   // 事件转发到父组件
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   propagateEvent(...args: any[]): void {
-    this.$emit('propagate-event', ...args)
+    this.$emit(GraphEvent.Propagate, ...args)
+  }
+  // 导出数据
+  exportCwl(format = 'yaml', isOnlyData = false): void | { data: any; name: string } {
+    const asYaml = format === 'yaml'
+    const serialize = this.dataModel instanceof WorkflowModel ? this.dataModel.serializeEmbedded() : this.dataModel.serialize()
+    const data = stringifyObject(serialize, asYaml)
+    const name = this.name + `.${asYaml ? 'cwl' : format}`
+    if (isOnlyData) {
+      return { data, name }
+    }
+    downloadStrLink(data, name)
+  }
+  // 导出任务数据
+  exportJob(format = 'yaml', isOnlyData = false): void | { data: any; name: string } {
+    const data = stringifyObject(this.jobControl.value, format === 'yaml')
+    const name = this.name + `.job.${format}`
+    if (isOnlyData) {
+      return { data, name }
+    }
+    downloadStrLink(data, name)
+  }
+  // TODO 图型变化时更新 json
+  updateJob(jobObject = {}): void {
+    const controlValue = this.normalizeJob(jobObject)
+    this.jobControl.setValue(controlValue)
+    this.graph.getPlugin(SVGJobFileDropPlugin)?.updateToJobState(controlValue)
+  }
+  normalizeJob(jobObject): any {
+    const nullJob = JobHelper.getNullJobInputs(this.graph.model)
+    const job = jobObject || {}
+    for (const key of Object.keys(job)) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (!nullJob.hasOwnProperty(key)) {
+        delete job[key]
+      }
+    }
+    return { ...nullJob, ...job }
+  }
+
+  // 工具事件
+  toolEvent(eventName: string, ...args: any[]): void {
+    ;(this as any)[eventName](...args)
+  }
+  async [GraphEvent.TriggerDownload](dType: string, dMain: boolean, dJob: boolean): void {
+    if (dMain && !dJob) {
+      // 只导出 cwl文件
+      this.exportCwl(dType)
+    } else if (!dMain && dJob) {
+      this.exportJob(dType)
+    } else {
+      const job: any = this.exportJob(dType, true)
+      const main: any = this.exportCwl(dType, true)
+      const JSZipModule = await import('jszip')
+      // eslint-disable-next-line new-cap
+      const zip: JSZip = new JSZipModule.default()
+      zip.file(main.name, main.data)
+      zip.file(job.name, job.data)
+      const content = await zip.generateAsync({ type: 'blob' })
+      const name = main.name.split('.')[0]
+      downloadBlobLink(content, name + '.zip')
+    }
   }
 
   beforeDestroy(): void {
@@ -158,6 +225,8 @@ export default class GraphMixin extends GraphEdit {
     // 处理 yaml 格式为 json 格式
     const content = getObject(this.content)
     this.createModel(content as any)
+    // 默认更新 json
+    this.updateJob({})
     this.fixWheel()
     if (!this.readonly) {
       // 注册拖拽放置事件
@@ -182,13 +251,6 @@ export default class GraphMixin extends GraphEdit {
         } else if (type === 'view') {
           dblclick?.onDblClick(event)
         }
-      })
-      // 触发回调 add step 事件
-      this.$on(GraphEvent.CallAddStep, (task: any) => {
-        this.addNodeToGraph(task, {
-          x: Math.floor(Math.random() * 100 + 20),
-          y: Math.floor(Math.random() * 100 + 20),
-        })
       })
     }
     // 初次进入自动放缩 并且 调整排版
