@@ -10,6 +10,7 @@ export const enum GraphEvent {
   // 触发事件（往上）
   TriggerWarning = 'trigger-warning',
   TriggerDownload = 'trigger-download',
+  TriggerSaveContent = 'trigger-save-content',
 
   // 触发事件（往下）
   PayloadUpdateJob = 'update-job',

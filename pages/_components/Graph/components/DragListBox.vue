@@ -1,19 +1,12 @@
 <template>
   <div class="drag-list-box">
-    <div class="tool-list"></div>
+    <div class="tool-list">
+      <el-button type="primary" icon="el-icon-plus" size="mini" title="新建" @click="actionToCreate"></el-button>
+      <el-button type="success" icon="el-icon-video-play" size="mini" title="设置运行参数" @click="actionToRun"></el-button>
+    </div>
     <div class="list-panel">
       <div class="toggle-button" :class="{ 'is-minimized': !showPanel }" @click.prevent="showPanel = !showPanel">
-        <svg xmlns="http://www.w3.org/2000/svg" class="svg-icon icon" viewBox="0 0 16 86" aria-hidden="true" width="16" height="86">
-          <g fill="none" fill-rule="evenodd">
-            <path class="path-wapper" d="M0 0l14.12 8.825A4 4 0 0116 12.217v61.566a4 4 0 01-1.88 3.392L0 86V0z" fill="#3c3c3c"></path>
-            <path
-              class="path-arrow"
-              d="M10.758 48.766a.778.778 0 000-1.127L6.996 43l3.762-4.639a.778.778 0 000-1.127.85.85 0 00-1.172 0l-4.344 5.202a.78.78 0 000 1.128l4.344 5.202a.85.85 0 001.172 0z"
-              fill="rgb(184, 188, 191)"
-              fill-rule="nonzero"
-            ></path>
-          </g>
-        </svg>
+        <drag-list-box-toggle></drag-list-box-toggle>
       </div>
       <transition>
         <div v-show="showPanel" class="left-panel pt-5">
@@ -35,10 +28,13 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import DragListShop from '@/pages/_components/Graph/components/DragListShop.vue'
 import DragListMine from '@/pages/_components/Graph/components/DragListMine.vue'
+import { GraphEvent } from '@/constants/GraphEvent'
+import DragListBoxToggle from '@/pages/_components/Graph/components/DragListBoxToggle.vue'
 import DragItem from './DragItem.vue'
 
 @Component({
   components: {
+    DragListBoxToggle,
     DragListMine,
     DragListShop,
     DragItem,
@@ -52,6 +48,23 @@ export default class DragListBox extends Vue {
 
   showPanel = true
   activeName = 'first'
+
+  // 事件冒泡
+  toolEvent(eventName: string, ...args: any[]): void {
+    this.$emit(GraphEvent.ToolEvent, eventName, ...args)
+  }
+  // 跳转至新建
+  actionToCreate(): void {
+    // 需要把数据保存然后跳转
+    this.toolEvent(GraphEvent.TriggerSaveContent)
+    this.$I18nRouter.push(`/application/pipe/new-local`)
+  }
+  // 跳转至运行
+  actionToRun(): void {
+    // 需要把数据保存然后跳转
+    this.toolEvent(GraphEvent.TriggerSaveContent)
+    this.$I18nRouter.push(`/graph-info/set-run-local`)
+  }
 
   mounted(): void {
     this.$refs.dragListShop.refreshTable()
@@ -69,10 +82,12 @@ export default class DragListBox extends Vue {
   }
   .tool-list {
     position: absolute;
-    right: -60px;
+    left: 100%;
     top: 10px;
     z-index: 10;
     color: white;
+    display: flex;
+    margin-left: 30px;
   }
   .toggle-button {
     position: absolute;

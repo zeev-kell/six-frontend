@@ -38,6 +38,7 @@ import { PipeModel } from '@/types/model/Pipe'
 import { downloadBlobLink, downloadStrLink } from '@/utils/download-link'
 import JSZip from 'jszip'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
+import { setStore } from '@/utils/local-storage'
 import { GraphPlugin } from './types'
 import ToolBox from './components/ToolBox.vue'
 
@@ -66,6 +67,12 @@ export default class GraphMixin extends GraphEdit {
 
   @Prop({ required: true })
   content!: V1Workflow
+  @Prop({
+    default() {
+      return 'download'
+    },
+  })
+  name!: string
   @Prop({ default: false })
   readonly!: boolean
   @Prop({ default: undefined })
@@ -76,12 +83,6 @@ export default class GraphMixin extends GraphEdit {
     },
   })
   plugins!: GraphPlugin[]
-  @Prop({
-    default() {
-      return 'download'
-    },
-  })
-  name!: string
 
   @Watch('graph')
   onGraphChange(): void {
@@ -181,7 +182,7 @@ export default class GraphMixin extends GraphEdit {
     this.jobControl.setValue(controlValue)
     this.graph.getPlugin(SVGJobFileDropPlugin)?.updateToJobState(controlValue)
   }
-  normalizeJob(jobObject): any {
+  normalizeJob(jobObject: any): any {
     const nullJob = JobHelper.getNullJobInputs(this.graph.model)
     const job = jobObject || {}
     for (const key of Object.keys(job)) {
@@ -197,7 +198,7 @@ export default class GraphMixin extends GraphEdit {
   toolEvent(eventName: string, ...args: any[]): void {
     ;(this as any)[eventName](...args)
   }
-  async [GraphEvent.TriggerDownload](dType: string, dMain: boolean, dJob: boolean): void {
+  async [GraphEvent.TriggerDownload](dType: string, dMain: boolean, dJob: boolean): Promise<void> {
     if (dMain && !dJob) {
       // 只导出 cwl文件
       this.exportCwl(dType)
@@ -208,13 +209,17 @@ export default class GraphMixin extends GraphEdit {
       const main: any = this.exportCwl(dType, true)
       const JSZipModule = await import('jszip')
       // eslint-disable-next-line new-cap
-      const zip: JSZip = new JSZipModule.default()
+      const zip: JSZip = new (JSZipModule as any).default()
       zip.file(main.name, main.data)
       zip.file(job.name, job.data)
       const content = await zip.generateAsync({ type: 'blob' })
       const name = main.name.split('.')[0]
       downloadBlobLink(content, name + '.zip')
     }
+  }
+  [GraphEvent.TriggerSaveContent](): void {
+    const { data: content } = this.exportCwl('json', true) as { data: any }
+    setStore('graph-content', content)
   }
 
   beforeDestroy(): void {

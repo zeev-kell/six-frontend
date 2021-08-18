@@ -34,6 +34,7 @@ export default class ToolDownload extends ToolBoxHelper {
       return
     }
     this.toolEvent(GraphEvent.TriggerDownload, this.dType, this.dMain, this.dJob)
+    this.downloadVisible = false
   }
 }
 </script>

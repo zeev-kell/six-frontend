@@ -23,7 +23,7 @@ import { pipeConstants } from '@/constants/PipeConstants'
 })
 export default class GraphIndex extends Vue {
   $refs!: {
-    cwl: GraphWorkflow | GraphTool
+    graph: GraphWorkflow | GraphTool
   }
 
   @Prop({ required: true })
@@ -41,11 +41,11 @@ export default class GraphIndex extends Vue {
 
   // 执行 子组件 方法
   dispatchAction(action: string, ...args: string[]): any {
-    return (this.$refs.cwl as unknown as HTMLFormElement)[action](...args)
+    return (this.$refs.graph as unknown as HTMLFormElement)[action](...args)
   }
   // 获取 子组件 属性
   getAttributeAction(attr: string): any {
-    return (this.$refs.cwl as unknown as HTMLFormElement)[attr]
+    return (this.$refs.graph as unknown as HTMLFormElement)[attr]
   }
 
   mounted(): void {
@@ -53,7 +53,7 @@ export default class GraphIndex extends Vue {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.$on(GraphEvent.Dispatch, (event: string, ...arg: any[]) => {
       console.log('onDispatchEvent', event)
-      this.$refs.cwl.$emit(event, ...arg)
+      this.$refs.graph.$emit(event, ...arg)
     })
   }
 }

@@ -14,8 +14,7 @@ export function stringifyObject(object: any, asYaml = true): string {
         return value.replace(/\u2002/g, ' ')
       }
       return value
-    },
-    4
+    }
   )
 }
 

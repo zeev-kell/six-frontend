@@ -13,6 +13,10 @@ export class Module {
     this.$$axios = $$axios
   }
 
+  create(data: any): Promise<any> {
+    return this.$$axios.$post('/v2/pipe', data)
+  }
+
   get(pipeId: string) {
     return this.$$axios.$get('/v2/pipe/repository/' + pipeId)
   }

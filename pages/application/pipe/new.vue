@@ -18,7 +18,7 @@
               <el-input v-model="formModel.category" placeholder="请输入分类" />
             </el-form-item>
             <el-form-item label="类别" prop="type">
-              <el-select v-model="formModel.type" placeholder="请选择类别" clearable style="width: 100%">
+              <el-select v-model="formModel.type" placeholder="请选择类别" clearable style="width: 100%" :disabled="disabledType">
                 <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value" />
               </el-select>
             </el-form-item>
@@ -50,7 +50,8 @@ export default class PipeNewPage extends Vue {
   $refs!: {
     formModel: HTMLFormElement
   }
-  formModel = {
+
+  formModel: any = {
     name: '',
     version: '',
     description: '',
@@ -75,20 +76,13 @@ export default class PipeNewPage extends Vue {
       { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
     ],
   }
-  cmOptions = {
-    tabSize: 4,
-    styleActiveLine: true,
-    lineNumbers: true,
-    line: true,
-    mode: 'text/yaml',
-    lineWrapping: true,
-    theme: 'default',
-  }
   loading = false
-  typeList = pipeConstants.items
+  disabledType = false
+  typeList = pipeConstants.getItemsList('TYPE_')
+
   async onSubmit() {
     await this.$refs.formModel.validate()
-    await this.$$axios.$post('/v2/pipe', this.formModel).then((data) => {
+    await this.$api.pipe.create(this.formModel).then((data) => {
       const id = data?.data?.id
       this.$I18nRouter.push(`/application/pipe/${id}/edit`)
     })

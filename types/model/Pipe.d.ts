@@ -16,5 +16,4 @@ export interface PipeModel {
   readme: any
   resource_id?: string
   content: any
-  _expanded: boolean
 }

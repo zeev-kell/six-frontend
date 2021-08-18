@@ -1,8 +1,8 @@
 <template>
   <div class="h-100 el-row el-row--flex">
-    <drag-list-box class="el-col-auto"></drag-list-box>
+    <drag-list-box class="el-col-auto" @tool-event="toolEvent"></drag-list-box>
     <div class="el-col-full">
-      <graph-index ref="graphIndex" class="h-100v" :item="item" tools="run|download|plus,minus,fit|auto" />
+      <graph-index ref="graphIndex" class="h-100v" :item="item" tools="download|plus,minus,fit|auto" />
     </div>
   </div>
 </template>
@@ -27,6 +27,15 @@ import DragListBox from '@/pages/_components/Graph/components/DragListBox.vue'
   },
 })
 export default class GraphInfoNew extends Vue {
+  $refs!: {
+    graphIndex: GraphIndex
+  }
+
   item = null
+
+  // TODO 修改事件传播方式
+  toolEvent(eventName: string, ...args: any[]): void {
+    this.$refs.graphIndex.dispatchAction(eventName, ...args)
+  }
 }
 </script>

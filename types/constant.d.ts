@@ -1,3 +1,4 @@
+import { NuxtVueI18n } from 'nuxt-i18n'
 // 目前只有 string 类型
 export type MapKey = string | number
 
@@ -14,4 +15,4 @@ export interface Items {
   [index: string]: MapKey
 }
 
-export type ItemList = { value: MapKey; label: MapKey }[]
+export type ItemList = { value: MapKey; label: string }[]

@@ -19,7 +19,7 @@
             <graph-index :item="graph" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
           </div>
         </el-tab-pane>
-        <el-tab-pane label="可视化编辑" name="3"></el-tab-pane>
+        <!--        <el-tab-pane label="可视化编辑" name="3"></el-tab-pane>-->
       </el-tabs>
     </div>
     <div class="card-footer">

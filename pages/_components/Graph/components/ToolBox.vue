@@ -103,10 +103,6 @@ export default class ToolBox extends Vue {
   }
   // 跳转至运行
   actionToRun(): void {
-    // 不存在 pipeId，需要把数据保存然后跳转
-    if (!this.$route.params.id) {
-      return
-    }
     this.$I18nRouter.push(`/graph-info/${this.$route.params.id}/set-run`)
   }
   // 下载
@@ -114,8 +110,8 @@ export default class ToolBox extends Vue {
     this.$refs.toolDownload.downloadVisible = true
   }
   // 事件冒泡
-  toolEvent(...args: any[]): void {
-    this.$emit(GraphEvent.ToolEvent, ...args)
+  toolEvent(eventName: string, ...args: any[]): void {
+    this.$emit(GraphEvent.ToolEvent, eventName, ...args)
   }
 
   // 处理每个按钮的事件
@@ -137,9 +133,11 @@ export default class ToolBox extends Vue {
       return h(
         'ElButton',
         {
+          attrs: {
+            title: btn.title,
+          },
           props: {
             icon: btn.icon,
-            title: btn.title,
             type: btn.type || 'dark',
             size: 'mini',
           },
