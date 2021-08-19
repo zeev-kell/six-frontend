@@ -35,4 +35,5 @@ export const Pipe = {
 export const PipeUrl = /\/pipe\/[0-9]*/
 export const addPipeUrl = /\/pipe/
 export const Pipes = { 'items|10': [Pipe] }
-export const PipesUrl = /\/pipes/
+export const PipesUrl = /\/v1\/pipes/
+export const PipesV2Url = /\/v2\/pipes/

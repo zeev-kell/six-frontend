@@ -3,7 +3,8 @@ import axios from 'axios'
 import Mock from 'better-mock'
 import MockAdapter from 'axios-mock-adapter'
 import { Module } from '@nuxt/types'
-import { Pipe, PipeUrl, Pipes, PipesUrl } from '../plugins/mock/pipe'
+import { PipeModel } from '@/types/model/Pipe'
+import { Pipe, PipeUrl, Pipes, PipesUrl, PipesV2Url } from '../plugins/mock/pipe'
 import _tool from '../plugins/mock/commandline.json'
 import _workflow from '../plugins/mock/workflow.json'
 // import { Workflow, WorkflowUrl, WorkflowList, WorkflowListUrl } from '../plugins/mock/workflow'
@@ -21,6 +22,16 @@ const MockModule: Module = function () {
   })
   mock.onGet(PipesUrl).reply(() => {
     return [200, Mock.mock(Pipes).items]
+  })
+  mock.onGet(PipesV2Url).reply(() => {
+    const items = Mock.mock(Pipes).items
+    return [
+      200,
+      items.map((p: PipeModel) => {
+        p.content = p.type === 0 ? _tool : _workflow
+        return p
+      }),
+    ]
   })
   // mock.onGet(/\/blog\//g).reply(() => {
   //   return [200, '### DDD']

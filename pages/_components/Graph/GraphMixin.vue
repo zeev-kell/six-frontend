@@ -4,9 +4,7 @@
       <svg ref="svg" class="cwl-workflow h-100" />
       <tool-box :tools="tools" :validation-state="validationState" @tool-event="toolEvent" />
     </div>
-    <transition name="el-fade-in-linear">
-      <workflow-step-inspector ref="stepInspector" />
-    </transition>
+    <workflow-step-inspector ref="stepInspector" />
   </div>
 </template>
 
@@ -39,6 +37,7 @@ import { downloadBlobLink, downloadStrLink } from '@/utils/download-link'
 import JSZip from 'jszip'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 import { setStore } from '@/utils/local-storage'
+import ValidationReport from '@/pages/_components/Graph/components/ValidationReport.vue'
 import { GraphPlugin } from './types'
 import ToolBox from './components/ToolBox.vue'
 

@@ -1,30 +1,32 @@
 <template>
-  <div v-if="showPanel" class="cwl-params-panel right-panel">
-    <div class="card-header">
-      <div class="f-b text-truncate" :title="labelName">
-        {{ labelName }}
+  <transition name="el-fade-in-linear">
+    <div v-if="showPanel" class="cwl-params-panel right-panel">
+      <div class="card-header">
+        <div class="f-b text-truncate" :title="labelName">
+          {{ labelName }}
+        </div>
+        <button type="button" class="el-dialog__headerbtn" style="top: 15px" @click="showPanel = false">
+          <i class="el-dialog__close el-icon el-icon-close" />
+        </button>
       </div>
-      <button type="button" class="el-dialog__headerbtn" style="top: 15px" @click="showPanel = false">
-        <i class="el-dialog__close el-icon el-icon-close" />
-      </button>
-    </div>
-    <div class="card-body scrollbar">
-      <el-tabs v-if="isStep" v-model="activeName">
-        <el-tab-pane label="详情" name="info">
-          <workflow-step-inspector-info :step="selectionNode" />
-        </el-tab-pane>
-        <el-tab-pane label="输入" name="input">
-          <step-inputs-inspector :step="selectionNode" />
-        </el-tab-pane>
-        <el-tab-pane label="步骤" name="step">
-          <workflow-step-inspector-step :step="selectionNode" />
-        </el-tab-pane>
-      </el-tabs>
-      <div v-else>
-        <workflow-io-inspector :step="selectionNode" :readonly="readonly" />
+      <div class="card-body scrollbar">
+        <el-tabs v-if="isStep" v-model="activeName">
+          <el-tab-pane label="详情" name="info">
+            <workflow-step-inspector-info :step="selectionNode" />
+          </el-tab-pane>
+          <el-tab-pane label="输入" name="input">
+            <step-inputs-inspector :step="selectionNode" />
+          </el-tab-pane>
+          <el-tab-pane label="步骤" name="step">
+            <workflow-step-inspector-step :step="selectionNode" />
+          </el-tab-pane>
+        </el-tabs>
+        <div v-else>
+          <workflow-io-inspector :step="selectionNode" :readonly="readonly" />
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script lang="ts">

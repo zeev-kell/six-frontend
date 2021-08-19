@@ -43,6 +43,7 @@ export default class DragListShop extends TableMixins<PipeModel> {
 
   async refreshTable(): Promise<void> {
     let response = await this.$api.pipe.getListV2(this.listQuery)
+    console.log(response)
     response = response.filter(this.filterPipe)
     response.forEach((p: PipeModel) => {
       if (p.versions?.length === 1) {

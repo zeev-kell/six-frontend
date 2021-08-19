@@ -12,6 +12,9 @@ $t-color: #409eff;
 @import '../../../../assets/feather/css/feather.css';
 
 @mixin scroll-bar() {
+  ::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+  }
   &::-webkit-scrollbar-track {
     border-radius: 8px;
     background-color: #454545;
@@ -236,4 +239,51 @@ $t-color: #409eff;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMTggMTE4Ij48dGl0bGU+ZHJhZ19mb2xkZXI8L3RpdGxlPjxnIGlkPSJMYXllcl8xX2NvcHkiIGRhdGEtbmFtZT0iTGF5ZXIgMSBjb3B5Ij48ZyBpZD0iTGF5ZXJfNV9jb3B5IiBkYXRhLW5hbWU9IkxheWVyIDUgY29weSI+PGcgaWQ9IkxheWVyXzJfY29weV8zIiBkYXRhLW5hbWU9IkxheWVyIDIgY29weSAzIj48Y2lyY2xlIGN4PSI1OSIgY3k9IjU5IiByPSI0MSIgc3R5bGU9ImZpbGw6I2MzYzNjMyIvPjwvZz48ZyBpZD0iTGF5ZXJfMl9jb3B5XzMtMiIgZGF0YS1uYW1lPSJMYXllciAyIGNvcHkgMy0yIj48cGF0aCBkPSJNNTkuNDIsMTE3LjQ3YTU5LDU5LDAsMSwxLDU5LTU5aDBBNTkuMDgsNTkuMDgsMCwwLDEsNTkuNDIsMTE3LjQ3Wm0wLTExMmE1Myw1MywwLDEsMCw1Myw1M0E1Myw1MywwLDAsMCw1OS40Miw1LjQ3WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTAuNDIgMC41MykiIHN0eWxlPSJmaWxsOiNjNGM0YzQiLz48L2c+PC9nPjwvZz48ZyBpZD0iTGF5ZXJfNl9jb3B5IiBkYXRhLW5hbWU9IkxheWVyIDYgY29weSI+PHBhdGggZD0iTTc4LjY2LDUyLjI4VjY4LjU2YTUuMjIsNS4yMiwwLDAsMS01LjE4LDUuMTlINDUuMzVhNS4yMiw1LjIyLDAsMCwxLTUuMTgtNS4xOVY0Ni4zNmE1LjIyLDUuMjIsMCwwLDEsNS4xOC01LjE4aDcuNGE1LjIyLDUuMjIsMCwwLDEsNS4xOSw1LjE4di43NEg3My40OGE1LjIyLDUuMjIsMCwwLDEsNS4xOCw1LjE4WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTAuNDIgMC41MykiIHN0eWxlPSJmaWxsOiMyYzJjMmMiLz48L2c+PC9zdmc+);
 
   @extend .drop-icon;
+}
+
+.input-cli {
+  color: #7ac24d;
+}
+
+.baseCmd-cli {
+  color: #a184dc;
+}
+
+.arg-cli {
+  color: #fda365;
+}
+
+.stream-cli {
+  color: #ddd;
+}
+
+.text-console-warning {
+  color: #dc8400;
+}
+
+.text-console-error {
+  color: #dd4a38;
+}
+
+.validation-report {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: #ffffff;
+
+  .action-box {
+    background: #3c3c3c;
+  }
+
+  .content {
+    font-family: monospace;
+    background: #1f1f1f;
+    max-height: 160px;
+    overflow-y: auto;
+
+    p {
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
 }

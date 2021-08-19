@@ -201,6 +201,9 @@ $t-color: #409eff;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+  .el-tag {
+    opacity: 0;
+  }
 }
 
 .icon-tool {

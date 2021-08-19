@@ -1,6 +1,7 @@
 <template>
   <div class="drag-list-box">
     <div class="tool-list">
+      <el-button type="warning" icon="el-icon-back" size="mini" title="返回上一页" @click="actionGoBack"></el-button>
       <el-button type="primary" icon="el-icon-plus" size="mini" title="新建" @click="actionToCreate"></el-button>
       <el-button type="success" icon="el-icon-video-play" size="mini" title="设置运行参数" @click="actionToRun"></el-button>
     </div>
@@ -52,6 +53,16 @@ export default class DragListBox extends Vue {
   // 事件冒泡
   toolEvent(eventName: string, ...args: any[]): void {
     this.$emit(GraphEvent.ToolEvent, eventName, ...args)
+  }
+  // 返回
+  actionGoBack(): void {
+    this.$confirm('是否确定返回上一页?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }).then(() => {
+      this.$I18nRouter.back()
+    })
   }
   // 跳转至新建
   actionToCreate(): void {
