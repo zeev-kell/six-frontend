@@ -76,6 +76,7 @@ export default class DragListBox extends Vue {
 <style lang="scss">
 .drag-list-box {
   position: relative;
+  background: #3c3c3c;
 
   .left-panel {
     width: 248px;

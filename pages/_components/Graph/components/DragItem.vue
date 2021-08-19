@@ -1,8 +1,10 @@
 <template>
   <div draggable="true" :class="itemClass" @dragstart="onDragStart($event)" @dragend="onDragEnd()">
-    <fa v-if="isTool" icon="terminal"></fa>
-    <i v-else class="el-icon-share text-warning"></i>
-    <span class="item-name" :title="item.name || item.pipe_name">{{ item.name || item.pipe_name }}</span>
+    <slot>
+      <fa v-if="isTool" icon="terminal"></fa>
+      <i v-else class="el-icon-share text-warning"></i>
+      <span class="item-name" :title="item.name || item.pipe_name">{{ item.name || item.pipe_name }}</span>
+    </slot>
     <div style="position: fixed; top: -1000px">
       <div ref="image" :class="imageClass"></div>
     </div>

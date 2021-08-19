@@ -14,6 +14,9 @@ export class Module {
   }
 
   create(data: any): Promise<any> {
+    if (typeof data.content !== 'string') {
+      data.content = JSON.stringify(data.content)
+    }
     return this.$$axios.$post('/v2/pipe', data)
   }
 
