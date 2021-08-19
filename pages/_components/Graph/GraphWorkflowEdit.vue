@@ -16,6 +16,8 @@ import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import DragListBox from '@/pages/_components/Graph/components/DragListBox.vue'
 import ValidationReport from '@/pages/_components/Graph/components/ValidationReport.vue'
 
+const content = Generator.generateWorkflow()
+
 @Component({
   components: { ValidationReport, DragListBox, GraphIndex },
 })
@@ -24,19 +26,14 @@ export default class GraphInfoNew extends Vue {
     graphIndex: GraphIndex
   }
 
-  item = null
+  item = {
+    content,
+    type: pipeConstants.items.TYPE_APP,
+  }
 
   // TODO 修改事件传播方式
   toolEvent(eventName: string, ...args: any[]): void {
     this.$refs.graphIndex.dispatchAction(eventName, ...args)
-  }
-
-  created(): void {
-    const content = Generator.generateWorkflow()
-    this.item = {
-      content,
-      type: pipeConstants.items.TYPE_APP,
-    }
   }
 }
 </script>
