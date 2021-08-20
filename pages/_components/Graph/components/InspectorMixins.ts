@@ -18,6 +18,7 @@ export default class InspectorMixins extends Vue {
 
   @Prop({ default: false })
   readonly!: boolean
+
   showPanel = false
   selectionNode!: StepModel | WorkflowInputParameterModel | WorkflowOutputParameterModel
   activeTabName: string | undefined

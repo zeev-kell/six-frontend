@@ -21,7 +21,7 @@ const content = Generator.generateWorkflow()
 @Component({
   components: { ValidationReport, DragListBox, GraphIndex },
 })
-export default class GraphInfoNew extends Vue {
+export default class GraphWorkflowEdit extends Vue {
   $refs!: {
     graphIndex: GraphIndex
   }

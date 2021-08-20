@@ -21,11 +21,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class CollapseItem extends Vue {
-  @Prop({
-    default() {
-      return ''
-    },
-  })
+  @Prop({ default: '' })
   title!: string
   collapsed = false
 }

@@ -66,6 +66,7 @@ export default class WorkflowStepInspectorStep extends Vue {
   private model!: WorkflowModel
   @InjectReactive('graph')
   private graph!: Workflow
+
   @Prop({ required: true })
   step!: StepModel
   @Prop({ default: false })
@@ -101,7 +102,6 @@ export default class WorkflowStepInspectorStep extends Vue {
       caption: 'Flat Cross Product',
     },
   ]
-  dialogHintsVisible = false
 
   @Watch('step', { immediate: true })
   onStepWatch(newStep: StepModel): void {
@@ -136,7 +136,6 @@ export default class WorkflowStepInspectorStep extends Vue {
       callback(new Error(e.message))
     }
   }
-
   onLabelChange(): void {
     this.step.label = this.ruleForm.label
     this.graph.draw()

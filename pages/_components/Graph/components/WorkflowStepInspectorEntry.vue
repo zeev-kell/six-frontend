@@ -138,31 +138,15 @@ import SelectionInputEntryMap from '@/pages/application/_components/graph/Select
 export default class WorkflowStepInspectorEntry extends Vue {
   @Prop({ required: true })
   input!: WorkflowStepInputModel
-  @Prop({
-    default() {
-      return ''
-    },
-  })
+  @Prop({ default: '' })
   prefix!: string
-  @Prop({
-    default() {
-      return ''
-    },
-  })
+  @Prop({ default: '' })
   value!: any
   @Prop({ default: false })
   readonly!: boolean
-  @Prop({
-    default() {
-      return -1
-    },
-  })
+  @Prop({ default: -1 })
   index!: number
-  @Prop({
-    default() {
-      return ''
-    },
-  })
+  @Prop({ default: '' })
   type: string | any
   warning: string | null = null
 

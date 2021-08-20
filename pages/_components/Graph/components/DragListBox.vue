@@ -2,8 +2,8 @@
   <div class="drag-list-box">
     <div class="tool-list">
       <el-button type="warning" icon="el-icon-back" size="mini" title="返回上一页" @click="actionGoBack"></el-button>
-      <el-button type="primary" icon="el-icon-plus" size="mini" title="新建" @click="actionToCreate"></el-button>
-      <el-button type="success" icon="el-icon-video-play" size="mini" title="设置运行参数" @click="actionToRun"></el-button>
+      <el-button type="dark" icon="el-icon-upload" size="mini" title="保存" @click="actionToCreate"></el-button>
+      <el-button type="dark" icon="el-icon-video-play" size="mini" title="设置运行参数" @click="actionToRun"></el-button>
     </div>
     <div class="list-panel">
       <div class="toggle-button" :class="{ 'is-minimized': !showPanel }" @click.prevent="showPanel = !showPanel">
@@ -67,13 +67,13 @@ export default class DragListBox extends Vue {
   // 跳转至新建
   actionToCreate(): void {
     // 需要把数据保存然后跳转
-    this.toolEvent(GraphEvent.TriggerSaveContent)
+    this.toolEvent(GraphEvent.TriggerGraphSaveContent)
     this.$I18nRouter.push(`/application/pipe/new-local`)
   }
   // 跳转至运行
   actionToRun(): void {
     // 需要把数据保存然后跳转
-    this.toolEvent(GraphEvent.TriggerSaveContent)
+    this.toolEvent(GraphEvent.TriggerGraphSaveContent)
     this.$I18nRouter.push(`/graph-info/set-run-local`)
   }
 

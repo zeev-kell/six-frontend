@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { AppValidityState } from '@/pages/_components/Graph/types'
+import { AppValidityState } from '@/types/graph'
 import { Issue } from 'cwlts/models'
 
 @Component

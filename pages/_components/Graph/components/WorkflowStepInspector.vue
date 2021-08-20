@@ -15,10 +15,10 @@
             <workflow-step-inspector-info :step="selectionNode" />
           </el-tab-pane>
           <el-tab-pane label="输入" name="input">
-            <step-inputs-inspector :step="selectionNode" />
+            <step-inputs-inspector :step="selectionNode" :readonly="readonly" />
           </el-tab-pane>
           <el-tab-pane label="步骤" name="step">
-            <workflow-step-inspector-step :step="selectionNode" />
+            <workflow-step-inspector-step :step="selectionNode" :readonly="readonly" />
           </el-tab-pane>
         </el-tabs>
         <div v-else>

@@ -17,7 +17,7 @@ const MockModule: Module = function () {
   mock.onGet(PipeUrl).reply(() => {
     const item = Mock.mock(Pipe)
     item.type = 0
-    item.cwl = item.type === 0 ? _tool : _workflow
+    item.content = item.type === 0 ? _tool : _workflow
     return [200, item]
   })
   mock.onGet(PipesUrl).reply(() => {
@@ -60,7 +60,7 @@ const MockModule: Module = function () {
   //   ]
   // })
   /** @function addPlugin */
-  this.addPlugin(path.resolve(__dirname, '..', 'plugins', 'mockjs.ts'))
+  this.addPlugin(path.resolve(__dirname, '..', 'plugins', 'mock', 'index.ts'))
 }
 
 export default MockModule

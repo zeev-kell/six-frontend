@@ -189,7 +189,7 @@ export default {
     },
     afterModelCreated(isFirstCreation) {
       if (isFirstCreation) {
-        // 只有第一次催发创建
+        // 只有第一次触发创建
         this.$emit(GraphEvent.TriggerModalCreate)
       }
     },

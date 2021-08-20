@@ -122,10 +122,12 @@ import LinkMergeSelect from '@/pages/application/_components/graph/LinkMergeSele
 export default class StepInputsInspector extends Vue {
   @InjectReactive('model')
   model!: WorkflowModel
+
   @Prop({ required: true })
   step!: StepModel
   @Prop({ default: false })
   readonly!: boolean
+
   dropDownPortOptions = [
     {
       value: 'default',
@@ -199,6 +201,7 @@ export default class StepInputsInspector extends Vue {
   }
 }
 </script>
+
 <style lang="scss" rel="stylesheet">
 @import '../theme';
 .el-tooltip__popper.input-popper {

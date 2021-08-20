@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import GraphIndex from '@/pages/application/_components/graph/GraphIndex.vue'
+import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 
 @Component({
   components: { GraphIndex },

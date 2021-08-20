@@ -3,7 +3,7 @@ import { SVGArrangePlugin, Workflow } from 'cwl-svg'
 import { Component, InjectReactive, Prop, Vue } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
 import type { CreateElement, VNode } from 'vue'
-import { AppValidityState, graphTool, graphTools } from '../types'
+import { AppValidityState, graphTool, graphTools } from '@/types/graph'
 
 @Component({
   components: {
@@ -20,11 +20,7 @@ export default class ToolBox extends Vue {
 
   @Prop({ default: false })
   readonly readonly!: boolean
-  @Prop({
-    default() {
-      return 'add|plus,minus,fit|auto'
-    },
-  })
+  @Prop({ default: 'add|plus,minus,fit|auto' })
   readonly tools!: string
   @Prop({
     default() {
@@ -43,7 +39,7 @@ export default class ToolBox extends Vue {
       icon: 'el-icon-warning-outline f-16',
       title: '异常',
       action: 'toolEvent',
-      eventName: GraphEvent.TriggerWarning,
+      eventName: GraphEvent.TriggerGraphWarning,
       type: 'warning',
     },
     download: {

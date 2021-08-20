@@ -9,6 +9,8 @@ import GraphMixin from './GraphMixin.vue'
 
 @Component
 export default class GraphWorkflow extends GraphMixin {
+  dataModel!: WorkflowModel
+
   recreateModel(json: V1Workflow): void {
     this.dataModel = WorkflowFactory.from(json, 'document')
     // 要使用 SVGArrangePlugin 插件，必须要有 sbg 前缀，可以改地址
@@ -18,16 +20,16 @@ export default class GraphWorkflow extends GraphMixin {
     this.dataModel.setValidationCallback(this.afterModelValidation.bind(this))
     this.dataModel.validate().then(this.afterModelValidation.bind(this))
   }
-
   createModel(json: V1Workflow | null | 'null'): void {
     if (json === null || json === 'null') {
       json = Generator.generateWorkflow()
     }
     this.recreateModel(json as V1Workflow)
+    this.afterModelCreated()
     const plugins = this.getDefaultPlugins()
     this.graph = new Workflow({
       editingEnabled: !this.readonly,
-      model: this.dataModel as WorkflowModel,
+      model: this.dataModel,
       svgRoot: this.$refs.svg,
       plugins,
     })

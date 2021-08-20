@@ -1,5 +1,5 @@
 import type { MutationTree } from 'vuex'
-import { AppValidityState } from '@/pages/_components/Graph/types'
+import { AppValidityState } from '@/types/graph'
 
 export const state = (): { validationState: AppValidityState } => ({
   validationState: {

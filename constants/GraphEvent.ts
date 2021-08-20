@@ -7,10 +7,11 @@ export const enum GraphEvent {
   // 工具事件
   ToolEvent = 'tool-event',
 
-  // 触发事件（往上）
-  TriggerWarning = 'trigger-warning',
-  TriggerDownload = 'trigger-download',
-  TriggerSaveContent = 'trigger-save-content',
+  // 触发事件 [trigger]-[目标]-[方法]
+  TriggerGraphWarning = 'trigger-graph-warning',
+  TriggerGraphDownload = 'trigger-graph-download',
+  TriggerGraphSaveContent = 'trigger-graph-save-content',
+  TriggerPageModalCreate = 'trigger-page-modal-create',
 
   // 触发事件（往下）
   PayloadUpdateJob = 'update-job',

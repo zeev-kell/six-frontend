@@ -4,7 +4,7 @@
       <svg ref="svg" class="cwl-workflow h-100" />
       <tool-box :tools="tools" :validation-state="validationState" @tool-event="toolEvent" />
     </div>
-    <workflow-step-inspector ref="stepInspector" />
+    <workflow-step-inspector ref="stepInspector" :readonly="readonly" />
   </div>
 </template>
 
@@ -37,8 +37,7 @@ import { downloadBlobLink, downloadStrLink } from '@/utils/download-link'
 import JSZip from 'jszip'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 import { setStore } from '@/utils/local-storage'
-import ValidationReport from '@/pages/_components/Graph/components/ValidationReport.vue'
-import { GraphPlugin } from './types'
+import { GraphPlugin } from '@/types/graph'
 import ToolBox from './components/ToolBox.vue'
 
 @Component({
@@ -66,11 +65,7 @@ export default class GraphMixin extends GraphEdit {
 
   @Prop({ required: true })
   content!: V1Workflow
-  @Prop({
-    default() {
-      return 'download'
-    },
-  })
+  @Prop({ default: 'download' })
   name!: string
   @Prop({ default: false })
   readonly!: boolean
@@ -82,6 +77,8 @@ export default class GraphMixin extends GraphEdit {
     },
   })
   plugins!: GraphPlugin[]
+  @Prop({ default: 'params' })
+  configType!: string
 
   @Watch('graph')
   onGraphChange(): void {
@@ -91,7 +88,7 @@ export default class GraphMixin extends GraphEdit {
   // 获取默认的插件
   getDefaultPlugins(): GraphPlugin[] {
     // 默认可以放缩，选择节点，线条悬浮，自动放缩
-    const plugins: GraphPlugin[] = [new SVGArrangePlugin(), new SVGEdgeHoverPlugin(), new SelectionPlugin()]
+    const plugins: GraphPlugin[] = [new SVGArrangePlugin(), new SVGEdgeHoverPlugin(), new SelectionPlugin(), new DblclickPlugin_()]
     if (!this.readonly) {
       plugins.push(
         new ZoomPlugin(),
@@ -100,7 +97,6 @@ export default class GraphMixin extends GraphEdit {
         new SVGValidatePlugin(),
         new DeletionPlugin(),
         new DropPlugin(),
-        new DblclickPlugin_(),
         new MenuPlugin(),
         new EmptyPlugin()
       )
@@ -118,6 +114,7 @@ export default class GraphMixin extends GraphEdit {
       true
     )
   }
+  // 往图形添加 Node
   addNodeToGraph(task: PipeModel, coords: { x: number; y: number }): void {
     // sbg 前缀是必须的
     Object.assign(task.content, {
@@ -197,7 +194,7 @@ export default class GraphMixin extends GraphEdit {
   toolEvent(eventName: string, ...args: any[]): void {
     ;(this as any)[eventName](...args)
   }
-  async [GraphEvent.TriggerDownload](dType: string, dMain: boolean, dJob: boolean): Promise<void> {
+  async [GraphEvent.TriggerGraphDownload](dType: string, dMain: boolean, dJob: boolean): Promise<void> {
     if (dMain && !dJob) {
       // 只导出 cwl文件
       this.exportCwl(dType)
@@ -216,22 +213,17 @@ export default class GraphMixin extends GraphEdit {
       downloadBlobLink(content, name + '.zip')
     }
   }
-  [GraphEvent.TriggerSaveContent](): void {
+  [GraphEvent.TriggerGraphSaveContent](): void {
     const { data: content } = this.exportCwl('json', true) as { data: any }
     setStore('graph-content', content)
   }
 
-  beforeDestroy(): void {
-    // 销毁流程图
-    this.graph?.destroy()
-  }
   mounted(): void {
     // 处理 yaml 格式为 json 格式
     const content = getObject(this.content)
     this.createModel(content as any)
     // 默认更新 json
     this.updateJob({})
-    this.fixWheel()
     if (!this.readonly) {
       // 注册拖拽放置事件
       const drop = this.graph.getPlugin(DropPlugin)
@@ -241,12 +233,6 @@ export default class GraphMixin extends GraphEdit {
       })
       // 注册双击事件，只处理 step 的类型
       const dblclick = this.graph.getPlugin(DblclickPlugin_)
-      dblclick?.registerOnDblClick((element: SVGElement): void => {
-        const selectionNode = this.graph.model.steps.find((input) => input.id === element.getAttribute('data-id'))
-        if (selectionNode) {
-          // this.$refs.stepInspector.showDialog(selectionNode)
-        }
-      }, 'step')
       // 注册菜单事件
       const menu = this.graph.getPlugin(MenuPlugin)
       menu?.registerOnMenuClick((type: string, event: Event) => {
@@ -256,11 +242,19 @@ export default class GraphMixin extends GraphEdit {
           dblclick?.onDblClick(event)
         }
       })
+      this.fixWheel()
+      this.$on(GraphEvent.PayloadUpdateJob, (job) => {
+        this.updateJob(job)
+      })
     }
     // 初次进入自动放缩 并且 调整排版
     this.$nextTick(() => {
       this.graph.getPlugin(SVGArrangePlugin)?.arrange()
     })
+  }
+  beforeDestroy(): void {
+    // 销毁流程图
+    this.graph?.destroy()
   }
 }
 </script>

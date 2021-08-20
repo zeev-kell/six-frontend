@@ -4,8 +4,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import { GraphEvent } from '@/constants/GraphEvent'
-import GraphIndex from '@/pages/application/_components/graph/GraphIndex.vue'
 import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 
 @Component({
@@ -24,6 +24,7 @@ export default class SetRunPage extends Vue {
   $refs!: {
     graph: HTMLFormElement
   }
+
   item: any = null
   profile: any = null
 
