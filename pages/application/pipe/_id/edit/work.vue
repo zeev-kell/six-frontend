@@ -81,12 +81,6 @@ export default class Work extends Vue {
   mounted() {
     this.content = this.item?.content.toString()
   }
-  onModalCreate() {
-    const job = getObject(this.item?.content || {})
-    this.$nextTick(() => {
-      this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
-    })
-  }
   async onSubmit() {
     const data = Object.assign({}, this.item)
     data.cwl = this.value

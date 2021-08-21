@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import GraphInfoNew from '../new.vue'
+import GraphWorkflowEdit from '@/pages/_components/Graph/GraphWorkflowEdit.vue'
 
 @Component({
   async asyncData({ app, params }) {
@@ -8,7 +8,7 @@ import GraphInfoNew from '../new.vue'
     return { item }
   },
 })
-export default class GraphInfoEditPage extends GraphInfoNew {
-  item = null
+export default class GraphInfoEditPage extends GraphWorkflowEdit {
+  item: any = null
 }
 </script>

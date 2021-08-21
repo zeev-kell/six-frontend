@@ -31,7 +31,7 @@ export default class EditorJobInspector extends InspectorMixins {
   @InjectReactive('model')
   model!: WorkflowModel
 
-  inspectedInputs = []
+  inspectedInputs: any = []
   pipeId = ''
 
   get relativePathRoot() {
@@ -46,7 +46,7 @@ export default class EditorJobInspector extends InspectorMixins {
     } else if (element.classList.contains('output')) {
       typeOfNode = 'outputs'
     }
-    this.selectionNode = this.graph.model[typeOfNode].find((input) => input.id === element.getAttribute('data-id'))
+    this.selectionNode = (this.graph.model as any)[typeOfNode].find((input: any) => input.id === element.getAttribute('data-id'))
     switch (typeOfNode) {
       case 'inputs':
         this.inspectedInputs = [this.selectionNode]

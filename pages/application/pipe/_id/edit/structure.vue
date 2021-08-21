@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import GraphIndex from '@/pages/application/_components/graph/GraphIndex.vue'
+import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
@@ -52,6 +52,7 @@ export default class Structure extends Vue {
     theme: 'default',
   }
   content = ''
+
   get item() {
     return this.$store.state.pipe
   }
@@ -76,9 +77,7 @@ export default class Structure extends Vue {
       resource_id: this.item.resource_id,
     }
   }
-  mounted() {
-    this.content = this.item.content.toString()
-  }
+
   async onSubmit() {
     const data = { content: this.content }
     await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
@@ -91,6 +90,10 @@ export default class Structure extends Vue {
       return false
     }
     return true
+  }
+
+  mounted() {
+    this.content = this.item.content.toString()
   }
 }
 </script>

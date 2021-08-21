@@ -105,14 +105,14 @@ export default class JobStepInspector extends Vue {
   relativePathRoot!: string
 
   jobGroup = new FormGroup({})
-  inputGroups = []
+  inputGroups: any = []
 
   get jobValue(): any {
     return this.$store.state.graph.jobValue
   }
 
   @Watch('stepInputs', { immediate: true })
-  onWatchStepInputs(stepInputs, oldStepInputs) {
+  onWatchStepInputs(stepInputs: any[], oldStepInputs: any[]) {
     // I have no idea why step input checking works
     if (stepInputs && !this.stepInputsAreSame(oldStepInputs, stepInputs || undefined)) {
       this.recreateForms()
@@ -135,19 +135,19 @@ export default class JobStepInspector extends Vue {
       }
     }
   }
-  isType(input, types) {
+  isType(input: any, types: any) {
     if (typeof types === 'string') {
       types = [types]
     }
-    return !!types.find((type) => {
+    return !!types.find((type: string) => {
       return input.type.type === type || input.type.items === type
     })
   }
-  clear(control) {
+  clear(control: any) {
     control.setValue(null)
     control.disable()
   }
-  getInputSource(input) {
+  getInputSource(input: any) {
     if (input instanceof WorkflowStepInputModel) {
       const inputSource = input.source[0]
       // Remove # if it exists on the beginning
@@ -162,7 +162,7 @@ export default class JobStepInspector extends Vue {
       this.jobGroup.removeControl(controlName)
     }
     this.$set(this, 'jobGroup', new FormGroup({}))
-    const grouped = {}
+    const grouped: any = {}
     for (const input of this.stepInputs) {
       const group = this.isType(input, 'File') ? 'Files' : 'AppParameters'
       if (!grouped[group]) {
@@ -185,7 +185,7 @@ export default class JobStepInspector extends Vue {
         inputs: grouped[key],
       }))
   }
-  stepInputsAreSame(previousValue, currentValue) {
+  stepInputsAreSame(previousValue: any, currentValue: any) {
     if (previousValue === currentValue) {
       return true
     }
@@ -208,13 +208,13 @@ export default class JobStepInspector extends Vue {
     }
     return true
   }
-  onPortOptionChange(event, input) {
+  onPortOptionChange(event: any, input: any) {
     if (!event) {
       const name = this.getInputSource(input)
       this.clear(this.jobGroup.get(name))
     }
   }
-  enableEditing(input) {
+  enableEditing(input: any) {
     const inputFormField = this.jobGroup.get(this.getInputSource(input))
     let value
     const isArray = input.type.type === 'array'
@@ -250,7 +250,7 @@ export default class JobStepInspector extends Vue {
     }
     inputFormField.setValue(input.type.type === 'array' ? [value] : value)
   }
-  enableFileEditing(input) {
+  enableFileEditing(input: any) {
     const inputFormField = this.jobGroup.get(this.getInputSource(input))
     const isArray = input.type.type === 'array'
     const type = input.type.items || input.type.type
@@ -260,7 +260,7 @@ export default class JobStepInspector extends Vue {
     const fileValues = [''].map((p) => ({ class: type, path: p }))
     inputFormField.setValue(!isArray ? fileValues[0] : fileValues)
   }
-  isFileOrDirectory(input) {
+  isFileOrDirectory(input: any) {
     const type = input.type.type
     const itemsType = input.type.items
     return type === 'File' || type === 'Directory' || itemsType === 'File' || itemsType === 'Directory'

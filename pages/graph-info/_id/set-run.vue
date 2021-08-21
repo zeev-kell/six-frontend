@@ -1,5 +1,5 @@
 <template>
-  <graph-index ref="graph" class="h-100v" :item="item" config-type="run" tools="download|plus,minus,fit" @trigger-modal-create="onModalCreate" />
+  <graph-index ref="graphIndex" class="h-100v" :item="item" config-type="run" tools="download|plus,minus,fit" @propagate-event="onPropagate" />
 </template>
 
 <script lang="ts">
@@ -22,24 +22,23 @@ import { getObject } from '@/pages/application/_components/graph/helpers/YamlHan
 })
 export default class SetRunPage extends Vue {
   $refs!: {
-    graph: HTMLFormElement
+    graphIndex: GraphIndex
   }
 
   item: any = null
   profile: any = null
 
-  onModalCreate() {
-    const profile = this.profile
-    if (profile?.content) {
-      this.updateGraphJob()
+  onPropagate(eventName: string): void {
+    // 监听第一次实例化事件
+    if (GraphEvent.TriggerPageModalCreate === eventName) {
+      const profile = this.profile
+      if (profile?.content) {
+        const job = getObject(profile.content)
+        this.$nextTick(() => {
+          this.$refs.graphIndex.dispatchAction('updateJob', job)
+        })
+      }
     }
-  }
-
-  updateGraphJob() {
-    const job = getObject(this.profile.content)
-    this.$nextTick(() => {
-      this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
-    })
   }
 }
 </script>

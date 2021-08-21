@@ -1,10 +1,9 @@
 export const enum GraphEvent {
-  // 往下广播事件
-  Dispatch = 'dispatch-event',
   // 往上传播事件
   Propagate = 'propagate-event',
-
-  // 工具事件
+  // 往下广播事件
+  Dispatch = 'dispatch-event',
+  // 工具事件传播
   ToolEvent = 'tool-event',
 
   // 触发事件 [trigger]-[目标]-[方法]

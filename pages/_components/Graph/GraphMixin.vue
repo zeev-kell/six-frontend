@@ -91,7 +91,7 @@ export default class GraphMixin extends GraphEdit {
   }
 
   @Watch('jobValue', { deep: true })
-  onWatchJobValue(jobValue): void {
+  onWatchJobValue(jobValue: any): void {
     this.graph.getPlugin(SVGJobFileDropPlugin)?.updateToJobState(jobValue)
     const markupPlugin = this.graph.getPlugin(SVGRequiredInputMarkup)
     if (markupPlugin) {
@@ -174,11 +174,6 @@ export default class GraphMixin extends GraphEdit {
       return this.dataModel.serializeEmbedded(false)
     }
   }
-  // 事件转发到父组件
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  propagateEvent(...args: any[]): void {
-    this.$emit(GraphEvent.Propagate, ...args)
-  }
   // 导出数据
   exportCwl(format = 'yaml', isOnlyData = false): void | { data: any; name: string } {
     const asYaml = format === 'yaml'
@@ -198,6 +193,38 @@ export default class GraphMixin extends GraphEdit {
       return { data, name }
     }
     downloadStrLink(data, name)
+  }
+  // 创建图形
+  createGraph(): void {
+    // 处理 yaml 格式为 json 格式
+    const content = getObject(this.content)
+    this.createModel(content as any)
+    // 默认更新 json
+    this.updateJob({})
+    if (!this.readonly) {
+      // 注册拖拽放置事件
+      const drop = this.graph.getPlugin(DropPlugin)
+      drop?.registerOnDropAfterChange((coords: SVGPoint) => {
+        const task = this.$store.state.system.dragToolItem
+        this.addNodeToGraph(task, coords)
+      })
+      // 注册双击事件，只处理 step 的类型
+      const dblclick = this.graph.getPlugin(DblclickPlugin_)
+      // 注册菜单事件
+      const menu = this.graph.getPlugin(MenuPlugin)
+      menu?.registerOnMenuClick((type: string, event: Event) => {
+        if (type === 'edit') {
+          dblclick?.onDblClick(event)
+        } else if (type === 'view') {
+          dblclick?.onDblClick(event)
+        }
+      })
+      this.fixWheel()
+    }
+    // 初次进入自动放缩 并且 调整排版
+    this.$nextTick(() => {
+      this.graph.getPlugin(SVGArrangePlugin)?.arrange()
+    })
   }
 
   // 工具事件
@@ -229,38 +256,17 @@ export default class GraphMixin extends GraphEdit {
   }
 
   mounted(): void {
-    // 处理 yaml 格式为 json 格式
-    const content = getObject(this.content)
-    this.createModel(content as any)
-    // 默认更新 json
-    this.updateJob({})
-    if (!this.readonly) {
-      // 注册拖拽放置事件
-      const drop = this.graph.getPlugin(DropPlugin)
-      drop?.registerOnDropAfterChange((coords: SVGPoint) => {
-        const task = this.$store.state.system.dragToolItem
-        this.addNodeToGraph(task, coords)
-      })
-      // 注册双击事件，只处理 step 的类型
-      const dblclick = this.graph.getPlugin(DblclickPlugin_)
-      // 注册菜单事件
-      const menu = this.graph.getPlugin(MenuPlugin)
-      menu?.registerOnMenuClick((type: string, event: Event) => {
-        if (type === 'edit') {
-          dblclick?.onDblClick(event)
-        } else if (type === 'view') {
-          dblclick?.onDblClick(event)
-        }
-      })
-      this.fixWheel()
-      this.$on(GraphEvent.PayloadUpdateJob, (job) => {
-        this.updateJob(job)
+    // 首次插入 content 可能为空，增加一次的监听
+    console.log(this.content)
+    if (this.content) {
+      this.createGraph()
+    } else {
+      const unWatch = this.$watch('content', () => {
+        console.log(1)
+        this.createGraph()
+        unWatch()
       })
     }
-    // 初次进入自动放缩 并且 调整排版
-    this.$nextTick(() => {
-      this.graph.getPlugin(SVGArrangePlugin)?.arrange()
-    })
   }
   beforeDestroy(): void {
     // 销毁流程图

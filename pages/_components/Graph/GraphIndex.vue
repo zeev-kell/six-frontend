@@ -14,7 +14,6 @@ import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
 import { CommandLineTool } from 'cwlts/mappings/v1.0/CommandLineTool'
 import { PipeModel } from '@/types/model/Pipe'
 import { pipeConstants } from '@/constants/PipeConstants'
-import { GraphPlugin } from '@/types/graph'
 
 @Component({
   components: {
@@ -27,7 +26,12 @@ export default class GraphIndex extends Vue {
     graph: GraphWorkflow | GraphTool
   }
 
-  @Prop({ required: true })
+  @Prop({
+    required: true,
+    validator(value: any): boolean {
+      return !!value
+    },
+  })
   item!: PipeModel
 
   // 根据当前类型实例化不同的组件
@@ -44,17 +48,12 @@ export default class GraphIndex extends Vue {
   dispatchAction(action: string, ...args: string[]): any {
     return (this.$refs.graph as unknown as HTMLFormElement)[action](...args)
   }
-  // 获取 子组件 属性
-  getAttributeAction(attr: string): any {
-    return (this.$refs.graph as unknown as HTMLFormElement)[attr]
-  }
 
   mounted(): void {
     // 事件转发到子组件
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.$on(GraphEvent.Dispatch, (event: string, ...arg: any[]) => {
-      console.log('onDispatchEvent', event)
-      this.$refs.graph.$emit(event, ...arg)
+    this.$on(GraphEvent.Dispatch, (eventName: string, ...arg: any[]) => {
+      console.log('GraphIndex onDispatchEvent', eventName)
+      this.$refs.graph.$emit(eventName, ...arg)
     })
   }
 }

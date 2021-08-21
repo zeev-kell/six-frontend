@@ -1,9 +1,9 @@
 <template>
   <div class="h-100 el-row el-row--flex">
-    <drag-list-box class="el-col-auto" @tool-event="toolEvent"></drag-list-box>
+    <drag-list-box class="el-col-auto" @tool-event="toolEvent" />
     <div class="el-col-full p-r">
       <graph-index ref="graphIndex" class="h-100v" :item="item" tools="download|plus,minus,fit|auto" />
-      <validation-report></validation-report>
+      <validation-report />
     </div>
   </div>
 </template>
@@ -16,8 +16,6 @@ import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import DragListBox from '@/pages/_components/Graph/components/DragListBox.vue'
 import ValidationReport from '@/pages/_components/Graph/components/ValidationReport.vue'
 
-const content = Generator.generateWorkflow()
-
 @Component({
   components: { ValidationReport, DragListBox, GraphIndex },
 })
@@ -27,11 +25,10 @@ export default class GraphWorkflowEdit extends Vue {
   }
 
   item = {
-    content,
+    content: Generator.generateWorkflow(),
     type: pipeConstants.items.TYPE_APP,
   }
 
-  // TODO 修改事件传播方式
   toolEvent(eventName: string, ...args: any[]): void {
     this.$refs.graphIndex.dispatchAction(eventName, ...args)
   }

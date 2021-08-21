@@ -10,6 +10,7 @@ $t-color: #409eff;
 @import '~cwl-svg/src/plugins/port-drag/theme.dark.scss';
 @import '~cwl-svg/src/plugins/selection/theme.dark.scss';
 @import '../../../../assets/feather/css/feather.css';
+@import '~cwl-svg/src/plugins/validate/validate.scss';
 
 @mixin scroll-bar() {
   ::-webkit-scrollbar-track-piece {

@@ -3,7 +3,6 @@ import { AppValidityState } from '@/types/graph'
 import { CommandLineToolModel, StepModel, WorkflowInputParameterModel, WorkflowModel, WorkflowOutputParameterModel } from 'cwlts/models'
 import { Workflow, CommandLineTool } from 'cwlts/mappings/v1.0'
 import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
-import { FormControl } from '@/pages/application/_components/FormControl'
 import { GraphEvent } from '@/constants/GraphEvent'
 
 @Component({
@@ -24,7 +23,6 @@ export class GraphEdit extends Vue {
   validationState!: AppValidityState
   isFirstCreation = true
 
-  jobControl = new FormControl({})
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   recreateModel(json: string | CommandLineTool | V1Workflow): void {
     throw new Error('Method not implemented.')
@@ -34,7 +32,7 @@ export class GraphEdit extends Vue {
     if (this.isFirstCreation) {
       // 只有第一次触发创建
       this.isFirstCreation = false
-      this.$emit(GraphEvent.TriggerPageModalCreate)
+      this.propagateEvent(GraphEvent.TriggerPageModalCreate)
     }
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -54,7 +52,11 @@ export class GraphEdit extends Vue {
     }
     this.$store.commit('graph/SET_VALIDATION_STATE', this.validationState)
   }
-
+  // 事件转发到父组件
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  propagateEvent(...args: any[]): void {
+    this.$emit(GraphEvent.Propagate, ...args)
+  }
   // 流程校验
   // eslint-disable-next-line require-await
   async validate(): Promise<void> {

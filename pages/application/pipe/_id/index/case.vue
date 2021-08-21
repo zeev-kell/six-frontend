@@ -8,14 +8,7 @@
           </div>
           <div class="card-body">
             <div class="workflow-box">
-              <graph-index
-                ref="graph"
-                class="h-100"
-                :item="item"
-                config-type="run"
-                tools="download|plus,minus,fit"
-                @trigger-modal-create="onModalCreate"
-              />
+              <graph-index ref="graph" class="h-100" :item="item" config-type="run" tools="download|plus,minus,fit" @propagate-event="onPropagate" />
             </div>
           </div>
         </div>
@@ -44,7 +37,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
 import { pipeConstants } from '@/constants/PipeConstants'
-import GraphIndex from '@/pages/application/_components/graph/GraphIndex.vue'
+import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 
 @Component({
@@ -58,25 +51,30 @@ export default class Case extends Vue {
     graph: HTMLFormElement
   }
   profile: any = {}
+
   get item() {
     return this.$store.state.pipe
   }
-  async onModalCreate() {
-    const profile = this.profile
-    if (profile?.content) {
-      this.updateGraphJob()
-    } else {
-      const profileId = this.item.profile
-      if (profileId) {
-        this.profile = await this.$axios.$get(`/v2/pipe/${profileId}`)
+
+  async onPropagate(eventName: string): Promise<void> {
+    // 监听第一次实例化事件
+    if (GraphEvent.TriggerPageModalCreate === eventName) {
+      const profile = this.profile
+      if (profile?.content) {
         this.updateGraphJob()
+      } else {
+        const profileId = this.item.profile
+        if (profileId) {
+          this.profile = await this.$axios.$get(`/v2/pipe/${profileId}`)
+          this.updateGraphJob()
+        }
       }
     }
   }
   updateGraphJob() {
     const job = getObject(this.profile.content)
     this.$nextTick(() => {
-      this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
+      this.$refs.graph.dispatchAction('updateJob', job)
     })
   }
 }

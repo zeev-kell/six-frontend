@@ -14,7 +14,7 @@
                 :item="graphItem"
                 config-type="run"
                 tools="download|plus,minus,fit"
-                @trigger-modal-create="onModalCreate"
+                @propagate-event="onPropagate"
               />
             </div>
           </div>
@@ -44,7 +44,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
 import { pipeConstants } from '@/constants/PipeConstants'
-import GraphIndex from '@/pages/application/_components/graph/GraphIndex.vue'
+import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
 
 @Component({
@@ -65,15 +65,21 @@ export default class Work extends Vue {
   $refs!: {
     graph: HTMLFormElement
   }
+
   graphItem = null
+
   get item() {
     return this.$store.state.pipe
   }
-  onModalCreate() {
-    const job = getObject(this.item?.content || {})
-    this.$nextTick(() => {
-      this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
-    })
+
+  onPropagate(eventName: string): void {
+    // 监听第一次实例化事件
+    if (GraphEvent.TriggerPageModalCreate === eventName) {
+      const job = getObject(this.item?.content || {})
+      this.$nextTick(() => {
+        this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
+      })
+    }
   }
 }
 </script>
