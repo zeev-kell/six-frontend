@@ -14,6 +14,7 @@ import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
 import { CommandLineTool } from 'cwlts/mappings/v1.0/CommandLineTool'
 import { PipeModel } from '@/types/model/Pipe'
 import { pipeConstants } from '@/constants/PipeConstants'
+import { GraphPlugin } from '@/types/graph'
 
 @Component({
   components: {

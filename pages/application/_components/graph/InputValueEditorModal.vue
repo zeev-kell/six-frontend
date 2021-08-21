@@ -41,7 +41,7 @@ import { FormArray, FormControl, FormGroup } from '@/pages/application/_componen
 export default {
   name: 'InputValueEditorModal',
   components: { NativeFileBrowserFormField },
-  inject: ['dataModel'],
+  inject: ['model'],
   data() {
     return {
       dialogFormVisible: false,
@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     allowDirectories() {
-      return !this.dataModel?.cwlVersion.includes('draft-2')
+      return !this.model?.cwlVersion.includes('draft-2')
     },
     controls() {
       return this.form.get('secondaryFiles')?.controls

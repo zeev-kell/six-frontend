@@ -4,7 +4,8 @@
       <svg ref="svg" class="cwl-workflow h-100" />
       <tool-box :tools="tools" :validation-state="validationState" @tool-event="toolEvent" />
     </div>
-    <workflow-step-inspector ref="stepInspector" :readonly="readonly" />
+    <editor-job-inspector v-if="isRunJob" />
+    <workflow-step-inspector v-else :readonly="readonly" />
   </div>
 </template>
 
@@ -23,6 +24,7 @@ import {
   ZoomPlugin,
 } from 'cwl-svg'
 import { SVGJobFileDropPlugin } from '@/pages/application/_components/graph/plugins/job-file-drop'
+import { SVGRequiredInputMarkup } from '@/pages/application/_components/graph/plugins/required-input-markup'
 import { DropPlugin } from '@/pages/_components/Graph/plugins/drop-plugin/drop-plugin'
 import { EmptyPlugin } from '@/pages/_components/Graph/plugins/empty-plugin/empty-plugin'
 import { DblclickPlugin_ } from '@/pages/_components/Graph/plugins/dblclick-plugin_'
@@ -35,13 +37,15 @@ import { getObject, stringifyObject } from '@/pages/_components/Graph/helpers/Ya
 import { PipeModel } from '@/types/model/Pipe'
 import { downloadBlobLink, downloadStrLink } from '@/utils/download-link'
 import JSZip from 'jszip'
-import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 import { setStore } from '@/utils/local-storage'
 import { GraphPlugin } from '@/types/graph'
+import EditorJobInspector from '@/pages/_components/Graph/components/EditorJobInspector.vue'
+import { normalizeJob } from '@/pages/_components/Graph/helpers/JobHelper'
 import ToolBox from './components/ToolBox.vue'
 
 @Component({
   components: {
+    EditorJobInspector,
     WorkflowStepInspector,
     ToolBox,
   },
@@ -55,7 +59,6 @@ import ToolBox from './components/ToolBox.vue'
 export default class GraphMixin extends GraphEdit {
   $refs!: {
     svg: SVGSVGElement
-    stepInspector: WorkflowStepInspector
   }
 
   @ProvideReactive('graph')
@@ -80,15 +83,34 @@ export default class GraphMixin extends GraphEdit {
   @Prop({ default: 'params' })
   configType!: string
 
-  @Watch('graph')
-  onGraphChange(): void {
-    this.$emit('graph-changed', this.graph)
+  get isRunJob(): boolean {
+    return this.configType === 'run'
+  }
+  get jobValue(): any {
+    return this.$store.state.graph.jobValue
   }
 
+  @Watch('jobValue', { deep: true })
+  onWatchJobValue(jobValue): void {
+    this.graph.getPlugin(SVGJobFileDropPlugin)?.updateToJobState(jobValue)
+    const markupPlugin = this.graph.getPlugin(SVGRequiredInputMarkup)
+    if (markupPlugin) {
+      const missingInputConnectionIDs = this.graph.model.inputs
+        .filter((input) => !input.type.isNullable && (jobValue[input.id] === null || jobValue[input.id] === undefined))
+        .map((input) => input.connectionId)
+      markupPlugin.markMissing(...missingInputConnectionIDs)
+    }
+  }
+
+  // TODO 图型变化时更新 json
+  updateJob(jobObject = {}): void {
+    const jobValue = normalizeJob(jobObject, this.graph.model)
+    this.$store.commit('graph/SET_JOB_VALUE', jobValue)
+  }
   // 获取默认的插件
   getDefaultPlugins(): GraphPlugin[] {
-    // 默认可以放缩，选择节点，线条悬浮，自动放缩
-    const plugins: GraphPlugin[] = [new SVGArrangePlugin(), new SVGEdgeHoverPlugin(), new SelectionPlugin(), new DblclickPlugin_()]
+    // 默认可以放缩，选择节点，线条悬浮，自动放缩，双击选择，默认插件
+    const plugins: GraphPlugin[] = [new SVGArrangePlugin(), new SVGEdgeHoverPlugin(), new SelectionPlugin(), new DblclickPlugin_(), ...this.plugins]
     if (!this.readonly) {
       plugins.push(
         new ZoomPlugin(),
@@ -97,9 +119,14 @@ export default class GraphMixin extends GraphEdit {
         new SVGValidatePlugin(),
         new DeletionPlugin(),
         new DropPlugin(),
-        new MenuPlugin(),
         new EmptyPlugin()
       )
+      if (this.isRunJob) {
+        plugins.push(new SVGJobFileDropPlugin(), new SVGRequiredInputMarkup())
+      } else {
+        // 不是运行任务，可以删除
+        plugins.push(new MenuPlugin())
+      }
     }
     return plugins
   }
@@ -165,29 +192,12 @@ export default class GraphMixin extends GraphEdit {
   }
   // 导出任务数据
   exportJob(format = 'yaml', isOnlyData = false): void | { data: any; name: string } {
-    const data = stringifyObject(this.jobControl.value, format === 'yaml')
+    const data = stringifyObject(this.jobValue, format === 'yaml')
     const name = this.name + `.job.${format}`
     if (isOnlyData) {
       return { data, name }
     }
     downloadStrLink(data, name)
-  }
-  // TODO 图型变化时更新 json
-  updateJob(jobObject = {}): void {
-    const controlValue = this.normalizeJob(jobObject)
-    this.jobControl.setValue(controlValue)
-    this.graph.getPlugin(SVGJobFileDropPlugin)?.updateToJobState(controlValue)
-  }
-  normalizeJob(jobObject: any): any {
-    const nullJob = JobHelper.getNullJobInputs(this.graph.model)
-    const job = jobObject || {}
-    for (const key of Object.keys(job)) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (!nullJob.hasOwnProperty(key)) {
-        delete job[key]
-      }
-    }
-    return { ...nullJob, ...job }
   }
 
   // 工具事件

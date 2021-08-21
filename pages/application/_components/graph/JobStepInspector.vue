@@ -86,6 +86,7 @@ import { FormControl, FormGroup } from '@/pages/application/_components/FormCont
 import InputValueEditor from '@/pages/application/_components/graph/InputValueEditor'
 import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputModel'
 import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
+
 export default {
   name: 'JobStepInspector',
   components: { InputValueEditor, CollapseItem },

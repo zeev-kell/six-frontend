@@ -123,6 +123,7 @@ class FormControl extends AbstractControl {
 }
 
 class FormGroup extends AbstractControl {
+  controls = null
   constructor(controls) {
     super()
     this.controls = controls
