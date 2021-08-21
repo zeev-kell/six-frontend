@@ -11,7 +11,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class LinkMergeSelect extends Vue {
-  @Prop
+  @Prop()
   value: any = null
   @Prop({ default: false })
   readonly!: boolean
