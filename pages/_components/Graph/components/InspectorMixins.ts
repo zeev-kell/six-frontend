@@ -2,7 +2,7 @@ import { WorkflowOutputParameterModel, WorkflowInputParameterModel, StepModel } 
 import { Component, Vue, Watch, InjectReactive, Prop } from 'nuxt-property-decorator'
 import { Workflow } from 'cwl-svg'
 import { SVG_TYPE } from '@/pages/_components/Graph/plugins/plugin-help'
-import { DblclickPlugin_ } from '@/pages/_components/Graph/plugins/dblclick-plugin_'
+import { DblclickPlugin } from '@/pages/_components/Graph/plugins/dblclick-plugin'
 
 @Component({
   data() {
@@ -25,7 +25,7 @@ export default class InspectorMixins extends Vue {
 
   @Watch('graph')
   onWatchWorkflow(): void {
-    const selection = this.graph?.getPlugin(DblclickPlugin_)
+    const selection = this.graph?.getPlugin(DblclickPlugin)
     if (selection) {
       selection.registerOnDblClick(this.onDblClick, this.onDblClickType)
     }

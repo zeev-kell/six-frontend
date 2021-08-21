@@ -46,7 +46,7 @@ export default class WorkflowStepInspectorInfo extends Vue {
 }
 </script>
 <style scoped lang="scss" rel="stylesheet">
-@import '../../../application/_components/graph/theme';
+@import '../theme';
 .selection-step-info > div {
   margin-bottom: 10px;
   color: $color1;

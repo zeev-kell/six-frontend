@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import '~/pages/application/_components/graph/_theme.scss'
+import './_index.scss'
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import GraphWorkflow from '@/pages/_components/Graph/GraphWorkflow.vue'
 import GraphTool from '@/pages/_components/Graph/GraphTool.vue'

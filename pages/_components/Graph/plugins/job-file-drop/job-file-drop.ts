@@ -1,43 +1,54 @@
-import { PluginBase } from 'cwl-svg'
-import { AppHelper } from '../helpers/AppHelper'
+import { PluginBase, Workflow } from 'cwl-svg'
+import { AppHelper } from '../../helpers/AppHelper'
 import './job-file-drop.scss'
 
 export class SVGJobFileDropPlugin extends PluginBase {
-  svg
-  fileInputs = {}
-  css = {
+  private svg!: SVGGElement
+
+  private fileInputs: {
+    [id: string]: {
+      type: 'File' | 'array'
+      element: SVGElement
+    }
+  } = {}
+
+  private css = {
     plugin: '__plugin-job-file-drop',
     added: '__plugin-job-file-drop-added',
   }
 
-  registerWorkflow(workflow) {
+  registerWorkflow(workflow: Workflow): void {
     super.registerWorkflow(workflow)
+
     this.svg = this.workflow.svgRoot
+
     this.svg.classList.add(this.css.plugin)
   }
 
-  destroy() {
+  destroy(): void {
     this.svg.classList.remove(this.css.plugin)
   }
 
-  afterRender() {
+  afterRender(): void {
     this.renderNodeLabels()
   }
 
   renderNodeLabels() {
     const fileInputNodeLabels = this.workflow.workflow.querySelectorAll('.input.type-File .title.label')
     for (const txtEl of fileInputNodeLabels) {
-      this.createLabelTSpanElements(txtEl)
+      this.createLabelTSpanElements(<SVGTextElement>txtEl)
     }
+
     const arrayFileInputNodeLabels = this.workflow.workflow.querySelectorAll('.input.type-array.items-File .title.label')
     for (const txtEl of arrayFileInputNodeLabels) {
-      this.createLabelTSpanElements(txtEl)
+      this.createLabelTSpanElements(<SVGTextElement>txtEl)
     }
   }
 
-  createLabelTSpanElements(txtEl) {
+  createLabelTSpanElements(txtEl: SVGTextElement) {
     const idText = txtEl.textContent
     txtEl.textContent = ''
+
     const id = document.createElementNS(this.svg.namespaceURI, 'tspan')
     id.setAttribute('x', '0')
     id.textContent = idText
@@ -51,36 +62,45 @@ export class SVGJobFileDropPlugin extends PluginBase {
     txtEl.appendChild(fileLabel)
   }
 
-  updateToJobState(job = {}) {
+  updateToJobState(job: any = {}) {
     const fileInputsSelector = '.input.type-File'
     const fileArrayInputsSelector = '.input.type-array.items-File'
+
     // Find all input nodes that represent files or file arrays
-    const query = this.svg.querySelectorAll([fileInputsSelector, fileArrayInputsSelector].join())
+    const query = this.svg.querySelectorAll([fileInputsSelector, fileArrayInputsSelector].join()) as NodeListOf<SVGGElement>
+
     for (const node of query) {
       const inputID = node.getAttribute('data-id')
-      if (!job[inputID]) {
+
+      if (!job[inputID as string]) {
         this.updateNodeLabel(node, undefined)
         continue
       }
+
       const filePaths = []
-      for (const entry of [].concat(job[inputID])) {
+
+      for (const entry of [].concat(job[inputID as string])) {
         if (entry === null) {
           continue
         }
-        if ((entry.class === 'File' || entry.class === 'Directory') && entry.path) {
-          filePaths.push(entry.path)
+
+        if (((entry as any).class === 'File' || (entry as any).class === 'Directory') && (entry as any).path) {
+          filePaths.push((entry as any).path)
         }
       }
+
       this.updateNodeLabel(node, filePaths)
     }
   }
 
-  updateNodeLabel(node, values) {
+  private updateNodeLabel(node: SVGGElement, values: string[] | undefined): void {
     const label = node.querySelector(`.title .file-label`)
     const typeIsArray = node.classList.contains('type-array')
+
     if (!node || !label) {
       return
     }
+
     if (values) {
       if (values.length > 1) {
         label.textContent = `Added ${values.length} files`

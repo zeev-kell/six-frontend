@@ -24,9 +24,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { GraphEvent } from '@/constants/GraphEvent'
 import { pipeConstants } from '@/constants/PipeConstants'
-import { getObject, stringifyObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
+import { getObject, stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { CommandLineToolFactory, WorkflowFactory } from 'cwlts/models'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 

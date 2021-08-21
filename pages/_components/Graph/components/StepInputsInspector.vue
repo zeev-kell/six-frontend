@@ -114,7 +114,7 @@ import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputMo
 import CollapseItem from '@/components/CollapseItem.vue'
 import WorkflowStepInspectorEntry from '@/pages/_components/Graph/components/WorkflowStepInspectorEntry.vue'
 import { ObjectHelper } from '@/pages/_components/Graph/helpers/ObjectHelper'
-import LinkMergeSelect from '@/pages/application/_components/graph/LinkMergeSelect.vue'
+import LinkMergeSelect from '@/pages/_components/Graph/components/LinkMergeSelect.vue'
 
 @Component({
   components: { LinkMergeSelect, WorkflowStepInspectorEntry, CollapseItem },
@@ -242,7 +242,7 @@ export default class StepInputsInspector extends Vue {
   background-color: #333333;
   background-image: none;
   background-clip: padding-box;
-  border: 1px solid $black1;
+  border: 1px solid #232323;
   border-radius: 0;
   &:focus {
     color: #eee;

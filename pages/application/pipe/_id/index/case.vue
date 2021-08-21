@@ -38,7 +38,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
 import { pipeConstants } from '@/constants/PipeConstants'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
-import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
+import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 
 @Component({
   filters: {

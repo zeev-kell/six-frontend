@@ -82,7 +82,7 @@ export default class WorkflowStepInspector extends InspectorMixins {
 </script>
 
 <style scoped lang="scss" rel="stylesheet">
-@import '../../../application/_components/graph/theme';
+@import '../theme';
 .el-tabs ::v-deep {
   height: 100%;
 

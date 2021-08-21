@@ -23,11 +23,11 @@ import {
   Workflow,
   ZoomPlugin,
 } from 'cwl-svg'
-import { SVGJobFileDropPlugin } from '@/pages/application/_components/graph/plugins/job-file-drop'
-import { SVGRequiredInputMarkup } from '@/pages/application/_components/graph/plugins/required-input-markup'
+import { SVGJobFileDropPlugin } from '@/pages/_components/Graph/plugins/job-file-drop/job-file-drop'
+import { SVGRequiredInputMarkup } from '@/pages/_components/Graph/plugins/required-input-markup/required-input-markup'
 import { DropPlugin } from '@/pages/_components/Graph/plugins/drop-plugin/drop-plugin'
 import { EmptyPlugin } from '@/pages/_components/Graph/plugins/empty-plugin/empty-plugin'
-import { DblclickPlugin_ } from '@/pages/_components/Graph/plugins/dblclick-plugin_'
+import { DblclickPlugin } from '@/pages/_components/Graph/plugins/dblclick-plugin'
 import { MenuPlugin } from '@/pages/_components/Graph/plugins/menu-plugin/menu-plugin'
 import { GraphEvent } from '@/constants/GraphEvent'
 import { GraphEdit } from '@/pages/_components/Graph/GraphEdit'
@@ -110,7 +110,7 @@ export default class GraphMixin extends GraphEdit {
   // 获取默认的插件
   getDefaultPlugins(): GraphPlugin[] {
     // 默认可以放缩，选择节点，线条悬浮，自动放缩，双击选择，默认插件
-    const plugins: GraphPlugin[] = [new SVGArrangePlugin(), new SVGEdgeHoverPlugin(), new SelectionPlugin(), new DblclickPlugin_(), ...this.plugins]
+    const plugins: GraphPlugin[] = [new SVGArrangePlugin(), new SVGEdgeHoverPlugin(), new SelectionPlugin(), new DblclickPlugin(), ...this.plugins]
     if (!this.readonly) {
       plugins.push(
         new ZoomPlugin(),
@@ -209,7 +209,7 @@ export default class GraphMixin extends GraphEdit {
         this.addNodeToGraph(task, coords)
       })
       // 注册双击事件，只处理 step 的类型
-      const dblclick = this.graph.getPlugin(DblclickPlugin_)
+      const dblclick = this.graph.getPlugin(DblclickPlugin)
       // 注册菜单事件
       const menu = this.graph.getPlugin(MenuPlugin)
       menu?.registerOnMenuClick((type: string, event: Event) => {
@@ -257,7 +257,6 @@ export default class GraphMixin extends GraphEdit {
 
   mounted(): void {
     // 首次插入 content 可能为空，增加一次的监听
-    console.log(this.content)
     if (this.content) {
       this.createGraph()
     } else {

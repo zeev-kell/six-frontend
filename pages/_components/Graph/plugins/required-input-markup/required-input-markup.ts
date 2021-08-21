@@ -1,28 +1,31 @@
-import { PluginBase } from 'cwl-svg'
+import { PluginBase, Workflow } from 'cwl-svg'
 import './required-input-markup.scss'
 
 export class SVGRequiredInputMarkup extends PluginBase {
-  svg
-  css = {
+  private svg!: SVGGElement
+
+  private css = {
     plugin: '__plugin-required-input-markup',
     required: '__plugin-required-input-markup-required',
   }
 
-  registerWorkflow(workflow) {
+  registerWorkflow(workflow: Workflow): void {
     super.registerWorkflow(workflow)
     this.svg = this.workflow.svgRoot
     this.svg.classList.add(this.css.plugin)
   }
 
-  destroy() {
+  destroy(): void {
     this.svg.classList.remove(this.css.plugin)
   }
 
-  markMissing(...nodeIDs) {
+  markMissing(...nodeIDs: string[]) {
     const allInputs = this.workflow.workflow.querySelectorAll(`.node.input`)
+
     for (const inputEl of allInputs) {
       const id = inputEl.getAttribute('data-connection-id')
-      if (~nodeIDs.indexOf(id)) {
+
+      if (~nodeIDs.indexOf(id as string)) {
         inputEl.classList.add(this.css.required)
       } else {
         inputEl.classList.remove(this.css.required)

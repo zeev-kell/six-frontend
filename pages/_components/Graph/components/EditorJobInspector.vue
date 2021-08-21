@@ -21,7 +21,7 @@ import { Component, InjectReactive, Vue } from 'nuxt-property-decorator'
 import InspectorMixins from '@/pages/_components/Graph/components/InspectorMixins'
 import JobStepInspector from '@/pages/_components/Graph/components/JobStepInspector.vue'
 import { StepModel, WorkflowModel } from 'cwlts/models'
-import { AppHelper } from '@/pages/application/_components/graph/helpers/AppHelper'
+import { AppHelper } from '@/pages/_components/Graph/helpers/AppHelper'
 import { SVG_TYPE } from '@/pages/_components/Graph/plugins/plugin-help'
 
 @Component({

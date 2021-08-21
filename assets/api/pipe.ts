@@ -2,8 +2,7 @@
 import Element from 'element-ui'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { Context } from '@nuxt/types'
-import { response } from 'express'
-import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
+import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { PipeModel } from '@/types/model/Pipe'
 
 export class Module {

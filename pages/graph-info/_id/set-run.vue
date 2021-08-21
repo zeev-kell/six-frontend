@@ -6,7 +6,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import { GraphEvent } from '@/constants/GraphEvent'
-import { getObject } from '@/pages/application/_components/graph/helpers/YamlHandle'
+import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 
 @Component({
   components: { GraphIndex },
