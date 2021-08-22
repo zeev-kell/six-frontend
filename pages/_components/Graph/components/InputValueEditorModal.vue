@@ -35,61 +35,61 @@
   </el-dialog>
 </template>
 
-<script type="text/babel">
-import NativeFileBrowserFormField from '@/pages/application/_components/graph/NativeFileBrowserFormField'
-import { FormArray, FormControl, FormGroup } from '@/pages/application/_components/FormControl'
-export default {
-  name: 'InputValueEditorModal',
+<script lang="ts">
+import { Component, InjectReactive, Vue } from 'nuxt-property-decorator'
+import NativeFileBrowserFormField from '@/pages/_components/Graph/components/NativeFileBrowserFormField.vue'
+import { WorkflowModel } from 'cwlts/models'
+import { FormArray, FormControl, FormGroup } from '@/components/FormControl'
+
+@Component({
   components: { NativeFileBrowserFormField },
-  inject: ['model'],
-  data() {
-    return {
-      dialogFormVisible: false,
-      metadata: undefined,
-      secondaryFiles: undefined,
-      relativePathRoot: '',
-      readonly: false,
-      form: new FormGroup({}),
-    }
-  },
-  computed: {
-    allowDirectories() {
-      return !this.model?.cwlVersion.includes('draft-2')
-    },
-    controls() {
-      return this.form.get('secondaryFiles')?.controls
-    },
-  },
-  methods: {
-    showDialog({ secondaryFiles, metadata }, relativePathRoot) {
-      this.secondaryFiles = secondaryFiles
-      this.metadata = metadata
-      this.relativePathRoot = relativePathRoot
-      this.form = new FormGroup({
-        secondaryFiles: new FormArray([]),
-        metadata: new FormControl(this.metadata),
+})
+export default class InputValueEditorModal extends Vue {
+  @InjectReactive('model')
+  model!: WorkflowModel
+
+  dialogFormVisible = false
+  metadata: any = null
+  secondaryFiles: any = null
+  relativePathRoot = ''
+  readonly = false
+  form = new FormGroup({})
+
+  get allowDirectories(): boolean {
+    return !this.model?.cwlVersion.includes('draft-2')
+  }
+  get controls(): any {
+    return this.form.get('secondaryFiles')?.controls
+  }
+
+  showDialog({ secondaryFiles, metadata }: any, relativePathRoot: any): void {
+    this.secondaryFiles = secondaryFiles
+    this.metadata = metadata
+    this.relativePathRoot = relativePathRoot
+    this.form = new FormGroup({
+      secondaryFiles: new FormArray([]),
+      metadata: new FormControl(this.metadata),
+    })
+    this.dialogFormVisible = true
+  }
+  deleteSecondaryFile(index: number): void {
+    const ctrl: any = this.form.get('secondaryFiles')
+    ctrl.removeAt(index)
+  }
+  addSecondaryFile(path = '', type: any): void {
+    const ctrl: any = this.form.get('secondaryFiles')
+    ctrl.push(
+      new FormGroup({
+        class: new FormControl(type),
+        path: new FormControl(path),
       })
-      this.dialogFormVisible = true
-    },
-    deleteSecondaryFile(index) {
-      const ctrl = this.form.get('secondaryFiles')
-      ctrl.removeAt(index)
-    },
-    addSecondaryFile(path = '', type) {
-      const ctrl = this.form.get('secondaryFiles')
-      ctrl.push(
-        new FormGroup({
-          class: new FormControl(type),
-          path: new FormControl(path),
-        })
-      )
-    },
-    onClose() {
-      this.dialogFormVisible = false
-    },
-    onSubmit() {
-      this.dialogFormVisible = false
-    },
-  },
+    )
+  }
+  onClose(): void {
+    this.dialogFormVisible = false
+  }
+  onSubmit(): void {
+    this.dialogFormVisible = false
+  }
 }
 </script>

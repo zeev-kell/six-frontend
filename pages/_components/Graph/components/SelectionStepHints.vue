@@ -48,48 +48,36 @@
   </div>
 </template>
 
-<script type="text/babel">
-export default {
-  name: 'SelectionStepHints',
-  props: {
-    step: {
-      type: Object,
-      default: null,
-    },
-    readonly: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      hints: [],
-      dialogVisible: false,
+<script lang="ts">
+import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
+import { WorkflowInputParameterModel, WorkflowOutputParameterModel } from 'cwlts/models'
+
+@Component
+export default class SelectionStepHints extends Vue {
+  @Prop({ default: false })
+  readonly!: boolean
+  @Prop({ required: true })
+  step!: any
+
+  hints = []
+  dialogVisible = false
+
+  @Watch('step.hints', { immediate: true })
+  onWatchStepHints(hints?: any): void {
+    if (hints) {
+      this.hints = hints.map((h: any) => {
+        return { class: h.class, value: h.value }
+      })
     }
-  },
-  watch: {
-    'step.hints': {
-      immediate: true,
-      handler(hints) {
-        if (hints) {
-          this.hints = hints.map((h) => {
-            return { class: h.class, value: h.value }
-          })
-        }
-      },
-    },
-  },
-  methods: {
-    addEntry() {
-      this.step.addHint({ class: '', value: '' })
-      this.$emit('update', this.step.hints)
-    },
-    setHints() {
-      this.dialogVisible = true
-    },
-    removeEntry() {},
-  },
+  }
+
+  addEntry() {
+    this.step.addHint({ class: '', value: '' })
+    this.$emit('update', this.step.hints)
+  }
+  setHints() {
+    this.dialogVisible = true
+  }
+  removeEntry() {}
 }
 </script>
-
-<style scoped lang="scss" rel="stylesheet"></style>

@@ -128,7 +128,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { ObjectHelper } from '@/pages/_components/Graph/helpers/ObjectHelper'
 import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputModel'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
-import SelectionInputEntryMap from '@/pages/application/_components/graph/SelectionInputEntryMap.vue'
+import SelectionInputEntryMap from '@/pages/_components/Graph/components/SelectionInputEntryMap.vue'
 
 @Component({
   components: {

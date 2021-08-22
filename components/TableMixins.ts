@@ -15,6 +15,7 @@ export default class TableMixins<T> extends Vue {
   protected loading = false
   protected total = 0
   protected immediate = false
+  protected listQueryKeys = []
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getTableData(listQuery: tableQuery): Promise<tableResponse<T> | any> {
     throw new Error('Method not implemented.')
@@ -26,6 +27,12 @@ export default class TableMixins<T> extends Vue {
   }
   async searchQuery(): Promise<void> {
     // 查询需要重置页数
+    this.listQueryKeys.forEach((k: string) => {
+      // 过滤无效的搜索条件
+      if (this.listQuery[k] === '') {
+        this.listQuery[k] = undefined
+      }
+    })
     this.listQuery.page = 1
     await this.refreshTable()
   }

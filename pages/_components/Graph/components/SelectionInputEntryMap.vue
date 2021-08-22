@@ -24,41 +24,28 @@
   </div>
 </template>
 
-<script type="text/babel">
-export default {
-  name: 'SelectionInputEntryMap',
-  props: {
-    value: {
-      type: [Object, String],
-      default: null,
-    },
-    readonly: {
-      type: Boolean,
-      default: false,
-    },
-    description: {
-      type: String,
-      default: '',
-    },
-    title: {
-      type: String,
-      default: '',
-    },
-  },
-  data() {
-    return {
-      children: [{ key: 'k', value: 'v' }],
-    }
-  },
-  methods: {
-    onClick() {},
-    onRemove(i) {
-      this.children.splice(i, 1)
-    },
-    onAdd() {
-      this.children.push({ key: 'k', value: 'v' })
-    },
-  },
+<script lang="ts">
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class SelectionInputEntryMap extends Vue {
+  @Prop({ default: null })
+  value!: any
+  @Prop({ default: false })
+  readonly!: boolean
+  @Prop({ default: '' })
+  description!: string
+  @Prop({ default: '' })
+  title!: string
+
+  children = [{ key: 'k', value: 'v' }]
+
+  onRemove(i: any) {
+    this.children.splice(i, 1)
+  }
+  onAdd() {
+    this.children.push({ key: 'k', value: 'v' })
+  }
 }
 </script>
 

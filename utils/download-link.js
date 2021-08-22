@@ -1,9 +1,6 @@
 export function downloadStrLink(data, filename) {
   if (!data) {
     return
-  } else {
-    console.log(data)
-    return
   }
   if (!filename) filename = 'json.json'
   if (typeof data === 'object') {

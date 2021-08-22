@@ -1,10 +1,16 @@
 <template>
-  <div class="drag-list-shop">
+  <div v-loading="loading" class="drag-list-shop">
     <div class="task-search">
       <el-form @submit.native.prevent>
         <el-form-item>
-          <el-input v-model="listQuery.name" size="mini" :placeholder="$t('placeholder.search')" clearable @keyup.enter.native="searchQuery">
-          </el-input>
+          <el-input
+            v-model="listQuery.name"
+            size="mini"
+            :placeholder="$t('placeholder.search')"
+            clearable
+            @keyup.enter.native="searchQuery"
+            @clear="searchQuery"
+          />
         </el-form-item>
       </el-form>
     </div>
@@ -36,14 +42,14 @@ export default class DragListShop extends TableMixins<PipeModel> {
     name: undefined,
     status: pipeConstants.items.STATUS_ON,
   }
-
+  protected listQueryKeys = ['name']
   protected filterPipe(p: PipeModel): boolean {
     return (p.type === 0 || p.type === 1) && (p.content || p.versions?.length > 0)
   }
 
   async refreshTable(): Promise<void> {
+    this.loading = true
     let response = await this.$api.pipe.getListV2(this.listQuery)
-    console.log(response)
     response = response.filter(this.filterPipe)
     response.forEach((p: PipeModel) => {
       if (p.versions?.length === 1) {
@@ -57,6 +63,7 @@ export default class DragListShop extends TableMixins<PipeModel> {
       }
     })
     this.tableData = response
+    this.loading = false
   }
 }
 </script>

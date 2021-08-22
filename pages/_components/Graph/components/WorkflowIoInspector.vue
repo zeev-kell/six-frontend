@@ -98,9 +98,9 @@
 
 <script lang="ts">
 import { Component, InjectReactive, Prop, Vue, Watch } from 'nuxt-property-decorator'
-import TypeSelect from '@/pages/application/_components/graph/TypeSelect.vue'
+import TypeSelect from '@/pages/_components/Graph/components/TypeSelect.vue'
 import debounce from '@/utils/debounce'
-import CollapseItem from '@/pages/application/_components/CollapseItem.vue'
+import CollapseItem from '@/components/CollapseItem.vue'
 import { WorkflowModel, WorkflowOutputParameterModel, WorkflowInputParameterModel } from 'cwlts/models'
 import { Workflow } from 'cwl-svg'
 

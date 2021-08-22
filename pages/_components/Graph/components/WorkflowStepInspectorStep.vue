@@ -54,8 +54,8 @@ import { Component, InjectReactive, Prop, Vue, Watch } from 'nuxt-property-decor
 import { StepModel, WorkflowModel } from 'cwlts/models'
 import { Workflow } from 'cwl-svg'
 import { checkKeyWord } from '@/pages/_components/Graph/KeyWords'
-import ElStepItem from '@/pages/application/_components/ElStepItem.vue'
-import SelectionStepHints from '@/pages/application/_components/graph/SelectionStepHints.vue'
+import ElStepItem from '@/components/ElStepItem.vue'
+import SelectionStepHints from '@/pages/_components/Graph/components/SelectionStepHints.vue'
 import debounce from '@/utils/debounce'
 
 @Component({

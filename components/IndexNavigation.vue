@@ -22,7 +22,7 @@
                 <a @click="navigate" @keypress.enter="navigate">云协作</a>
               </nuxt-link>
             </li>
-            <el-menu-item :index="localePath('application-pipes')"> 流程组合 </el-menu-item>
+            <el-menu-item :index="localePath('/graph-info/new')"> 流程组合 </el-menu-item>
             <el-menu-item class="px-0">
               <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link px-10">数据库</a>
             </el-menu-item>
@@ -94,7 +94,7 @@
           <li role="menuitem" class="el-menu-item">
             <a :href="localePath('index') + '#section-product'" @click="showMobileMenu = false">云协作</a>
           </li>
-          <el-menu-item :index="localePath('application-pipes')"> 流程组合 </el-menu-item>
+          <el-menu-item :index="localePath('/graph-info/new')"> 流程组合 </el-menu-item>
           <el-menu-item class="px-0">
             <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link pl-40 d-inline-b w-100">数据库</a>
           </el-menu-item>

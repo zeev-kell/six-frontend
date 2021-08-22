@@ -82,12 +82,12 @@
 
 <script lang="ts">
 import { Component, InjectReactive, Prop, Vue, Watch } from 'nuxt-property-decorator'
-import { StepModel, WorkflowModel } from 'cwlts/models'
-import { FormControl, FormGroup } from '@/pages/application/_components/FormControl'
+import { WorkflowModel } from 'cwlts/models'
+import { FormControl, FormGroup } from '@/components/FormControl'
 import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputModel'
 import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
-import CollapseItem from '@/pages/application/_components/CollapseItem.vue'
-import InputValueEditor from '@/pages/application/_components/graph/InputValueEditor.vue'
+import CollapseItem from '@/components/CollapseItem.vue'
+import InputValueEditor from '@/pages/_components/Graph/components/InputValueEditor.vue'
 import { normalizeJob } from '@/pages/_components/Graph/helpers/JobHelper'
 
 @Component({

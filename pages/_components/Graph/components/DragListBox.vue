@@ -177,5 +177,8 @@ export default class DragListBox extends Vue {
     opacity: 1;
     pointer-events: auto;
   }
+  .el-loading-mask {
+    background-color: rgba(88, 88, 88, 0.9);
+  }
 }
 </style>

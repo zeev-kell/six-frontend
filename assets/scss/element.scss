@@ -18,6 +18,11 @@
   }
 }
 
+.el-button--medium {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .el-button {
   @include m(dark) {
     @include button-variant($--button-dark-font-color, $--button-dark-background-color, $--button-dark-border-color);

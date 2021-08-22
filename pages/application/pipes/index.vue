@@ -31,6 +31,9 @@
               <el-button type="primary" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
             </nuxt-link>
           </can-create>
+          <nuxt-link v-slot="{ navigate }" :to="localePath('/graph-info/new')" custom>
+            <el-button type="default" role="link" icon="el-icon-share" @click="navigate" @keypress.enter="navigate"> 流程组合 </el-button>
+          </nuxt-link>
         </div>
       </div>
       <div class="table-box">

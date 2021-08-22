@@ -33,7 +33,7 @@
                 <nuxt-link :to="localePath('index') + '#section-product'"> 云协作 </nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath('application-pipes')"> 流程组合 </nuxt-link>
+                <nuxt-link :to="localePath('/graph-info/new')"> 流程组合 </nuxt-link>
               </li>
               <li>
                 <a :href="RESOURCES_URL + '/data/'" target="_blank">数据集</a>
