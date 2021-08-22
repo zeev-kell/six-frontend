@@ -57,6 +57,7 @@ export default class Case extends Vue {
   }
 
   async onPropagate(eventName: string): Promise<void> {
+    // TODO 修改为事件
     // 监听第一次实例化事件
     if (GraphEvent.TriggerPageModalCreate === eventName) {
       const profile = this.profile

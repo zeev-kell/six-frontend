@@ -29,7 +29,8 @@ export default class SetRunPage extends Vue {
   profile: any = null
 
   onPropagate(eventName: string): void {
-    // 监听第一次实例化事件
+    // TODO 修改为事件
+    //  监听第一次实例化事件
     if (GraphEvent.TriggerPageModalCreate === eventName) {
       const profile = this.profile
       if (profile?.content) {

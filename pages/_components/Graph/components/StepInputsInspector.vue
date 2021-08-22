@@ -84,7 +84,7 @@
           <!--Link Merge Method Group-->
           <div class="el-form-item">
             <label class="input-label text-muted">Link Merge Method</label>
-            <link-merge-select :readonly="readonly" :value="input.linkMerge.value" @onUpdate="input.linkMerge.value = $event" />
+            <link-merge-select v-model="input.linkMerge.value" :readonly="readonly" />
           </div>
           <!--Connections-->
           <div class="connections">

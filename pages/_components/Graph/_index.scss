@@ -259,3 +259,19 @@
     }
   }
 }
+
+.el-notification-graph {
+  border-radius: 0;
+  width: 150px;
+  padding: 5px;
+  background-color: #404040;
+  border-color: #666;
+  .el-notification__content {
+    margin: 0;
+    color: #ffffff;
+  }
+  .el-icon-close {
+    top: 8px;
+    right: 8px;
+  }
+}

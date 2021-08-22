@@ -42,7 +42,7 @@ export default class DragListShop extends TableMixins<PipeModel> {
     name: undefined,
     status: pipeConstants.items.STATUS_ON,
   }
-  protected listQueryKeys = ['name']
+  protected listQueryKeys: string[] = ['name']
   protected filterPipe(p: PipeModel): boolean {
     return (p.type === 0 || p.type === 1) && (p.content || p.versions?.length > 0)
   }

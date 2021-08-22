@@ -11,8 +11,8 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class LinkMergeSelect extends Vue {
-  @Prop()
-  value: any = null
+  @Prop({ required: true })
+  value!: any
   @Prop({ default: false })
   readonly!: boolean
 
@@ -20,7 +20,8 @@ export default class LinkMergeSelect extends Vue {
     return this.value === null || this.value === undefined ? '' : this.value
   }
   set actualValue(value) {
-    this.$emit('onUpdate', value)
+    this.value = value
+    this.$emit('update', value)
   }
 }
 </script>

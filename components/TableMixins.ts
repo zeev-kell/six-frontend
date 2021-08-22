@@ -15,7 +15,7 @@ export default class TableMixins<T> extends Vue {
   protected loading = false
   protected total = 0
   protected immediate = false
-  protected listQueryKeys = []
+  protected listQueryKeys: string[] = []
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getTableData(listQuery: tableQuery): Promise<tableResponse<T> | any> {
     throw new Error('Method not implemented.')

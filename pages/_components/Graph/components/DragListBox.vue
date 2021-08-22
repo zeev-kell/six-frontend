@@ -1,7 +1,7 @@
 <template>
   <div class="drag-list-box">
     <div class="tool-list">
-      <el-button type="warning" icon="el-icon-back" size="mini" title="返回上一页" @click="actionGoBack"></el-button>
+      <el-button type="info" icon="el-icon-back" size="mini" title="返回上一页" @click="actionGoBack"></el-button>
       <el-button type="dark" icon="el-icon-upload" size="mini" title="保存" @click="actionToCreate"></el-button>
       <el-button type="dark" icon="el-icon-video-play" size="mini" title="设置运行参数" @click="actionToRun"></el-button>
     </div>

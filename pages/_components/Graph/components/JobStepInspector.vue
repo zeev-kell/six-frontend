@@ -9,15 +9,15 @@
               <div class="el-row is-justify-space-between el-row--flex">
                 <label class="input-label" :title="input.label || getInputSource(input)">
                   <span v-if="!input.type.isNullable" class="text-danger">*</span>
-                  <el-tooltip v-if="input.description">
+                  <el-tooltip v-if="input.description" popper-class="input-popper">
                     <div slot="content">
-                      <h4>{{ input.label || getInputSource(input) }}</h4>
+                      <h2>{{ input.label || getInputSource(input) }}</h2>
                       <div>
                         <span class="title">{{ $t('cwl.Description') }}:</span>
                         <span class="value">{{ input.description }}</span>
                       </div>
                     </div>
-                    <i class="fa fa-info-circle text-muted" />
+                    <i class="el-icon-info text-muted" />
                   </el-tooltip>
                   {{ input.label || getInputSource(input) }}
                   <span class="text-muted">({{ input.type.type }})</span>

@@ -258,10 +258,11 @@ export default class GraphMixin extends GraphEdit {
   mounted(): void {
     // 首次插入 content 可能为空，增加一次的监听
     if (this.content) {
+      console.log('on content')
       this.createGraph()
     } else {
       const unWatch = this.$watch('content', () => {
-        console.log(1)
+        console.info('on watch content')
         this.createGraph()
         unWatch()
       })

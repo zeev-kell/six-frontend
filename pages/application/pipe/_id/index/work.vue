@@ -73,6 +73,7 @@ export default class Work extends Vue {
   }
 
   onPropagate(eventName: string): void {
+    // TODO 修改为事件
     // 监听第一次实例化事件
     if (GraphEvent.TriggerPageModalCreate === eventName) {
       const job = getObject(this.item?.content || {})

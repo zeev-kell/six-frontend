@@ -97,7 +97,7 @@
           <div v-if="inputArrayItemsType === 'map'" class="pb-1">
             <span class="text-muted"> [{{ idx }}] </span>
             <el-tooltip v-if="!readonly" content="Delete map array">
-              <i class="fa fa-trash clickable remove-icon pull-right" @click="deleteFromArray(idx)" />
+              <i class="el-icon-delete-solid clickable remove-icon pull-right" @click="deleteFromArray(idx)" />
             </el-tooltip>
           </div>
 
@@ -114,7 +114,7 @@
 
             <!--Delete button if not array of maps-->
             <el-tooltip v-if="inputArrayItemsType !== 'map' && !readonly" content="Delete">
-              <i class="fa fa-trash clickable remove-icon pull-right" @click="deleteFromArray(idx)" />
+              <i class="el-icon-delete-solid clickable remove-icon pull-right" @click="deleteFromArray(idx)" />
             </el-tooltip>
           </div>
         </div>
@@ -122,14 +122,14 @@
           <!--Add array item button in case that element is not File or Directory-->
           <div v-if="inputArrayItemsType !== 'File' && inputArrayItemsType !== 'Directory'">
             <button v-if="!readonly" type="button" class="btn pl-0 btn-link" @click="addArrayEntry()">
-              <i class="fa fa-plus" /> New {{ inputArrayItemsType }}
+              <i class="el-icon-plus" /> New {{ inputArrayItemsType }}
             </button>
           </div>
 
           <!--Add array item button in case that element is File or Directory-->
           <div v-else>
             <button v-if="!readonly" type="button" class="btn pl-0 btn-link" @click="addArrayFileOrDirectory()">
-              <i class="fa fa-plus" /> New {{ inputArrayItemsType }}
+              <i class="el-icon-plus" /> New {{ inputArrayItemsType }}
             </button>
           </div>
         </div>
