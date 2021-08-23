@@ -31,75 +31,76 @@
   </div>
 </template>
 
-<script type="text/babel">
-export default {
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({
   components: {
-    // codemirror: () => import('@/pages/application/_components/CodeMirror'),
     Markdown: () => import('@/pages/application/_components/markdown/simple'),
   },
-
   async asyncData({ app, params }) {
-    const item = await app.$axios.$get(`/v1/blog/${params.id}`)
+    const item: any = await app.$axios.$get(`/v1/blog/${params.id}`)
     if (typeof item.cwl !== 'string') {
       // 尝试转换字段为字符串
       item.cwl = JSON.stringify(item.cwl, null, 2)
     }
     item.content = item.content?.replace(/[↵ ]{2,}/g, '  \n')
-    const category = []
+    const category: any[] = []
     for (const tag in item.tag) {
-      category.push(tag.name)
+      category.push((tag as any).name)
     }
     item.category = category.join(',')
     return { formModel: item }
   },
-  data() {
-    return {
-      formModel: {
-        title: '',
-        category: '',
-        content: '',
-      },
-      rules: {
-        title: [
-          { required: true, message: '请输入标题', trigger: 'blur' },
-          { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' },
-        ],
-        category: [
-          { required: true, message: '请输入分类', trigger: 'blue' },
-          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-        ],
-      },
-      cmOptions: {
-        tabSize: 4,
-        styleActiveLine: true,
-        lineNumbers: true,
-        line: true,
-        mode: 'text/yaml',
-        lineWrapping: true,
-        theme: 'default',
-      },
-      loading: false,
-    }
-  },
-  methods: {
-    onSubmit() {
-      this.$refs.formModel.validate((valid) => {
-        if (valid) {
-          this.loading = true
-          this.$$axios
-            .put('/v1/blog/' + this.formModel.id, this.formModel)
-            .then(() => {
-              this.$I18nRouter.push('/application/doc/' + this.formModel.id)
-            })
-            .finally(() => {
-              this.loading = false
-            })
-        } else {
-          this.$message.warning('请填写完整信息')
-          return false
-        }
-      })
-    },
-  },
+})
+export default class DocEdit extends Vue {
+  $refs!: {
+    formModel: HTMLFormElement
+  }
+
+  formModel: any = {
+    title: '',
+    category: '',
+    content: '',
+  }
+  rules: any = {
+    title: [
+      { required: true, message: '请输入标题', trigger: 'blur' },
+      { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' },
+    ],
+    category: [
+      { required: true, message: '请输入分类', trigger: 'blue' },
+      { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
+    ],
+  }
+  cmOptions = {
+    tabSize: 4,
+    styleActiveLine: true,
+    lineNumbers: true,
+    line: true,
+    mode: 'text/yaml',
+    lineWrapping: true,
+    theme: 'default',
+  }
+  loading = false
+
+  onSubmit(): void {
+    this.$refs.formModel.validate((valid: boolean) => {
+      if (valid) {
+        this.loading = true
+        this.$$axios
+          .put('/v1/blog/' + this.formModel.id, this.formModel)
+          .then(() => {
+            this.$I18nRouter.push('/application/doc/' + this.formModel.id)
+          })
+          .finally(() => {
+            this.loading = false
+          })
+      } else {
+        this.$message.warning('请填写完整信息')
+        return false
+      }
+    })
+  }
 }
 </script>

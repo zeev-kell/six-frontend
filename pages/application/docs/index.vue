@@ -55,10 +55,12 @@
   </div>
 </template>
 
-<script type="text/babel">
-import CanCreate from '@/components/common/CanCreate'
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
-export default {
+
+@Component({
   components: { CanCreate },
   filters: {
     ...intercept,
@@ -67,65 +69,61 @@ export default {
     const items = await app.$axios.$get('/v1/blogs')
     return { items }
   },
-  data() {
-    return {
-      query: {
-        name: this.$route.query.name || '',
-        category: this.$route.query.category || '',
-        type: this.$route.query.type || '',
-      },
-      items: [],
-      typeList: [],
+})
+export default class Docs extends Vue {
+  query = {
+    name: this.$route.query.name || '',
+    category: this.$route.query.category || '',
+    type: this.$route.query.type || '',
+  }
+  items = []
+  typeList = []
+
+  get categoryList() {
+    return this.items.reduce((list: any, item: any) => {
+      if (!list.includes(item.category)) {
+        list.push(item.category)
+      }
+      return list
+    }, [])
+  }
+  get nameList() {
+    return this.items.reduce((list: any, item: any) => {
+      if (!list.includes(item.name)) {
+        list.push({ value: item.name })
+      }
+      return list
+    }, [])
+  }
+  get tableDate() {
+    let data = this.items
+    if (this.query.category !== '') {
+      data = data.filter((item: any) => {
+        return item.category === this.query.category
+      })
     }
-  },
-  computed: {
-    categoryList() {
-      return this.items.reduce((list, item) => {
-        if (!list.includes(item.category)) {
-          list.push(item.category)
-        }
-        return list
-      }, [])
-    },
-    nameList() {
-      return this.items.reduce((list, item) => {
-        if (!list.includes(item.name)) {
-          list.push({ value: item.name })
-        }
-        return list
-      }, [])
-    },
-    tableDate() {
-      let data = this.items
-      if (this.query.category !== '') {
-        data = data.filter((item) => {
-          return item.category === this.query.category
-        })
-      }
-      if (this.query.name !== '') {
-        data = data.filter((item) => {
-          return item.name.includes(this.query.title)
-        })
-      }
-      if (this.query.type !== '') {
-        data = data.filter((item) => {
-          return item.type === this.query.type
-        })
-      }
-      return data
-    },
-  },
-  methods: {
-    createFilter(str) {
-      return (name) => {
-        return name.value.toLowerCase().includes(str.toLowerCase())
-      }
-    },
-    queryName(str, cb) {
-      const nameList = this.nameList
-      const results = str ? nameList.filter(this.createFilter(str)) : nameList
-      cb(results)
-    },
-  },
+    if (this.query.name !== '') {
+      data = data.filter((item: any) => {
+        return item.name.includes(this.query.name)
+      })
+    }
+    if (this.query.type !== '') {
+      data = data.filter((item: any) => {
+        return item.type === this.query.type
+      })
+    }
+    return data
+  }
+
+  createFilter(str: string) {
+    return (name: any) => {
+      return name.value.toLowerCase().includes(str.toLowerCase())
+    }
+  }
+  queryName(str: string, cb: any) {
+    const nameList = this.nameList
+    const results = str ? nameList.filter(this.createFilter(str)) : nameList
+    cb(results)
+  }
 }
 </script>

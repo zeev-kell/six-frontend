@@ -42,29 +42,29 @@
   </div>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import MarkdownToc from '@/components/MarkdownToc.vue'
 import { resourceHelp } from '@/utils/resource-help'
+import CanCreate from '@/components/common/CanCreate.vue'
+import CanExamine from '@/components/common/CanExamine.vue'
 
-export default {
-  components: { MarkdownToc },
+@Component({
+  components: { CanExamine, CanCreate, MarkdownToc },
   async asyncData({ app, params }) {
     const blog = await app.$axios.$get(`/v1/blog/${params.id}`)
     const { markdown, toc, imageList } = resourceHelp(blog.content)
     return { blog, markdown, toc, imageList }
   },
-  data() {
-    return {
-      blog: {},
-      markdown: undefined,
-      toc: [],
-      imageList: [],
-      currentImage: undefined,
-    }
-  },
-  methods: {
-    handleDelete() {},
-  },
+})
+export default class DocIndex extends Vue {
+  blog = {}
+  markdown = null
+  toc = []
+  imageList = []
+  currentImage = null
+
+  handleDelete() {}
 }
 </script>
 

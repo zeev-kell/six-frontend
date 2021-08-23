@@ -24,11 +24,12 @@
   </div>
 </template>
 
-<script type="text/babel">
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import MarkdownToc from '@/components/MarkdownToc.vue'
 import { resourceHelp } from '@/utils/resource-help'
 
-export default {
+@Component({
   components: { MarkdownToc },
   async asyncData({ app, store }) {
     const item = store.state.pipe
@@ -38,18 +39,15 @@ export default {
       return { instruction, markdown, toc, imageList }
     }
   },
-  data() {
-    return {
-      markdown: undefined,
-      toc: [],
-      imageList: [],
-      currentImage: undefined,
-    }
-  },
-  computed: {
-    item() {
-      return this.$store.state.pipe
-    },
-  },
+})
+export default class Course extends Vue {
+  markdown = null
+  toc = []
+  imageList = []
+  currentImage = null
+
+  get item() {
+    return this.$store.state.pipe
+  }
 }
 </script>

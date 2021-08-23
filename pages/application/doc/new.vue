@@ -40,60 +40,63 @@
   </div>
 </template>
 
-<script type="text/babel">
-export default {
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({
   components: {
     // codemirror: () => import('@/pages/application/_components/CodeMirror'),
     Markdown: () => import('@/pages/application/_components/markdown/simple'),
   },
-  data() {
-    return {
-      formModel: {
-        title: '',
-        category: '',
-        content: '',
-      },
-      rules: {
-        title: [
-          { required: true, message: '请输入标题', trigger: 'blur' },
-          { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' },
-        ],
-        category: [
-          { required: true, message: '请输入分类', trigger: 'blue' },
-          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-        ],
-      },
-      cmOptions: {
-        tabSize: 4,
-        styleActiveLine: true,
-        lineNumbers: true,
-        line: true,
-        mode: 'text/yaml',
-        lineWrapping: true,
-        theme: 'default',
-      },
-      loading: false,
-    }
-  },
-  methods: {
-    onSubmit() {
-      this.$refs.formModel.validate((valid) => {
-        if (valid) {
-          this.loading = true
-          this.$$axios
-            .post('/v1/blog', this.formModel)
-            .then(() => {
-              this.$I18nRouter.push('/application/docs')
-            })
-            .finally(() => {
-              this.loading = false
-            })
-        } else {
-          this.$message.warning('请填写完整信息')
-          return false
-        }
-      })
-    },
-  },
+})
+export default class DocNew extends Vue {
+  $refs!: {
+    formModel: HTMLFormElement
+  }
+
+  formModel = {
+    title: '',
+    category: '',
+    content: '',
+  }
+  rules = {
+    title: [
+      { required: true, message: '请输入标题', trigger: 'blur' },
+      { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' },
+    ],
+    category: [
+      { required: true, message: '请输入分类', trigger: 'blue' },
+      { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
+    ],
+  }
+  cmOptions = {
+    tabSize: 4,
+    styleActiveLine: true,
+    lineNumbers: true,
+    line: true,
+    mode: 'text/yaml',
+    lineWrapping: true,
+    theme: 'default',
+  }
+  loading = false
+
+  onSubmit() {
+    this.$refs.formModel.validate((valid: boolean) => {
+      if (valid) {
+        this.loading = true
+        this.$$axios
+          .post('/v1/blog', this.formModel)
+          .then(() => {
+            this.$I18nRouter.push('/application/docs')
+          })
+          .finally(() => {
+            this.loading = false
+          })
+      } else {
+        this.$message.warning('请填写完整信息')
+        return false
+      }
+    })
+  }
 }
 </script>
