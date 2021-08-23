@@ -30,16 +30,16 @@
             <div class="title">产品</div>
             <ul class="list-unstyled">
               <li>
-                <nuxt-link :to="localePath('index') + '#section-product'"> 云协作 </nuxt-link>
+                <nuxt-link :to="localePath('index') + '#section-product'">云协作</nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath('/graph-info/new')"> 流程组合 </nuxt-link>
+                <nuxt-link :to="localePath('/graph-info/new')">流程组合</nuxt-link>
               </li>
               <li>
                 <a :href="RESOURCES_URL + '/data/'" target="_blank">数据集</a>
               </li>
               <li>
-                <nuxt-link :to="localePath('application-docs')"> 知识库 </nuxt-link>
+                <nuxt-link :to="localePath('application-docs')">知识库</nuxt-link>
               </li>
             </ul>
           </div>
@@ -47,13 +47,13 @@
             <div class="title">下载中心</div>
             <ul class="list-unstyled">
               <li>
-                <nuxt-link :to="localePath('download-center')"> 客户端下载 </nuxt-link>
+                <nuxt-link :to="localePath('download-center')">客户端下载</nuxt-link>
               </li>
               <li>
                 <a :href="RESOURCES_URL + '/data/'" target="_blank">数据下载</a>
               </li>
               <li>
-                <nuxt-link :to="localePath('application-pipes')"> 软件仓库 </nuxt-link>
+                <nuxt-link :to="localePath('application-pipes')">软件仓库</nuxt-link>
               </li>
             </ul>
           </div>
@@ -61,16 +61,16 @@
             <div class="title">资源</div>
             <ul class="list-unstyled">
               <li>
-                <nuxt-link :to="localePath('support-center')"> 帮助文档 </nuxt-link>
+                <nuxt-link :to="localePath('support-center')">帮助文档</nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'Q_A' } })"> 常见Q&A </nuxt-link>
+                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'Q_A' } })">常见Q&A</nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'advice' } })"> 意见建议 </nuxt-link>
+                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'advice' } })">意见建议</nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'get_started' } })"> 使用指南 </nuxt-link>
+                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'get_started' } })">使用指南 </nuxt-link>
               </li>
               <li><a href="https://github.com/6-oclock" target="_blank">更新日志</a></li>
               <li><a href="https://github.com/6-oclock" target="_blank">NewSroom</a></li>
@@ -79,16 +79,16 @@
           <div class="el-col-12 hidden-md-and-up">
             <div class="el-row text-center" style="line-height: 1.5">
               <div class="el-col-12">
-                <nuxt-link :to="localePath('download-center')"> 下载中心 </nuxt-link>
+                <nuxt-link :to="localePath('download-center')">下载中心</nuxt-link>
               </div>
               <div class="el-col-12">
-                <nuxt-link :to="localePath('support-center')"> 资源 </nuxt-link>
+                <nuxt-link :to="localePath('support-center')">资源</nuxt-link>
               </div>
               <div class="el-col-12">
                 <a href="https://github.com/6-oclock" target="_blank">关于我们</a>
               </div>
               <div class="el-col-12">
-                <nuxt-link :to="localePath('index') + '#section-product'"> 产品 </nuxt-link>
+                <nuxt-link :to="localePath('index') + '#section-product'">产品</nuxt-link>
               </div>
             </div>
           </div>
@@ -97,29 +97,41 @@
               <div class="icon">
                 <fa icon="download" class="fa-2x" />
               </div>
-              <div class="hidden-sm-and-down">下载</div>
+              <div class="hidden-sm-and-down">
+                <nuxt-link :to="localePath('download-center')">下载</nuxt-link>
+              </div>
             </div>
             <div class="el-col-8">
-              <div class="icon">
-                <fa :icon="['fab', 'weixin']" class="fa-2x" />
-              </div>
-              <div class="hidden-sm-and-down">官方微信</div>
+              <el-popover placement="bottom" trigger="hover">
+                <img style="width: 126px" src="/images/qrcode.jpg" alt="官方微博" />
+                <div slot="reference" class="pointer">
+                  <div class="icon">
+                    <fa :icon="['fab', 'weixin']" class="fa-2x" />
+                  </div>
+                  <div class="hidden-sm-and-down">官方微博</div>
+                </div>
+              </el-popover>
             </div>
             <div class="el-col-8">
               <div class="icon">
                 <fa :icon="['fab', 'github']" class="fa-2x" />
               </div>
-              <div class="hidden-sm-and-down">GitHub 仓库</div>
+              <div class="hidden-sm-and-down">
+                <a href="https://github.com/6-oclock" target="_blank">GitHub 仓库</a>
+              </div>
             </div>
           </div>
+        </div>
+        <div v-if="showUA">
+          <user-agreement v-model="showUA"></user-agreement>
         </div>
         <p id="copyright" class="copyright">
           ©2021 六点了技术-为生物医疗健康提供最便捷的数据挖掘云平台
           <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021047962号-1&emsp;</a>
           <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030302001909">
-            <img src="/images/beian.png" alt="" />&ensp;粤公网安备 44030302001909号
+            <img src="/images/beian.png" alt="" />&nbsp;粤公网安备 44030302001909号
           </a>
-          服务协议
+          <a class="pointer" @click="showUA = true">服务协议</a>
         </p>
       </div>
     </div>
@@ -129,11 +141,18 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
-@Component
+@Component({
+  components: {
+    UserAgreement: () => import('@/pages/_components/UserAgreement.vue'),
+  },
+})
 export default class IndexFooter extends Vue {
   @Prop({ default: true })
   withSubscribe!: Boolean
+
   RESOURCES_URL = process.env.RESOURCES_URL
+  showUA = false
+
   get style() {
     return this.withSubscribe ? '' : 'box-shadow: 0 -8px 8px -8px rgba(0, 0, 0, 0.1)'
   }

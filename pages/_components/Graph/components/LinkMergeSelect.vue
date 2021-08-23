@@ -21,7 +21,7 @@ export default class LinkMergeSelect extends Vue {
   }
   set actualValue(value) {
     this.value = value
-    this.$emit('update', value)
+    this.$emit('input', value)
   }
 }
 </script>

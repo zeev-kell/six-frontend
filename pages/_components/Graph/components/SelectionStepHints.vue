@@ -73,7 +73,6 @@ export default class SelectionStepHints extends Vue {
 
   addEntry() {
     this.step.addHint({ class: '', value: '' })
-    this.$emit('update', this.step.hints)
   }
   setHints() {
     this.dialogVisible = true

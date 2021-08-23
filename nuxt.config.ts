@@ -33,13 +33,13 @@ const config = {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    { src: '@/plugins/element-ui.ts' },
-    { src: '@/plugins/axios.ts' },
-    { src: '@/plugins/axios-msg.ts' },
-    { src: '@/plugins/api.ts' },
-    { src: '@/plugins/nuxt-client-init.client.ts' },
-    { src: '@/plugins/components.ts' },
-    { src: '@/plugins/i18n-router.ts' },
+    { src: '@/plugins/element-ui' },
+    { src: '@/plugins/axios' },
+    { src: '@/plugins/axios-msg' },
+    { src: '@/plugins/api' },
+    { src: '@/plugins/nuxt-client-init.client' },
+    { src: '@/plugins/components' },
+    { src: '@/plugins/i18n-router' },
     // { src: '@/plugins/vue-mavon-editor', ssr: false, mode: 'client' },
   ],
 
