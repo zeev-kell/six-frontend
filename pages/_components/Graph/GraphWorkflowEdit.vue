@@ -38,14 +38,16 @@ export default class GraphWorkflowEdit extends Vue {
   }
   saveContent() {
     this.timeout = setTimeout(() => {
-      this.$refs.graphIndex.dispatchAction(GraphEvent.TriggerGraphSaveContent)
-      this.$notify({
-        title: '',
-        duration: 2000,
-        customClass: 'el-notification-graph',
-        message: '自动保存成功',
-        offset: 40,
-      })
+      const isSave = this.$refs.graphIndex.dispatchAction(GraphEvent.TriggerGraphSaveContent)
+      if (isSave) {
+        this.$notify({
+          title: '',
+          duration: 2000,
+          customClass: 'el-notification-graph',
+          message: '自动保存成功',
+          offset: 40,
+        })
+      }
       this.saveContent()
     }, 32 * 1000)
   }

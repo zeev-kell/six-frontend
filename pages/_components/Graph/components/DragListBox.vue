@@ -1,8 +1,10 @@
 <template>
   <div class="drag-list-box">
     <div class="tool-list">
-      <el-button type="info" icon="el-icon-back" size="mini" title="返回上一页" @click="actionGoBack"></el-button>
-      <el-button type="dark" icon="el-icon-upload" size="mini" title="保存" @click="actionToCreate"></el-button>
+      <el-button type="dark" icon="el-icon-back" size="mini" title="返回上一页" @click="actionGoBack"></el-button>
+      <can-create>
+        <el-button type="dark" icon="el-icon-upload" size="mini" title="保存" @click="actionToCreate"></el-button>
+      </can-create>
       <el-button type="dark" icon="el-icon-video-play" size="mini" title="设置运行参数" @click="actionToRun"></el-button>
     </div>
     <div class="list-panel">
@@ -31,10 +33,12 @@ import DragListShop from '@/pages/_components/Graph/components/DragListShop.vue'
 import DragListMine from '@/pages/_components/Graph/components/DragListMine.vue'
 import { GraphEvent } from '@/constants/GraphEvent'
 import DragListBoxToggle from '@/pages/_components/Graph/components/DragListBoxToggle.vue'
+import CanCreate from '@/components/common/CanCreate.vue'
 import DragItem from './DragItem.vue'
 
 @Component({
   components: {
+    CanCreate,
     DragListBoxToggle,
     DragListMine,
     DragListShop,

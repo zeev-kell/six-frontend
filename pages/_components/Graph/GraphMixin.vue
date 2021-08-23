@@ -37,7 +37,7 @@ import { getObject, stringifyObject } from '@/pages/_components/Graph/helpers/Ya
 import { PipeModel } from '@/types/model/Pipe'
 import { downloadBlobLink, downloadStrLink } from '@/utils/download-link'
 import JSZip from 'jszip'
-import { setStore } from '@/utils/local-storage'
+import { compareStore, setStore } from '@/utils/local-storage'
 import { GraphPlugin } from '@/types/graph'
 import EditorJobInspector from '@/pages/_components/Graph/components/EditorJobInspector.vue'
 import { normalizeJob } from '@/pages/_components/Graph/helpers/JobHelper'
@@ -250,9 +250,14 @@ export default class GraphMixin extends GraphEdit {
       downloadBlobLink(content, name + '.zip')
     }
   }
-  [GraphEvent.TriggerGraphSaveContent](): void {
+  [GraphEvent.TriggerGraphSaveContent](): void | boolean {
     const { data: content } = this.exportCwl('json', true) as { data: any }
-    setStore('graph-content', content)
+    const str = JSON.stringify(content)
+    // 判断是否和本地存储一致，数据不一致才保存
+    if (!compareStore('graph-content', str)) {
+      setStore('graph-content', str)
+      return true
+    }
   }
 
   mounted(): void {

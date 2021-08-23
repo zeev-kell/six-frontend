@@ -9,6 +9,11 @@ export const setStore = (name: string, content: string | unknown): void => {
   localStorage.setItem(name, content as string)
 }
 
+export function compareStore(name: string, str: string) {
+  const oldContent = getStore(name)
+  return oldContent && (oldContent as unknown as string) === str
+}
+
 export const getStore = (name: string, parse = false): void | null | string => {
   if (process.server) {
     return
