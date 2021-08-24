@@ -1,23 +1,25 @@
 import { Context, Plugin } from '@nuxt/types'
 const request: { [index: string]: any } = {}
+let $axios: any
 
 const ApiPlugin: Plugin = (context: Context, inject) => {
+  $axios = context.$axios
   const $api = new Proxy(
     {},
     {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       get(target: never, serverName: string) {
-        let api = request[serverName]
-        if (!api) {
+        let Module: any = request[serverName]
+        if (!Module) {
           // 还没加载
-          api = import(/* webpackChunkName: "api-[request]" */ `@/assets/api/${serverName}.ts`).then(function (ModuleClass) {
-            request[serverName] = new ModuleClass.Module(context)
-            return request[serverName]
+          Module = import(/* webpackChunkName: "api-[request]" */ `@/assets/api/${serverName}.ts`).then(function (ModuleClass) {
+            request[serverName] = ModuleClass.Module
+            return new Module({ $axios })
           })
         }
         // 已经加载完毕，可正常使用
-        if (!(api instanceof Promise)) {
-          return api
+        if (!(Module instanceof Promise)) {
+          return new Module({ $axios })
         }
         // 正在加载，返回代理
         return new Proxy(
@@ -26,7 +28,7 @@ const ApiPlugin: Plugin = (context: Context, inject) => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             get(target: never, method) {
               return function (...args: string[]) {
-                return api.then(function (server: any) {
+                return Module.then(function (server: any) {
                   return server[method](...args)
                 })
               }
