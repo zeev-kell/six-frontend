@@ -14,7 +14,7 @@ const ApiPlugin: Plugin = (context: Context, inject) => {
           // 还没加载
           Module = import(/* webpackChunkName: "api-[request]" */ `@/assets/api/${serverName}.ts`).then(function (ModuleClass) {
             request[serverName] = ModuleClass.Module
-            return new Module({ $axios })
+            return new request[serverName]({ $axios })
           })
         }
         // 已经加载完毕，可正常使用
