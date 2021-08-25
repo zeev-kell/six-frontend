@@ -108,7 +108,7 @@
                   <div class="icon">
                     <fa :icon="['fab', 'weixin']" class="fa-2x" />
                   </div>
-                  <div class="hidden-sm-and-down">官方微博</div>
+                  <div class="hidden-sm-and-down">官方微信</div>
                 </div>
               </el-popover>
             </div>
