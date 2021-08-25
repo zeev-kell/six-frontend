@@ -2,7 +2,7 @@
   <el-form :model="ruleForm" :rules="rules" label-position="top" @submit.native.prevent>
     <!--Required-->
     <div v-if="isInput" class="el-form-item el-row--flex">
-      <label class="el-col-full">{{ $t('cwl.Required') }}</label>
+      <label class="el-col-full">{{ $t('graph.Required') }}</label>
       <div class="el-col-auto">
         <el-switch v-model="ruleForm.isRequired" :disabled="readonly" @change="step.type.isNullable = $event" />
       </div>
@@ -19,7 +19,7 @@
       </div>
       <!--List of connections-->
       <div v-if="step['source'].length > 0" class="text-muted small">
-        {{ $t('cwl.Connections') }}:
+        {{ $t('graph.Connections') }}:
         {{ step['source'].join(', ') }}
       </div>
     </div>
@@ -85,12 +85,12 @@
       </div>
     </el-form-item>
     <!--Description-->
-    <el-form-item :label="$t('cwl.Description')" prop="description">
+    <el-form-item :label="$t('graph.Description')" prop="description">
       <textarea v-model="ruleForm.description" class="form-control" rows="4" :disabled="readonly" @change="onChange('description')" />
     </el-form-item>
     <!-- TODO -->
     <!--Secondary Files-->
-    <collapse-item title="SecondaryFiles">
+    <collapse-item :title="'graph.SecondaryFiles'">
       <!--      <div>{{ ruleForm.secondaryFiles }}</div>-->
     </collapse-item>
   </el-form>

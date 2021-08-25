@@ -2,7 +2,7 @@
   <div class="job-step-inspector">
     <div v-if="inputGroups.length">
       <div v-for="group of inputGroups" :key="group.name">
-        <collapse-item :title="group.name">
+        <collapse-item :title="'graph.' + group.name">
           <form @submit.prevent>
             <div v-for="(input, index) of group.inputs" :key="index" class="input-box">
               <!--Label and port options-->
@@ -13,7 +13,7 @@
                     <div slot="content">
                       <h2>{{ input.label || getInputSource(input) }}</h2>
                       <div>
-                        <span class="title">{{ $t('cwl.Description') }}:</span>
+                        <span class="title">{{ $t('graph.Description') }}:</span>
                         <span class="value">{{ input.description }}</span>
                       </div>
                     </div>
@@ -28,7 +28,7 @@
                       <i class="el-icon-more" />
                     </span>
                     <el-dropdown-menu slot="dropdown" class="input-dropdown-menu">
-                      <el-dropdown-item> {{ $t('cwl.SetNull') }} </el-dropdown-item>
+                      <el-dropdown-item> {{ $t('graph.SetNull') }} </el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </div>
@@ -47,14 +47,14 @@
 
               <div v-else class="text-center m-b-1">
                 <p class="text-muted">
-                  {{ $t('cwl.NoValue') }}
+                  {{ $t('graph.NoValue') }}
                 </p>
                 <el-button v-if="isFileOrDirectory(input)" type="primary" size="mini" class="el-button-dark-border" @click="enableFileEditing(input)">
-                  {{ $t('cwl.Browse') }}
+                  {{ $t('graph.Browse') }}
                 </el-button>
 
                 <el-button v-else type="primary" size="mini" class="el-button-dark-border" @click="enableEditing(input)">
-                  {{ $t('cwl.SetValue') }}
+                  {{ $t('graph.SetValue') }}
                 </el-button>
               </div>
 
@@ -67,7 +67,7 @@
                   <span v-if="!input.type.isNullable" class="text-danger"> <i class="el-icon-error" /> This required port is not connected </span>
                 </div>
                 <!--List of connections-->
-                <div v-if="input.source.length > 0" class="text-muted">{{ $t('cwl.Connections') }}: {{ input.source.join(', ') }}</div>
+                <div v-if="input.source.length > 0" class="text-muted">{{ $t('graph.Connections') }}: {{ input.source.join(', ') }}</div>
               </div>
             </div>
           </form>
@@ -75,7 +75,7 @@
       </div>
     </div>
     <div v-else>
-      {{ $t('cwl.NoAppParams') }}
+      {{ $t('graph.NoAppParams') }}
     </div>
   </div>
 </template>

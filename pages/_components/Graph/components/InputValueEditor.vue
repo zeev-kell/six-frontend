@@ -54,7 +54,7 @@
               <div v-if="metadataKeysCount > 0 || secondaryFilesCount > 0">
                 {{ secondaryFilesCount }} secondary {{ secondaryFilesCount === 1 ? 'file' : 'files' }}, {{ metadataKeysCount }} metadata
               </div>
-              <span v-else>Add secondary files and metadata</span>
+              <span v-else>{{ $t('graph.add_files_and_metadata') }}</span>
             </el-button>
           </div>
         </template>

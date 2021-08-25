@@ -1,8 +1,8 @@
 <template>
-  <el-dialog title="Secondary files and metadata" :visible.sync="dialogFormVisible" class="el-dialog-dark">
+  <el-dialog :title="$t('graph.files_and_metadata')" :visible.sync="dialogFormVisible" class="el-dialog-dark">
     <el-form @submit.native.prevent>
       <div class="form-group">
-        <label>Secondary files</label>
+        <label>{{ $t('graph.SecondaryFiles') }}</label>
         <div v-for="(group, idx) of controls" :key="idx" class="m-b-1 el-input el-input-group el-input-group--append">
           <native-file-browser-form-field
             class="el-input__inner"
@@ -16,15 +16,17 @@
           </span>
         </div>
         <div>
-          <el-button type="text" size="mini" @click="addSecondaryFile('', 'File')"> <i class="el-icon-plus" /> Add a file </el-button>
+          <el-button type="text" size="mini" @click="addSecondaryFile('', 'File')"> <i class="el-icon-plus" /> {{ $t('graph.add_file') }} </el-button>
           <template v-if="allowDirectories">
-            or
-            <el-button type="text" class="ml-0" size="mini" @click="addSecondaryFile('', 'Directory')"> a directory </el-button>
+            {{ $t('common.or') }}
+            <el-button type="text" class="ml-0" size="mini" @click="addSecondaryFile('', 'Directory')">
+              {{ $t('graph.directory') }}
+            </el-button>
           </template>
         </div>
       </div>
       <div class="form-group m-b-1">
-        <label>Metadata</label>
+        <label> {{ $t('common.metadata') }}</label>
         <!-- TODO -->
       </div>
     </el-form>

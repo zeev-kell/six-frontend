@@ -9,7 +9,7 @@
     </el-form-item>
     <!--Type-->
     <div v-if="isParamTypeArray" class="el-row el-row--flex">
-      <label class="el-col-full">{{ $t('cwl.AllowArrayAsSingle') }}</label>
+      <label class="el-col-full">{{ $t('graph.AllowArrayAsSingle') }}</label>
       <div class="el-col-auto">
         {{ ruleForm.isItemOrArray ? $t('common.yes') : $t('common.no') }}
         <el-switch v-model="ruleForm.isItemOrArray" :disabled="readonly" @change="onFormChange" />
