@@ -1,8 +1,8 @@
 <template>
-  <div class="h-100 el-row el-row--flex">
+  <div class="graph h-100 el-row el-row--flex">
     <drag-list-box class="el-col-auto" @tool-event="toolEvent" />
     <div class="el-col-full p-r">
-      <graph-index ref="graphIndex" class="h-100v" :item="item" tools="download|plus,minus,fit|auto" @propagate-event="onPropagate" />
+      <graph-index ref="graphIndex" class="h-100v" :item="item" tools="empty|download|plus,minus,fit|auto" @propagate-event="onPropagate" />
       <validation-report />
     </div>
   </div>

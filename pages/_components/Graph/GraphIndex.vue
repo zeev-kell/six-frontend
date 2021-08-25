@@ -1,5 +1,5 @@
 <template>
-  <div class="graph-index">
+  <div class="graph graph-index">
     <component :is="graphComponent" ref="graph" :content="content" v-bind="$attrs" v-on="$listeners" />
   </div>
 </template>

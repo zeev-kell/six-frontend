@@ -10,6 +10,7 @@ export const enum GraphEvent {
   TriggerGraphWarning = 'trigger-graph-warning',
   TriggerGraphDownload = 'trigger-graph-download',
   TriggerGraphSaveContent = 'trigger-graph-save-content',
+  TriggerGraphEmpty = 'trigger-graph-empty',
   TriggerPageModalCreate = 'trigger-page-modal-create',
 
   // 触发事件（往下）

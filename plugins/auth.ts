@@ -1,11 +1,10 @@
-import { Plugin } from '@nuxt/types'
-import { Context } from '@nuxt/types/app'
+import { Plugin, Context } from '@nuxt/types'
 
 const AuthPlugin: Plugin = ({ $auth, i18n }: Context) => {
   $auth.onRedirect(function (to) {
-    const local = i18n.getLocaleCookie()
+    const local = i18n.getLocaleCookie() || 'zh'
     // 如果是默认的语言，不需要修改
-    if (local === i18n.defaultLocale) {
+    if (local === undefined || local === i18n.defaultLocale) {
       return to
     }
     const lang = `/${local}`

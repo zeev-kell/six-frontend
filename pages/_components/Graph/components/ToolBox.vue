@@ -4,6 +4,50 @@ import { Component, InjectReactive, Prop, Vue } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
 import type { CreateElement, VNode } from 'vue'
 import { AppValidityState, graphTool, graphTools } from '@/types/graph'
+const BUTTON_LIST: graphTools = {
+  empty: {
+    icon: 'iconfont icon-eraser',
+    title: '清空',
+    action: 'actionToEmpty',
+  },
+  run: {
+    icon: 'el-icon-video-play',
+    title: '运行',
+    action: 'actionToRun',
+  },
+  validate: {
+    icon: 'el-icon-warning-outline f-16',
+    title: '异常',
+    action: 'toolEvent',
+    eventName: GraphEvent.TriggerGraphWarning,
+    type: 'warning',
+  },
+  download: {
+    icon: 'el-icon-download',
+    title: '下载',
+    action: 'actionDownload',
+  },
+  auto: {
+    icon: 'el-icon-magic-stick',
+    title: '自动排版',
+    action: 'actionAutoLayout',
+  },
+  plus: {
+    icon: 'el-icon-zoom-in',
+    title: '放大',
+    action: 'actionUpscale',
+  },
+  minus: {
+    icon: 'el-icon-zoom-out',
+    title: '缩小',
+    action: 'actionDownscale',
+  },
+  fit: {
+    icon: 'feather icon-maximize-2',
+    title: '适应窗口',
+    action: 'actionFitToViewport',
+  },
+}
 
 @Component({
   components: {
@@ -29,45 +73,6 @@ export default class ToolBox extends Vue {
   })
   readonly validationState!: AppValidityState
 
-  private BUTTON_LIST: graphTools = {
-    run: {
-      icon: 'el-icon-video-play',
-      title: '运行',
-      action: 'actionToRun',
-    },
-    validate: {
-      icon: 'el-icon-warning-outline f-16',
-      title: '异常',
-      action: 'toolEvent',
-      eventName: GraphEvent.TriggerGraphWarning,
-      type: 'warning',
-    },
-    download: {
-      icon: 'el-icon-download',
-      title: '下载',
-      action: 'actionDownload',
-    },
-    auto: {
-      icon: 'el-icon-magic-stick',
-      title: '自动排版',
-      action: 'actionAutoLayout',
-    },
-    plus: {
-      icon: 'el-icon-zoom-in',
-      title: '放大',
-      action: 'actionUpscale',
-    },
-    minus: {
-      icon: 'el-icon-zoom-out',
-      title: '缩小',
-      action: 'actionDownscale',
-    },
-    fit: {
-      icon: 'feather icon-maximize-2',
-      title: '适应窗口',
-      action: 'actionFitToViewport',
-    },
-  }
   private scaleStep = 0.1
   toolList: graphTool[][] = []
 
@@ -102,8 +107,23 @@ export default class ToolBox extends Vue {
     this.$I18nRouter.push(`/graph-info/${this.$route.params.id}/set-run`)
   }
   // 下载
-  actionDownload() {
+  actionDownload(): void {
     this.$refs.toolDownload.downloadVisible = true
+  }
+  // 清空
+  actionToEmpty(): void {
+    this.$confirm('此操作将清空当前画布和临时缓存的所有数据, 是否继续?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }).then(() => {
+      this.toolEvent(GraphEvent.TriggerGraphEmpty)
+      this.toolEvent(GraphEvent.TriggerGraphSaveContent)
+      this.$message({
+        type: 'success',
+        message: '清空成功!',
+      })
+    })
   }
   // 事件冒泡
   toolEvent(eventName: string, ...args: any[]): void {
@@ -119,8 +139,8 @@ export default class ToolBox extends Vue {
     // 统一处理为数组
     this.toolList = this.tools.split('|').map((tool): graphTool[] => {
       return tool.split(',').map((t): graphTool => {
-        this.BUTTON_LIST[t].name = t
-        return this.BUTTON_LIST[t]
+        BUTTON_LIST[t].name = t
+        return BUTTON_LIST[t]
       })
     })
   }
@@ -173,7 +193,7 @@ export default class ToolBox extends Vue {
         return h(
           'div',
           {
-            class: 'd-inline-b',
+            class: 'tool-group',
           },
           [
             h(
@@ -212,9 +232,5 @@ export default class ToolBox extends Vue {
       }
     }
   }
-}
-
-.d-inline-b + .d-inline-b {
-  margin-left: 4px;
 }
 </style>

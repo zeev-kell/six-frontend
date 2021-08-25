@@ -12,6 +12,7 @@ export interface graphTool {
 }
 
 export interface graphTools {
+  empty: graphTool
   run: graphTool
   validate: graphTool
   auto: graphTool

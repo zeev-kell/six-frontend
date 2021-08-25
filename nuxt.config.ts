@@ -99,6 +99,7 @@ const config = {
               'faDownload',
               'faBars',
               'faTerminal',
+              'faEraser',
             ],
           },
           {

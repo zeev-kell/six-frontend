@@ -41,6 +41,7 @@ import { compareStore, setStore } from '@/utils/local-storage'
 import { GraphPlugin } from '@/types/graph'
 import EditorJobInspector from '@/pages/_components/Graph/components/EditorJobInspector.vue'
 import { normalizeJob } from '@/pages/_components/Graph/helpers/JobHelper'
+import { Generator } from '@/pages/_components/Graph/Generator'
 import ToolBox from './components/ToolBox.vue'
 
 @Component({
@@ -195,9 +196,9 @@ export default class GraphMixin extends GraphEdit {
     downloadStrLink(data, name)
   }
   // 创建图形
-  createGraph(): void {
+  createGraph(content?: V1Workflow): void {
     // 处理 yaml 格式为 json 格式
-    const content = getObject(this.content)
+    content = content ?? getObject(this.content)
     this.createModel(content as any)
     // 默认更新 json
     this.updateJob({})
@@ -258,6 +259,12 @@ export default class GraphMixin extends GraphEdit {
       setStore('graph-content', str)
       return true
     }
+  }
+  [GraphEvent.TriggerGraphEmpty](): void {
+    // 清空画布，目前只有流程编辑，所以替换一个新的 workflow 即可
+    const content = Generator.generateWorkflow()
+    this.graph.destroy()
+    this.createGraph(content)
   }
 
   mounted(): void {

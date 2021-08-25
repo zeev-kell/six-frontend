@@ -1,11 +1,18 @@
 <template>
   <div class="drag-list-box">
     <div class="tool-list">
-      <el-button type="dark" icon="el-icon-back" size="mini" title="返回上一页" @click="actionGoBack"></el-button>
-      <can-create>
+      <div class="tool-group">
+        <el-button type="dark" icon="el-icon-back" size="mini" title="返回上一页" @click="actionGoBack"></el-button>
+      </div>
+      <can-create class="tool-group">
         <el-button type="dark" icon="el-icon-upload" size="mini" title="保存" @click="actionToCreate"></el-button>
       </can-create>
-      <el-button type="dark" icon="el-icon-video-play" size="mini" title="设置运行参数" @click="actionToRun"></el-button>
+      <div class="tool-group">
+        <el-button type="dark" icon="el-icon-edit-outline" size="mini" title="临时保存" @click="actionToSave"></el-button>
+      </div>
+      <div class="tool-group">
+        <el-button type="dark" icon="el-icon-video-play" size="mini" title="设置运行参数" @click="actionToRun"></el-button>
+      </div>
     </div>
     <div class="list-panel">
       <div class="toggle-button" :class="{ 'is-minimized': !showPanel }" @click.prevent="showPanel = !showPanel">
@@ -79,6 +86,17 @@ export default class DragListBox extends Vue {
     // 需要把数据保存然后跳转
     this.toolEvent(GraphEvent.TriggerGraphSaveContent)
     this.$I18nRouter.push(`/graph-info/set-run-local`)
+  }
+  // 临时保存
+  actionToSave(): void {
+    this.toolEvent(GraphEvent.TriggerGraphSaveContent)
+    this.$notify({
+      title: '',
+      duration: 2000,
+      customClass: 'el-notification-graph',
+      message: '保存成功',
+      offset: 40,
+    })
   }
 
   mounted(): void {

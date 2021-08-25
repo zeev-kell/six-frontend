@@ -275,3 +275,12 @@
     right: 8px;
   }
 }
+
+.graph {
+  .tool-group {
+    display: inline-block;
+  }
+  .tool-group + .tool-group {
+    margin-left: 4px;
+  }
+}
