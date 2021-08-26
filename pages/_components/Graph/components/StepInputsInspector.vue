@@ -7,7 +7,7 @@
           <div class="el-row is-justify-space-between el-row--flex m-b-05 is-align-middle">
             <label class="text-truncate" :title="input.label || input.id">
               <span v-if="!input.type.isNullable" class="text-danger mr-2">*</span>
-              <el-tooltip v-if="hasMetadata(input)" :visible-arrow="false" popper-class="input-popper">
+              <el-tooltip v-if="hasMetadata(input)" :visible-arrow="false" popper-class="input-tooltip-popper">
                 <div slot="content">
                   <h2>{{ input.label || input.id }}</h2>
                   <!--Description-->
@@ -201,105 +201,3 @@ export default class StepInputsInspector extends Vue {
   }
 }
 </script>
-
-<style lang="scss" rel="stylesheet">
-@import '../theme';
-.el-tooltip__popper.input-popper {
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 2px;
-  max-width: 500px;
-
-  .title {
-    margin-bottom: 0.78571rem;
-    display: block;
-    font-weight: bold;
-  }
-
-  .indent {
-    padding-left: 1.57143rem;
-  }
-
-  .value {
-    margin-bottom: 1.57143rem;
-    display: block;
-  }
-}
-.input-box {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #ebeef5;
-  &:last-of-type {
-    border-bottom: transparent;
-  }
-}
-.form-control {
-  display: block;
-  width: 100%;
-  padding: 0.4rem 0.55rem;
-  font-size: 12px;
-  line-height: 1rem;
-  color: #eee;
-  background-color: #333333;
-  background-image: none;
-  background-clip: padding-box;
-  border: 1px solid #232323;
-  border-radius: 0;
-  &:focus {
-    color: #eee;
-    background-color: #333333;
-    border-color: #66afe9;
-    outline: none;
-  }
-
-  @include scroll-bar();
-}
-select.form-control,
-input.form-control {
-  &:not([size]):not([multiple]) {
-    height: calc(2.5rem - 2px);
-  }
-}
-.selection-step-inputs {
-  border: none;
-  color: #eee;
-  .el-form-item {
-    margin-bottom: 1rem;
-  }
-  label {
-    display: inline-block;
-    margin-bottom: 0.5rem;
-  }
-  .el-switch__core {
-    border-color: $black1 !important;
-  }
-}
-.input-dropdown-menu {
-  max-width: 220px;
-  background: #333333;
-  border: 1px solid #232323;
-  border-radius: 2px;
-  padding: 0;
-  color: #eee;
-  box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.2);
-  .el-dropdown-menu__item {
-    line-height: 1.5;
-    margin-top: 0;
-    border-top: 1px solid #232323;
-    padding: 0.55rem 1rem;
-    color: inherit;
-    &:focus,
-    &:not(.is-disabled):hover {
-      background: #3c3c3c;
-      color: inherit;
-    }
-  }
-  .popper__arrow {
-    border-bottom-color: $black1 !important;
-    border-top-color: $black1 !important;
-  }
-  .popper__arrow::after {
-    border-top-color: $black2 !important;
-    border-bottom-color: $black2 !important;
-  }
-}
-</style>

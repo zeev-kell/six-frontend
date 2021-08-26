@@ -14,7 +14,7 @@
     </div>
     <div v-for="(ctrl, index) of children" :key="index" class="el-row--flex text-center m-b-05 is-align-middle">
       <input v-model="ctrl.key" class="form-control" placeholder="key" />
-      <span class="add-on">:</span>
+      <span class="f-b-20">:</span>
       <input v-model="ctrl.value" class="form-control" placeholder="value" />
       <el-tooltip v-if="!readonly" content="Delete">
         <el-button icon="el-icon-delete" type="text" @click="onRemove(index)" />
@@ -48,9 +48,3 @@ export default class SelectionInputEntryMap extends Vue {
   }
 }
 </script>
-
-<style scoped lang="scss" rel="stylesheet">
-.add-on {
-  flex: 0 0 20px;
-}
-</style>

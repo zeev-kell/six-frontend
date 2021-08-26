@@ -1,5 +1,5 @@
 <template>
-  <div class="selection-step-info">
+  <div class="workflow-step-inspector-info">
     <div><label>TYPE:</label>{{ step.run['class'] }}</div>
     <div><label>CWL VERSION:</label> {{ step.run['cwlVersion'] }}</div>
     <div><label>REVISION:</label>{{ step.run.customProps['sbg:revision'] }}</div>
@@ -45,15 +45,3 @@ export default class WorkflowStepInspectorInfo extends Vue {
   }
 }
 </script>
-<style scoped lang="scss" rel="stylesheet">
-@import '../theme';
-.selection-step-info > div {
-  margin-bottom: 10px;
-  color: $color1;
-  label {
-    font-weight: bold;
-    color: $color2;
-    margin-right: 4px;
-  }
-}
-</style>

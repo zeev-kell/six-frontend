@@ -9,7 +9,7 @@
               <div class="el-row is-justify-space-between el-row--flex">
                 <label class="input-label" :title="input.label || getInputSource(input)">
                   <span v-if="!input.type.isNullable" class="text-danger">*</span>
-                  <el-tooltip v-if="input.description" popper-class="input-popper">
+                  <el-tooltip v-if="input.description" popper-class="input-tooltip-popper">
                     <div slot="content">
                       <h2>{{ input.label || getInputSource(input) }}</h2>
                       <div>

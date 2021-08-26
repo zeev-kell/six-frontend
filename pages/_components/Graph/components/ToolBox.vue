@@ -155,7 +155,6 @@ export default class ToolBox extends Vue {
           props: {
             icon: btn.icon,
             type: btn.type || 'dark',
-            size: 'mini',
           },
           on: {
             click: (): void => {
@@ -187,7 +186,7 @@ export default class ToolBox extends Vue {
     return h(
       'div',
       {
-        class: 'tool-box',
+        class: 'tool-box right',
       },
       this.toolList.map((group: graphTool[]): VNode => {
         return h(
@@ -210,27 +209,3 @@ export default class ToolBox extends Vue {
   }
 }
 </script>
-
-<style scoped lang="scss">
-.tool-box {
-  position: absolute;
-  right: 30px;
-  top: 10px;
-  z-index: 10;
-  color: white;
-
-  > .el-button {
-    vertical-align: middle;
-  }
-
-  ::v-deep {
-    .el-button-group {
-      > .el-button--mini {
-        width: 30px;
-        height: 30px;
-        padding: 0;
-      }
-    }
-  }
-}
-</style>

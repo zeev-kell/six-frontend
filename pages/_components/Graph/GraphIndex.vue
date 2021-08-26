@@ -39,7 +39,6 @@ export default class GraphIndex extends Vue {
     const isTool = this.item.type === pipeConstants.items.TYPE_TOOL
     return isTool ? 'graph-tool' : 'graph-workflow'
   }
-
   get content(): V1Workflow | CommandLineTool {
     return this.item.content
   }
@@ -58,16 +57,3 @@ export default class GraphIndex extends Vue {
   }
 }
 </script>
-
-<style lang="scss" rel="stylesheet">
-@import '_theme';
-.scrollbar,
-.el-tabs__content {
-  overflow-y: auto;
-
-  @include scroll-bar();
-}
-.graph-index {
-  background: #3c3c3c;
-}
-</style>

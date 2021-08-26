@@ -1,25 +1,27 @@
 <template>
-  <div class="drag-list-box">
-    <div class="tool-list">
+  <div class="drag-list-box h-100v">
+    <div class="tool-box left">
       <div class="tool-group">
-        <el-button type="dark" icon="el-icon-back" size="mini" title="返回上一页" @click="actionGoBack"></el-button>
+        <el-button type="dark" icon="el-icon-back" title="返回上一页" @click="actionGoBack"></el-button>
       </div>
-      <can-create class="tool-group">
-        <el-button type="dark" icon="el-icon-upload" size="mini" title="保存" @click="actionToCreate"></el-button>
+      <can-create>
+        <div class="tool-group">
+          <el-button type="dark" icon="el-icon-upload" title="保存" @click="actionToCreate"></el-button>
+        </div>
       </can-create>
       <div class="tool-group">
-        <el-button type="dark" icon="el-icon-edit-outline" size="mini" title="临时保存" @click="actionToSave"></el-button>
+        <el-button type="dark" icon="el-icon-edit-outline" title="临时保存" @click="actionToSave"></el-button>
       </div>
       <div class="tool-group">
-        <el-button type="dark" icon="el-icon-video-play" size="mini" title="设置运行参数" @click="actionToRun"></el-button>
+        <el-button type="dark" icon="el-icon-video-play" title="设置运行参数" @click="actionToRun"></el-button>
       </div>
     </div>
-    <div class="list-panel">
+    <div class="list-panel h-100">
       <div class="toggle-button" :class="{ 'is-minimized': !showPanel }" @click.prevent="showPanel = !showPanel">
         <drag-list-box-toggle></drag-list-box-toggle>
       </div>
       <transition>
-        <div v-show="showPanel" class="left-panel pt-5">
+        <div v-show="showPanel" class="left-panel">
           <el-tabs v-model="activeName">
             <el-tab-pane label="应用商店" name="first">
               <drag-list-shop ref="dragListShop"></drag-list-shop>
@@ -114,15 +116,6 @@ export default class DragListBox extends Vue {
   .left-panel {
     width: 248px;
   }
-  .tool-list {
-    position: absolute;
-    left: 100%;
-    top: 10px;
-    z-index: 10;
-    color: white;
-    display: flex;
-    margin-left: 30px;
-  }
   .toggle-button {
     position: absolute;
     display: flex;
@@ -143,36 +136,6 @@ export default class DragListBox extends Vue {
         transform-origin: center center;
         transform: rotate(180deg);
       }
-    }
-  }
-  .el-button--mini {
-    width: 30px;
-    height: 30px;
-    padding: 0;
-  }
-  .el-tabs__nav-wrap::after {
-    background-color: #222;
-    height: 1px;
-  }
-  .el-tabs__active-bar {
-    height: 1px;
-  }
-  .el-tabs__content {
-    height: calc(100vh - 60px);
-  }
-  .el-tabs__nav {
-    width: 100%;
-    color: #ffffff;
-    border-radius: 0 !important;
-  }
-  .el-tabs__item {
-    color: #999999;
-    width: 50%;
-    text-align: center;
-    padding: 0;
-    &.is-active {
-      color: #ffffff;
-      border-bottom-color: #3c3c3c !important;
     }
   }
   .item-padding {

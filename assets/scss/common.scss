@@ -374,6 +374,9 @@ img {
   order: 2;
 }
 
+.f-b-20 {
+  flex: 0 0 20px;
+}
 //
 // font-size
 // f-5   使用像素
@@ -453,21 +456,22 @@ img {
 
 /*滚动条美化：start*/
 
-::-webkit-scrollbar-track-piece {
-  background-color: #f8f8f8;
-}
-
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
+::-webkit-scrollbar-track {
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track-piece {
+  background-color: #f8f8f8;
+}
 ::-webkit-scrollbar-thumb {
   background-color: #dddddd;
   background-clip: padding-box;
   min-height: 28px;
+  border-radius: 8px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background-color: #bbb;
 }
