@@ -35,8 +35,15 @@
         </li>
         <template v-if="loggedIn">
           <el-submenu index="1" popper-class="nav-app">
-            <span slot="title" class="y-baseline">{{ username }}</span>
-            <li role="menuitem" tabindex="-1" class="el-menu-item" @click="ACTION_LOGOUT">注销</li>
+            <template slot="title" class="v-baseline">{{ username }}</template>
+            <el-menu-item :index="localePath('application-u-center')" class="el-menu-center">
+              <span class="el-icon-user"></span>
+              帐号设置
+            </el-menu-item>
+            <li role="menuitem" tabindex="-1" class="el-menu-item el-menu-center" @click="ACTION_LOGOUT">
+              <span class="feather icon-log-out"></span>
+              退出登录
+            </li>
           </el-submenu>
         </template>
         <template v-else>

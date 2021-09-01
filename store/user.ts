@@ -10,6 +10,8 @@ export const getters: GetterTree<UserModuleState, NuxtState> = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   username: (state, getters, rootState) => rootState.auth?.user?.uname,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  email: (state, getters, rootState) => rootState.auth?.user?.email,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   userId: (state, getters, rootState) => rootState.auth?.user?.uid,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   loggedIn: (state, getters, rootState) => rootState.auth?.loggedIn,

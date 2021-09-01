@@ -222,9 +222,11 @@ export default class GraphMixin extends GraphEdit {
       })
       this.fixWheel()
     }
-    // 初次进入自动放缩 并且 调整排版
     this.$nextTick(() => {
-      this.graph.getPlugin(SVGArrangePlugin)?.arrange()
+      // 初次进入调整视野
+      this.graph.fitToViewport()
+      // 初次进入自动放缩 并且 调整排版
+      // this.graph.getPlugin(SVGArrangePlugin)?.arrange()
     })
   }
 

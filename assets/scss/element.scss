@@ -76,6 +76,20 @@
   }
 }
 
+.el-menu-center {
+  display: flex;
+  align-items: center;
+  .feather,
+  [class^='el-icon-'] {
+    width: 20px;
+    font-size: 14px;
+  }
+  .feather {
+    margin-right: 5px;
+    text-align: center;
+  }
+}
+
 // 按实际大小显示
 .el-col-auto {
   -ms-flex: 0 0 auto;

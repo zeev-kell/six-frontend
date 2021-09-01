@@ -25,7 +25,7 @@
           </el-form-item>
           <el-form-item class="text-center mb-0 el-form_error_rl" prop="checked">
             <el-checkbox v-model="form.checked"> 注册即代表同意 </el-checkbox>
-            <el-link type="primary" :underline="false" class="y-baseline" @click="showUserAgreement()"> 《产品使用协议》 </el-link>
+            <el-link type="primary" :underline="false" class="v-baseline" @click="showUserAgreement()"> 《产品使用协议》 </el-link>
           </el-form-item>
           <el-form-item>
             <div class="text-right">

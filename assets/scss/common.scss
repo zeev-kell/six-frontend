@@ -41,6 +41,10 @@ hr {
   margin-right: 0;
 }
 
+.mr-10 {
+  margin-right: 10px;
+}
+
 .m-r-1 {
   margin-right: 1rem;
 }
@@ -75,6 +79,10 @@ hr {
 
 .ml-0 {
   margin-left: 0 !important;
+}
+
+.ml-10 {
+  margin-left: 10px;
 }
 
 .m-l-05 {
@@ -192,6 +200,10 @@ hr {
 .p-y-2 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.p-0 {
+  padding: 0;
 }
 
 .p-5 {
@@ -377,6 +389,7 @@ img {
 .f-b-20 {
   flex: 0 0 20px;
 }
+
 //
 // font-size
 // f-5   使用像素
@@ -412,11 +425,11 @@ img {
 //
 // align
 //
-.v-center {
+.v-middle {
   vertical-align: middle;
 }
 
-.y-baseline {
+.v-baseline {
   vertical-align: baseline;
 }
 
@@ -460,18 +473,22 @@ img {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   border-radius: 8px;
 }
+
 ::-webkit-scrollbar-track-piece {
   background-color: #f8f8f8;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #dddddd;
   background-clip: padding-box;
   min-height: 28px;
   border-radius: 8px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background-color: #bbb;
 }
