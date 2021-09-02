@@ -59,9 +59,9 @@
               </div>
               <h3 class="text-center">使用sixoclock处理数据</h3>
               <p class="text-justify">运行下载自sixoclock软件仓库的流程处理本地数据</p>
-              <nuxt-link v-slot="{ navigate }" :to="localePath('/support-center')" custom>
-                <el-button type="primary" class="block" @click="navigate" @keypress.enter="navigate"> 阅读教程 </el-button>
-              </nuxt-link>
+              <docs-link to="/">
+                <el-button type="primary" class="block">阅读教程 </el-button>
+              </docs-link>
             </el-card>
           </el-col>
         </el-row>
@@ -72,6 +72,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import DocsLink from '@/components/common/DocsLink.vue'
 
 const MSG: any = {
   installer: [
@@ -86,6 +87,7 @@ const MSG: any = {
 }
 
 @Component({
+  components: { DocsLink },
   scrollToTop: true,
   layout: 'IndexLayoutBase',
 })

@@ -61,16 +61,16 @@
             <div class="title">资源</div>
             <ul class="list-unstyled">
               <li>
-                <nuxt-link :to="localePath('support-center')">帮助文档</nuxt-link>
+                <docs-link to="/">帮助文档</docs-link>
               </li>
               <li>
-                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'Q_A' } })">常见Q&A</nuxt-link>
+                <docs-link to="/Q_A.html">常见Q&A</docs-link>
               </li>
               <li>
-                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'advice' } })">意见建议</nuxt-link>
+                <docs-link to="/Advice.html">意见建议</docs-link>
               </li>
               <li>
-                <nuxt-link :to="localePath({ name: 'support-center-id', params: { id: 'get_started' } })">使用指南 </nuxt-link>
+                <docs-link to="/guide/">使用指南</docs-link>
               </li>
               <li><a href="https://github.com/6-oclock" target="_blank">更新日志</a></li>
               <li><a href="https://github.com/6-oclock" target="_blank">NewSroom</a></li>
@@ -82,7 +82,7 @@
                 <nuxt-link :to="localePath('download-center')">下载中心</nuxt-link>
               </div>
               <div class="el-col-12">
-                <nuxt-link :to="localePath('support-center')">资源</nuxt-link>
+                <docs-link to="/">资源</docs-link>
               </div>
               <div class="el-col-12">
                 <a href="https://github.com/6-oclock" target="_blank">关于我们</a>
@@ -140,9 +140,11 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import DocsLink from '@/components/common/DocsLink.vue'
 
 @Component({
   components: {
+    DocsLink,
     UserAgreement: () => import('@/pages/_components/UserAgreement.vue'),
   },
 })

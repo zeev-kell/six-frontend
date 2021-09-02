@@ -31,9 +31,9 @@
           <el-menu-item :index="localePath('download-center')">
             {{ $t('nav.download') }}
           </el-menu-item>
-          <el-menu-item :index="localePath('support-center')" :class="{ 'is-child-active': $route.name.startsWith('support-center') }">
-            {{ $t('nav.help') }}
-          </el-menu-item>
+          <li role="menuitem" tabindex="0" class="el-menu-item el-menu-item-blank">
+            <docs-link to="/" class="a-link" style="vertical-align: baseline">帮助中心</docs-link>
+          </li>
           <li role="menuitem" tabindex="0" class="el-menu-item el-menu-item-blank">
             <a href="https://github.com/6-oclock" target="_blank" class="a-link" style="vertical-align: baseline">
               {{ $t('nav.about') }}
@@ -103,9 +103,9 @@
         <el-menu-item :index="localePath('download-center')">
           {{ $t('nav.download') }}
         </el-menu-item>
-        <el-menu-item :index="localePath('support-center')" :class="{ 'is-child-active': $route.name.startsWith('support-center') }">
-          {{ $t('nav.help') }}
-        </el-menu-item>
+        <li role="menuitem" tabindex="0" class="el-menu-item el-menu-item-blank">
+          <docs-link to="/" class="a-link" style="vertical-align: baseline">{{ $t('nav.help') }}</docs-link>
+        </li>
         <li role="menuitem" tabindex="0" class="el-menu-item el-menu-item-blank">
           <a href="https://github.com/6-oclock" target="_blank" class="a-link"> {{ $t('nav.about') }}</a>
         </li>
@@ -130,9 +130,11 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'nuxt-property-decorator'
 import LogoPng from '@/components/LogoPng.vue'
+import DocsLink from '@/components/common/DocsLink.vue'
 
 @Component({
   components: {
+    DocsLink,
     LogoPng,
   },
 })

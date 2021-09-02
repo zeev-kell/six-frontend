@@ -2,7 +2,7 @@
   <div class="drag-list-box h-100v">
     <div class="tool-box left">
       <div class="tool-group">
-        <el-button type="dark" icon="el-icon-back" title="返回上一页" @click="actionGoBack"></el-button>
+        <el-button type="dark" icon="el-icon-s-home" size="mini" title="返回主页" @click="actionGoBack"></el-button>
       </div>
       <can-create>
         <div class="tool-group">
@@ -69,12 +69,12 @@ export default class DragListBox extends Vue {
   }
   // 返回
   actionGoBack(): void {
-    this.$confirm('是否确定返回上一页?', '提示', {
+    this.$confirm('是否确定返回主页?', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning',
     }).then(() => {
-      this.$I18nRouter.back()
+      this.$I18nRouter.push('/application')
     })
   }
   // 跳转至新建
