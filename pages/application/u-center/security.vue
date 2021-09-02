@@ -1,9 +1,12 @@
 <template>
-  <div>change-password</div>
+  <div>security</div>
 </template>
 
-<script type="text/babel">
-  export default {}
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class Security extends Vue {}
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss"></style>

@@ -1,18 +1,8 @@
-/* 改变 icon 字体路径变量，必需 */
-//$--font-path: '~element-ui/lib/theme-chalk/fonts';
-//$--border-radius-base: 0;
-//$--card-border-radius: 0;
-//
-//@import '~element-ui/packages/theme-chalk/src/index';
-
-@import '../element-variables';
-@import '../theme/index.css';
-@import './node_modules/element-theme-chalk/src/mixins/mixins';
-@import './node_modules/element-theme-chalk/src/mixins/_button';
 @import './variables';
+@import './assets/element-ui-build/mixins';
+@import '/node_modules/element-theme-chalk/src/mixins/_button';
 
 .el-button--normal {
-  //@extend .el-button--text;
   border-color: transparent;
   background: 0 0;
   padding-left: 0;
@@ -28,24 +18,49 @@
   }
 }
 
+.el-button--medium {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .el-button {
   @include m(dark) {
     @include button-variant($--button-dark-font-color, $--button-dark-background-color, $--button-dark-border-color);
   }
+
+  &.block {
+    display: block;
+    width: 100%;
+  }
+
+  &.pass {
+    background-color: transparent;
+  }
+
+  .iconfont {
+    font-size: 12px;
+  }
 }
 
-.el-button.block {
-  display: block;
+.el-button-block {
   width: 100%;
 }
 
-.el-button.pass {
-  background-color: transparent;
+.el-link {
+  &.block {
+    display: block;
+    width: 100%;
+  }
 }
 
 .el-dialog__header {
   border-bottom: 1px solid #dcdfe6;
   text-align: left;
+  padding: 10px 20px;
+
+  .el-dialog__headerbtn {
+    top: 14px;
+  }
 }
 
 .el-input__inner[type='number'] {
@@ -59,10 +74,6 @@
   &[x-placement^='top'] .popper__arrow {
     border-top-color: $--border-color-base;
   }
-}
-
-.el-success {
-  color: $--color-success;
 }
 
 // 按实际大小显示
@@ -89,4 +100,48 @@
 // 这个可以使平分的换行
 .col-100 {
   width: 100%;
+}
+
+.el-dropdown-info {
+  background-color: $--color-info;
+  color: $--color-white;
+
+  &[x-placement^='bottom'] .popper__arrow::after {
+    border-bottom-color: $--color-info;
+  }
+
+  .el-dropdown-menu__item {
+    color: $--color-white;
+
+    &:hover,
+    &:focus {
+      background: mix($--color-white, $--color-info, $--button-hover-tint-percent);
+      border-color: mix($--color-white, $--color-info, $--button-hover-tint-percent);
+      color: $--color-white;
+    }
+  }
+}
+
+.el-form_error_rl {
+  .el-form-item__error {
+    position: relative;
+  }
+}
+
+.form-inline .el-form-item {
+  margin-bottom: 0;
+}
+
+.el-table-column--selection .cell {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.el-tag.el-tag--dark {
+  background-color: #505050;
+  border-color: #696969;
+  color: #b3b3b3;
+  line-height: 1;
+  height: auto;
+  display: inline;
 }

@@ -1,0 +1,29 @@
+$color1: #ddd;
+$color2: #999;
+$b-color: #222;
+$black1: #232323;
+$black2: #333333;
+$dark-gray: #303030;
+$t-color: #409eff;
+
+@mixin scroll-bar() {
+  ::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: #454545;
+  }
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #555;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: #454545;
+  }
+}

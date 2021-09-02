@@ -1,0 +1,10 @@
+$node-update-fill: #f89406;
+$node-update-fill-fade: #94621b;
+
+svg.cwl-workflow.__plugin-drop {
+  border: 1px solid transparent;
+
+  &.__plugin-dragging {
+    border: 1px dotted #ddd;
+  }
+}

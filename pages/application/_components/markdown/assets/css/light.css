@@ -1,0 +1,117 @@
+::v-deep .markdown-theme-light pre {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  word-break: break-all;
+  word-wrap: break-word;
+  border: 0 !important;
+  background: #f7f8fb !important;
+  padding: 20px 10px !important;
+  border-radius: 4px !important;
+  overflow-y: hidden !important;
+  overflow-x: auto !important;
+  margin: 10px 0 !important;
+}
+
+::v-deep .markdown-theme-light pre code {
+  font-size: 13px;
+  line-height: 1 !important;
+  color: #444;
+}
+
+::v-deep .markdown-theme-light .hljs {
+  display: block;
+  overflow-x: auto;
+  color: #525252;
+  padding: 15px;
+  -webkit-text-size-adjust: none;
+}
+
+::v-deep .markdown-theme-light .hljs-doctype {
+  color: #999;
+}
+
+::v-deep .markdown-theme-light .hljs-tag {
+  color: #3e76f6;
+}
+
+::v-deep .markdown-theme-light .hljs-attribute {
+  color: #e96900;
+}
+
+::v-deep .markdown-theme-light .hljs-value {
+  color: #42b983;
+}
+
+::v-deep .markdown-theme-light .hljs-keyword {
+  color: #e96900;
+}
+
+::v-deep .markdown-theme-light .hljs-string {
+  color: #42b983;
+}
+
+::v-deep .markdown-theme-light .hljs-comment {
+  color: #b3b3b3;
+}
+
+::v-deep .markdown-theme-light .hljs-operator .hljs-comment {
+  color: #525252;
+}
+
+::v-deep .markdown-theme-light .hljs-regexp {
+  color: #af7dff;
+}
+
+::v-deep .markdown-theme-light .hljs-built_in {
+  color: #2db7f5;
+}
+
+::v-deep .markdown-theme-light .css .hljs-class {
+  color: #e96900;
+}
+
+::v-deep .markdown-theme-light .css .hljs-number,
+::v-deep .markdown-theme-light .javascript .hljs-number {
+  color: #fc1e70;
+}
+
+::v-deep .markdown-theme-light .css .hljs-attribute {
+  color: #af7dff;
+}
+
+::v-deep .markdown-theme-light .css .hljs-important {
+  color: red;
+}
+
+::v-deep .markdown-theme-light .actionscript .hljs-literal,
+::v-deep .markdown-theme-light .javascript .hljs-literal {
+  color: #fc1e70;
+}
+
+::v-deep .markdown-theme-light pre {
+  padding: 0;
+  margin: 0;
+  background: #f7f7f7 !important;
+}
+
+::v-deep .markdown-theme-light code {
+  display: inline-block;
+  background: #f7f7f7;
+  margin: 0 3px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #666;
+  border: 1px solid #eee;
+}
+
+::v-deep .markdown-theme-light pre code {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+::v-deep .markdown-theme-light pre.bg code {
+  background: #f7f7f7;
+}

@@ -4,8 +4,7 @@
       <div class="el-col-8 el-col-offset-4">
         <h1>关于我们</h1>
         <p>
-          专业的生物信息知识库，提供系统的生物信息知识检索与学习途径，在这里，你可以
-          尽情查阅NGS，医学统计学，科研绘图等技术文档与教程。 速查速得。
+          专业的生物信息知识库，提供系统的生物信息知识检索与学习途径，在这里，你可以 尽情查阅NGS，医学统计学，科研绘图等技术文档与教程。 速查速得。
         </p>
       </div>
     </section>
@@ -15,9 +14,9 @@
       </div>
       <div class="container">
         <div class="el-row el-row--flex is-justify-space-around">
-          <div v-for="item in 4" :key="item" class="el-col el-col-6 mb-2r text-center">
-            <el-image style="width: 100px; height: 100px" src="/images/banner.jpg" fit="cover"></el-image>
-            <h3 class="pro-title mx-1r">
+          <div v-for="item in 4" :key="item" class="el-col el-col-6 m-b-2 text-center">
+            <el-image style="width: 100px; height: 100px" src="/images/banner.jpg" fit="cover" />
+            <h3 class="pro-title m-y-1">
               <strong>云计算</strong>
             </h3>
             <div class="pro-content">
@@ -62,8 +61,8 @@
       </div>
       <div class="container">
         <div class="el-row el-row--flex is-justify-space-around">
-          <div v-for="item in 5" :key="item" class="el-col el-col-auto mb-2r text-center">
-            <el-image style="width: 200px; height: 100px" src="/images/banner.jpg" fit="cover"></el-image>
+          <div v-for="item in 5" :key="item" class="el-col el-col-auto m-b-2 text-center">
+            <el-image style="width: 200px; height: 100px" src="/images/banner.jpg" fit="cover" />
           </div>
         </div>
       </div>
@@ -71,15 +70,19 @@
   </div>
 </template>
 
-<script type="text/babel">
-  export default {
-    layout: 'IndexLayout',
-  }
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({
+  layout: 'IndexLayout',
+  scrollToTop: true,
+})
+export default class AboutUsPage extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-  .header-banner {
-    background-color: #146161;
-    color: var(--light_grey);
-  }
+.header-banner {
+  background-color: #146161;
+  color: var(--light_grey);
+}
 </style>

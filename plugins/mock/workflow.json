@@ -1,0 +1,1310 @@
+{
+    "class": "Workflow",
+    "cwlVersion": "v1.0",
+    "$namespaces": {
+        "sbg": "https://www.sevenbridges.com/"
+    },
+    "inputs": [
+        {
+            "id": "fa_virus",
+            "type": "File",
+            "sbg:x": 0,
+            "sbg:y": 343.03125
+        },
+        {
+            "id": "fq1",
+            "type": "File",
+            "sbg:x": 0,
+            "sbg:y": 235.6875
+        },
+        {
+            "id": "fq2",
+            "type": "File",
+            "sbg:x": 0,
+            "sbg:y": 128.34375
+        }
+    ],
+    "outputs": [
+        {
+            "id": "bam_depth",
+            "outputSource": [
+                "depth_of_bam/bam_depth"
+            ],
+            "type": "File",
+            "sbg:x": 1166.8193359375,
+            "sbg:y": 396.703125
+        },
+        {
+            "id": "bam_sorted",
+            "outputSource": [
+                "sort_alignment_files/bam_sorted"
+            ],
+            "type": "File",
+            "sbg:x": 877.1942749023438,
+            "sbg:y": 403.703125
+        },
+        {
+            "id": "bam_sorted_indexed",
+            "outputSource": [
+                "index_bam/bam_sorted_indexed"
+            ],
+            "type": "File",
+            "sbg:x": 1166.8193359375,
+            "sbg:y": 289.359375
+        },
+        {
+            "id": "fai",
+            "outputSource": [
+                "fai_index/fa_with_fai"
+            ],
+            "type": "File",
+            "sbg:x": 338.96875,
+            "sbg:y": 450.375
+        },
+        {
+            "id": "fil_fastq1",
+            "outputSource": [
+                "filter/fil_fastq1"
+            ],
+            "type": "File",
+            "sbg:x": 338.96875,
+            "sbg:y": 343.03125
+        },
+        {
+            "id": "fil_fastq2",
+            "outputSource": [
+                "filter/fil_fastq2"
+            ],
+            "type": "File",
+            "sbg:x": 338.96875,
+            "sbg:y": 235.6875
+        },
+        {
+            "id": "indices",
+            "outputSource": [
+                "bowtie2_index/indices"
+            ],
+            "type": "File",
+            "sbg:x": 338.96875,
+            "sbg:y": 128.34375
+        },
+        {
+            "id": "mpileup",
+            "outputSource": [
+                "bcftools_mpileup/mpileup"
+            ],
+            "type": "File",
+            "sbg:x": 1166.8193359375,
+            "sbg:y": 74.671875
+        },
+        {
+            "id": "sam",
+            "outputSource": [
+                "mapping_to_virus/sam"
+            ],
+            "type": "File",
+            "sbg:x": 625.6005249023438,
+            "sbg:y": 289.359375
+        },
+        {
+            "id": "variants",
+            "outputSource": [
+                "call_snp_indel/variants"
+            ],
+            "type": "File",
+            "sbg:x": 1407.6318359375,
+            "sbg:y": 235.6875
+        }
+    ],
+    "steps": [
+        {
+            "id": "bcftools_mpileup",
+            "in": [
+                {
+                    "id": "ReferenceGenome",
+                    "source": "fai_index/fa_with_fai"
+                },
+                {
+                    "id": "inputBAM",
+                    "source": "sort_alignment_files/bam_sorted"
+                }
+            ],
+            "out": [
+                {
+                    "id": "mpileup"
+                }
+            ],
+            "run": {
+                "class": "CommandLineTool",
+                "cwlVersion": "v1.0",
+                "baseCommand": [
+                    "bcftools",
+                    "mpileup"
+                ],
+                "inputs": [
+                    {
+                        "id": "ReferenceGenome",
+                        "type": "File",
+                        "inputBinding": {
+                            "prefix": "-f",
+                            "shellQuote": false,
+                            "position": 1
+                        },
+                        "doc": "faidx indexed reference sequence file\n"
+                    },
+                    {
+                        "id": "inputBAM",
+                        "type": "File",
+                        "inputBinding": {
+                            "shellQuote": false,
+                            "position": 20
+                        },
+                        "doc": "bam file\n"
+                    },
+                    {
+                        "id": "regionsfile",
+                        "type": "File?",
+                        "inputBinding": {
+                            "prefix": "-R",
+                            "shellQuote": false,
+                            "position": 3
+                        },
+                        "doc": "restrict to regions listed in a file\n"
+                    },
+                    {
+                        "id": "threads",
+                        "type": "int",
+                        "inputBinding": {
+                            "prefix": "--threads",
+                            "shellQuote": false,
+                            "position": 2
+                        },
+                        "doc": "use multithreading with INT worker threads [0]\n",
+                        "default": 1
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "mpileup",
+                        "type": "stdout"
+                    }
+                ],
+                "doc": "genotype likelihoods",
+                "requirements": [
+                    {
+                        "class": "ShellCommandRequirement"
+                    },
+                    {
+                        "class": "ResourceRequirement",
+                        "ramMin": 10240,
+                        "coresMin": 1
+                    },
+                    {
+                        "class": "InitialWorkDirRequirement",
+                        "listing": [
+                            "$(inputs.ReferenceGenome)"
+                        ]
+                    },
+                    {
+                        "class": "InlineJavascriptRequirement"
+                    }
+                ],
+                "hints": [
+                    {
+                        "class": "DockerRequirement",
+                        "dockerPull": "6oclock/bcftools:v1.11"
+                    }
+                ],
+                "stdout": "$(inputs.inputBAM.nameroot).vcf"
+            },
+            "sbg:x": 877.1942749023438,
+            "sbg:y": 289.359375
+        },
+        {
+            "id": "bowtie2_index",
+            "in": [
+                {
+                    "id": "bt2_index_base",
+                    "valueFrom": "chrM"
+                },
+                {
+                    "id": "reference_in",
+                    "source": "fa_virus"
+                }
+            ],
+            "out": [
+                {
+                    "id": "indices"
+                }
+            ],
+            "run": {
+                "class": "CommandLineTool",
+                "cwlVersion": "v1.0",
+                "baseCommand": [
+                    "bowtie2-build"
+                ],
+                "inputs": [
+                    {
+                        "id": "bmax",
+                        "type": "int?",
+                        "inputBinding": {
+                            "prefix": "--bmax",
+                            "shellQuote": false,
+                            "position": 6
+                        },
+                        "doc": "max bucket sz for blockwise suffix-array builder\n"
+                    },
+                    {
+                        "id": "bmaxdivn",
+                        "type": "int?",
+                        "inputBinding": {
+                            "prefix": "--bmaxdivn",
+                            "shellQuote": false,
+                            "position": 7
+                        },
+                        "doc": "max bucket sz as divisor of ref len (default: 4)\n"
+                    },
+                    {
+                        "id": "bt2_index_base",
+                        "type": "string?",
+                        "inputBinding": {
+                            "shellQuote": false,
+                            "position": 26
+                        },
+                        "doc": "write bt2 data to files with this dir/basename\n"
+                    },
+                    {
+                        "id": "c",
+                        "type": "boolean?",
+                        "inputBinding": {
+                            "prefix": "-c",
+                            "shellQuote": false,
+                            "position": 2
+                        },
+                        "doc": "reference sequences given on cmd line (as <reference_in>)\n"
+                    },
+                    {
+                        "id": "dcv",
+                        "type": "int?",
+                        "inputBinding": {
+                            "prefix": "--dcv",
+                            "shellQuote": false,
+                            "position": 8
+                        },
+                        "doc": "diff-cover period for blockwise (default: 1024)\n"
+                    },
+                    {
+                        "id": "f",
+                        "type": "boolean?",
+                        "inputBinding": {
+                            "prefix": "-f",
+                            "shellQuote": false,
+                            "position": 1
+                        },
+                        "doc": "reference files are Fasta (default)\n"
+                    },
+                    {
+                        "id": "ftabchars",
+                        "type": "int?",
+                        "inputBinding": {
+                            "prefix": "--ftabchars",
+                            "shellQuote": false,
+                            "position": 13
+                        },
+                        "doc": "# of chars consumed in initial lookup (default: 10)\n"
+                    },
+                    {
+                        "id": "justref",
+                        "type": "boolean?",
+                        "inputBinding": {
+                            "prefix": "--justref",
+                            "shellQuote": false,
+                            "position": 11
+                        },
+                        "doc": "just build .3/.4 index files\n"
+                    },
+                    {
+                        "id": "large_index",
+                        "type": "boolean?",
+                        "inputBinding": {
+                            "prefix": "--large-index",
+                            "shellQuote": false,
+                            "position": 3
+                        },
+                        "doc": "force generated index to be 'large', even if ref has fewer than 4 billion nucleotides\n"
+                    },
+                    {
+                        "id": "noauto",
+                        "type": "boolean?",
+                        "inputBinding": {
+                            "prefix": "--noauto",
+                            "shellQuote": false,
+                            "position": 4
+                        },
+                        "doc": "disable automatic -p/--bmax/--dcv memory-fitting\n"
+                    },
+                    {
+                        "id": "nodc",
+                        "type": "boolean?",
+                        "inputBinding": {
+                            "prefix": "--nodc",
+                            "shellQuote": false,
+                            "position": 9
+                        },
+                        "doc": "disable diff-cover (algorithm becomes quadratic)\n"
+                    },
+                    {
+                        "id": "noref",
+                        "type": "boolean?",
+                        "inputBinding": {
+                            "prefix": "--noref",
+                            "shellQuote": false,
+                            "position": 10
+                        },
+                        "doc": "don't build .3/.4 index files\n"
+                    },
+                    {
+                        "id": "offrate",
+                        "type": "int?",
+                        "inputBinding": {
+                            "prefix": "--offrate",
+                            "shellQuote": false,
+                            "position": 12
+                        },
+                        "doc": "SA is sampled every 2^<int> BWT chars (default: 5)\n"
+                    },
+                    {
+                        "id": "packed",
+                        "type": "boolean?",
+                        "inputBinding": {
+                            "prefix": "--packed",
+                            "shellQuote": false,
+                            "position": 5
+                        },
+                        "doc": "use packed strings internally; slower, less memory\n"
+                    },
+                    {
+                        "id": "quiet",
+                        "type": "boolean?",
+                        "inputBinding": {
+                            "prefix": "--quiet",
+                            "shellQuote": false,
+                            "position": 15
+                        },
+                        "doc": "verbose output (for debugging)\n"
+                    },
+                    {
+                        "id": "reference_in",
+                        "type": "File",
+                        "inputBinding": {
+                            "shellQuote": false,
+                            "position": 25
+                        }
+                    },
+                    {
+                        "id": "seed",
+                        "type": "int?",
+                        "inputBinding": {
+                            "prefix": "--seed",
+                            "shellQuote": false,
+                            "position": 15
+                        },
+                        "doc": "seed for random number generator\n"
+                    },
+                    {
+                        "id": "threads",
+                        "type": "int?",
+                        "inputBinding": {
+                            "prefix": "--threads",
+                            "shellQuote": false,
+                            "position": 14
+                        },
+                        "doc": "# of threads\n"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "indices",
+                        "type": "File",
+                        "outputBinding": {
+                            "glob": "$(inputs.bt2_index_base + \".1.bt2*\")"
+                        },
+                        "secondaryFiles": [
+                            "${\n    var ext = self.location.split('/').slice(-1)[0].split('.').slice(-1)[0];\n    var basename = self.location.split(\"/\").slice(-1)[0].split(\".\").slice(0, -2).join (\".\");\n    var dirname = self.location.split(\"/\").slice(0,-1).join(\"/\");\n    return [{\"class\": \"File\", \"path\": dirname + \"/\" + basename + \".2.\" + ext},\n            {\"class\": \"File\", \"path\": dirname + \"/\" + basename + \".3.\" + ext},\n            {\"class\": \"File\", \"path\": dirname + \"/\" + basename + \".4.\" + ext},\n            {\"class\": \"File\", \"path\": dirname + \"/\" + basename + \".rev.1.\" + ext},\n            {\"class\": \"File\", \"path\": dirname + \"/\" + basename + \".rev.2.\" + ext}\n    ]\n}\n"
+                        ]
+                    }
+                ],
+                "doc": "bowtie2 is an ultrafast and memory-efficient tool for aligning sequencing reads to long reference sequences",
+                "requirements": [
+                    {
+                        "class": "ShellCommandRequirement"
+                    },
+                    {
+                        "class": "ResourceRequirement",
+                        "ramMin": 10240,
+                        "coresMin": 1
+                    },
+                    {
+                        "class": "InlineJavascriptRequirement"
+                    }
+                ],
+                "hints": [
+                    {
+                        "class": "DockerRequirement",
+                        "dockerPull": "6oclock/bowtie2-light:v2.2.9"
+                    }
+                ]
+            },
+            "sbg:x": 129.53125,
+            "sbg:y": 350.03125
+        },
+        {
+            "id": "call_snp_indel",
+            "in": [
+                {
+                    "id": "inputVCF",
+                    "source": "bcftools_mpileup/mpileup"
+                }
+            ],
+            "out": [
+                {
+                    "id": "variants"
+                }
+            ],
+            "run": {
+                "class": "CommandLineTool",
+                "cwlVersion": "v1.0",
+                "baseCommand": [
+                    "bcftools",
+                    "call"
+                ],
+                "inputs": [
+                    {
+                        "id": "consensuscaller",
+                        "type": "boolean?",
+                        "inputBinding": {
+                            "prefix": "-c",
+                            "shellQuote": false,
+                            "position": 7
+                        },
+                        "doc": "the original calling method (conflicts with -m)\n"
+                    },
+                    {
+                        "id": "inputVCF",
+                        "type": "File",
+                        "inputBinding": {
+                            "shellQuote": false,
+                            "position": 20
+                        },
+                        "doc": "in.vcf\n"
+                    },
+                    {
+                        "id": "multialleliccaller",
+                        "type": "boolean?",
+                        "inputBinding": {
+                            "prefix": "-m",
+                            "shellQuote": false,
+                            "position": 6
+                        },
+                        "doc": "alternative model for multiallelic and rare-variant calling (conflicts with -c)\n",
+                        "default": true
+                    },
+                    {
+                        "id": "outputtype",
+                        "type": "string",
+                        "inputBinding": {
+                            "prefix": "-O",
+                            "shellQuote": false,
+                            "position": 2
+                        },
+                        "doc": "output type: 'b' compressed BCF; 'u' uncompressed BCF; 'z' compressed VCF; 'v' uncompressed VCF [v]\n",
+                        "default": "v"
+                    },
+                    {
+                        "id": "regionsfile",
+                        "type": "File?",
+                        "inputBinding": {
+                            "prefix": "-R",
+                            "shellQuote": false,
+                            "position": 3
+                        },
+                        "doc": "restrict to regions listed in a file\n"
+                    },
+                    {
+                        "id": "threads",
+                        "type": "int",
+                        "inputBinding": {
+                            "prefix": "--threads",
+                            "shellQuote": false,
+                            "position": 4
+                        },
+                        "doc": "use multithreading with <int> worker threads [0]\n",
+                        "default": 1
+                    },
+                    {
+                        "id": "variantsonly",
+                        "type": "boolean?",
+                        "inputBinding": {
+                            "prefix": "-v",
+                            "shellQuote": false,
+                            "position": 5
+                        },
+                        "doc": "output variant sites only\n"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "variants",
+                        "type": "stdout"
+                    }
+                ],
+                "doc": "SNP/indel variant calling from VCF/BCF",
+                "requirements": [
+                    {
+                        "class": "ShellCommandRequirement"
+                    },
+                    {
+                        "class": "ResourceRequirement",
+                        "ramMin": 10240,
+                        "coresMin": 1
+                    },
+                    {
+                        "class": "InlineJavascriptRequirement"
+                    }
+                ],
+                "hints": [
+                    {
+                        "class": "DockerRequirement",
+                        "dockerPull": "6oclock/bcftools:v1.11"
+                    }
+                ],
+                "stdout": "$(inputs.inputVCF.nameroot).vcf"
+            },
+            "sbg:x": 1166.8193359375,
+            "sbg:y": 182.015625
+        },
+        {
+            "id": "depth_of_bam",
+            "in": [
+                {
+                    "id": "bam_sorted",
+                    "source": "sort_alignment_files/bam_sorted"
+                }
+            ],
+            "out": [
+                {
+                    "id": "bam_depth"
+                }
+            ],
+            "run": {
+                "class": "CommandLineTool",
+                "cwlVersion": "v1.0",
+                "baseCommand": [
+                    "samtools",
+                    "depth"
+                ],
+                "inputs": [
+                    {
+                        "id": "all_pos",
+                        "type": "boolean",
+                        "inputBinding": {
+                            "prefix": "-a",
+                            "shellQuote": false,
+                            "position": 1
+                        },
+                        "doc": "If true, will output all positions (including zero depth)",
+                        "default": false
+                    },
+                    {
+                        "id": "bam_sorted",
+                        "type": "File",
+                        "inputBinding": {
+                            "shellQuote": false,
+                            "position": 6
+                        },
+                        "doc": "aligned reads to be checked in sam or bam format"
+                    },
+                    {
+                        "id": "bed",
+                        "type": "string?",
+                        "inputBinding": {
+                            "prefix": "-b",
+                            "shellQuote": false,
+                            "position": 2
+                        },
+                        "doc": "list of positions or regions"
+                    },
+                    {
+                        "id": "f",
+                        "type": "string?",
+                        "inputBinding": {
+                            "prefix": "-f",
+                            "shellQuote": false,
+                            "position": 3
+                        },
+                        "doc": "list of input BAM filenames, one per line [null]",
+                        "default": null
+                    },
+                    {
+                        "id": "l",
+                        "type": "int",
+                        "inputBinding": {
+                            "prefix": "-l",
+                            "shellQuote": false,
+                            "position": 4
+                        },
+                        "doc": "read length threshold (ignore reads shorter than <int>) [0]",
+                        "default": 0
+                    },
+                    {
+                        "id": "r",
+                        "type": "string?",
+                        "inputBinding": {
+                            "prefix": "-r",
+                            "shellQuote": false,
+                            "position": 5
+                        },
+                        "doc": "region <chr:from-to>"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "bam_depth",
+                        "type": "stdout"
+                    }
+                ],
+                "doc": "computes the read depth at each position or region.",
+                "requirements": [
+                    {
+                        "class": "ShellCommandRequirement"
+                    },
+                    {
+                        "class": "ResourceRequirement",
+                        "ramMin": 10240,
+                        "coresMin": 1
+                    },
+                    {
+                        "class": "InlineJavascriptRequirement"
+                    }
+                ],
+                "hints": [
+                    {
+                        "class": "DockerRequirement",
+                        "dockerPull": "6oclock/samtools:1.8-dev"
+                    }
+                ],
+                "stdout": "$(inputs.bam_sorted.nameroot).depth.txt"
+            },
+            "sbg:x": 877.1942749023438,
+            "sbg:y": 175.015625
+        },
+        {
+            "id": "fai_index",
+            "in": [
+                {
+                    "id": "input_f",
+                    "source": "fa_virus"
+                }
+            ],
+            "out": [
+                {
+                    "id": "fa_with_fai"
+                },
+                {
+                    "id": "fai"
+                }
+            ],
+            "run": {
+                "class": "CommandLineTool",
+                "cwlVersion": "v1.0",
+                "baseCommand": [
+                    "samtools",
+                    "faidx"
+                ],
+                "inputs": [
+                    {
+                        "id": "input_f",
+                        "type": "File",
+                        "inputBinding": {
+                            "shellQuote": false,
+                            "position": 1
+                        },
+                        "doc": "a FASTA/FASTQ file containing reference sequences"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "fa_with_fai",
+                        "type": "File",
+                        "outputBinding": {
+                            "glob": "$(inputs.input_f.basename)"
+                        },
+                        "secondaryFiles": [
+                            ".fai"
+                        ]
+                    },
+                    {
+                        "id": "fai",
+                        "type": "File",
+                        "outputBinding": {
+                            "glob": "$(inputs.input_f.basename).fai"
+                        }
+                    }
+                ],
+                "doc": "an index enabling random access to FASTA and FASTQ files",
+                "requirements": [
+                    {
+                        "class": "ShellCommandRequirement"
+                    },
+                    {
+                        "class": "InitialWorkDirRequirement",
+                        "listing": [
+                            "${\n  return [\n            {\n              \"entry\": inputs.input_f,\n              \"entryname\": inputs.input_f.basename,\n              \"writable\": true\n            }\n         ]\n}\n"
+                        ]
+                    },
+                    {
+                        "class": "InlineJavascriptRequirement"
+                    }
+                ],
+                "hints": [
+                    {
+                        "class": "DockerRequirement",
+                        "dockerPull": "6oclock/samtools:1.8-dev"
+                    }
+                ]
+            },
+            "sbg:x": 129.53125,
+            "sbg:y": 235.6875
+        },
+        {
+            "id": "filter",
+            "in": [
+                {
+                    "id": "clean_fq1_name",
+                    "valueFrom": "clean_1.fq.gz"
+                },
+                {
+                    "id": "clean_fq2_name",
+                    "valueFrom": "clean_2.fq.gz"
+                },
+                {
+                    "id": "fastq1",
+                    "source": "fq1"
+                },
+                {
+                    "id": "fastq2",
+                    "source": "fq2"
+                }
+            ],
+            "out": [
+                {
+                    "id": "fil_fastq1"
+                },
+                {
+                    "id": "fil_fastq2"
+                }
+            ],
+            "run": {
+                "class": "CommandLineTool",
+                "cwlVersion": "v1.0",
+                "baseCommand": [
+                    "SOAPnuke",
+                    "filter"
+                ],
+                "inputs": [
+                    {
+                        "id": "adapter1",
+                        "type": "string?",
+                        "inputBinding": {
+                            "prefix": "-f",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "doc": "adapter sequence of fq1 file"
+                    },
+                    {
+                        "id": "adapter2",
+                        "type": "string?",
+                        "inputBinding": {
+                            "prefix": "-r",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "doc": "adapter sequence of fq2 file (if PE)"
+                    },
+                    {
+                        "id": "clean_fq1_name",
+                        "type": "string",
+                        "inputBinding": {
+                            "prefix": "-C",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "doc": "clean fq1 file name(required,gz format)"
+                    },
+                    {
+                        "id": "clean_fq2_name",
+                        "type": "string?",
+                        "inputBinding": {
+                            "prefix": "-D",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "doc": "clean fq2 file name"
+                    },
+                    {
+                        "id": "fastq1",
+                        "type": "File",
+                        "inputBinding": {
+                            "prefix": "-1",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "doc": "fq1 file(required)"
+                    },
+                    {
+                        "id": "fastq2",
+                        "type": "File?",
+                        "inputBinding": {
+                            "prefix": "-2",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "doc": "fq2 file, used when pe"
+                    },
+                    {
+                        "id": "lowQual",
+                        "type": "int?",
+                        "inputBinding": {
+                            "prefix": "-l",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "doc": "low quality threshold  [default:5]",
+                        "default": 5
+                    },
+                    {
+                        "id": "nrate",
+                        "type": "float?",
+                        "inputBinding": {
+                            "prefix": "-n",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "doc": "N rate threshold  [default:0.05]",
+                        "default": 0.05
+                    },
+                    {
+                        "id": "outdir",
+                        "type": "string",
+                        "inputBinding": {
+                            "prefix": "-o",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "doc": "Output directory. Processed fq files and statistical results would be output to here",
+                        "default": "."
+                    },
+                    {
+                        "id": "qualRate",
+                        "type": "float?",
+                        "inputBinding": {
+                            "prefix": "-q",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "doc": "low quality rate  [default:0.5]",
+                        "default": 0.5
+                    },
+                    {
+                        "id": "threads",
+                        "type": "int?",
+                        "inputBinding": {
+                            "prefix": "--thread",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "default": 1
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "fil_fastq1",
+                        "type": "File",
+                        "outputBinding": {
+                            "glob": "$(inputs.clean_fq1_name)"
+                        }
+                    },
+                    {
+                        "id": "fil_fastq2",
+                        "type": "File?",
+                        "outputBinding": {
+                            "glob": "$(inputs.clean_fq2_name)"
+                        }
+                    }
+                ],
+                "doc": "SOAPnuke, a novel analysis tool developed for quality control and preprocessing of FASTQ and SAM/BAM data",
+                "requirements": [
+                    {
+                        "class": "ShellCommandRequirement"
+                    },
+                    {
+                        "class": "ResourceRequirement",
+                        "ramMin": 10240,
+                        "coresMin": 1
+                    },
+                    {
+                        "class": "InlineJavascriptRequirement"
+                    }
+                ],
+                "hints": [
+                    {
+                        "class": "DockerRequirement",
+                        "dockerPull": "6oclock/soapnuke:v2.1.0"
+                    }
+                ]
+            },
+            "sbg:x": 129.53125,
+            "sbg:y": 114.34375
+        },
+        {
+            "id": "index_bam",
+            "in": [
+                {
+                    "id": "bam_sorted",
+                    "source": "sort_alignment_files/bam_sorted"
+                }
+            ],
+            "out": [
+                {
+                    "id": "bam_sorted_indexed"
+                }
+            ],
+            "run": {
+                "class": "CommandLineTool",
+                "cwlVersion": "v1.0",
+                "baseCommand": [
+                    "samtools",
+                    "index"
+                ],
+                "inputs": [
+                    {
+                        "id": "bam_sorted",
+                        "type": "File",
+                        "inputBinding": {
+                            "shellQuote": false,
+                            "position": 2
+                        },
+                        "doc": "sorted bam input file"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "bam_sorted_indexed",
+                        "type": "File",
+                        "outputBinding": {
+                            "glob": "$(inputs.bam_sorted.basename)"
+                        },
+                        "secondaryFiles": [
+                            ".bai"
+                        ]
+                    }
+                ],
+                "doc": "Indexing BAM.",
+                "requirements": [
+                    {
+                        "class": "ShellCommandRequirement"
+                    },
+                    {
+                        "class": "ResourceRequirement",
+                        "ramMin": 10240,
+                        "coresMin": 1
+                    },
+                    {
+                        "class": "InitialWorkDirRequirement",
+                        "listing": [
+                            "$(inputs.bam_sorted)"
+                        ]
+                    },
+                    {
+                        "class": "InlineJavascriptRequirement"
+                    }
+                ],
+                "hints": [
+                    {
+                        "class": "DockerRequirement",
+                        "dockerPull": "6oclock/samtools:1.8-dev"
+                    }
+                ]
+            },
+            "sbg:x": 877.1942749023438,
+            "sbg:y": 67.671875
+        },
+        {
+            "id": "mapping_to_virus",
+            "in": [
+                {
+                    "id": "fastq1",
+                    "source": "filter/fil_fastq1"
+                },
+                {
+                    "id": "fastq2",
+                    "source": "filter/fil_fastq2"
+                },
+                {
+                    "id": "reference_index",
+                    "source": "bowtie2_index/indices"
+                }
+            ],
+            "out": [
+                {
+                    "id": "bowtie2_log"
+                },
+                {
+                    "id": "sam"
+                },
+                {
+                    "id": "unmap_fq1"
+                },
+                {
+                    "id": "unmap_fq2"
+                }
+            ],
+            "run": {
+                "class": "CommandLineTool",
+                "cwlVersion": "v1.0",
+                "baseCommand": [
+                    "bowtie2"
+                ],
+                "inputs": [
+                    {
+                        "id": "fastq1",
+                        "type": "File",
+                        "inputBinding": {
+                            "shellQuote": false,
+                            "position": 11
+                        }
+                    },
+                    {
+                        "id": "fastq2",
+                        "type": "File?",
+                        "inputBinding": {
+                            "prefix": "-2",
+                            "shellQuote": false,
+                            "position": 12,
+                            "valueFrom": "${\n    if ( inputs.is_paired_end ){\n        return self;\n    }\n    else {\n        return null;\n    }\n}  \n"
+                        }
+                    },
+                    {
+                        "id": "is_paired_end",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    {
+                        "id": "max_mapping_insert_length",
+                        "type": "int?",
+                        "inputBinding": {
+                            "prefix": "--maxins",
+                            "shellQuote": false,
+                            "position": 1
+                        },
+                        "doc": "useful for very long fragments, as expected for ATAC",
+                        "default": 2000
+                    },
+                    {
+                        "id": "reference_index",
+                        "type": "File",
+                        "inputBinding": {
+                            "prefix": "-x",
+                            "shellQuote": false,
+                            "position": 2,
+                            "valueFrom": "$(self.path.split('.').slice(0,-2).join('.'))"
+                        },
+                        "doc": "path to the FM-index files for the chosen reference genome(for example \"chrM.1.bt2\")"
+                    },
+                    {
+                        "id": "threads",
+                        "type": "int",
+                        "inputBinding": {
+                            "prefix": "-p",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "doc": "number of alignment threads to launch",
+                        "default": 1
+                    },
+                    {
+                        "id": "un_conc",
+                        "type": "string",
+                        "inputBinding": {
+                            "prefix": "--un-conc-gz",
+                            "shellQuote": false,
+                            "position": 0
+                        },
+                        "default": "un_conc"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "bowtie2_log",
+                        "type": "stderr"
+                    },
+                    {
+                        "id": "sam",
+                        "type": "File",
+                        "outputBinding": {
+                            "glob": "*.sam"
+                        }
+                    },
+                    {
+                        "id": "unmap_fq1",
+                        "type": "File?",
+                        "outputBinding": {
+                            "glob": "*.1.gz"
+                        }
+                    },
+                    {
+                        "id": "unmap_fq2",
+                        "type": "File?",
+                        "outputBinding": {
+                            "glob": "*.2.gz"
+                        }
+                    }
+                ],
+                "doc": "bowtie2 is an ultrafast and memory-efficient tool for aligning sequencing reads to long reference sequences",
+                "arguments": [
+                    {
+                        "shellQuote": false,
+                        "position": 1,
+                        "valueFrom": "--very-sensitive"
+                    },
+                    {
+                        "shellQuote": false,
+                        "position": 10,
+                        "valueFrom": "${\n    if ( inputs.is_paired_end ){\n        return \"-1\";\n    }\n    else {\n        return \"-U\";\n    }\n}\n"
+                    },
+                    {
+                        "prefix": "-S",
+                        "shellQuote": false,
+                        "position": 6,
+                        "valueFrom": "$(inputs.fastq1.nameroot).sam"
+                    }
+                ],
+                "requirements": [
+                    {
+                        "class": "ShellCommandRequirement"
+                    },
+                    {
+                        "class": "ResourceRequirement",
+                        "ramMin": 30000,
+                        "coresMin": 4
+                    },
+                    {
+                        "class": "InlineJavascriptRequirement"
+                    }
+                ],
+                "hints": [
+                    {
+                        "class": "DockerRequirement",
+                        "dockerPull": "6oclock/bowtie2-light:v2.2.9"
+                    }
+                ],
+                "stderr": "$(inputs.fastq1.nameroot).bowtie2_stderr"
+            },
+            "sbg:x": 338.96875,
+            "sbg:y": 0
+        },
+        {
+            "id": "sort_alignment_files",
+            "in": [
+                {
+                    "id": "bam_unsorted",
+                    "source": "mapping_to_virus/sam"
+                }
+            ],
+            "out": [
+                {
+                    "id": "bam_sorted"
+                }
+            ],
+            "run": {
+                "class": "CommandLineTool",
+                "cwlVersion": "v1.0",
+                "baseCommand": [
+                    "samtools",
+                    "sort"
+                ],
+                "inputs": [
+                    {
+                        "id": "bam_unsorted",
+                        "type": "File",
+                        "inputBinding": {
+                            "shellQuote": false,
+                            "position": 4
+                        },
+                        "doc": "aligned reads to be checked in sam or bam format"
+                    },
+                    {
+                        "id": "by_name",
+                        "type": "boolean",
+                        "inputBinding": {
+                            "prefix": "-n",
+                            "shellQuote": false,
+                            "position": 1
+                        },
+                        "doc": "If true, will sort by name, otherwise will sort by genomic position",
+                        "default": false
+                    },
+                    {
+                        "id": "threads",
+                        "type": "int",
+                        "inputBinding": {
+                            "prefix": "-@",
+                            "shellQuote": false,
+                            "position": 2
+                        },
+                        "doc": "Number of additional threads to use",
+                        "default": 1
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "bam_sorted",
+                        "type": "stdout"
+                    }
+                ],
+                "doc": "Sort a bam file.",
+                "requirements": [
+                    {
+                        "class": "ShellCommandRequirement"
+                    },
+                    {
+                        "class": "ResourceRequirement",
+                        "ramMin": 10240,
+                        "coresMin": 1
+                    },
+                    {
+                        "class": "InlineJavascriptRequirement"
+                    }
+                ],
+                "hints": [
+                    {
+                        "class": "DockerRequirement",
+                        "dockerPull": "6oclock/samtools:1.8-dev"
+                    }
+                ],
+                "stdout": "$(inputs.bam_unsorted.nameroot).sort.bam"
+            },
+            "sbg:x": 625.6005249023438,
+            "sbg:y": 182.015625
+        }
+    ],
+    "requirements": [
+        {
+            "class": "InlineJavascriptRequirement"
+        },
+        {
+            "class": "StepInputExpressionRequirement"
+        }
+    ]
+}

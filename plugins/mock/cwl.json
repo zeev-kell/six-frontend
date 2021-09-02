@@ -548,7 +548,26 @@
           "id": "#Picard_CollectAlignmentSummaryMetrics.adapter_sequence"
         }
       ],
-      "id": "#Picard_CollectAlignmentSummaryMetrics"
+      "id": "#Picard_CollectAlignmentSummaryMetrics",
+      "hints": [
+        {
+          "class": "sbg:CPURequirement",
+          "value": 1
+        },
+        {
+          "class": "sbg:MemRequirement",
+          "value": {
+            "class": "Expression",
+            "engine": "#cwl-js-engine",
+            "script": "{\n  if($job.inputs.memory_per_job){\n  \treturn $job.inputs.memory_per_job\n  }\n  \treturn 2048\n}"
+          }
+        },
+        {
+          "class": "DockerRequirement",
+          "dockerImageId": "eab0e70b6629",
+          "dockerPull": "images.sbgenomics.com/mladenlsbg/picard:1.140"
+        }
+      ]
     },
     {
       "run": {

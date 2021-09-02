@@ -1,26 +1,17 @@
 @font-face {
-  font-family: 'iconfont';
-  src: url('iconfont.eot?t=1613241092024'); /* IE9 */
-  src: url('iconfont.eot?t=1613241092024#iefix') format('embedded-opentype'),
-    /* IE6-IE8 */
-      url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAALcAAsAAAAABuwAAAKOAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqBRIE1ATYCJAMMCwgABCAFhG0HSBsNBhEVlBlkXyVkbia09zp9PKvwZeMY50Tfon5bRZtoXBM80X60Nzv75UyTalLVkO7AE1QPVTRxJJpYlSieyD8AGiDgBX65v5d1vN87Z3Tc3OQJU5S1I4++8FMKvctt7BP3TptA4djPspzmmPqpCzAOKKC9qYsiK5CAvGHsJoIHeB8ChJKiiLS2947iYwHLBJDdrY0l/EIci3VKPoLbsNci13HwzVXzClzj35dfivPB4Chg7eB62yqNXwe/betJcMIsJaFYzgs4h0CBImBB5hvzkyjiMJRQve2udbEIZqlUEHB5bHQP+sczIC6gORyAPF1nHkqBxRD4ti3TmYA6XD6jWAwadXp8hUE9Lxw8szE8Om4ixnfGRocmxnTn2cfUux/KH79LuvN+jOrLKr2TWfS5d+O2afn/sW1LyvNjRAWLn5rydExk1L8dFhX1N6qTmmoDVf27HrMIQPBSn2oNBGfmSJv/6W94JbtmIar2vx9mAfjUX6s8GpxZhgXBP2NA4A8qBvbYWAUcakM5lqdBJetuvAZ0qRsiAIRjfZluTBicBcEvKBwYPJKh+GSRLb0IDmGUwsWnAaEU6jgcRpxjFLEhQIGLGoRo92CI5AWUaK/Jlv4ZDon+wCU6RSjjEndmGDkJZr1jtIKBug/NffAGuUSL1jPGh205r+K8OzjNKaryslw6wYOX2JCeYy1iyHBwdNQeg7WBIocFveSTSGyKwjS9Ke+DU5odoxUM1H1o7oM3dLDoyufPGB+25Q7CSPIOTvPoVOXlAPJJ7wcRHuWV9BxrEUOGg6OjNgvWBorNsxb0kk8TsrEpYD8zVJ9vb3T/dwgIBVykYkTFotcf1qaeAb+5w+45pjllT/ALxVqrFAAA')
-      format('woff2'),
-    url('iconfont.woff?t=1613241092024') format('woff'), url('iconfont.ttf?t=1613241092024') format('truetype'),
-    /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */ url('iconfont.svg?t=1613241092024#iconfont') format('svg'); /* iOS 4.1- */
+  font-family: 'iconfont'; /* Project id 2326583 */
+  src: url('iconfont.woff2?t=1629903904379') format('woff2'), url('iconfont.woff?t=1629903904379') format('woff'),
+    url('iconfont.ttf?t=1629903904379') format('truetype');
 }
 
 .iconfont {
   font-family: 'iconfont' !important;
-  font-size: inherit;
+  font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-fullscreen:before {
-  content: '\e650';
-}
-
-.icon-ellipsis-vertical:before {
-  content: '\e76a';
+.icon-eraser:before {
+  content: '\e6e3';
 }

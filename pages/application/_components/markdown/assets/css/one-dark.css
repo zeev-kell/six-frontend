@@ -1,0 +1,84 @@
+::v-deep .markdown-theme-oneDark pre {
+  padding: 20px 10px !important;
+  display: block;
+  color: #abb2bf;
+  background: #292c34;
+  border-radius: 4px;
+  overflow-y: hidden !important;
+  overflow-x: auto !important;
+  margin: 10px 0 !important;
+}
+
+::v-deep .markdown-theme-oneDark pre * {
+  line-height: 1.6 !important;
+  font-size: 14px;
+}
+
+::v-deep .markdown-theme-oneDark .hljs-comment,
+::v-deep .markdown-theme-oneDark .hljs-quote {
+  color: #5c6370;
+  font-style: italic;
+}
+
+::v-deep .markdown-theme-oneDark .hljs-doctag,
+::v-deep .markdown-theme-oneDark .hljs-formula,
+::v-deep .markdown-theme-oneDark .hljs-keyword {
+  color: #c678dd;
+}
+
+::v-deep .markdown-theme-oneDark .hljs-deletion,
+::v-deep .markdown-theme-oneDark .hljs-name,
+::v-deep .markdown-theme-oneDark .hljs-section,
+::v-deep .markdown-theme-oneDark .hljs-selector-tag,
+::v-deep .markdown-theme-oneDark .hljs-subst {
+  color: #e06c75;
+}
+
+::v-deep .markdown-theme-oneDark .hljs-literal {
+  color: #56b6c2;
+}
+
+::v-deep .markdown-theme-oneDark .hljs-addition,
+::v-deep .markdown-theme-oneDark .hljs-attribute,
+::v-deep .markdown-theme-oneDark .hljs-meta-string,
+::v-deep .markdown-theme-oneDark .hljs-regexp,
+::v-deep .markdown-theme-oneDark .hljs-string {
+  color: #98c379;
+}
+
+::v-deep .markdown-theme-oneDark .hljs-built_in,
+::v-deep .markdown-theme-oneDark .hljs-class .hljs-title {
+  color: #e6c07b;
+}
+
+::v-deep .markdown-theme-oneDark .hljs-attr,
+::v-deep .markdown-theme-oneDark .hljs-number,
+::v-deep .markdown-theme-oneDark .hljs-selector-attr,
+::v-deep .markdown-theme-oneDark .hljs-selector-class,
+::v-deep .markdown-theme-oneDark .hljs-selector-pseudo,
+::v-deep .markdown-theme-oneDark .hljs-template-variable,
+::v-deep .markdown-theme-oneDark .hljs-type,
+::v-deep .markdown-theme-oneDark .hljs-variable {
+  color: #d19a66;
+}
+
+::v-deep .markdown-theme-oneDark .hljs-bullet,
+::v-deep .markdown-theme-oneDark .hljs-link,
+::v-deep .markdown-theme-oneDark .hljs-meta,
+::v-deep .markdown-theme-oneDark .hljs-selector-id,
+::v-deep .markdown-theme-oneDark .hljs-symbol,
+::v-deep .markdown-theme-oneDark .hljs-title {
+  color: #61aeee;
+}
+
+::v-deep .markdown-theme-oneDark .hljs-emphasis {
+  font-style: italic;
+}
+
+::v-deep .markdown-theme-oneDark .hljs-strong {
+  font-weight: bold;
+}
+
+::v-deep .markdown-theme-oneDark .hljs-link {
+  text-decoration: underline;
+}

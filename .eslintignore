@@ -1,1 +1,5 @@
-/assets/iconfont
+/assets/iconfont/**/*
+/assets/element-ui/**/*
+/assets/element-ui-build/**/*
+/**/*.d.ts
+/types/**/*

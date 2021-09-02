@@ -88,3 +88,8 @@ sw.*
 
 # Vim swap files
 *.swp
+
+/static/installer.exe
+
+/assets/element-ui/*.css
+!/assets/element-ui/index.css

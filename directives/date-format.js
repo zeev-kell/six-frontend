@@ -10,7 +10,7 @@ export const dateFormat = function (date, _format = DEFAULT_FORMAT) {
   return format(date, _format)
 }
 
-export default function (el, binding, vnode) {
+export default function (el, binding) {
   if (!binding.value) {
     el.innerHTML = '-'
     return ''

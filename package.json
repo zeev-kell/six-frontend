@@ -3,17 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "build-theme": "et",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
-    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "dev": "nuxt-ts",
+    "build": "nuxt-ts build",
+    "start": "nuxt-ts start",
+    "generate": "nuxt-ts generate",
+    "lint:ts": "eslint --ext .ts,.vue --ignore-path .gitignore --ignore-path .eslintignore .",
     "lint:style": "stylelint **/*.{vue,scss} --ignore-path .gitignore",
-    "lint": "yarn lint:js && yarn lint:style"
+    "lint": "yarn lint:ts && yarn lint:style"
   },
   "lint-staged": {
-    "*.{js,vue}": "yarn lint",
+    "*.{ts,vue}": "yarn lint",
     "*.{scss,vue}": "stylelint"
   },
   "husky": {
@@ -23,36 +22,53 @@
     }
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/vue-fontawesome": "^2.0.2",
     "@nuxt/content": "^1.9.0",
+    "@nuxt/typescript-runtime": "^2.0.0",
+    "@nuxtjs/auth-next": "^5.0.0-1616003482.75c20e6",
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.2",
+    "@nuxtjs/sitemap": "^2.4.0",
     "axios": "^0.21.1",
+    "codemirror": "^5.61.0",
     "cookie": "^0.4.1",
     "core-js": "^3.6.5",
     "cwl-svg": "^2.1.7",
     "cwlts": "^1.15.30",
     "element-ui": "^2.13.2",
+    "highlight.js": "^10.7.1",
     "js-cookie": "^2.2.1",
+    "js-yaml": "^4.0.0",
+    "jszip": "^3.6.0",
     "marked": "^1.2.9",
+    "mavon-editor": "^2.9.1",
     "normalize.css": "^8.0.1",
-    "nuxt": "^2.14.6",
+    "nuxt": "^2.15.7",
+    "nuxt-fontawesome": "^0.4.0",
+    "nuxt-i18n": "^6.27.2",
+    "nuxt-property-decorator": "^2.9.1",
     "sanitize-html": "^2.3.2",
     "vue-clipboard2": "^0.3.1",
     "vue-count-to": "^1.0.13",
-    "vuex-persistedstate": "^4.0.0-beta.1"
+    "vue-meditor": "^2.1.1",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@nuxt/types": "^2.15.7",
+    "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/eslint-config": "^3.1.0",
+    "@nuxtjs/eslint-config-typescript": "^3.0.0",
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "axios-mock-adapter": "^1.19.0",
-    "babel-eslint": "^10.1.0",
     "better-mock": "^0.2.8",
-    "element-theme": "^2.0.1",
     "element-theme-chalk": "^2.15.0",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.12.0",
@@ -60,23 +76,18 @@
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.3.0",
     "lint-staged": "^10.4.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "npm:sass",
     "prettier": "^2.2.1",
     "sass-loader": "^10.1.0",
     "scss-loader": "^0.0.1",
     "stylelint": "^13.7.2",
+    "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.18.0"
   },
-  "element-theme": {
-    "browsers": [
-      "ie > 9",
-      "last 2 versions"
-    ],
-    "out": "./assets/theme",
-    "config": "./assets/element-variables.scss",
-    "theme": "element-theme-chalk",
-    "minimize": true
+  "resolutions": {
+    "@babel/core": "7.13.15",
+    "@babel/preset-env": "7.13.15"
   }
 }

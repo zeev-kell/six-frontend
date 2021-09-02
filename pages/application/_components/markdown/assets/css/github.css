@@ -1,0 +1,103 @@
+::v-deep .markdown-theme-gitHub pre {
+  padding: 20px 10px !important;
+  display: block;
+  color: #333;
+  background: #f7f8fa !important;
+  font-size: 13px;
+  line-height: 20px;
+  border-radius: 4px;
+  margin: 10px 0 !important;
+  overflow-x: auto !important;
+}
+
+::v-deep .markdown-theme-gitHub pre * {
+}
+
+::v-deep .markdown-theme-gitHub .hljs-comment,
+::v-deep .markdown-theme-gitHub .hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-selector-tag,
+::v-deep .markdown-theme-gitHub .hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-keyword {
+  color: #d73a49;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-literal,
+::v-deep .markdown-theme-gitHub .hljs-number,
+::v-deep .markdown-theme-gitHub .hljs-tag .hljs-attr,
+::v-deep .markdown-theme-gitHub .hljs-template-variable,
+::v-deep .markdown-theme-gitHub .hljs-variable {
+  color: #008080;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-doctag,
+::v-deep .markdown-theme-gitHub .hljs-string {
+  color: #d73a49;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-section,
+::v-deep .markdown-theme-gitHub .hljs-selector-id,
+::v-deep .markdown-theme-gitHub .hljs-title {
+  color: #900;
+  font-weight: bold;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-subst {
+  font-weight: normal;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-class .hljs-title,
+::v-deep .markdown-theme-gitHub .hljs-type {
+  color: #458;
+  font-weight: bold;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-attribute,
+::v-deep .markdown-theme-gitHub .hljs-name,
+::v-deep .markdown-theme-gitHub .hljs-tag {
+  color: #000080;
+  font-weight: normal;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-link,
+::v-deep .markdown-theme-gitHub .hljs-regexp {
+  color: #009926;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-bullet,
+::v-deep .markdown-theme-gitHub .hljs-symbol {
+  color: #990073;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-built_in,
+::v-deep .markdown-theme-gitHub .hljs-builtin-name {
+  color: #0086b3;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-deletion {
+  background: #fdd;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-addition {
+  background: #dfd;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-emphasis {
+  font-style: italic;
+}
+
+::v-deep .markdown-theme-gitHub .hljs-strong {
+  font-weight: bold;
+}

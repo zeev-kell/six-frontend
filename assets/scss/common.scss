@@ -1,55 +1,11 @@
 // stylelint-disable declaration-no-important
-@import '../element-variables';
+@import './variables';
+@import './assets/element-ui-build/mixins';
 
 @mixin text-truncate() {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-//
-// common
-//
-.mt-30 {
-  margin-top: 30px !important;
-}
-
-.mb-0 {
-  margin-bottom: 0;
-}
-
-.mb-05r {
-  margin-bottom: 0.5rem;
-}
-
-.mb-1r {
-  margin-bottom: 1rem;
-}
-
-.mb-2r {
-  margin-bottom: 2rem;
-}
-
-.mb-10 {
-  margin-bottom: 10px;
-}
-
-.mx-0 {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.ml-05r {
-  margin-left: 0.5rem;
-}
-
-.ml-1r {
-  margin-left: 1rem;
-}
-
-.mx-1r {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
 }
 
 hr {
@@ -58,6 +14,205 @@ hr {
   border-style: dashed;
 }
 
+//
+// margin
+// m-5   使用像素
+// mt-5  使用像素
+// m-t-5 使用 rem
+//
+
+.mt-5 {
+  margin-top: 5px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mt-30 {
+  margin-top: 30px !important;
+}
+
+.mt-50 {
+  margin-top: 50px;
+}
+
+.mr-0 {
+  margin-right: 0;
+}
+
+.m-r-1 {
+  margin-right: 1rem;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-50 {
+  margin-bottom: 50px;
+}
+
+.m-b-05 {
+  margin-bottom: 0.5rem;
+}
+
+.m-b-1 {
+  margin-bottom: 1rem;
+}
+
+.m-b-2 {
+  margin-bottom: 2rem;
+}
+
+.ml-0 {
+  margin-left: 0 !important;
+}
+
+.m-l-05 {
+  margin-left: 0.5rem;
+}
+
+.m-l-1 {
+  margin-left: 1rem;
+}
+
+.mx-0 {
+  @extend .ml-0;
+  @extend .mr-0;
+}
+
+.m-x-1 {
+  @extend .m-l-1;
+  @extend .m-r-1;
+}
+
+.my-0 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.m-y-05 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.m-y-1 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+//
+// padding
+// p-5   使用像素
+// pt-5 使用像素
+// p-t-5  使用 rem
+//
+
+.p-t-2 {
+  padding-top: 2rem;
+}
+
+.p-l-1 {
+  padding-left: 1rem;
+}
+
+.pt-5 {
+  padding-top: 5px;
+}
+
+.pt-15 {
+  padding-top: 15px;
+}
+
+.pr-20 {
+  padding-right: 20px;
+}
+
+.pb-10 {
+  padding-bottom: 10px;
+}
+
+.pl-20 {
+  padding-left: 20px;
+}
+
+.pl-40 {
+  padding-left: 40px;
+}
+
+.px-0 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.px-5 {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.px-10 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.px-15 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.px-20 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.py-0 {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.py-5 {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.py-40 {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.p-y-2 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.p-5 {
+  padding: 5px;
+}
+
+.p-10 {
+  padding: 10px;
+}
+
+.p-15 {
+  padding: 15px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+//
+// height & width
+//
 .h-100 {
   height: 100%;
 }
@@ -66,59 +221,21 @@ hr {
   height: 100vh;
 }
 
-//
-// padding
-//
-.px-20 {
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.p-5 {
-  padding: 5px;
-}
-
-.p-20 {
-  padding: 20px;
-}
-
-.py-2r {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-.py-5 {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.py-0 {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.px-5 {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-.pt-2r {
-  padding-top: 2rem;
-}
-
-//
-// Button
-//
-.el-button-block {
+.w-100 {
   width: 100%;
 }
 
 //
 // a
 //
+
 a {
   text-decoration: none;
   color: $theme-a-color;
+
+  &.no-underline {
+    text-decoration: none !important;
+  }
 }
 
 a:active,
@@ -130,6 +247,10 @@ a:focus,
 a:hover {
   color: lighten($theme-a-color, 20%);
   text-decoration: underline;
+}
+
+.a-link {
+  text-decoration: none !important;
 }
 
 //
@@ -195,18 +316,20 @@ a:hover {
   color: #909399;
 }
 
+.text-white {
+  color: white;
+}
+
+.text-primary {
+  color: $--color-primary;
+}
+
 .text-danger {
   color: $--color-danger;
 }
 
 .text-warning {
   color: $--color-warning;
-}
-
-.input-group-btn {
-  width: 1%;
-  white-space: nowrap;
-  vertical-align: middle;
 }
 
 //
@@ -252,8 +375,18 @@ img {
 }
 
 //
-// font
+// font-size
+// f-5   使用像素
+// fr-5  使用 rem
 //
+.f-36 {
+  font-size: 36px;
+}
+
+.f-48 {
+  font-size: 48px;
+}
+
 .f-b {
   font-weight: bold;
 }
@@ -272,3 +405,71 @@ img {
 .pointer {
   cursor: pointer;
 }
+
+//
+// align
+//
+.v-center {
+  vertical-align: middle;
+}
+
+.y-baseline {
+  vertical-align: baseline;
+}
+
+//
+// line-height
+//
+.lh-30 {
+  line-height: 30px;
+}
+
+.lh-20-i {
+  line-height: 20px !important;
+}
+
+//
+// display
+//
+.d-inline-b {
+  display: inline-block;
+}
+
+.d-flex {
+  display: flex;
+
+  &.is-align-middle {
+    align-items: center;
+  }
+
+  &.is-justify-space-around {
+    justify-content: space-around;
+  }
+
+  &.is-justify-space-between {
+    justify-content: space-between;
+  }
+}
+
+/*滚动条美化：start*/
+
+::-webkit-scrollbar-track-piece {
+  background-color: #f8f8f8;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #dddddd;
+  background-clip: padding-box;
+  min-height: 28px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #bbb;
+}
+
+/* 滚动条美化：end */
