@@ -29,9 +29,7 @@
         active-text-color="#ffd04b"
       >
         <li role="menuitem" tabindex="-1" class="el-menu-item menu-link">
-          <nuxt-link v-slot="{ href }" :to="localePath('/support-center')" custom>
-            <a target="_blank" :href="href">帮助中心</a>
-          </nuxt-link>
+          <docs-link to="/">帮助中心</docs-link>
         </li>
         <template v-if="loggedIn">
           <el-submenu index="1" popper-class="nav-app">
@@ -51,11 +49,13 @@
 <script lang="ts">
 import { Component, Vue, namespace } from 'nuxt-property-decorator'
 import LogoPng from '@/components/LogoPng.vue'
+import DocsLink from '@/components/common/DocsLink.vue'
 
 const UserNamespace = namespace('user')
 
 @Component({
   components: {
+    DocsLink,
     LogoPng,
   },
 })

@@ -6,9 +6,9 @@
         <nuxt-link v-slot="{ navigate }" :to="localePath('index') + '#section-product'" custom>
           <el-button type="primary" @click="navigate" @keypress.enter="navigate"> 云计算协作 </el-button>
         </nuxt-link>
-        <nuxt-link v-slot="{ navigate }" :to="localePath({ name: 'support-center-id', params: { id: 'get_started' } })" custom>
-          <el-button class="m-l-1" @click="navigate" @keypress.enter="navigate"> 开始体验 </el-button>
-        </nuxt-link>
+        <docs-link to="/guide/">
+          <el-button class="m-l-1 bloc">开始体验 </el-button>
+        </docs-link>
       </div>
       <div class="search-wrap mb-50">
         <el-input v-model="searchInput" style="max-width: 450px" placeholder="提供1000+种工具和知识" @keyup.enter.native="toSearch">
@@ -35,8 +35,10 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import scrollTop from '@/utils/animate-scroll'
-
-@Component
+import DocsLink from '@/components/common/DocsLink.vue'
+@Component({
+  components: { DocsLink },
+})
 export default class IndexBanner extends Vue {
   searchInput = ''
   searchType = '0'
