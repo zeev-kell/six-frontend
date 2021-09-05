@@ -41,7 +41,7 @@ const config = {
     { src: '@/plugins/components' },
     { src: '@/plugins/i18n-router' },
     // { src: '@/plugins/vue-mavon-editor', ssr: false, mode: 'client' },
-    { src: '~/plugins/vue-cropper', ssr: false },
+    { src: '@/plugins/vue-clipboard2', ssr: false },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

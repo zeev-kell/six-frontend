@@ -46,6 +46,7 @@ function translateMark(el, binding) {
   }
   el.innerHTML = safe ? sanitizeHtml(html) : html
 }
+
 export default {
   marked: {
     update: translateMark,
@@ -58,9 +59,10 @@ export default {
       }
     },
   },
-  $getTocObj(markdown) {
-    toc = []
-    const html = marked(markdown, { smartypants: false })
-    return [html, toc]
-  },
+}
+
+export function getTocObj(markdown) {
+  toc = []
+  const html = marked(markdown, { smartypants: false })
+  return [html, toc]
 }

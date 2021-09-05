@@ -25,10 +25,6 @@
           <i class="el-icon-setting" />
           <span slot="title">授权管理</span>
         </el-menu-item>
-        <el-menu-item index="/application/u-center/security">
-          <i class="el-icon-document" />
-          <span slot="title">安全设置</span>
-        </el-menu-item>
       </el-menu>
     </el-aside>
     <el-main class="p-0 ml-10">

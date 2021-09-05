@@ -29,6 +29,10 @@ hr {
   margin-top: 10px;
 }
 
+.mt-10-a + .mt-10-a {
+  @extend .mt-10;
+}
+
 .mt-20 {
   margin-top: 20px;
 }
@@ -348,6 +352,10 @@ a:hover {
   color: $--color-warning;
 }
 
+.text-success {
+  color: $--color-success;
+}
+
 //
 // List
 //
@@ -505,3 +513,10 @@ img {
 }
 
 /* 滚动条美化：end */
+
+//
+// plugins
+//
+.clipboard {
+  cursor: pointer;
+}
