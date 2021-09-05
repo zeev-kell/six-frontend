@@ -41,6 +41,7 @@ const config = {
     { src: '@/plugins/components' },
     { src: '@/plugins/i18n-router' },
     // { src: '@/plugins/vue-mavon-editor', ssr: false, mode: 'client' },
+    { src: '~/plugins/vue-cropper', ssr: false },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -196,7 +197,7 @@ const config = {
     babel: {
       plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
     },
-    vendor: ['element-ui'],
+    vendor: ['element-ui', 'vue-cropper'],
   },
 }
 export default config

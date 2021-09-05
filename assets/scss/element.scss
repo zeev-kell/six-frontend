@@ -79,14 +79,52 @@
 .el-menu-center {
   display: flex;
   align-items: center;
+
   .feather,
   [class^='el-icon-'] {
     width: 20px;
     font-size: 14px;
   }
+
   .feather {
     margin-right: 5px;
     text-align: center;
+  }
+}
+
+.el-submenu.el-dropdown > .el-submenu__title {
+  border-bottom-color: transparent;
+  color: rgb(255, 255, 255);
+  background-color: rgb(84, 92, 100);
+
+  &:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(67, 74, 80);
+
+    .el-submenu__icon-arrow {
+      transform: rotateZ(180deg);
+    }
+  }
+}
+
+.el-submenu-dropdown-menu {
+  background-color: #545c64;
+
+  &.el-popper[x-placement^='bottom'] {
+    margin-top: 5px;
+  }
+
+  .el-dropdown-menu__item {
+    color: rgb(255, 255, 255);
+    background-color: rgb(84, 92, 100);
+
+    &:hover {
+      color: rgb(255, 255, 255);
+      background-color: #434a50;
+    }
+  }
+  .el-dropdown-menu__item--divided::before {
+    background-color: rgb(84, 92, 100);
   }
 }
 
@@ -112,8 +150,12 @@
 }
 
 // 这个可以使平分的换行
-.col-100 {
+.el-col-100 {
   width: 100%;
+}
+
+.el-column--flex {
+  flex-direction: column;
 }
 
 .el-dropdown-info {
@@ -124,6 +166,7 @@
     border-bottom-color: $--color-info;
   }
 
+  /* stylelint-disable no-descending-specificity */
   .el-dropdown-menu__item {
     color: $--color-white;
 

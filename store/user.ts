@@ -19,6 +19,8 @@ export const getters: GetterTree<UserModuleState, NuxtState> = {
   role: (state, getters, rootState) => rootState.auth?.user?.admin,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   permissions: (state, getters, rootState) => rootState.auth?.user?.permissions,
+  // eslint-disable-next-line camelcase
+  avatarUrl: (state, getters, rootState) => rootState.auth?.user?.avatar_url,
 }
 
 export const actions: ActionTree<UserModuleState, NuxtState> = {

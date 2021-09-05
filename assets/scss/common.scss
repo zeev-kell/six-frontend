@@ -25,6 +25,10 @@ hr {
   margin-top: 5px;
 }
 
+.mt-10 {
+  margin-top: 10px;
+}
+
 .mt-20 {
   margin-top: 20px;
 }
@@ -379,6 +383,10 @@ img {
   height: auto;
 }
 
+.img-circle {
+  border-radius: 50%;
+}
+
 //
 // flex
 //
@@ -444,6 +452,9 @@ img {
   line-height: 20px !important;
 }
 
+.border {
+  border: solid 1px #e6e6e6;
+}
 //
 // display
 //
