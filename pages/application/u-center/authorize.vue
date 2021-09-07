@@ -3,7 +3,7 @@
     <div class="card-header el-row--flex">
       <h3 class="card-title mt-10 el-col-full">授权管理</h3>
       <div class="action">
-        <el-button type="primary">新的Token</el-button>
+        <el-button type="primary" @click="dialogVisible = true">新的Token</el-button>
       </div>
     </div>
     <div class="card-body">
@@ -21,37 +21,65 @@
             <div>创建时间：6天前</div>
           </div>
           <div class="el-col-auto">
-            <el-button type="danger">删除</el-button>
+            <loading-button type="danger" :callback="onDelete" :args="[t.id]">删除</loading-button>
           </div>
         </div>
       </div>
     </div>
+    <el-dialog title="新增Token" :visible.sync="dialogVisible">
+      <el-form :model="form">
+        <el-form-item prop="description" label="描述">
+          <el-input v-model="form.description" type="textarea" :rows="3"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <loading-button :callback="onSubmit">确定</loading-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import clipboard from '@/directives/clipboard'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
+  components: { LoadingButton },
   directives: {
     ...clipboard,
   },
 })
 export default class Authorize extends Vue {
-  tableList = [
-    {
-      name: 'name',
-      value: 'fLJeISyhxn7aeNDQ3SO8wf7i9OJOramwGhMfLJeISyhxn7aeNDQ3SO8wf7i9OJOramwGhM',
-    },
-    {
-      name: 'name',
-      value: 'fLJeISyhxn7aeNDQ3SO8wf7i9OJOramwGhMfLJeISyhxn7aeNDQ3SO8wf7i9OJOramwGhM',
-    },
-  ]
+  tableList: any[] = []
+  dialogVisible = false
+  form = {
+    description: '',
+  }
 
-  onCopy(e): void {
+  onCopy(e: any): void {
     alert('You just copied: ' + e.text)
+  }
+  onDelete(id: string): Promise<any> {
+    return this.$confirm('此操作将删除该Token, 是否继续?', '提示', {
+      type: 'warning',
+    }).then(() => {
+      return this.$api.user.removeToken(id).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!',
+        })
+      })
+    })
+  }
+  onSubmit(): Promise<any> {
+    return this.$api.user.createToken(this.form)
+  }
+
+  async mounted(): Promise<any> {
+    this.tableList = await this.$api.user.getTokenList()
+    console.log(this.tableList)
   }
 }
 </script>

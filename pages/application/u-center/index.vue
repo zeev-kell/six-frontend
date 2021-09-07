@@ -7,13 +7,13 @@
       <div class="el-col-12">
         <el-form label-position="top" :model="form">
           <el-form-item label="显示昵称">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.name" placeholder="给自己起个好听的昵称"></el-input>
           </el-form-item>
-          <el-form-item label="邮箱">
+          <el-form-item label="公开邮箱">
             <el-input v-model="form.email"></el-input>
           </el-form-item>
           <el-form-item label="个人简介">
-            <el-input v-model="form.description" type="textarea"></el-input>
+            <el-input v-model="form.description" type="textarea" :rows="5"></el-input>
           </el-form-item>
         </el-form>
       </div>

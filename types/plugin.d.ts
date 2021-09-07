@@ -1,6 +1,7 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import VueRouter from 'vue-router'
 import type { ModuleType as PipeType } from '~/assets/api/pipe'
+import type { ModuleType as UserType } from '~/assets/api/user'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -9,6 +10,7 @@ declare module 'vue/types/vue' {
     $I18nRouter: VueRouter
     $api: {
       pipe: PipeType
+      user: UserType
     }
   }
 }
