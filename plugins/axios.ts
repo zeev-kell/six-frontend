@@ -35,7 +35,7 @@ const AxiosPlugin: Plugin = ({ $axios, store }) => {
       }
       // eslint-disable-next-line no-console
       console.error(error.response.config?.url)
-      if (error.response.config?.url !== '/logout') {
+      if (!error.response.config?.url?.includes('/logout')) {
         await store.dispatch('user/ACTION_LOGOUT')
       }
     }

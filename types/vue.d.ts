@@ -5,6 +5,7 @@ import { ElMessage } from 'element-ui/types/message'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import VueRouter from 'vue-router'
 import { NuxtI18nInstance } from 'nuxt-i18n'
+import { Auth } from '@nuxtjs/auth-next/dist'
 
 interface $ElMessage extends ElMessage {}
 

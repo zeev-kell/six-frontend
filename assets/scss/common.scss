@@ -328,6 +328,10 @@ a:hover {
   word-wrap: break-word !important;
 }
 
+.text-break-all {
+  word-break: break-all;
+}
+
 .text-reset {
   color: inherit !important;
 }
@@ -463,6 +467,7 @@ img {
 .border {
   border: solid 1px #e6e6e6;
 }
+
 //
 // display
 //

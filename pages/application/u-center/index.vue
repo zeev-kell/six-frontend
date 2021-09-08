@@ -7,10 +7,10 @@
       <div class="el-col-12">
         <el-form label-position="top" :model="form">
           <el-form-item label="显示昵称">
-            <el-input v-model="form.name" placeholder="给自己起个好听的昵称"></el-input>
+            <el-input v-model="form.nickname" placeholder="给自己起个好听的昵称"></el-input>
           </el-form-item>
           <el-form-item label="公开邮箱">
-            <el-input v-model="form.email"></el-input>
+            <el-input v-model="form.public_email"></el-input>
           </el-form-item>
           <el-form-item label="个人简介">
             <el-input v-model="form.description" type="textarea" :rows="5"></el-input>
@@ -23,18 +23,24 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import { mapState } from 'vuex'
 
-@Component
+@Component({
+  computed: {
+    ...mapState('user', ['username', 'email', 'avatar_url']),
+  },
+})
 export default class UCenterIndex extends Vue {
   form = {
-    name: '',
-    email: '',
+    nickname: '',
+    public_email: '',
     description: '',
     avatarUrl: '/images/portrait.jpg',
   }
   mounted(): void {
-    this.form.name = this.$store.getters['user/username']
-    this.form.avatarUrl = '/images/portrait.jpg'
+    Object.keys(this.form).forEach((key: string) => {
+      ;(this.form as any)[key] = this.$store.state.user[key]
+    })
   }
 }
 </script>

@@ -1,6 +1,7 @@
 import type { MutationTree } from 'vuex'
+import { NuxtState } from '@nuxt/types/app'
 
-export const state = () => ({
+export const state = (): NuxtState => ({
   validationState: {
     isValidCWL: false,
     isPending: true,

@@ -14,14 +14,14 @@
             <span class="el-icon-key f-36 text-success"></span>
           </div>
           <div class="el-col-full">
-            <div>用于电脑登录</div>
-            <div class="m-y-05">
-              <span v-clipboard="t.value">{{ t.value }}</span>
+            <div>{{ t.description }}</div>
+            <div class="m-y-05 pr-20">
+              <span v-clipboard="t.token" class="text-break-all">{{ t.token }}</span>
             </div>
-            <div>创建时间：6天前</div>
+            <div>创建时间：{{ t.created_at }}</div>
           </div>
           <div class="el-col-auto">
-            <loading-button type="danger" :callback="onDelete" :args="[t.id]">删除</loading-button>
+            <loading-button type="danger" :callback="onDelete" :args="[t.resource_id]">删除</loading-button>
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <loading-button :callback="onSubmit">确定</loading-button>
+        <loading-button :callback="onSubmit" type="primary">确定</loading-button>
       </span>
     </el-dialog>
   </div>
@@ -50,6 +50,10 @@ import LoadingButton from '@/components/LoadingButton.vue'
   directives: {
     ...clipboard,
   },
+  async asyncData({ app }): Promise<any> {
+    const tableList = await app.$api.user.getTokenList()
+    return { tableList }
+  },
 })
 export default class Authorize extends Vue {
   tableList: any[] = []
@@ -58,10 +62,7 @@ export default class Authorize extends Vue {
     description: '',
   }
 
-  onCopy(e: any): void {
-    alert('You just copied: ' + e.text)
-  }
-  onDelete(id: string): Promise<any> {
+  onDelete($event: never, id: string): Promise<any> {
     return this.$confirm('此操作将删除该Token, 是否继续?', '提示', {
       type: 'warning',
     }).then(() => {
@@ -70,16 +71,19 @@ export default class Authorize extends Vue {
           type: 'success',
           message: '删除成功!',
         })
+        return this.onRefresh()
       })
     })
   }
   onSubmit(): Promise<any> {
-    return this.$api.user.createToken(this.form)
+    return this.$api.user.createToken(this.form).then(() => {
+      this.form.description = ''
+      this.dialogVisible = false
+      return this.onRefresh()
+    })
   }
-
-  async mounted(): Promise<any> {
+  async onRefresh(): Promise<any> {
     this.tableList = await this.$api.user.getTokenList()
-    console.log(this.tableList)
   }
 }
 </script>

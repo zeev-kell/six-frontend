@@ -2,8 +2,9 @@
 import type { GetterTree, MutationTree } from 'vuex'
 import { pipeConstants } from '@/constants/PipeConstants'
 import { NuxtState } from '@nuxt/types/app'
+import { RootState } from '@/store/index'
 
-export const state = () => ({
+export const state = (): NuxtState => ({
   pipe_id: null,
   name: null,
   type: 0,
@@ -26,7 +27,7 @@ export const state = () => ({
 
 export type PipeModuleState = ReturnType<typeof state>
 
-export const getters: GetterTree<PipeModuleState, NuxtState> = {
+export const getters: GetterTree<PipeModuleState, RootState> = {
   isTool: (state) => state.type === pipeConstants.items.TYPE_TOOL,
   isApp: (state) => state.type === pipeConstants.items.TYPE_APP,
   isDocker: (state) => state.type === pipeConstants.items.TYPE_DOCKER,
