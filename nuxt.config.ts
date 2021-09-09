@@ -21,6 +21,11 @@ const config = {
       { hid: 'og:image:alt', name: 'og:image:alt', content: 'sixoclock' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      {
+        src: 'https://hm.baidu.com/hm.js?ab3c74d0585f5c310923ae3663cdb4df',
+      },
+    ],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
