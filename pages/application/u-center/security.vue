@@ -25,5 +25,5 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
-export default class Security extends Vue {}
+export default class SecurityPage extends Vue {}
 </script>

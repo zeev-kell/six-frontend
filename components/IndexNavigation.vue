@@ -50,7 +50,7 @@
               </nuxt-link>
             </li>
             <li v-if="!username" class="el-menu-item menu-link" role="menuitem">
-              <nuxt-link :to="localePath('login')">
+              <nuxt-link :to="localePath('access')">
                 {{ $t('nav.login') }}
               </nuxt-link>
             </li>
@@ -65,7 +65,7 @@
       <div class="el-col-auto d-flex is-align-middle hidden-md-and-up">
         <ul class="el-menu--horizontal el-menu">
           <li class="el-menu-item menu-link" role="menuitem">
-            <nuxt-link :to="localePath('login')">
+            <nuxt-link :to="localePath('access')">
               {{ username || $t('nav.login') }}
             </nuxt-link>
           </li>
@@ -114,7 +114,7 @@
             <nuxt-link v-if="!username" :to="localePath('register')">
               {{ $t('nav.register') }}
             </nuxt-link>
-            <nuxt-link v-if="!username" :to="localePath('login')">
+            <nuxt-link v-if="!username" :to="localePath('access')">
               {{ $t('nav.login') }}
             </nuxt-link>
             <nuxt-link v-else :to="localePath('application')">

@@ -174,9 +174,9 @@ const config = {
       },
     },
     redirect: {
-      login: '/login', // 如果需要登录，用户将被重定向到此路径。
-      logout: '/login', // 如果注销后当前路由受到保护，用户将被重定向到此路径。
-      callback: '/login', // 用户登录后将被重定向到此路径。
+      login: '/access', // 如果需要登录，用户将被重定向到此路径。
+      logout: '/access', // 如果注销后当前路由受到保护，用户将被重定向到此路径。
+      callback: '/access', // 用户登录后将被重定向到此路径。
       home: '/application', // 用户登录后将被身份提供者重定向到此路径。
     },
     plugins: ['@/plugins/auth.ts'],

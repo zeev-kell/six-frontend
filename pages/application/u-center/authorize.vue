@@ -55,7 +55,7 @@ import LoadingButton from '@/components/LoadingButton.vue'
     return { tableList }
   },
 })
-export default class Authorize extends Vue {
+export default class AuthorizePage extends Vue {
   tableList: any[] = []
   dialogVisible = false
   form = {

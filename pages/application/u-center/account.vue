@@ -30,7 +30,7 @@ import LoadingButton from '@/components/LoadingButton.vue'
 @Component({
   components: { LoadingButton },
 })
-export default class account extends Vue {
+export default class AccountPage extends Vue {
   $refs!: {
     form: HTMLFormElement
   }

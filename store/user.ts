@@ -76,7 +76,7 @@ export const actions: ActionTree<UserModuleState, RootState> = {
   },
   // 更新当前用户的信息
   async ACTION_GET_INFO({ commit }): Promise<any> {
-    const user = await this.$api.user.getUserInfo()
+    const user = await this.$api.user.getInfo()
     commit('UPDATE_USERINFO', user)
   },
 }

@@ -10,8 +10,11 @@ export class Module {
     this.$axios = $axios
   }
 
-  getUserInfo(): any {
+  getInfo(): any {
     return this.$axios.$get(`/v1/user/profile`)
+  }
+  updateInfo(data: any): any {
+    return this.$axios.$put(`/v1/user/profile`, data)
   }
   getTokenList(): any {
     return this.$axios.$get(`/v1/user/token/personal`)
@@ -20,7 +23,7 @@ export class Module {
     return this.$axios.$post(`/v1/user/token/personal`, data)
   }
   updatePassword(data: any): any {
-    return this.$axios.$post(`/v1/user/security`, data).catch((response) => {
+    return this.$axios.$put(`/v1/user/security`, data).catch((response) => {
       Element.Message.error(response?.msg)
       return Promise.reject(response)
     })

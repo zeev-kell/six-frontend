@@ -55,8 +55,8 @@
           </el-dropdown>
         </template>
         <template v-else>
-          <el-menu-item index="/register"> 注册 </el-menu-item>
-          <el-menu-item index="/login"> 登录 </el-menu-item>
+          <el-menu-item index="/access/register"> 注册 </el-menu-item>
+          <el-menu-item index="/access"> 登录 </el-menu-item>
         </template>
       </el-menu>
     </div>
