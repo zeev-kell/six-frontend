@@ -7,13 +7,13 @@
       <div class="el-col-12">
         <el-form ref="form" label-position="top" :model="form" :rules="rules" @submit.native.prevent>
           <el-form-item label="旧密码" prop="old_password">
-            <el-input v-model="form.old_password"></el-input>
+            <el-input v-model="form.old_password" type="password"></el-input>
           </el-form-item>
           <el-form-item label="新密码" prop="new_password">
-            <el-input v-model="form.new_password"></el-input>
+            <el-input v-model="form.new_password" type="password"></el-input>
           </el-form-item>
           <el-form-item label="确认新密码" prop="con_password">
-            <el-input v-model="form.con_password"></el-input>
+            <el-input v-model="form.con_password" type="password"></el-input>
           </el-form-item>
           <el-form-item>
             <loading-button :callback="onSubmit" type="primary" native-type="submit">确定</loading-button>

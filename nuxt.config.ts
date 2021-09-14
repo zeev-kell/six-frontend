@@ -156,6 +156,7 @@ const config = {
           required: true,
           type: '',
           property: 'data.token',
+          maxAge: 3600,
         },
         endpoints: {
           login: {
@@ -164,11 +165,15 @@ const config = {
             propertyName: 'data.token',
           },
           logout: { url: '/v1/logout', method: 'get' },
-          user: false,
+          // user: false,
+          user: {
+            url: '/v1/user/profile',
+            method: 'get',
+          },
         },
         user: {
           // 是否自动请求用户数据，目前没有该接口
-          autoFetch: false,
+          // autoFetch: false,
           property: false,
         },
       },

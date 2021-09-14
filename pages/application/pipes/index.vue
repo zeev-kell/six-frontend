@@ -45,7 +45,7 @@
                   <el-button type="text" icon="el-icon-search" class="px-5 py-0" @click.stop="showVisualModal(row['pipe_id'])" />
                 </el-tooltip>
                 <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + row['pipe_id'])" :title="row.name">
-                  {{ row.name }}
+                  {{ row.provider + '/' + row.name }}
                 </nuxt-link>
               </div>
             </template>

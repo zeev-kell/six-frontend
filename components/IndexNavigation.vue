@@ -45,7 +45,7 @@
         <client-only>
           <el-menu mode="horizontal">
             <li v-if="!username" class="el-menu-item menu-link" role="menuitem">
-              <nuxt-link :to="localePath('register')">
+              <nuxt-link :to="localePath('access-register')">
                 {{ $t('nav.register') }}
               </nuxt-link>
             </li>
@@ -111,7 +111,7 @@
         </li>
         <li class="el-menu-item menu-link d-flex is-justify-space-around">
           <client-only>
-            <nuxt-link v-if="!username" :to="localePath('register')">
+            <nuxt-link v-if="!username" :to="localePath('access-register')">
               {{ $t('nav.register') }}
             </nuxt-link>
             <nuxt-link v-if="!username" :to="localePath('access')">
