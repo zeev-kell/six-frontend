@@ -103,7 +103,7 @@
             </div>
             <div class="el-col-8">
               <el-popover placement="bottom" trigger="hover">
-                <img style="width: 126px" src="/images/qrcode.jpg" alt="官方微博" />
+                <img style="width: 126px" src="/images/qrcode.webp" alt="官方微博" />
                 <div slot="reference" class="pointer">
                   <div class="icon">
                     <fa :icon="['fab', 'weixin']" class="fa-2x" />
@@ -129,7 +129,7 @@
           ©2021 六点了技术-为生物医疗健康提供最便捷的数据挖掘云平台
           <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2021047962号-1&emsp;</a>
           <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030302001909">
-            <img src="/images/beian.png" alt="" />&nbsp;粤公网安备 44030302001909号
+            <img src="/images/beian.webp" alt="" />&nbsp;粤公网安备 44030302001909号
           </a>
           <a class="pointer" @click="showUA = true">服务协议</a>
         </p>
