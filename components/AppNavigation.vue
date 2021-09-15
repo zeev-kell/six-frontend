@@ -43,7 +43,7 @@
                 <span class="el-icon-user"></span>
                 帐号设置
               </el-dropdown-item>
-              <el-dropdown-item command="application-u-center">
+              <el-dropdown-item command="application-u-creation">
                 <span class="el-icon-edit"></span>
                 我的创作
               </el-dropdown-item>

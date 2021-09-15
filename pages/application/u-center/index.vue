@@ -59,6 +59,7 @@ export default class UCenterIndex extends Vue {
   async onSubmit(): Promise<void> {
     await this.$refs.form.validate()
     await this.$api.user.updateInfo(this.form)
+    this.$store.commit('user/UPDATE_USERINFO', this.form)
     this.$message.success('更新成功')
   }
 }

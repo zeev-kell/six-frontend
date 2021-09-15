@@ -1,5 +1,5 @@
 <template>
-  <el-container class="personal-box p-10">
+  <el-container class="creation-box p-10">
     <el-aside width="240px">
       <div class="card mb-10">
         <div class="card-body el-row--flex el-row">
@@ -13,17 +13,17 @@
         </div>
       </div>
       <el-menu :default-active="$route.path" :router="true" class="border">
-        <el-menu-item :index="localePath('application-u-center')">
+        <el-menu-item :index="localePath('application-u-creation')">
           <i class="el-icon-menu" />
-          <span slot="title">个人信息</span>
+          <span slot="title">创作中心</span>
         </el-menu-item>
-        <el-menu-item :index="localePath('application-u-center-account')">
+        <el-menu-item :index="localePath('application-u-creation-app')">
           <i class="el-icon-menu" />
-          <span slot="title">帐号密码</span>
+          <span slot="title">我的应用</span>
         </el-menu-item>
-        <el-menu-item :index="localePath('application-u-center-authorize')">
+        <el-menu-item :index="localePath('application-u-creation-docs')">
           <i class="el-icon-setting" />
-          <span slot="title">授权管理</span>
+          <span slot="title">我的文档</span>
         </el-menu-item>
       </el-menu>
     </el-aside>
@@ -38,7 +38,7 @@ import { Component, namespace, Vue } from 'nuxt-property-decorator'
 const UserNamespace = namespace('user')
 
 @Component
-export default class UCenterPage extends Vue {
+export default class UCreation extends Vue {
   @UserNamespace.Action('ACTION_GET_INFO')
   ACTION_GET_INFO!: () => void
   @UserNamespace.Getter('username')

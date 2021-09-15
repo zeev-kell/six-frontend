@@ -3,20 +3,20 @@
     <div class="card-header el-row--flex">
       <h3 class="card-title mt-10 el-col-full">授权管理</h3>
       <div class="action">
-        <el-button type="primary" @click="dialogVisible = true">新的Token</el-button>
+        <el-button type="primary" @click="dialogVisible = true">新增Token</el-button>
       </div>
     </div>
     <div class="card-body">
       <div class="text-muted mb-10">这是与您的帐户关联的 Token 列表，用于 sixbox 等客户端免密登录，删除所有您无法识别的 Token。</div>
       <div class="token-list el-row el-row--flex el-column--flex">
-        <div v-for="(t, index) of tableList" :key="index" class="el-row el-row--flex is-align-middle mt-10-a border p-10">
+        <div v-for="(t, index) of tableList" :key="index" class="el-row el-row--flex is-align-middle mt-10-a border p-20">
           <div class="el-col-auto p-20">
             <span class="el-icon-key f-36 text-success"></span>
           </div>
           <div class="el-col-full">
             <div>{{ t.description }}</div>
             <div class="m-y-05 pr-20">
-              <span v-clipboard="t.token" class="text-break-all">{{ t.token }}</span>
+              <small v-clipboard="t.token" class="text-break-all">{{ t.token }}</small>
             </div>
             <div>创建时间：{{ t.created_at }}</div>
           </div>
