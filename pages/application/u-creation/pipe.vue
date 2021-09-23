@@ -4,9 +4,9 @@ import BaseTable from '@/pages/application/_components/BaseTable.vue'
 
 @Component({
   async asyncData({ app }) {
-    const items = await app.$api.pipe.getList()
+    const items = await app.$api.user.getPipes()
     return { items }
   },
 })
-export default class IndexPage extends BaseTable {}
+export default class PipePage extends BaseTable {}
 </script>

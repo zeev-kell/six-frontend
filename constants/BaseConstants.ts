@@ -1,11 +1,11 @@
-import { MapKey, Items, ItemList } from '@/types/constant'
+import { MapKey, Record, ItemList } from '@/types/constant'
 
 export default class BaseConstants {
-  items: Items
+  items: Record
 
   Enum: Map<MapKey, MapKey>
 
-  constructor(items: Items) {
+  constructor(items: Record) {
     this.items = items
     this.Enum = BaseConstants.CreateEnum<MapKey, MapKey>(items)
   }
@@ -40,7 +40,7 @@ export default class BaseConstants {
   }
 
   // 创建枚举，因为要用到生成列表，所以不用 ts 的 enum 定义
-  static CreateEnum<K, V>(o: Items): Map<K, V> {
+  static CreateEnum<K, V>(o: Record): Map<K, V> {
     // 有些字段是 int，所以使用 map 来存储数据
     const map = new Map<K, V>()
     Object.entries(o).forEach(([k, v]) => {

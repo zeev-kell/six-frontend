@@ -45,6 +45,7 @@ const config = {
     { src: '@/plugins/nuxt-client-init.client' },
     { src: '@/plugins/components' },
     { src: '@/plugins/i18n-router' },
+    { src: '@/directives/index', ssr: false },
     // { src: '@/plugins/vue-mavon-editor', ssr: false, mode: 'client' },
     { src: '@/plugins/vue-clipboard2', ssr: false },
   ],

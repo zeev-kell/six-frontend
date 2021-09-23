@@ -31,6 +31,12 @@ export class Module {
   removeToken(tokenId: string): any {
     return this.$axios.$delete(`/v1/user/token/personal/${tokenId}`)
   }
+  getPipes(): any {
+    return this.$axios.$get('/v1/user/pipes')
+  }
+  getDocs(): any {
+    return this.$axios.$get('/v1/user/blogs')
+  }
 }
 
 export type ModuleType = InstanceType<typeof Module>

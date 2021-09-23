@@ -80,7 +80,7 @@ import { pipeConstants } from '@/constants/PipeConstants'
     return { items }
   },
 })
-export default class AppPage extends Vue {
+export default class BaseTable extends Vue {
   items = []
   query = {
     name: this.$route.query.name || '',

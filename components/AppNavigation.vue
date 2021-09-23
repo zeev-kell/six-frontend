@@ -18,9 +18,9 @@
           active-text-color="#ffd04b"
         >
           <el-menu-item :index="localePath('application-pipes')"> 主页 </el-menu-item>
-          <el-submenu :index="localePath('application-u-creation')">
+          <el-submenu v-create :index="localePath('application-u-creation')">
             <template slot="title">我的创作</template>
-            <el-menu-item :index="localePath('application-u-creation-app')">我的应用</el-menu-item>
+            <el-menu-item :index="localePath('application-u-creation-pipe')">我的应用</el-menu-item>
             <el-menu-item :index="localePath('application-u-creation-docs')">我的文档</el-menu-item>
           </el-submenu>
         </el-menu>
@@ -48,10 +48,6 @@
                 <span class="el-icon-user"></span>
                 帐号设置
               </el-dropdown-item>
-              <el-dropdown-item command="application-u-creation">
-                <span class="el-icon-edit"></span>
-                我的创作
-              </el-dropdown-item>
               <el-dropdown-item divided command="ACTION_LOGOUT">
                 <span class="feather icon-log-out"></span>
                 退出登录
@@ -72,11 +68,13 @@
 import { Component, Vue, namespace } from 'nuxt-property-decorator'
 import LogoPng from '@/components/LogoPng.vue'
 import DocsLink from '@/components/common/DocsLink.vue'
+import CanCreate from '@/components/common/CanCreate.vue'
 
 const UserNamespace = namespace('user')
 
 @Component({
   components: {
+    CanCreate,
     DocsLink,
     LogoPng,
   },
