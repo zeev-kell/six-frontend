@@ -23,6 +23,9 @@ import IndexProduct from '@/pages/_components/IndexProduct.vue'
     IndexBanner,
     IndexProduct,
   },
+  head: {
+    title: '六点了协作云-数据分析从未如此便捷',
+  },
 })
 export default class IndexPage extends Vue {}
 </script>

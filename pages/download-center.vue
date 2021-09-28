@@ -90,6 +90,9 @@ const MSG: any = {
   components: { DocsLink },
   scrollToTop: true,
   layout: 'IndexLayoutBase',
+  head: {
+    title: '下载中心-六点了协作云',
+  },
 })
 export default class DownloadCenterPage extends Vue {
   openMsg(type: string) {

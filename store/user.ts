@@ -6,19 +6,19 @@ import { Auth } from '@nuxtjs/auth-next/dist'
 
 export const state = (): NuxtState => {
   return {
-    avatar_url: 'https://www.sixoclock.net/resources/pics/',
+    avatar_url: '',
     coins: null,
     creations: null,
-    description: '一个测试',
-    email: 'r_d@sixoclock.net',
+    description: '',
+    email: '',
     id: 8,
-    last_login_at: '2021-09-09 02:07:24',
-    nickname: 'nick',
-    phone: '12345678910',
-    public_email: 'info@sixoclock.net',
-    registered_at: '2021-04-26 21:42:25',
-    status: 1,
-    updated_at: '2021-09-09 02:07:24',
+    last_login_at: '',
+    nickname: '',
+    phone: '',
+    public_email: '',
+    registered_at: '',
+    status: null,
+    updated_at: '',
   }
 }
 

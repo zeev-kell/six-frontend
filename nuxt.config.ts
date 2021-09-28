@@ -153,11 +153,18 @@ const config = {
   auth: {
     strategies: {
       local: {
+        scheme: 'refresh',
         token: {
           required: true,
           type: '',
           property: 'data.token',
           maxAge: 3600,
+          global: true,
+        },
+        refreshToken: {
+          property: 'data.refresh_token',
+          data: 'refresh_token',
+          maxAge: 3600 * 24 * 30,
         },
         endpoints: {
           login: {
@@ -166,14 +173,14 @@ const config = {
             propertyName: 'data.token',
           },
           logout: { url: '/v1/logout', method: 'get' },
-          // user: false,
           user: {
             url: '/v1/user/profile',
             method: 'get',
           },
+          refresh: { url: '/v1/token/refresh', method: 'post' },
         },
         user: {
-          // 是否自动请求用户数据，目前没有该接口
+          // 是否自动请求用户数据
           // autoFetch: false,
           property: false,
         },
