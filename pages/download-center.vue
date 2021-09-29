@@ -92,6 +92,14 @@ const MSG: any = {
   layout: 'IndexLayoutBase',
   head: {
     title: '下载中心-六点了协作云',
+    meta: [
+      { hid: 'keywords', name: 'keywords', content: 'sixbox,sixbox下载,sixoclock平台软件运行环境,CWL' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Sixbox 是运行sixoclock软件仓库的本地桌面软件，提供可视化选择软件与配置文件并一键本地运行功能。',
+      },
+    ],
   },
 })
 export default class DownloadCenterPage extends Vue {

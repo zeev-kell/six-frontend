@@ -17,7 +17,6 @@ import DragListBox from '@/pages/_components/Graph/components/DragListBox.vue'
 import ValidationReport from '@/pages/_components/Graph/components/ValidationReport.vue'
 import { getStore } from '@/utils/local-storage'
 import { GraphEvent } from '@/constants/GraphEvent'
-import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 
 @Component({
   components: { ValidationReport, DragListBox, GraphIndex },

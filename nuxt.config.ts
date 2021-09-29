@@ -5,20 +5,22 @@ const config = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'keywords', name: 'keywords', content: '生信分析,数据共享,技术教程,六点了科技,sixoclock' },
+      { name: 'author', content: 'sixoclock' },
+      { hid: 'keywords', name: 'keywords', content: 'sixoclock,六点了科技,基因数据云服务,CWL' },
       {
         hid: 'description',
         name: 'description',
         content:
-          '六点了协作云是一个专业的提供生物医疗数据、算法、知识等内容在线创作，使用，托管，共享，可视化计算的云协作平台。囊括生信流程可视化配置，在线运行，下载，免安装本地运行以及流程拖拽智能生成，标准数据下载，生物医疗挖掘知识库等全栈生物医疗相关服务，并提供本地基因云计算私有化部署的整套解决方案。',
+          '六点了协作云是一个专业的提供生物医疗数据、算法、知识等内容在线创作，使用，托管，共享，可视化计算的云协作平台。' +
+          '囊括生信流程可视化配置，在线运行，下载，免安装本地运行以及流程拖拽智能生成，标准数据下载，生物医疗挖掘知识库等全栈生物医疗相关服务，并提供本地基因云计算私有化部署的整套解决方案。',
       },
-      { hid: 'og:type', name: 'og:type', content: 'website' },
-      { hid: 'og:title', name: 'og:title', content: '六点了协作云-sixoclock' },
-      { hid: 'og:site_name', name: 'og:site_name', content: '六点了协作云-sixoclock' },
-      { hid: 'og:description', name: 'og:description', content: '生信分析,数据共享,六点了科技' },
-      { hid: 'og:url', name: 'og:url', content: 'http://www.sixoclock.net/' },
-      { hid: 'og:image', name: 'og:image', content: 'http://www.sixoclock.net/images/logo-black.png' },
-      { hid: 'og:image:alt', name: 'og:image:alt', content: 'sixoclock' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:title', property: 'og:title', content: '六点了协作云-sixoclock' },
+      { hid: 'og:description', property: 'og:description', content: '生信分析,数据共享,六点了科技' },
+      { hid: 'og:site_name', property: 'og:site_name', content: '六点了协作云-sixoclock' },
+      { hid: 'og:url', property: 'og:url', content: 'http://www.sixoclock.net/' },
+      { hid: 'og:image', property: 'og:image', content: 'http://www.sixoclock.net/images/logo-black.png' },
+      { hid: 'og:image:alt', property: 'og:image:alt', content: 'sixoclock' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [

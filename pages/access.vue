@@ -17,6 +17,17 @@ import Copyright from '@/components/Copyright.vue'
     CanvasParticle,
   },
   middleware: ['check-login'],
+  head: {
+    title: '六点了科技',
+    meta: [
+      { hid: 'keywords', name: 'keywords', content: 'sixoclock,六点了科技,基因数据云服务,CWL' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: '六点了协作云是一个专业的提供生物医疗数据、算法、知识等内容在线创作的平台。',
+      },
+    ],
+  },
 })
 export default class AccessPage extends Vue {}
 </script>
