@@ -35,15 +35,20 @@
 
 <script lang="ts">
 import { Component, namespace, Vue } from 'nuxt-property-decorator'
+import { mapState } from 'vuex'
 const UserNamespace = namespace('user')
 
-@Component
+@Component({
+  async middleware({ store }) {
+    // TODO 修改为只有首次加载
+    await store.dispatch('user/ACTION_GET_INFO')
+  },
+  computed: {
+    ...mapState('user', ['username', 'email']),
+  },
+})
 export default class UCenterPage extends Vue {
   @UserNamespace.Action('ACTION_GET_INFO')
   ACTION_GET_INFO!: () => void
-  @UserNamespace.Getter('username')
-  username!: string
-  @UserNamespace.Getter('email')
-  email!: string
 }
 </script>

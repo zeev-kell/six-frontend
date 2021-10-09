@@ -218,3 +218,28 @@ section {
   height: 240px;
   align-items: center;
 }
+
+.el-main .table-box {
+  display: flex;
+  flex: 1;
+  > .table,
+  > .el-table {
+    display: flex;
+    flex: 1 1 100%;
+    overflow-y: auto;
+    flex-direction: column;
+
+    &::before {
+      background-color: transparent;
+    }
+
+    .el-table__body-wrapper {
+      flex: 1 1 100%;
+      overflow-y: auto;
+    }
+
+    .el-table__header-wrapper {
+      flex: 0 0 auto;
+    }
+  }
+}

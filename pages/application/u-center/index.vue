@@ -5,7 +5,7 @@
     </div>
     <div class="card-body el-row el-row--flex">
       <div class="el-col-12">
-        <el-form ref="form" size="mini" label-position="top" :model="form" @submit.native.prevent>
+        <el-form ref="form" label-position="top" :model="form" @submit.native.prevent>
           <el-form-item label="显示昵称">
             <el-input v-model="form.nickname" placeholder="给自己起个好听的昵称"></el-input>
           </el-form-item>

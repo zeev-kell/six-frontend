@@ -158,7 +158,7 @@ const config = {
         scheme: 'refresh',
         token: {
           required: true,
-          type: '',
+          type: 'Bearer',
           property: 'data.token',
           maxAge: 3600,
           global: true,
@@ -176,13 +176,13 @@ const config = {
           },
           logout: { url: '/v1/logout', method: 'get' },
           user: {
-            url: '/v1/user/profile',
+            url: '/v1/user/info',
             method: 'get',
           },
           refresh: { url: '/v1/token/refresh', method: 'post' },
         },
         user: {
-          // 是否自动请求用户数据
+          // 是否自动请求用户数据， 默认 true
           // autoFetch: false,
           property: false,
         },

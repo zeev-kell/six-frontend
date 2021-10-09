@@ -25,41 +25,43 @@
           </el-submenu>
         </el-menu>
       </div>
-      <el-menu
-        :default-active="$route.path"
-        :router="true"
-        mode="horizontal"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#ffd04b"
-      >
-        <li role="menuitem" tabindex="-1" class="el-menu-item menu-link">
-          <docs-link to="/">帮助中心</docs-link>
-        </li>
-        <template v-if="loggedIn">
-          <el-dropdown class="el-submenu" @command="handleUserMenu">
-            <div class="el-submenu__title">
-              <el-avatar size="medium" src="/images/portrait.jpg"></el-avatar>
-              {{ username }}
-              <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
-            </div>
-            <el-dropdown-menu slot="dropdown" :visible-arrow="false" class="el-submenu-dropdown-menu">
-              <el-dropdown-item command="application-u-center">
-                <span class="el-icon-user"></span>
-                帐号设置
-              </el-dropdown-item>
-              <el-dropdown-item divided command="ACTION_LOGOUT">
-                <span class="feather icon-log-out"></span>
-                退出登录
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </template>
-        <template v-else>
-          <el-menu-item index="/access/register"> 注册 </el-menu-item>
-          <el-menu-item index="/access"> 登录 </el-menu-item>
-        </template>
-      </el-menu>
+      <div class="el-col-auto">
+        <el-menu
+          :default-active="$route.path"
+          :router="true"
+          mode="horizontal"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+        >
+          <li role="menuitem" tabindex="-1" class="el-menu-item menu-link">
+            <docs-link to="/">帮助中心</docs-link>
+          </li>
+          <template v-if="loggedIn">
+            <el-dropdown class="el-submenu" @command="handleUserMenu">
+              <div class="el-submenu__title">
+                <el-avatar size="medium" src="/images/portrait.jpg"></el-avatar>
+                {{ username }}
+                <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+              </div>
+              <el-dropdown-menu slot="dropdown" :visible-arrow="false" class="el-submenu-dropdown-menu">
+                <el-dropdown-item command="application-u-center">
+                  <span class="el-icon-user"></span>
+                  帐号设置
+                </el-dropdown-item>
+                <el-dropdown-item divided command="ACTION_LOGOUT">
+                  <span class="feather icon-log-out"></span>
+                  退出登录
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </template>
+          <template v-else>
+            <el-menu-item index="/access/register"> 注册 </el-menu-item>
+            <el-menu-item index="/access"> 登录 </el-menu-item>
+          </template>
+        </el-menu>
+      </div>
     </div>
   </el-header>
 </template>

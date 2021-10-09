@@ -11,7 +11,7 @@ export const state = (): NuxtState => {
     creations: null,
     description: '',
     email: '',
-    id: 8,
+    id: null,
     last_login_at: '',
     nickname: '',
     phone: '',
@@ -51,7 +51,7 @@ export const actions: ActionTree<UserModuleState, RootState> = {
       .then((response: any) => {
         const data = response.data.data
         const user = $auth.user as any
-        user.permissions = data.permissions
+        // user.permissions = data.permissions
         // eslint-disable-next-line camelcase
         user.refreshToken = data.refresh_token
         $auth.$storage.setLocalStorage('user', user)

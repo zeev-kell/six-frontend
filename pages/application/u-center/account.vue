@@ -5,7 +5,7 @@
     </div>
     <div class="card-body el-row el-row--flex">
       <div class="el-col-12">
-        <el-form ref="form" size="mini" label-position="top" :model="form" :rules="rules" @submit.native.prevent>
+        <el-form ref="form" label-position="top" :model="form" :rules="rules" @submit.native.prevent>
           <el-form-item label="旧密码" prop="old_password">
             <el-input v-model="form.old_password" type="password"></el-input>
           </el-form-item>
