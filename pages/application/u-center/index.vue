@@ -9,12 +9,14 @@
           <el-form-item label="显示昵称">
             <el-input v-model="form.nickname" placeholder="给自己起个好听的昵称"></el-input>
           </el-form-item>
+          <!--
           <el-form-item label="公开邮箱">
             <el-input v-model="form.public_email"></el-input>
           </el-form-item>
           <el-form-item label="手机帐号">
             <el-input v-model="form.phone"></el-input>
           </el-form-item>
+          -->
           <el-form-item label="个人简介">
             <el-input v-model="form.description" type="textarea" :rows="5"></el-input>
           </el-form-item>
@@ -45,9 +47,7 @@ export default class UCenterIndex extends Vue {
 
   form = {
     nickname: '',
-    public_email: '',
     description: '',
-    phone: '',
     avatarUrl: '/images/portrait.jpg',
   }
   mounted(): void {
