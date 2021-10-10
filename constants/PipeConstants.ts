@@ -1,6 +1,6 @@
 import BaseConstants from '@/constants/BaseConstants'
-import { Items } from '@/types/constant'
-const items: Items = {
+import { Record } from '@/types/constant'
+const items: Record = {
   STATUS_DRAFT: '0', // 草稿
   STATUS_OFF: '1', // 禁用
   STATUS_ON: '2', // 启用

@@ -33,10 +33,10 @@
                 <nuxt-link :to="localePath('index') + '#section-product'">云协作</nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath('/graph-info/new')">流程组合</nuxt-link>
+                <nuxt-link :to="localePath('graph-info-new')">流程组合</nuxt-link>
               </li>
               <li>
-                <a :href="RESOURCES_URL + '/data/'" target="_blank">数据集</a>
+                <nuxt-link :to="localePath('application-data')">数据集</nuxt-link>
               </li>
               <li>
                 <nuxt-link :to="localePath('application-docs')">知识库</nuxt-link>
@@ -50,7 +50,7 @@
                 <nuxt-link :to="localePath('download-center')">客户端下载</nuxt-link>
               </li>
               <li>
-                <a :href="RESOURCES_URL + '/data/'" target="_blank">数据下载</a>
+                <nuxt-link :to="localePath('application-data')">数据下载</nuxt-link>
               </li>
               <li>
                 <nuxt-link :to="localePath('application-pipes')">软件仓库</nuxt-link>

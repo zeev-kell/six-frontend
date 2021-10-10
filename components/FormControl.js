@@ -84,7 +84,7 @@ class AbstractControl {
   _updateValue() {}
 }
 
-class FormControl extends AbstractControl {
+export class FormControl extends AbstractControl {
   constructor(formState) {
     super()
     this._applyFormState(formState)
@@ -122,7 +122,7 @@ class FormControl extends AbstractControl {
   }
 }
 
-class FormGroup extends AbstractControl {
+export class FormGroup extends AbstractControl {
   controls = null
   constructor(controls) {
     super()
@@ -240,7 +240,7 @@ class FormGroup extends AbstractControl {
   }
 }
 
-class FormArray extends AbstractControl {
+export class FormArray extends AbstractControl {
   constructor(controls) {
     super()
     this.controls = controls
@@ -355,4 +355,4 @@ class FormArray extends AbstractControl {
   }
 }
 
-export { FormGroup, FormArray, FormControl }
+export default { FormControl, FormGroup, FormArray }

@@ -25,6 +25,9 @@ export default {
   TYPE_DOCKER: 'Dockerfile',
   TYPE_WORK: '工作',
   TYPE_WORKFLOW: '工作流',
+  TYPE_FORMAT: '格式',
+  TYPE_DATA: '数据',
+  TYPE_DATA_PACKAGE: '数据包',
   // 导航条
   nav: {
     index: '主页',

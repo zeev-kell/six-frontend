@@ -41,7 +41,7 @@
 import { Component, InjectReactive, Vue } from 'nuxt-property-decorator'
 import NativeFileBrowserFormField from '@/pages/_components/Graph/components/NativeFileBrowserFormField.vue'
 import { WorkflowModel } from 'cwlts/models'
-import { FormArray, FormControl, FormGroup } from '@/components/FormControl'
+import { FormArray, FormControl, FormGroup } from '@/components/FormControl.js'
 
 @Component({
   components: { NativeFileBrowserFormField },

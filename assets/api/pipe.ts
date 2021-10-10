@@ -23,10 +23,6 @@ export class Module {
     return this.$axios.$get('/v2/pipe/repository/' + pipeId)
   }
 
-  getList() {
-    return this.$axios.$get('/v2/pipes')
-  }
-
   getListV2(params: any): Promise<PipeModel[]> {
     return this.$axios.$get<PipeModel[]>('/v2/pipes', { params }).then((response) => {
       response.forEach((r) => {

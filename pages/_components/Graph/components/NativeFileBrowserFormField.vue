@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { FormControl } from '@/components/FormControl'
+import { FormControl } from '@/components/FormControl.js'
 
 @Component
 export default class NativeFileBrowserFormField extends Vue {
