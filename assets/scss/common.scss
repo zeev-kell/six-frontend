@@ -25,6 +25,14 @@ hr {
   margin-top: 5px;
 }
 
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-10-a + .mt-10-a {
+  @extend .mt-10;
+}
+
 .mt-20 {
   margin-top: 20px;
 }
@@ -39,6 +47,10 @@ hr {
 
 .mr-0 {
   margin-right: 0;
+}
+
+.mr-10 {
+  margin-right: 10px;
 }
 
 .m-r-1 {
@@ -75,6 +87,10 @@ hr {
 
 .ml-0 {
   margin-left: 0 !important;
+}
+
+.ml-10 {
+  margin-left: 10px;
 }
 
 .m-l-05 {
@@ -194,6 +210,10 @@ hr {
   padding-bottom: 2rem;
 }
 
+.p-0 {
+  padding: 0;
+}
+
 .p-5 {
   padding: 5px;
 }
@@ -308,6 +328,10 @@ a:hover {
   word-wrap: break-word !important;
 }
 
+.text-break-all {
+  word-break: break-all;
+}
+
 .text-reset {
   color: inherit !important;
 }
@@ -330,6 +354,10 @@ a:hover {
 
 .text-warning {
   color: $--color-warning;
+}
+
+.text-success {
+  color: $--color-success;
 }
 
 //
@@ -367,11 +395,19 @@ img {
   height: auto;
 }
 
+.img-circle {
+  border-radius: 50%;
+}
+
 //
 // flex
 //
 .order-2 {
   order: 2;
+}
+
+.f-b-20 {
+  flex: 0 0 20px;
 }
 
 //
@@ -409,11 +445,11 @@ img {
 //
 // align
 //
-.v-center {
+.v-middle {
   vertical-align: middle;
 }
 
-.y-baseline {
+.v-baseline {
   vertical-align: baseline;
 }
 
@@ -426,6 +462,10 @@ img {
 
 .lh-20-i {
   line-height: 20px !important;
+}
+
+.border {
+  border: solid 1px #e6e6e6;
 }
 
 //
@@ -453,19 +493,24 @@ img {
 
 /*滚动条美化：start*/
 
-::-webkit-scrollbar-track-piece {
-  background-color: #f8f8f8;
-}
-
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: #f8f8f8;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: #dddddd;
   background-clip: padding-box;
   min-height: 28px;
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -473,3 +518,10 @@ img {
 }
 
 /* 滚动条美化：end */
+
+//
+// plugins
+//
+.clipboard {
+  cursor: pointer;
+}

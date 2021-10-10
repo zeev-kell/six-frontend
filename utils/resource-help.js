@@ -1,4 +1,4 @@
-import dMarked from '@/directives/marked/marked'
+import { getTocObj } from '@/directives/marked/marked'
 const BLOG_URL = process.env.RESOURCES_URL + '/blog'
 
 export function resourceHelp(data = '') {
@@ -10,7 +10,7 @@ export function resourceHelp(data = '') {
     imageList.push(imageSrc)
     return subStr + BLOG_URL + '/img/' + imageName + ')'
   })
-  const [markdown, toc] = dMarked.$getTocObj(str)
+  const [markdown, toc] = getTocObj(str)
   /**
    * @param markdown 内容
    * @param toc 标题

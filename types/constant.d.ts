@@ -1,8 +1,11 @@
-import { NuxtVueI18n } from 'nuxt-i18n'
 // 目前只有 string 类型
 export type MapKey = string | number
 
-export interface Items {
+export interface Record {
+  [index: string]: MapKey
+}
+
+export interface Items extends Record {
   STATUS_DRAFT: MapKey
   STATUS_OFF: MapKey
   STATUS_ON: MapKey
@@ -12,7 +15,6 @@ export interface Items {
   TYPE_TOOL: MapKey
   TYPE_WORK: MapKey
   TYPE_WORKFLOW: MapKey
-  [index: string]: MapKey
 }
 
 export type ItemList = { value: MapKey; label: string }[]

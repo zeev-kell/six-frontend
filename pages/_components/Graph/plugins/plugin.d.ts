@@ -1,1 +1,1 @@
-export type fnChange = (change: GraphChange) => void
+export type fnChange = (change: any) => void

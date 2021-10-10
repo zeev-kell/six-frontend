@@ -1,6 +1,6 @@
 <template>
   <transition name="el-fade-in-linear">
-    <div v-if="showPanel" class="cwl-params-panel right-panel">
+    <div v-if="showPanel" class="right-panel">
       <div class="card-header">
         <div class="f-b text-truncate" :title="labelName">
           {{ labelName }}
@@ -80,36 +80,3 @@ export default class WorkflowStepInspector extends InspectorMixins {
   }
 }
 </script>
-
-<style scoped lang="scss" rel="stylesheet">
-@import '../theme';
-.el-tabs ::v-deep {
-  height: 100%;
-
-  .el-tabs__nav {
-    width: 100%;
-    display: flex;
-  }
-  .el-tabs__item {
-    flex: 1;
-    color: #bbbbbb;
-    padding: 0 !important;
-    text-align: center;
-    &.is-active {
-      color: white;
-    }
-  }
-  .el-tabs__nav-wrap::after {
-    background-color: $b-color;
-    height: 1px;
-  }
-  .el-tabs__active-bar {
-    height: 1px;
-  }
-  .el-tabs__content {
-    height: calc(100% - 40px - 15px);
-
-    /*height: calc(100vh - 47px - 30px - 40px - 15px);*/
-  }
-}
-</style>

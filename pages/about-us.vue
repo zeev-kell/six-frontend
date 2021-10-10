@@ -76,6 +76,9 @@ import { Component, Vue } from 'nuxt-property-decorator'
 @Component({
   layout: 'IndexLayout',
   scrollToTop: true,
+  head: {
+    title: '关于我们-六点了协作云',
+  },
 })
 export default class AboutUsPage extends Vue {}
 </script>

@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 import type { MutationTree } from 'vuex'
+import { NuxtState } from '@nuxt/types/app'
 
-export const state = () => ({
+export const state = (): NuxtState => ({
   bodyClass: '',
   isMobile: false,
   dragToolItem: undefined,

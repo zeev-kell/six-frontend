@@ -1,37 +1,54 @@
 <template>
-  <el-container class="personal-box">
+  <el-container class="personal-box p-10">
     <el-aside width="240px">
-      <el-menu :default-active="$route.path" :router="true">
-        <el-menu-item index="/application/u-center">
+      <div class="card mb-10">
+        <div class="card-body el-row--flex el-row">
+          <div class="el-col-auto">
+            <el-avatar size="medium" src="/images/portrait.jpg"></el-avatar>
+          </div>
+          <div class="el-col-equal el-row--flex el-column--flex is-justify-center f-b p-l-1">
+            <label>{{ username }}</label>
+            <label class="text-truncate">{{ email }}</label>
+          </div>
+        </div>
+      </div>
+      <el-menu :default-active="$route.path" :router="true" class="border">
+        <el-menu-item :index="localePath('application-u-center')">
           <i class="el-icon-menu" />
-          <span slot="title">基本信息</span>
+          <span slot="title">个人信息</span>
         </el-menu-item>
-        <el-menu-item index="/application/u-center/security">
-          <i class="el-icon-document" />
-          <span slot="title">账户安全</span>
+        <el-menu-item :index="localePath('application-u-center-account')">
+          <i class="el-icon-menu" />
+          <span slot="title">帐号密码</span>
         </el-menu-item>
-        <el-menu-item index="/application/u-center/authorize">
+        <el-menu-item :index="localePath('application-u-center-authorize')">
           <i class="el-icon-setting" />
           <span slot="title">授权管理</span>
         </el-menu-item>
       </el-menu>
     </el-aside>
-    <el-main>
+    <el-main class="p-0 ml-10">
       <nuxt-child />
     </el-main>
   </el-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, namespace, Vue } from 'nuxt-property-decorator'
+import { mapState } from 'vuex'
+const UserNamespace = namespace('user')
 
-@Component
-export default class UCenterPage extends Vue {}
-</script>
-
-<style scoped lang="scss">
-.menu {
-  flex: 0 0 240px;
-  width: 240px;
+@Component({
+  async middleware({ store }) {
+    // TODO 修改为只有首次加载
+    await store.dispatch('user/ACTION_GET_INFO')
+  },
+  computed: {
+    ...mapState('user', ['username', 'email']),
+  },
+})
+export default class UCenterPage extends Vue {
+  @UserNamespace.Action('ACTION_GET_INFO')
+  ACTION_GET_INFO!: () => void
 }
-</style>
+</script>

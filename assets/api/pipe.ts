@@ -24,7 +24,7 @@ export class Module {
   }
 
   getList() {
-    return this.$axios.$get('/v1/pipes')
+    return this.$axios.$get('/v2/pipes')
   }
 
   getListV2(params: any): Promise<PipeModel[]> {

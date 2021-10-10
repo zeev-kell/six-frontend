@@ -74,7 +74,7 @@ export default class Docs extends Vue {
   query = {
     name: this.$route.query.name || '',
     category: this.$route.query.category || '',
-    type: this.$route.query.type || '',
+    type: this.$route.query.type ? Number(this.$route.query.type) : '',
   }
   items = []
   typeList = []

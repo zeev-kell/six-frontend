@@ -1,7 +1,7 @@
 <template>
   <div v-once class="logo-wrap el-row--flex is-align-middle">
-    <img src="/images/logo-white.png" class="logo-white" alt="six-o-clock" />
-    <img src="/images/logo-black.png" class="logo-black" alt="six-o-clock" />
+    <img src="/images/logo-white.webp" class="logo-white" alt="six-o-clock" />
+    <img src="/images/logo-black.webp" class="logo-black" alt="six-o-clock" />
     <span>六点了技术</span>
   </div>
 </template>
