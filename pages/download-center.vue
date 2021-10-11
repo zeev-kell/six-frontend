@@ -91,13 +91,18 @@ const MSG: any = {
   scrollToTop: true,
   layout: 'IndexLayoutBase',
   head: {
-    title: '下载中心-六点了协作云',
+    title: '下载中心-sixbox',
     meta: [
       { hid: 'keywords', name: 'keywords', content: 'sixbox,sixbox下载,sixoclock平台软件运行环境,CWL' },
       {
         hid: 'description',
         name: 'description',
-        content: 'Sixbox 是运行sixoclock软件仓库的本地桌面软件，提供可视化选择软件与配置文件并一键本地运行功能。',
+        content: 'Sixbox是运行sixoclock软件仓库的本地桌面软件，提供可视化选择软件与配置文件并一键本地运行功能。',
+      },
+      {
+        hid: 'og:description',
+        name: 'og:description',
+        content: 'Sixbox是运行sixoclock软件仓库的本地桌面软件，提供可视化选择软件与配置文件并一键本地运行功能。',
       },
     ],
   },
