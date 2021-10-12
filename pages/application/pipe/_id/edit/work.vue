@@ -44,7 +44,7 @@ import { JobHelper } from 'cwlts/models/helpers/JobHelper'
     })
     const options = items.map((d: any) => {
       return {
-        value: d.pipe_id,
+        value: d.resource_id,
         label: d.name,
       }
     })
@@ -88,12 +88,12 @@ export default class Work extends Vue {
       this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { cwl: data.cwl, content: data.content })
     })
   }
-  onValueChange(value: string) {
+  onValueChange(resourceId: string) {
     if (this.content && this.content !== '') {
       this.$confirm('是否替换新的软件运行模板？')
         .then(() => {
           // 不使用 async
-          this.$api.pipe.getVersion(value).then((pipe: any) => {
+          this.$api.pipe.get(resourceId).then((pipe: any) => {
             let content = pipe?.content
             if (content) {
               // TODO 修改成新的类

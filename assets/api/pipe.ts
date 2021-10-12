@@ -19,8 +19,8 @@ export class Module {
     return this.$axios.$post('/v2/pipe', data)
   }
 
-  get(pipeId: string) {
-    return this.$axios.$get('/v2/pipe/repository/' + pipeId)
+  get(resourceId: string) {
+    return this.$axios.$get('/v2/pipe/repository/' + resourceId)
   }
 
   getList() {

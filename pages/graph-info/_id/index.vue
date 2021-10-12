@@ -9,7 +9,7 @@ import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 @Component({
   components: { GraphIndex },
   async asyncData({ app, params }) {
-    const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
+    const item = await app.$api.pipe.get(params.id)
     return { item }
   },
 })
