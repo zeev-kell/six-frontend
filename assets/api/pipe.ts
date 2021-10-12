@@ -19,6 +19,7 @@ export class Module {
     return this.$axios.$post('/v2/pipe', data)
   }
 
+  // 获取主表信息
   get(pipeId: string) {
     return this.$axios.$get('/v2/pipe/repository/' + pipeId)
   }
@@ -50,6 +51,7 @@ export class Module {
     })
   }
 
+  // 获取版本信息
   getVersion(versionId: string) {
     return this.$axios.$get('/v2/pipe/' + versionId)
   }

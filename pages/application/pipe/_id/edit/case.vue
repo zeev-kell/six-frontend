@@ -30,7 +30,7 @@ import LoadingButton from '@/components/LoadingButton.vue'
   async asyncData({ app, store }) {
     const item = store.state.pipe
     const type = store.getters['pipe/isTool'] ? pipeConstants.items.TYPE_WORK : pipeConstants.items.TYPE_WORKFLOW
-    const items = await app.$axios.$get('/v1/pipes', {
+    const items = await app.$axios.$get('/v2/pipes', {
       params: {
         type,
       },

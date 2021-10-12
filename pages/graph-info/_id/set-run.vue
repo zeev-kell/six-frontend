@@ -11,10 +11,10 @@ import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 @Component({
   components: { GraphIndex },
   async asyncData({ app, params, query }) {
-    const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
+    const item = await app.$api.pipe.getVersion(params.id)
     const profileId = query.profile ?? item.profile
     if (profileId) {
-      const profile = await app.$axios.$get(`/v2/pipe/${profileId}`)
+      const profile = await app.$api.pipe.getVersion(profileId as string)
       return { item, profile }
     }
     return { item }
