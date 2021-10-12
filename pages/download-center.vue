@@ -86,19 +86,20 @@ const MSG: any = {
   sixrunr: [],
 }
 
+const description =
+  'sixbox是sixoclock平台的客户端软件，支持本地创建、运行、管理sixoclock各类资源' +
+  '（CWL格式软件，数据以及数据格式描述等）并与sixoclock平台进行在线交互。'
+
 @Component({
   components: { DocsLink },
   scrollToTop: true,
   layout: 'IndexLayoutBase',
   head: {
-    title: '下载中心-六点了协作云',
+    title: '下载中心-sixbox-本地客户端软件',
     meta: [
-      { hid: 'keywords', name: 'keywords', content: 'sixbox,sixbox下载,sixoclock平台软件运行环境,CWL' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'Sixbox 是运行sixoclock软件仓库的本地桌面软件，提供可视化选择软件与配置文件并一键本地运行功能。',
-      },
+      { hid: 'keywords', name: 'keywords', content: 'sixbox,sixbox下载,sixoclock平台软件运行环境,sixoclock,CWL' },
+      { hid: 'description', name: 'description', content: description },
+      { hid: 'og:description', name: 'og:description', content: description },
     ],
   },
 })

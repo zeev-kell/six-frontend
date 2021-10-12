@@ -1,26 +1,26 @@
+const description =
+  '六点了协作云-sixoclock是一个专业的提供生物医疗数据、算法、知识等线创作，使用，托管，共享，可视化计算的云协作平台，' +
+  '提供基于CWL(Common Workflow Language)和docker的数据在线可视化配置运行，本地基因数据云服务私有化部署服务。'
 const config = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
+  // og: https://www.cnblogs.com/chig/p/14086838.html
   head: {
-    title: '六点了协作云-数据分析从未如此便捷',
+    title: '六点了协作云-sixoclock-数据可视化分析云平台',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'author', content: 'sixoclock' },
-      { hid: 'keywords', name: 'keywords', content: 'sixoclock,六点了科技,基因数据云服务,CWL' },
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          '六点了协作云是一个专业的提供生物医疗数据、算法、知识等内容在线创作，使用，托管，共享，可视化计算的云协作平台。' +
-          '囊括生信流程可视化配置，在线运行，下载，免安装本地运行以及流程拖拽智能生成，标准数据下载，生物医疗挖掘知识库等全栈生物医疗相关服务，并提供本地基因云计算私有化部署的整套解决方案。',
-      },
+      { name: 'author', content: '六点了科技-sixoclock' },
+      { name: 'Copyright', content: '六点了科技-sixoclock版权所有' },
+      { hid: 'keywords', name: 'keywords', content: 'sixoclock,六点了协作云,六点了科技,六点了,CWL,基因数据云服务' },
+      { hid: 'description', name: 'description', content: description },
       { hid: 'og:type', property: 'og:type', content: 'website' },
-      { hid: 'og:title', property: 'og:title', content: '六点了协作云-sixoclock' },
-      { hid: 'og:description', property: 'og:description', content: '生信分析,数据共享,六点了科技' },
+      { hid: 'og:title', property: 'og:title', content: '六点了协作云-sixoclock-数据可视化分析云平台' },
+      { hid: 'og:description', property: 'og:description', content: description },
       { hid: 'og:site_name', property: 'og:site_name', content: '六点了协作云-sixoclock' },
       { hid: 'og:url', property: 'og:url', content: 'http://www.sixoclock.net/' },
       { hid: 'og:image', property: 'og:image', content: 'http://www.sixoclock.net/images/logo-black.png' },
       { hid: 'og:image:alt', property: 'og:image:alt', content: 'sixoclock' },
+      { hid: 'og:release_date', property: 'og:release_date', content: `${new Date().toLocaleDateString()} ${new Date().toTimeString()}` },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
