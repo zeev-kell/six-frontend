@@ -37,7 +37,7 @@ import { JobHelper } from 'cwlts/models/helpers/JobHelper'
   async asyncData({ app, store }) {
     const item = store.state.pipe
     const type = store.getters['pipe/isWork'] ? pipeConstants.items.TYPE_TOOL : pipeConstants.items.TYPE_APP
-    const items = await app.$axios.$get('/v1/pipes', {
+    const items = await app.$axios.$get('/v2/pipes', {
       params: {
         type,
       },
@@ -49,7 +49,7 @@ import { JobHelper } from 'cwlts/models/helpers/JobHelper'
       }
     })
     const value = item.cwl
-    const graphItem = value ? await app.$axios.$get(`/v2/pipe/${value}`) : undefined
+    const graphItem = value ? await app.$api.pipe.getVersion(value) : undefined
     return { options, value, graphItem }
   },
 })
@@ -93,7 +93,7 @@ export default class Work extends Vue {
       this.$confirm('是否替换新的软件运行模板？')
         .then(() => {
           // 不使用 async
-          this.$api.pipe.get(resourceId).then((pipe: any) => {
+          this.$api.pipe.getVersion(resourceId).then((pipe: any) => {
             let content = pipe?.content
             if (content) {
               // TODO 修改成新的类

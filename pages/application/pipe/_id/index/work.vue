@@ -56,7 +56,7 @@ import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
     const item = store.state.pipe
     if (item.cwl) {
       // 请求 graph 数据
-      const graphItem = await app.$axios.$get(`/v2/pipe/${item.cwl}`)
+      const graphItem = await app.$api.pipe.getVersion(item.cwl)
       return { graphItem }
     }
   },
