@@ -33,6 +33,9 @@ const MockModule: Module = function () {
       }),
     ]
   })
+  mock.onGet(/\/api\/v[1|2]\/user\/info|profile/).reply(() => {
+    return [200, { admin: false, uid: Mock.Random.string('lower', 32), uname: 'keziyuan', username: 'keziyuan' }]
+  })
   // mock.onGet(/\/blog\//g).reply(() => {
   //   return [200, '### DDD']
   // })

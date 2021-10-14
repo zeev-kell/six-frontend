@@ -47,9 +47,9 @@ const config = {
     { src: '@/plugins/nuxt-client-init.client' },
     { src: '@/plugins/components' },
     { src: '@/plugins/i18n-router' },
-    { src: '@/directives/index', ssr: false },
-    // { src: '@/plugins/vue-mavon-editor', ssr: false, mode: 'client' },
-    { src: '@/plugins/vue-clipboard2', ssr: false },
+    { src: '@/directives/index', mode: 'client' },
+    // { src: '@/plugins/vue-mavon-editor', mode: 'client' },
+    { src: '@/plugins/vue-clipboard2', mode: 'client' },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -76,7 +76,7 @@ const config = {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    // ...(process.env.NODE_ENV === 'development' ? ['~/modules/mockjs.ts'] : []),
+    ...(process.env.NODE_ENV === 'development' ? ['~/modules/mockjs.ts'] : []),
     // ...['@/modules/mockjs.ts'],
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',

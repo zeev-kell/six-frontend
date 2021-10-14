@@ -29,6 +29,15 @@ Mock.mock(/\/api\/v[1|2]\/user/, 'get', function () {
     admin: false,
     uid: Mock.Random.string('lower', 32),
     uname: 'keziyuan',
+    username: 'keziyuan',
+  })
+})
+Mock.mock(/\/api\/v[1|2]\/user\/info|profile/, 'get', function () {
+  return Mock.mock({
+    admin: false,
+    uid: Mock.Random.string('lower', 32),
+    uname: 'keziyuan',
+    username: 'keziyuan',
   })
 })
 Mock.mock(PipeUrl, function () {
