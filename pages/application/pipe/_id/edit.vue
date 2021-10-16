@@ -65,7 +65,7 @@ import CanExamine from '@/components/common/CanExamine.vue'
     // ID 不同，需要重新请求数据
     if (params.id !== pipe.resource_id) {
       // params.id = 'bd5adb8d-8615-4a09-9cf8-fa0005de6518'
-      const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
+      const item = await app.$api.pipe.getVersion(params.id)
       // eslint-disable-next-line camelcase
       if (item.readme?.by_system) {
         // eslint-disable-next-line camelcase

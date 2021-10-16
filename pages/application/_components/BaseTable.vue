@@ -29,6 +29,9 @@
           <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-new')" custom>
             <el-button type="primary" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
           </nuxt-link>
+          <nuxt-link v-slot="{ navigate }" :to="localePath('graph-info-new')" custom>
+            <el-button type="default" role="link" icon="el-icon-share" @click="navigate" @keypress.enter="navigate"> 流程组合 </el-button>
+          </nuxt-link>
         </div>
       </div>
       <div class="table-box">
@@ -37,9 +40,9 @@
             <template slot-scope="{ row }">
               <div class="el-row--flex is-align-middle">
                 <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
-                  <el-button type="text" icon="el-icon-search" class="px-5 py-0" @click.stop="showVisualModal(row['pipe_id'])" />
+                  <el-button type="text" icon="el-icon-search" class="px-5 py-0" @click.stop="showVisualModal(row['resource_id'])" />
                 </el-tooltip>
-                <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + row['pipe_id'])" :title="row.name">
+                <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + row['resource_id'])" :title="row.name">
                   {{ row.provider + '/' + row.name }}
                 </nuxt-link>
               </div>

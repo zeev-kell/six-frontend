@@ -65,7 +65,7 @@ import BaseTable from '@/pages/application/_components/BaseTable.vue'
     return { items }
   },
 })
-export default class AppPage extends BaseTable {
+export default class DocsPage extends BaseTable {
   query = {
     name: this.$route.query.name || '',
     category: this.$route.query.category || '',

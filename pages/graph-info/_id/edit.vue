@@ -4,7 +4,7 @@ import GraphWorkflowEdit from '@/pages/_components/Graph/GraphWorkflowEdit.vue'
 
 @Component({
   async asyncData({ app, params }) {
-    const item = await app.$axios.$get(`/v2/pipe/${params.id}`)
+    const item = await app.$api.pipe.getVersion(params.id)
     return { item }
   },
 })
