@@ -36,7 +36,7 @@
           <el-table-column label="名称" prop="name" sortable width="280">
             <template slot-scope="{ row }">
               <div class="el-row--flex is-align-middle">
-                <nuxt-link class="text-truncate" :to="localePath('/application/datum/' + row['data_id'])" :title="row.name">
+                <nuxt-link class="text-truncate" :to="localePath('/application/datum/' + row.versions[0]['resource_id'])" :title="row.name">
                   {{ row.provider + '/' + row.name }}
                 </nuxt-link>
               </div>
@@ -68,7 +68,7 @@ import intercept from '@/filters/intercept'
 
 @Component({
   async asyncData({ app }) {
-    const items = await app.$api.datum.getList()
+    const items = await app.$api.datum.getList({ category: '参考序列' })
     return { items }
   },
   filters: {

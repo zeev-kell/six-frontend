@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import type { GetterTree, MutationTree } from 'vuex'
-import { pipeConstants } from '@/constants/PipeConstants'
+import { datumConstants } from '@/constants/DatumConstants'
 import { NuxtState } from '@nuxt/types/app'
 import { RootState } from '@/store/index'
 
@@ -28,14 +28,9 @@ export const state = (): NuxtState => ({
 export type PipeModuleState = ReturnType<typeof state>
 
 export const getters: GetterTree<PipeModuleState, RootState> = {
-  isTool: (state) => state.type === pipeConstants.items.TYPE_TOOL,
-  isApp: (state) => state.type === pipeConstants.items.TYPE_APP,
-  isDocker: (state) => state.type === pipeConstants.items.TYPE_DOCKER,
-  isWork: (state) => state.type === pipeConstants.items.TYPE_WORK,
-  isWorkflow: (state) => state.type === pipeConstants.items.TYPE_WORKFLOW,
-  // 是否是软件应用
-  isSoftware: (state) => [pipeConstants.items.TYPE_TOOL, pipeConstants.items.TYPE_APP].includes(state.type),
-  isOperation: (state) => [pipeConstants.items.TYPE_WORK, pipeConstants.items.TYPE_WORKFLOW].includes(state.type),
+  isFormat: (state) => state.type === datumConstants.items.TYPE_FORMAT,
+  isData: (state) => state.type === datumConstants.items.TYPE_DATA,
+  isDataPackage: (state) => state.type === datumConstants.items.TYPE_DATA_PACKAGE,
 }
 
 export const mutations: MutationTree<NuxtState> = {

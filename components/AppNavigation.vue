@@ -40,7 +40,6 @@
           <template v-if="loggedIn">
             <el-dropdown class="el-submenu" @command="handleUserMenu">
               <div class="el-submenu__title">
-                <el-avatar size="medium" src="/images/portrait.jpg"></el-avatar>
                 {{ username }}
                 <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
               </div>

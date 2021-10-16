@@ -1,6 +1,7 @@
-.pipe-el-tabs {
+@import 'variables';
+.info-el-tabs {
   .el-tabs__header {
-    background-color: #fcfcfc;
+    background-color: $theme-b-color;
   }
 
   .el-tabs__nav-scroll {
@@ -19,12 +20,12 @@
   }
 }
 
-.pipe-info {
-  background-color: #fcfcfc;
+.info-header {
+  background-color: $theme-b-color;
   padding: 20px;
 }
 
-.pipe-tip {
+.info-tip {
   padding: 5px 0 0;
 
   > div {

@@ -1,6 +1,6 @@
 <template>
-  <div class="pipe-container">
-    <div class="el-row el-row--flex is-align-middle pipe-info">
+  <div class="pipe-id-container">
+    <div class="el-row el-row--flex is-align-middle p-20 info-header">
       <div class="el-col-auto px-20">
         <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px" />
         <i v-if="isWork" class="el-icon-reading" style="font-size: 36px" />
@@ -10,7 +10,7 @@
           {{ item['name'] }}
         </h2>
         <p class="m-y-05">ID: {{ item.resource_id }}</p>
-        <div class="el-row el-row--flex pipe-tip">
+        <div class="el-row el-row--flex info-tip">
           <div class="el-col">
             <div class="title">类别</div>
             <div>{{ item.type | pipeTypeTranslate | t }}</div>
@@ -68,7 +68,7 @@
         </can-examine>
       </div>
     </div>
-    <el-tabs v-model="activeTab" class="pipe-el-tabs" :before-leave="onBeforeLeave">
+    <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">
       <el-tab-pane label="资源介绍" name="application-pipe-id-index" />
       <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-index-work" />
       <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-index-structure" />

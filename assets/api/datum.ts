@@ -12,8 +12,8 @@ export class Module {
     return this.$axios.$post('/v2/data', data)
   }
 
-  get(dataId: string) {
-    return this.$axios.$get('/v2/data/repository/' + dataId)
+  get(resourceId: string) {
+    return this.$axios.$get('/v2/data/' + resourceId)
   }
 
   getList(params?: any): Promise<any[]> {

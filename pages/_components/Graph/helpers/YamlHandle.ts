@@ -33,3 +33,11 @@ export function getObject(str: string | object): any {
     return Yaml.load(str, { json: true })
   }
 }
+
+export function yamlToJson(str: string | object): any {
+  if (typeof str !== 'string' && str) {
+    // TODO
+    return str
+  }
+  return Yaml.load(str, { json: true })
+}
