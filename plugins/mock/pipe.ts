@@ -1,4 +1,4 @@
-// import Mock from 'better-mock'
+import Mock from 'better-mock'
 import { PipeModel } from '@/types/model/Pipe'
 
 export const Pipe = {
@@ -32,8 +32,32 @@ export const Pipe = {
   },
   'resource_id|+1': /[0-9]{7}/,
 }
-export const PipeUrl = /\/pipe\/[0-9]*/
-export const addPipeUrl = /\/pipe/
+export const pipeUrl = /\/v[12]\/pipe\/[0-9]*/
+export const pipeFun = function () {
+  const item = Mock.mock(Pipe)
+  const _tool = require('./commandline.json')
+  const _workflow = require('./workflow.json')
+  item.type = 0
+  item.content = item.type === 0 ? _tool : _workflow
+  item.content = JSON.stringify(item.content)
+  return item
+}
 export const Pipes = { 'items|10': [Pipe] }
-export const PipesUrl = /\/v1\/pipes/
-export const PipesV2Url = /\/v2\/pipes/
+export const pipesUrl = /\/v[12]\/pipes/
+export const pipesFun = function () {
+  const items = Mock.mock(Pipes).items
+  const _tool = require('./commandline.json')
+  const _workflow = require('./workflow.json')
+  return items.map((p: PipeModel) => {
+    p.content = p.type === 0 ? _tool : _workflow
+    return p
+  })
+}
+export const pipeUserUrl = /\/v[12]\/user\/pipes/
+
+// NOTE 由 Node.js 发起请求需要同步修改 modules 至 mock
+Mock.mock('/v2/pipe', 'post', pipeFun)
+Mock.mock(pipeUrl, 'delete')
+Mock.mock(pipeUrl, pipeFun)
+Mock.mock(pipesUrl, pipesFun)
+Mock.mock(pipeUserUrl, pipesFun)
