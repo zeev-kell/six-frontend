@@ -7,22 +7,17 @@ import { RootState } from '@/store/index'
 export const state = (): NuxtState => ({
   data_id: null,
   name: null,
+  version: null,
   type: 0,
+  content: null,
   provider: null,
   website: null,
   description: null,
-  readme: null,
-  resource_id: null,
-  version: null,
-  dockerfile: null,
-  instruction: null,
-  cwl: null,
-  profile: null,
-  content: null,
-  create_at: null,
-  updated_at: null,
   category: null,
   versions: [],
+  status: null,
+  resource_id: null,
+  create_at: null,
 })
 
 export type PipeModuleState = ReturnType<typeof state>

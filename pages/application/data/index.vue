@@ -36,7 +36,7 @@
           <el-table-column label="名称" prop="name" sortable width="280">
             <template slot-scope="{ row }">
               <div class="el-row--flex is-align-middle">
-                <nuxt-link class="text-truncate" :to="localePath('/application/datum/' + row.versions[0]['resource_id'])" :title="row.name">
+                <nuxt-link class="text-truncate" :to="localePath('/application/datum/' + row['resource_id'])" :title="row.name">
                   {{ row.provider + '/' + row.name }}
                 </nuxt-link>
               </div>

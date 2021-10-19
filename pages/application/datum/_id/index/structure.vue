@@ -13,7 +13,11 @@ import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
   components: {
-    codemirror: () => import('@/pages/application/_components/CodeMirror.vue'),
+    codemirror: () => {
+      if (process.client) {
+        return import('@/pages/application/_components/CodeMirror.vue')
+      }
+    },
   },
 })
 export default class structure extends Vue {

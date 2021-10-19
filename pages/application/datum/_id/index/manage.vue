@@ -1,5 +1,17 @@
 <template>
   <div class="container-fluid p-20">
+    <transition>
+      <div>
+        <el-upload action="https://jsonplaceholder.typicode.com/posts/" multiple :limit="3" class="el-row el-row--flex is-align-middle text-center">
+          <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
+          或
+          <el-input placeholder="链接">
+            <el-button slot="append" icon="el-icon-check"></el-button>
+          </el-input>
+          <div slot="tip" class="el-upload__tip el-col-24">只能上传不超过2M的文件</div>
+        </el-upload>
+      </div>
+    </transition>
     <div class="el-row--flex is-justify-space-between pb-10">
       <div class="search-box">
         <el-form class="form-inline" :inline="true" :model="query" @submit.native.prevent="">
@@ -64,5 +76,5 @@ import { yamlToJson } from '@/pages/_components/Graph/helpers/YamlHandle'
     return { items: [] }
   },
 })
-export default class download extends BaseTable {}
+export default class manage extends BaseTable {}
 </script>

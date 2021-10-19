@@ -40,8 +40,10 @@
     </div>
     <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">
       <el-tab-pane label="资源介绍" name="application-datum-id-index" />
+      <el-tab-pane v-if="isFormat" label="格式规范" name="application-datum-id-index-format" />
+      <el-tab-pane v-if="isFormat" label="历史版本" name="application-datum-id-index-version" />
       <el-tab-pane v-if="!isFormat" label="数据结构" name="application-datum-id-index-structure" />
-      <el-tab-pane v-if="!isFormat" label="数据下载" name="application-datum-id-index-download" />
+      <el-tab-pane v-if="!isFormat" label="数据下载" name="application-datum-id-index-manage" />
       <el-tab-pane v-if="!isFormat" label="处理流程" name="application-datum-id-index-process" />
     </el-tabs>
     <div class="px-20 mt-5">
@@ -51,9 +53,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Getter, Vue, Watch } from 'nuxt-property-decorator'
-import { stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
-import { downloadStrLink } from '@/utils/download-link'
+import { Component, Vue, Watch } from 'nuxt-property-decorator'
 import CanCreate from '@/components/common/CanCreate.vue'
 import CanExamine from '@/components/common/CanExamine.vue'
 import { datumConstants } from '@/constants/DatumConstants'
@@ -78,13 +78,12 @@ import { mapGetters } from 'vuex'
       isFormat: 'datum/isFormat',
       isData: 'datum/isData',
       isDataPackage: 'datum/isDataPackage',
+      username: 'user/username',
     }),
   },
 })
 export default class DatumIdIndex extends Vue {
   activeTab = this.getRouteBaseName()
-  @Getter('user/username')
-  username!: number
   get item() {
     return this.$store.state.datum
   }
@@ -98,12 +97,6 @@ export default class DatumIdIndex extends Vue {
     })
   }
 
-  handleDownload(format = 'yaml') {
-    const asYaml = format === 'yaml'
-    const data = stringifyObject(this.item.content, asYaml)
-    const name = this.item?.name + `.${asYaml ? 'cwl' : format}`
-    downloadStrLink(data, name)
-  }
   handleDeleteDatum() {
     this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
       confirmButtonText: '确定',

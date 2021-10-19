@@ -1,4 +1,5 @@
 import Mock from 'better-mock'
+import { MockMark } from './helper'
 
 export const refreshFun = function () {
   return Mock.mock({
@@ -26,6 +27,9 @@ export const userFun = function () {
 }
 
 Mock.mock(/\/v[12]\/login|(token\/refresh)/, 'post', refreshFun)
-Mock.mock(/\/v[12]\/user\/(info|profile)/, 'get', userFun)
-Mock.mock(/\/v[12]\/logout/, 'get', function () {})
 Mock.mock(/\/v[12]\/register/, 'post', function () {})
+Mock.mock(/\/v[12]\/logout/, 'get', function () {})
+
+export const MockList: any = [[/\/v[12]\/user\/(info|profile)/, userFun]]
+
+MockMark(MockList)

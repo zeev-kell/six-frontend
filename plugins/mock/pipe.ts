@@ -1,5 +1,6 @@
 import Mock from 'better-mock'
 import { PipeModel } from '@/types/model/Pipe'
+import { MockMark } from './helper'
 
 export const Pipe = {
   'pipe_id|+1': /[0-9]{7}/,
@@ -58,6 +59,11 @@ export const pipeUserUrl = /\/v[12]\/user\/pipes/
 // NOTE 由 Node.js 发起请求需要同步修改 modules 至 mock
 Mock.mock('/v2/pipe', 'post', pipeFun)
 Mock.mock(pipeUrl, 'delete')
-Mock.mock(pipeUrl, pipeFun)
-Mock.mock(pipesUrl, pipesFun)
-Mock.mock(pipeUserUrl, pipesFun)
+
+export const MockList: any = [
+  [pipeUrl, pipeFun],
+  [pipesUrl, pipesFun],
+  [pipeUserUrl, pipesFun],
+]
+
+MockMark(MockList)
