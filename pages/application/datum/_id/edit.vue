@@ -1,9 +1,10 @@
 <template>
-  <div class="pipe-id-container">
-    <div class="el-row el-row--flex is-align-middle p-20 info-header">
+  <div class="datum-container">
+    <div class="el-row el-row--flex is-align-middle info-header">
       <div class="el-col-auto px-20">
-        <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px" />
-        <i v-if="isWork" class="el-icon-reading" style="font-size: 36px" />
+        <i v-if="isFormat" class="el-icon-notebook-1" style="font-size: 36px" />
+        <i v-if="isData" class="el-icon-document" style="font-size: 36px" />
+        <i v-if="isDataPackage" class="el-icon-files" style="font-size: 36px" />
       </div>
       <div class="el-col el-col-16 text-truncate mx-0">
         <h2 class="text-truncate my-0" :title="item['name']">
@@ -13,7 +14,7 @@
         <div class="el-row el-row--flex info-tip">
           <div class="el-col">
             <div class="title">类别</div>
-            <div>{{ item.type | pipeTypeTranslate | t }}</div>
+            <div>{{ item.type | datumTypeTranslate | t }}</div>
           </div>
           <div class="el-col">
             <div class="title">版本</div>
@@ -26,22 +27,19 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipe/' + item['resource_id'])" custom>
-          <el-button type="warning" icon="el-icon-back" @click="navigate" @keypress.enter="navigate"> 详情 </el-button>
-        </nuxt-link>
         <can-examine>
-          <el-button type="danger" icon="el-icon-delete" @click="handleDelete"> 删除 </el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="handleDeleteDatum"> 删除 </el-button>
         </can-examine>
       </div>
     </div>
     <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">
-      <el-tab-pane label="资源介绍" name="application-pipe-id-edit" />
-      <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-edit-work" />
-      <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-edit-structure" />
-      <el-tab-pane label="使用教程" name="application-pipe-id-edit-course" />
-      <el-tab-pane v-if="isApp" label="运行案例" name="application-pipe-id-edit-case" />
-      <el-tab-pane v-if="isApp" label="历史版本" name="application-pipe-id-edit-versions" />
-      <el-tab-pane label="管理" name="application-pipe-id-edit-setting" />
+      <el-tab-pane label="资源介绍" name="application-datum-id-edit" />
+      <el-tab-pane v-if="isFormat" label="格式规范" name="application-datum-id-edit-format" />
+      <el-tab-pane v-if="isFormat" label="历史版本" name="application-datum-id-edit-version" />
+      <el-tab-pane v-if="!isFormat" label="数据结构" name="application-datum-id-edit-structure" />
+      <el-tab-pane v-if="!isFormat" label="数据下载" name="application-datum-id-edit-manage" />
+      <el-tab-pane v-if="!isFormat" label="处理流程" name="application-datum-id-edit-process" />
+      <el-tab-pane label="管理" name="application-datum-id-edit-setting" />
     </el-tabs>
     <div class="px-20 mt-5">
       <nuxt-child />
@@ -51,34 +49,31 @@
 
 <script lang="ts">
 import { Component, Getter, Vue, Watch } from 'nuxt-property-decorator'
-import { pipeConstants } from '@/constants/PipeConstants'
 import CanExamine from '@/components/common/CanExamine.vue'
+import { mapGetters } from 'vuex'
+import { datumConstants } from '@/constants/DatumConstants'
 
 @Component({
   components: { CanExamine },
   scrollToTop: true,
   filters: {
-    pipeTypeTranslate: pipeConstants.get,
+    datumTypeTranslate: datumConstants.get,
   },
   async middleware({ store, params, app }) {
-    const pipe = store.state.pipe
+    const datum = store.state.datum
     // ID 不同，需要重新请求数据
-    if (params.id !== pipe.resource_id) {
-      // params.id = 'bd5adb8d-8615-4a09-9cf8-fa0005de6518'
-      const item = await app.$api.pipe.getVersion(params.id)
-      // eslint-disable-next-line camelcase
-      if (item.readme?.by_system) {
-        // eslint-disable-next-line camelcase
-        item.readme.by_system = item.readme.by_system?.replace(/[↵ ]{2,}/g, '  \n')
-      }
-      // eslint-disable-next-line camelcase
-      if (item.readme?.by_author) {
-        // eslint-disable-next-line camelcase
-        item.readme.by_author = item.readme.by_author?.replace(/[↵ ]{2,}/g, '  \n')
-      }
-      item.tutorial = item.tutorial?.replace(/[↵ ]{2,}/g, '  \n')
-      store.commit('pipe/UPDATE_CURRENT_WORKFLOW', item)
+    if (params.id !== datum.resource_id) {
+      const item = await app.$api.datum.get(params.id)
+      store.commit('datum/UPDATE_CURRENT_DATUM', item)
     }
+  },
+  computed: {
+    ...mapGetters({
+      isFormat: 'datum/isFormat',
+      isData: 'datum/isData',
+      isDataPackage: 'datum/isDataPackage',
+      username: 'user/username',
+    }),
   },
 })
 export default class PipeIdEdit extends Vue {
@@ -88,12 +83,6 @@ export default class PipeIdEdit extends Vue {
   }
   @Getter('user/username')
   username!: number
-  get isApp() {
-    return this.$store.getters['pipe/isSoftware']
-  }
-  get isWork() {
-    return this.$store.getters['pipe/isOperation']
-  }
   @Watch('$route.params')
   onWatchParams() {
     this.$nextTick(() => {
@@ -101,23 +90,6 @@ export default class PipeIdEdit extends Vue {
       // 会触发 onBeforeLeave onAbort
       this.activeTab = this.getRouteBaseName()
     })
-  }
-  handleDelete() {
-    return this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning',
-    })
-      .then(() => {
-        return this.$$axios.delete('/v2/pipe/' + this.$route.params.id).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!',
-          })
-          this.$I18nRouter.push('/application/pipes')
-        })
-      })
-      .catch(() => {})
   }
   onBeforeLeave(activeName: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -132,6 +104,24 @@ export default class PipeIdEdit extends Vue {
         }
       })
     })
+  }
+
+  handleDeleteDatum() {
+    this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    })
+      .then(() => {
+        return this.$$axios.delete('/v2/datum/' + this.$route.params.id).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!',
+          })
+          this.$I18nRouter.push('/application/datums')
+        })
+      })
+      .catch(() => {})
   }
 }
 </script>

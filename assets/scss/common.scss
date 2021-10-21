@@ -49,6 +49,10 @@ hr {
   margin-right: 0;
 }
 
+.mr-5 {
+  margin-right: 5px;
+}
+
 .mr-10 {
   margin-right: 10px;
 }
@@ -89,6 +93,10 @@ hr {
   margin-left: 0 !important;
 }
 
+.ml-5 {
+  margin-left: 5px;
+}
+
 .ml-10 {
   margin-left: 10px;
 }
@@ -104,6 +112,11 @@ hr {
 .mx-0 {
   @extend .ml-0;
   @extend .mr-0;
+}
+
+.mx-5 {
+  @extend .ml-5;
+  @extend .mr-5;
 }
 
 .m-x-1 {

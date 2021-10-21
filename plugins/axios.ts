@@ -25,7 +25,7 @@ const AxiosPlugin: Plugin = ({ $axios, store }) => {
   })
   $axios.onResponseError(async (error) => {
     // eslint-disable-next-line no-console
-    console.log('onResponseError', error.response)
+    console.log('onResponseError', error.response || error)
     if (!error.response || !error.response.status) {
       return Promise.reject(DEFAULT_RESPONSE)
     }

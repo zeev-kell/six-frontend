@@ -4,6 +4,7 @@ import { MockMark } from './helper'
 
 export const Pipe = {
   'pipe_id|+1': /[0-9]{7}/,
+  'cwl|+1': /[0-9]{7}/,
   name: '@name',
   version: /v[0-9]\.[0-9]\.[0-9]-r1044/,
   provider: '@name',

@@ -17,7 +17,11 @@ export class Module {
   }
 
   getList(params?: any): Promise<any[]> {
-    return this.$axios.$get<any[]>('/v1/datas', { params })
+    return this.$axios.$get<any[]>('/v2/datas', { params })
+  }
+
+  getOssToken() {
+    return this.$axios.$get('/v1/osstoken').then((response) => response.data)
   }
 }
 
