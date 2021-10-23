@@ -14,9 +14,7 @@
     </div>
     <div class="card-body">
       <div class="codemirror-box">
-        <client-only placeholder="Loading...">
-          <codemirror v-model="content" :options="cmOptions" />
-        </client-only>
+        <code-mirror-client v-model="content" />
       </div>
     </div>
   </div>
@@ -28,17 +26,16 @@ import { pipeConstants } from '@/constants/PipeConstants'
 import { getObject, stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { CommandLineToolFactory, WorkflowFactory } from 'cwlts/models'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
+import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
   filters: {
     pipeTypeTranslate: pipeConstants.get,
   },
   components: {
-    codemirror: () => {
-      if (process.client) {
-        import('@/pages/application/_components/CodeMirror.vue')
-      }
-    },
+    LoadingButton,
+    CodeMirrorClient,
   },
   async asyncData({ app, store }) {
     const item = store.state.pipe
@@ -65,15 +62,6 @@ export default class Work extends Vue {
     pipeSelect: HTMLFormElement
   }
   graphItem = null
-  cmOptions = {
-    tabSize: 4,
-    styleActiveLine: true,
-    lineNumbers: true,
-    line: true,
-    mode: 'text/yaml',
-    lineWrapping: true,
-    theme: 'default',
-  }
   options = []
   content = ''
   value = ''

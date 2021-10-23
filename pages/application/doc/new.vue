@@ -19,21 +19,9 @@
         <h2 class="mx-0">拟写正文</h2>
       </div>
       <div class="card-body marked-content">
-        <client-only placeholder="Loading...">
-          <markdown v-model="formModel.content" />
-        </client-only>
+        <markdown-client v-model="formModel.content" />
       </div>
     </div>
-    <!-- <div class="card">
-      <div class="card-header">
-        <h2 class="mx-0">软件结构与参数配置</h2>
-      </div>
-      <div class="card-body">
-        <client-only placeholder="Loading...">
-          <codemirror v-model="formModel.cwl" :options="cmOptions" />
-        </client-only>
-      </div>
-    </div> -->
     <div class="el-row text-right mt-20">
       <el-button type="success" icon="el-icon-plus" :loading="loading" @click="onSubmit"> 保存 </el-button>
     </div>
@@ -42,15 +30,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
 
 @Component({
   components: {
-    // codemirror: () => import('@/pages/application/_components/CodeMirror'),
-    Markdown: () => {
-      if (process.client) {
-        return import('@/pages/application/_components/markdown/simple')
-      }
-    },
+    MarkdownClient,
   },
 })
 export default class DocNew extends Vue {
@@ -72,15 +56,6 @@ export default class DocNew extends Vue {
       { required: true, message: '请输入分类', trigger: 'blue' },
       { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
     ],
-  }
-  cmOptions = {
-    tabSize: 4,
-    styleActiveLine: true,
-    lineNumbers: true,
-    line: true,
-    mode: 'text/yaml',
-    lineWrapping: true,
-    theme: 'default',
   }
   loading = false
 

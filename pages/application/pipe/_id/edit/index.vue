@@ -13,9 +13,7 @@
             <div v-marked="readmeBySystem" />
           </el-collapse-item>
         </el-collapse>
-        <client-only placeholder="Loading...">
-          <markdown v-model="readmeByAuthor" />
-        </client-only>
+        <markdown-client v-model="readmeByAuthor" />
       </div>
       <div class="card-footer">
         <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
@@ -28,18 +26,15 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import marked from '@/directives/marked/marked'
 import LoadingButton from '@/components/LoadingButton.vue'
+import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
 
 @Component({
   directives: {
     ...marked,
   },
   components: {
+    MarkdownClient,
     LoadingButton,
-    Markdown: () => {
-      if (process.client) {
-        return import('@/pages/application/_components/markdown/simple')
-      }
-    },
   },
 })
 export default class PipeEditIndex extends Vue {

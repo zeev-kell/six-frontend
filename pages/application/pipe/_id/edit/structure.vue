@@ -9,9 +9,7 @@
       <el-tabs v-model="activeName" type="card" :before-leave="onBeforeLeave">
         <el-tab-pane label="编辑内容" name="1">
           <div class="codemirror-box">
-            <client-only placeholder="Loading...">
-              <codemirror v-model="content" :options="cmOptions" />
-            </client-only>
+            <code-mirror-client v-model="content" />
           </div>
         </el-tab-pane>
         <el-tab-pane label="预览内容" name="2">
@@ -32,32 +30,21 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
+import { PipeModel } from '@/types/model/Pipe'
+import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
 
 @Component({
   components: {
+    CodeMirrorClient,
     LoadingButton,
     GraphIndex,
-    codemirror: () => {
-      if (process.client) {
-        return import('@/pages/application/_components/CodeMirror.vue')
-      }
-    },
   },
 })
 export default class Structure extends Vue {
   activeName = '1'
-  cmOptions = {
-    tabSize: 4,
-    styleActiveLine: true,
-    lineNumbers: true,
-    line: true,
-    mode: 'text/yaml',
-    lineWrapping: true,
-    theme: 'default',
-  }
   content = ''
 
-  get item() {
+  get item(): PipeModel {
     return this.$store.state.pipe
   }
   get title() {
