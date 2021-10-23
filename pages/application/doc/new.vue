@@ -46,7 +46,11 @@ import { Component, Vue } from 'nuxt-property-decorator'
 @Component({
   components: {
     // codemirror: () => import('@/pages/application/_components/CodeMirror'),
-    Markdown: () => import('@/pages/application/_components/markdown/simple'),
+    Markdown: () => {
+      if (process.client) {
+        return import('@/pages/application/_components/markdown/simple')
+      }
+    },
   },
 })
 export default class DocNew extends Vue {

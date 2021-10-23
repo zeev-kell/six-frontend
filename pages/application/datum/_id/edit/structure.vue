@@ -36,7 +36,7 @@ export default class structure extends Vue {
     return this.$store.state.datum
   }
   mounted() {
-    this.content = this.item.content.toString()
+    this.content = this.item.content?.toString()
   }
 }
 </script>

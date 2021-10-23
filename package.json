@@ -70,6 +70,7 @@
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@types/ali-oss": "^6.0.11",
+    "@types/js-cookie": "^3.0.0",
     "axios-mock-adapter": "^1.19.0",
     "better-mock": "^0.2.8",
     "element-theme-chalk": "^2.15.0",

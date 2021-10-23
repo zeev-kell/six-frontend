@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <div class="codemirror-box">
-      <client-only placeholder="Loading...">
-        <codemirror v-model="content" :options="cmOptions" />
-      </client-only>
-    </div>
+  <div class="codemirror-box">
+    <client-only placeholder="Loading...">
+      <codemirror v-model="content" :options="cmOptions" />
+    </client-only>
   </div>
 </template>
 

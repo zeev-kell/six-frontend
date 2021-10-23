@@ -5,7 +5,7 @@
         <h2 class="mx-0 el-col-equal">软件结构与参数配置（双击图标查看配置）</h2>
       </div>
       <div class="card-body">
-        <div class="workflow-box">
+        <div class="page-graph-box">
           <graph-index :item="item" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
         </div>
       </div>
@@ -27,10 +27,3 @@ export default class Structure extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.workflow-box {
-  min-height: 450px;
-  height: calc(100vh - 60px);
-}
-</style>

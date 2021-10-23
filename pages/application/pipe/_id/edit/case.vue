@@ -62,10 +62,3 @@ export default class Case extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.workflow-box {
-  min-height: 450px;
-  height: calc(100vh - 60px);
-}
-</style>

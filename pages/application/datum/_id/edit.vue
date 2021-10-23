@@ -27,6 +27,9 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
+        <nuxt-link v-slot="{ navigate }" :to="localePath('/application/datum/' + item['resource_id'])" custom>
+          <el-button type="warning" icon="el-icon-back" @click="navigate" @keypress.enter="navigate"> 详情 </el-button>
+        </nuxt-link>
         <can-examine>
           <el-button type="danger" icon="el-icon-delete" @click="handleDeleteDatum"> 删除 </el-button>
         </can-examine>
@@ -48,10 +51,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Getter, Vue, Watch } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import CanExamine from '@/components/common/CanExamine.vue'
 import { mapGetters } from 'vuex'
 import { datumConstants } from '@/constants/DatumConstants'
+import ElTabRouter from '@/pages/application/_components/ElTabRouter.vue'
 
 @Component({
   components: { CanExamine },
@@ -76,34 +80,9 @@ import { datumConstants } from '@/constants/DatumConstants'
     }),
   },
 })
-export default class PipeIdEdit extends Vue {
-  activeTab = this.getRouteBaseName()
+export default class PipeIdEdit extends ElTabRouter {
   get item() {
-    return this.$store.state.pipe
-  }
-  @Getter('user/username')
-  username!: number
-  @Watch('$route.params')
-  onWatchParams() {
-    this.$nextTick(() => {
-      // 强制使当前 tab 切换到当前路由
-      // 会触发 onBeforeLeave onAbort
-      this.activeTab = this.getRouteBaseName()
-    })
-  }
-  onBeforeLeave(activeName: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.$I18nRouter.push({ name: activeName, params: this.$route.params }, resolve, (...args) => {
-        // 如果是相同的路由，onAbort 会被调用，这时候需要手动 resolve，让 tab 切换
-        const activeTab = this.getRouteBaseName()
-        if (activeTab === activeName) {
-          resolve()
-        } else {
-          // eslint-disable-next-line prefer-promise-reject-errors
-          reject(...args)
-        }
-      })
-    })
+    return this.$store.state.datum
   }
 
   handleDeleteDatum() {

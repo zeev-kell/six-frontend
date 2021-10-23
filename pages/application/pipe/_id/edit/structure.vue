@@ -15,7 +15,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="预览内容" name="2">
-          <div v-if="activeName === '2'" class="workflow-box">
+          <div v-if="activeName === '2'" class="page-graph-box workflow-box">
             <graph-index :item="graph" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
           </div>
         </el-tab-pane>
@@ -37,7 +37,11 @@ import LoadingButton from '@/components/LoadingButton.vue'
   components: {
     LoadingButton,
     GraphIndex,
-    codemirror: () => import('@/pages/application/_components/CodeMirror.vue'),
+    codemirror: () => {
+      if (process.client) {
+        return import('@/pages/application/_components/CodeMirror.vue')
+      }
+    },
   },
 })
 export default class Structure extends Vue {

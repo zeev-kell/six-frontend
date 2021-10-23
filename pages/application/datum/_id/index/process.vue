@@ -7,7 +7,7 @@
             <h2 class="mx-0 el-col-equal">双击图标查看案例参数</h2>
           </div>
           <div class="card-body">
-            <div class="workflow-box">
+            <div class="page-graph-box">
               <graph-index
                 ref="graph"
                 class="h-100"
@@ -87,10 +87,3 @@ export default class process extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.workflow-box {
-  min-height: 450px;
-  height: calc(100vh - 60px);
-}
-</style>

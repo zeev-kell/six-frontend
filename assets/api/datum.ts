@@ -1,5 +1,6 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { Context } from '@nuxt/types'
+import Element from 'element-ui'
 
 export class Module {
   private $axios: NuxtAxiosInstance
@@ -22,6 +23,13 @@ export class Module {
 
   getOssToken() {
     return this.$axios.$get('/v1/osstoken').then((response) => response.data)
+  }
+
+  updateVersion(versionId: string, data: any) {
+    return this.$axios.$put('/v2/datum/' + versionId, data).then((response) => {
+      Element.Message.success('保存成功')
+      return response
+    })
   }
 }
 

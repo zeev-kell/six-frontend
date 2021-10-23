@@ -14,9 +14,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="action-box">
-        <el-button type="primary" icon="el-icon-plus" @click="dialogVisible = true"> 新增 </el-button>
-      </div>
+      <div class="action-box"></div>
     </div>
     <div class="table-box">
       <el-table ref="multipleTable" :data="tableDate" style="width: 100%">
@@ -36,16 +34,6 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-dialog title="上传数据" :visible.sync="dialogVisible" width="500px" :close-on-click-modal="false">
-      <el-upload action="https://jsonplaceholder.typicode.com/posts/" multiple :limit="3" class="upload-wrap" :http-request="uploadOssFile">
-        <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-        <span class="mx-5">或</span>
-        <el-input placeholder="链接" style="width: 300px">
-          <el-button slot="append" icon="el-icon-check"></el-button>
-        </el-input>
-        <div slot="tip" class="el-upload__tip">只能上传不超过2M的文件</div>
-      </el-upload>
-    </el-dialog>
   </div>
 </template>
 
@@ -64,47 +52,5 @@ import intercept from '@/filters/intercept'
     ...intercept,
   },
 })
-export default class manage extends BaseTable {
-  dialogVisible = false
-  ossPath: string = ''
-  async uploadOssFile(file: any): Promise<void> {
-    const token = await this.$api.datum.getOssToken()
-    const client = new OSS({
-      // yourRegion填写Bucket所在地域。以华东1（杭州）为例，Region填写为oss-cn-hangzhou。
-      region: 'yourRegion',
-      // 填写Bucket名称。
-      bucket: 'examplebucket',
-      // 从STS服务获取的临时访问密钥（AccessKey ID和AccessKey Secret）。
-      accessKeyId: token.access_key_id,
-      accessKeySecret: token.access_key_secret,
-      // 从STS服务获取的安全令牌（SecurityToken）。
-      stsToken: token.security_token,
-      refreshSTSToken: async () => {
-        // 向您搭建的STS服务获取临时访问凭证。
-        const token = await this.$api.datum.getOssToken()
-        return {
-          accessKeyId: token.access_key_id,
-          accessKeySecret: token.access_key_secret,
-          stsToken: token.security_token,
-        }
-      },
-      // 刷新临时访问凭证的时间间隔，单位为毫秒。
-      refreshSTSTokenInterval: 300000,
-    })
-    const storeAs = this.ossPath + file.file.name
-    client.put(storeAs, file.file).then((res) => {
-      console.log(res)
-    })
-  }
-}
+export default class manage extends BaseTable {}
 </script>
-
-<style lang="scss">
-.upload-wrap {
-  text-align: center;
-  padding-bottom: 30px;
-  .el-upload-list {
-    text-align: left;
-  }
-}
-</style>

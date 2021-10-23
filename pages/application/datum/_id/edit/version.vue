@@ -1,12 +1,7 @@
-<template>
-  <div>version</div>
-</template>
-
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
+import DatumVersion from '@/pages/application/datum/_id/index/version.vue'
 
 @Component
-export default class version extends Vue {}
+export default class VersionEdit extends DatumVersion {}
 </script>
-
-<style lang="scss"></style>

@@ -36,7 +36,11 @@ import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
   components: {
-    Markdown: () => import('@/pages/application/_components/markdown/simple'),
+    Markdown: () => {
+      if (process.client) {
+        return import('@/pages/application/_components/markdown/simple')
+      }
+    },
   },
   async asyncData({ app, params }) {
     const item: any = await app.$axios.$get(`/v1/blog/${params.id}`)

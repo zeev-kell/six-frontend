@@ -2174,6 +2174,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/js-cookie@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmmirror.com/@types/js-cookie/download/@types/js-cookie-3.0.0.tgz#6dcc3ab167251ace6964310789d8ea80f732a82c"
+  integrity sha1-bcw6sWclGs5pZDEHidjqgPcyqCw=
+
 "@types/js-yaml@^4.0.0":
   version "4.0.3"
   resolved "https://registry.nlark.com/@types/js-yaml/download/@types/js-yaml-4.0.3.tgz?cache=0&sync_timestamp=1629482755834&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fjs-yaml%2Fdownload%2F%40types%2Fjs-yaml-4.0.3.tgz#9f33cd6fbf0d5ec575dc8c8fc69c7fec1b4eb200"

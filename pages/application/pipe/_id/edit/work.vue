@@ -33,7 +33,13 @@ import { JobHelper } from 'cwlts/models/helpers/JobHelper'
   filters: {
     pipeTypeTranslate: pipeConstants.get,
   },
-  components: { codemirror: () => import('@/pages/application/_components/CodeMirror.vue') },
+  components: {
+    codemirror: () => {
+      if (process.client) {
+        import('@/pages/application/_components/CodeMirror.vue')
+      }
+    },
+  },
   async asyncData({ app, store }) {
     const item = store.state.pipe
     const type = store.getters['pipe/isWork'] ? pipeConstants.items.TYPE_TOOL : pipeConstants.items.TYPE_APP
@@ -115,10 +121,3 @@ export default class Work extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.workflow-box {
-  min-height: 450px;
-  height: calc(100vh - 60px);
-}
-</style>

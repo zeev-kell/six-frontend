@@ -20,7 +20,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
-export default class Versions extends Vue {
+export default class PipeVersion extends Vue {
   get item() {
     return this.$store.state.pipe
   }

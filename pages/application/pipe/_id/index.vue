@@ -74,7 +74,7 @@
       <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-index-structure" />
       <el-tab-pane label="使用教程" name="application-pipe-id-index-course" />
       <el-tab-pane v-if="isApp" label="运行案例" name="application-pipe-id-index-case" />
-      <el-tab-pane v-if="isApp" label="历史版本" name="application-pipe-id-index-versions" />
+      <el-tab-pane v-if="isApp" label="历史版本" name="application-pipe-id-index-version" />
     </el-tabs>
     <div class="px-20 mt-5">
       <nuxt-child />
@@ -89,6 +89,7 @@ import { stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { downloadStrLink } from '@/utils/download-link'
 import CanCreate from '@/components/common/CanCreate.vue'
 import CanExamine from '@/components/common/CanExamine.vue'
+import ElTabRouter from '@/pages/application/_components/ElTabRouter.vue'
 
 @Component({
   components: { CanExamine, CanCreate },
@@ -117,8 +118,7 @@ import CanExamine from '@/components/common/CanExamine.vue'
     }
   },
 })
-export default class PipeIdIndex extends Vue {
-  activeTab = this.getRouteBaseName()
+export default class PipeIdIndex extends ElTabRouter {
   @Getter('user/username')
   username!: number
   get item() {
@@ -129,15 +129,6 @@ export default class PipeIdIndex extends Vue {
   }
   get isWork() {
     return this.$store.getters['pipe/isOperation']
-  }
-
-  @Watch('$route.params')
-  onWatchParams() {
-    this.$nextTick(() => {
-      // 强制使当前 tab 切换到当前路由
-      // 会触发 onBeforeLeave onAbort
-      this.activeTab = this.getRouteBaseName()
-    })
   }
 
   handleDownload(format = 'yaml') {
@@ -162,20 +153,6 @@ export default class PipeIdIndex extends Vue {
         })
       })
       .catch(() => {})
-  }
-  onBeforeLeave(activeName: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.$I18nRouter.push({ name: activeName, params: this.$route.params }, resolve, (...args) => {
-        // 如果是相同的路由，onAbort 会被调用，这时候需要手动 resolve，让 tab 切换
-        const activeTab = this.getRouteBaseName()
-        if (activeTab === activeName) {
-          resolve()
-        } else {
-          // eslint-disable-next-line prefer-promise-reject-errors
-          reject(...args)
-        }
-      })
-    })
   }
 }
 </script>
