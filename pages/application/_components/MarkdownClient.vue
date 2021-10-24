@@ -1,6 +1,6 @@
 <template>
   <client-only placeholder="Loading...">
-    <markdown v-model="content" />
+    <markdown v-model="content" @input="$emit('input', $event)" />
   </client-only>
 </template>
 
@@ -10,7 +10,7 @@ import ClientMixin from '@/pages/application/_components/ClientMixin.vue'
 
 @Component({
   components: {
-    Markdown: () => {
+    markdown: () => {
       if (process.client) {
         return import('@/pages/application/_components/markdown/simple')
       }

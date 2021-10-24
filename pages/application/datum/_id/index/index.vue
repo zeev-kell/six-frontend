@@ -5,9 +5,7 @@
         <div class="card-header el-row el-row--flex is-align-middle py-5">
           <h2>{{ item.name }}</h2>
         </div>
-        <div class="card-body">
-          {{ item.description }}
-        </div>
+        <div v-marked="item.readme" class="card-body"></div>
       </div>
     </div>
     <div class="el-col- el-col-6">
@@ -45,7 +43,5 @@ export default class DatumIndex extends Vue {
   get item() {
     return this.$store.state.datum
   }
-  @Getter('user/username')
-  username!: number
 }
 </script>

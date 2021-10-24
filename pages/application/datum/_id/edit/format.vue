@@ -10,10 +10,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
 import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
-import { DatumModel } from '@/types/model/Datum'
+import DatumStructure from '@/pages/application/datum/_id/index/structure.vue'
 
 @Component({
   components: {
@@ -21,14 +21,7 @@ import { DatumModel } from '@/types/model/Datum'
     LoadingButton,
   },
 })
-export default class DatumFormat extends Vue {
-  content = ''
-  get item(): DatumModel {
-    return this.$store.state.datum
-  }
-  mounted() {
-    this.content = this.item.content?.toString()
-  }
+export default class DatumEditFormat extends DatumStructure {
   async onSubmit() {
     const data = { content: this.content }
     await this.$api.datum.updateVersion(this.item.resource_id, data).then(() => {

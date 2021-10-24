@@ -59,9 +59,7 @@
           </el-dropdown-menu>
         </el-dropdown>
         <can-create v-if="item.provider === username">
-          <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipe/' + item['resource_id'] + '/edit')" custom>
-            <el-button type="primary" icon="el-icon-edit" @click="navigate" @keypress.enter="navigate"> 编辑 </el-button>
-          </nuxt-link>
+          <toggle-edit-info type="primary" icon="el-icon-edit"> 编辑 </toggle-edit-info>
         </can-create>
         <can-examine>
           <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe"> 删除 </el-button>
@@ -90,9 +88,10 @@ import { downloadStrLink } from '@/utils/download-link'
 import CanCreate from '@/components/common/CanCreate.vue'
 import CanExamine from '@/components/common/CanExamine.vue'
 import ElTabRouter from '@/pages/application/_components/ElTabRouter.vue'
+import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
 
 @Component({
-  components: { CanExamine, CanCreate },
+  components: { ToggleEditInfo, CanExamine, CanCreate },
   scrollToTop: true,
   filters: {
     pipeTypeTranslate: pipeConstants.get,

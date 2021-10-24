@@ -32,7 +32,7 @@ export const getters: GetterTree<PipeModuleState, RootState> = {
     if (getters.isData) {
       return [items]
     }
-    return items
+    return items.resources
   },
 }
 

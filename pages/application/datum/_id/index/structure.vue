@@ -1,6 +1,8 @@
 <template>
-  <div class="codemirror-box">
-    <code-mirror-client v-model="content" :options="{ readOnly: true }" />
+  <div class="card container-fluid">
+    <div class="codemirror-box">
+      <code-mirror-client v-model="content" :options="{ readOnly: true }" />
+    </div>
   </div>
 </template>
 
@@ -14,7 +16,7 @@ import { DatumModel } from '@/types/model/Datum'
     CodeMirrorClient,
   },
 })
-export default class structure extends Vue {
+export default class DatumStructure extends Vue {
   content = ''
   get item(): DatumModel {
     return this.$store.state.datum

@@ -37,7 +37,7 @@
       </el-table>
     </div>
     <el-dialog title="上传数据" :visible.sync="dialogVisible" width="500px" :close-on-click-modal="false">
-      <el-upload action="https://jsonplaceholder.typicode.com/posts/" multiple :limit="3" class="upload-wrap" :http-request="uploadOssFile">
+      <el-upload action="/api" multiple :limit="3" class="upload-wrap" :http-request="uploadOssFile">
         <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
         <span class="mx-5">或</span>
         <el-input placeholder="链接" style="width: 300px">
@@ -54,6 +54,20 @@ import { Component } from 'nuxt-property-decorator'
 import BaseTable from '@/pages/application/_components/BaseTable.vue'
 import OSS from 'ali-oss'
 import intercept from '@/filters/intercept'
+interface uploadChunkOption {
+  headers: any
+  withCredentials: boolean
+  file: File
+  data: any
+  filename: string
+  action: string
+  onProgress: (e: ProgressEvent) => void
+  onSuccess: (res: any) => void
+  onError: (e: any) => void
+  _id: string
+  _chunks: number
+  _currentChunk: number
+}
 
 @Component({
   asyncData({ store }) {
@@ -64,16 +78,17 @@ import intercept from '@/filters/intercept'
     ...intercept,
   },
 })
-export default class manage extends BaseTable {
+export default class DatumEditManage extends BaseTable {
   dialogVisible = false
-  ossPath: string = ''
-  async uploadOssFile(file: any): Promise<void> {
+  ossPath: string = 'exampledir/'
+  async uploadOssFile(option: uploadChunkOption): Promise<void> {
+    console.log(option)
     const token = await this.$api.datum.getOssToken()
     const client = new OSS({
       // yourRegion填写Bucket所在地域。以华东1（杭州）为例，Region填写为oss-cn-hangzhou。
-      region: 'yourRegion',
+      region: token.Region || 'oss-cn-zhangjiakou',
       // 填写Bucket名称。
-      bucket: 'examplebucket',
+      bucket: token.Bucket || 'sixoclock',
       // 从STS服务获取的临时访问密钥（AccessKey ID和AccessKey Secret）。
       accessKeyId: token.access_key_id,
       accessKeySecret: token.access_key_secret,
@@ -91,10 +106,13 @@ export default class manage extends BaseTable {
       // 刷新临时访问凭证的时间间隔，单位为毫秒。
       refreshSTSTokenInterval: 300000,
     })
-    const storeAs = this.ossPath + file.file.name
-    client.put(storeAs, file.file).then((res) => {
-      console.log(res)
-    })
+    const storeAs = this.ossPath + option.file.name
+    try {
+      const result = await client.put(storeAs, option.file)
+      console.log(result)
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 </script>

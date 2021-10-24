@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <div v-else>暂无工作结构</div>
+    <div v-else>暂无处理流程</div>
   </div>
 </template>
 
@@ -47,6 +47,7 @@ import { GraphEvent } from '@/constants/GraphEvent'
 import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import { PipeModel } from '@/types/model/Pipe'
+import { DatumModel } from '@/types/model/Datum'
 
 @Component({
   filters: {
@@ -54,16 +55,16 @@ import { PipeModel } from '@/types/model/Pipe'
   },
   components: { GraphIndex },
   async asyncData({ app, store }) {
-    const id = '25775232'
-    if (id) {
-      const pipeItem = await app.$api.pipe.getVersion(id)
+    const item: DatumModel = store.state.datum
+    if (item.link_pipes) {
+      const pipeItem = await app.$api.pipe.getVersion(item.link_pipes)
       // 请求 graph 数据
       const graphItem = await app.$api.pipe.getVersion(pipeItem.cwl)
       return { graphItem, pipeItem }
     }
   },
 })
-export default class process extends Vue {
+export default class DatumProcess extends Vue {
   $refs!: {
     graph: HTMLFormElement
   }

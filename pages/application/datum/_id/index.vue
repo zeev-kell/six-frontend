@@ -3,8 +3,8 @@
     <div class="el-row el-row--flex is-align-middle info-header">
       <div class="el-col-auto px-20">
         <i v-if="isFormat" class="el-icon-notebook-1" style="font-size: 36px" />
-        <i v-if="isData" class="el-icon-document" style="font-size: 36px" />
-        <i v-if="isDataPackage" class="el-icon-files" style="font-size: 36px" />
+        <i v-else-if="isData" class="el-icon-document" style="font-size: 36px" />
+        <i v-else-if="isDataPackage" class="el-icon-files" style="font-size: 36px" />
       </div>
       <div class="el-col el-col-16 text-truncate mx-0">
         <h2 class="text-truncate my-0" :title="item['name']">
@@ -30,9 +30,7 @@
         <el-button type="primary" icon="el-icon-caret-right"> 校验数据 </el-button>
         <el-button type="info" icon="el-icon-download"> 下载 </el-button>
         <can-create v-if="item.provider === username">
-          <nuxt-link v-slot="{ navigate }" :to="localePath('/application/datum/' + item['resource_id'] + '/edit')" custom>
-            <el-button type="primary" icon="el-icon-edit" @click="navigate" @keypress.enter="navigate"> 编辑 </el-button>
-          </nuxt-link>
+          <toggle-edit-info type="primary" icon="el-icon-edit"> 编辑 </toggle-edit-info>
         </can-create>
         <can-examine>
           <el-button type="danger" icon="el-icon-delete" @click="handleDeleteDatum"> 删除 </el-button>
@@ -60,9 +58,10 @@ import CanExamine from '@/components/common/CanExamine.vue'
 import { datumConstants } from '@/constants/DatumConstants'
 import { mapGetters } from 'vuex'
 import ElTabRouter from '@/pages/application/_components/ElTabRouter.vue'
+import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
 
 @Component({
-  components: { CanExamine, CanCreate },
+  components: { ToggleEditInfo, CanExamine, CanCreate },
   scrollToTop: true,
   filters: {
     datumTypeTranslate: datumConstants.get,

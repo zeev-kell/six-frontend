@@ -19,6 +19,7 @@ import { Component, Getter, Vue } from 'nuxt-property-decorator'
 import marked from '@/directives/marked/marked'
 import LoadingButton from '@/components/LoadingButton.vue'
 import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
+import { DatumModel } from '@/types/model/Datum'
 
 @Component({
   components: {
@@ -30,16 +31,16 @@ import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
   },
 })
 export default class DatumIndex extends Vue {
-  get item() {
+  get item(): DatumModel {
     return this.$store.state.datum
   }
-  readme = null
+  readme = ''
   mounted() {
     this.readme = this.item.readme || ''
   }
   async onSubmit() {
     const data = { readme: this.readme }
-    await this.$api.datum.updateVersion(this.item.resource_id, data).then(() => {
+    await this.$api.datum.update(this.item.data_id, data).then(() => {
       this.$store.commit('datum/UPDATE_CURRENT_DATUM', data)
     })
   }

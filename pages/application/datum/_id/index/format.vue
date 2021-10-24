@@ -1,26 +1,7 @@
-<template>
-  <div class="codemirror-box">
-    <code-mirror-client v-model="content" :options="{ readOnly: true }" />
-  </div>
-</template>
-
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
-import { DatumModel } from '@/types/model/Datum'
+import { Component } from 'nuxt-property-decorator'
+import DatumStructure from '@/pages/application/datum/_id/index/structure.vue'
 
-@Component({
-  components: {
-    CodeMirrorClient,
-  },
-})
-export default class format extends Vue {
-  content = ''
-  get item(): DatumModel {
-    return this.$store.state.datum
-  }
-  mounted() {
-    this.content = this.item.content.toString()
-  }
-}
+@Component
+export default class DatumFormat extends DatumStructure {}
 </script>

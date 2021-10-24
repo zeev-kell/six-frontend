@@ -26,9 +26,7 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipe/' + item['resource_id'])" custom>
-          <el-button type="warning" icon="el-icon-back" @click="navigate" @keypress.enter="navigate"> 详情 </el-button>
-        </nuxt-link>
+        <toggle-edit-info type="warning" icon="el-icon-back"> 详情 </toggle-edit-info>
         <can-examine>
           <el-button type="danger" icon="el-icon-delete" @click="handleDelete"> 删除 </el-button>
         </can-examine>
@@ -54,9 +52,10 @@ import { Component, Getter, Vue, Watch } from 'nuxt-property-decorator'
 import { pipeConstants } from '@/constants/PipeConstants'
 import CanExamine from '@/components/common/CanExamine.vue'
 import ElTabRouter from '@/pages/application/_components/ElTabRouter.vue'
+import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
 
 @Component({
-  components: { CanExamine },
+  components: { ToggleEditInfo, CanExamine },
   scrollToTop: true,
   filters: {
     pipeTypeTranslate: pipeConstants.get,

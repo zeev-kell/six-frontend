@@ -3,8 +3,8 @@
     <div class="el-row el-row--flex is-align-middle info-header">
       <div class="el-col-auto px-20">
         <i v-if="isFormat" class="el-icon-notebook-1" style="font-size: 36px" />
-        <i v-if="isData" class="el-icon-document" style="font-size: 36px" />
-        <i v-if="isDataPackage" class="el-icon-files" style="font-size: 36px" />
+        <i v-else-if="isData" class="el-icon-document" style="font-size: 36px" />
+        <i v-else-if="isDataPackage" class="el-icon-files" style="font-size: 36px" />
       </div>
       <div class="el-col el-col-16 text-truncate mx-0">
         <h2 class="text-truncate my-0" :title="item['name']">
@@ -27,9 +27,7 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <nuxt-link v-slot="{ navigate }" :to="localePath('/application/datum/' + item['resource_id'])" custom>
-          <el-button type="warning" icon="el-icon-back" @click="navigate" @keypress.enter="navigate"> 详情 </el-button>
-        </nuxt-link>
+        <toggle-edit-info type="warning" icon="el-icon-back"> 详情 </toggle-edit-info>
         <can-examine>
           <el-button type="danger" icon="el-icon-delete" @click="handleDeleteDatum"> 删除 </el-button>
         </can-examine>
@@ -56,9 +54,10 @@ import CanExamine from '@/components/common/CanExamine.vue'
 import { mapGetters } from 'vuex'
 import { datumConstants } from '@/constants/DatumConstants'
 import ElTabRouter from '@/pages/application/_components/ElTabRouter.vue'
+import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
 
 @Component({
-  components: { CanExamine },
+  components: { ToggleEditInfo, CanExamine },
   scrollToTop: true,
   filters: {
     datumTypeTranslate: datumConstants.get,
@@ -80,7 +79,7 @@ import ElTabRouter from '@/pages/application/_components/ElTabRouter.vue'
     }),
   },
 })
-export default class PipeIdEdit extends ElTabRouter {
+export default class DatumIdEdit extends ElTabRouter {
   get item() {
     return this.$store.state.datum
   }

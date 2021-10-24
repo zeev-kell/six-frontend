@@ -2,7 +2,7 @@ export interface DatumModel {
   data_id: string
   resource_id: string
   name: string
-  pipe_name: string
+  data_name: string
   version: string
   provider: string
   create_at: number
@@ -12,8 +12,10 @@ export interface DatumModel {
   tutorial: string
   type: number
   website: string
-  status: 16
+  status: number
   versions: DatumModel[]
+  Readme: any
   readme: any
   content: any
+  link_pipes: string
 }

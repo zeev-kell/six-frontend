@@ -4,9 +4,10 @@ import { MockMark } from './helper'
 export const Datum = {
   'data_id|+1': /[0-9]{7}/,
   'resource_id|+1': /[0-9]{7}/,
+  link_pipes: /[0-9]{7}/,
   name: 'chrM.fasta',
   version: '1.4',
-  'type|1': [1],
+  'type|1': [0, 1],
   provider: 'keziyuan',
   website: 'http://39.100.115.170:5000/resources/data/NGS/Homo_sapiens/Reference/hg19.chrM.fasta',
   description: 'chrM\u53F7\u67D3\u8272\u4F53\u53C2\u8003\u57FA\u56E0\u7EC4\u5E8F\u5217',
@@ -38,6 +39,10 @@ export const datumFun = function (options: Mock.MockCbOptions) {
   if (match && match[1]) {
     item.resource_id = match[1]
   }
+  if (item.type === 2) {
+    item.content =
+      '- \\n  bytes: 37\\n  encoding: utf-8\\n  hash: d41d8cd98f00b204e9800998ecf8427e\\n  id: 7433af1e-43fe-48a3-82c9-5a7a091853b9\\n  name: aaaaa\\n  path: exampledir/aaa.gz\\n  saveMode: ossObject\\n- \\n  bytes: 37\\n  encoding: utf-8\\n  hash: d41d8cd98f00b204e9800998ecf8427e\\n  id: 7433af1e-43fe-48a3-82c9-5a7a091853b9\\n  name: aaaaa\\n  path: exampledir/aaa.gz\\n  saveMode: ossObject\\n- \\n  bytes: 37\\n  encoding: utf-8\\n  hash: d41d8cd98f00b204e9800998ecf8427e\\n  id: 032c2f14-f939-44ea-9ab2-fd5d604a6c9b\\n  name: aaaaa\\n  path: exampledir/aaa.gz\\n  saveMode: ossObject\\n- \\n  bytes: 37\\n  encoding: utf-8\\n  hash: d41d8cd98f00b204e9800998ecf8427e\\n  id: 032c2f14-f939-44ea-9ab2-fd5d604a6c9b\\n  name: aaaaa\\n  path: exampledir/aaa.gz\\n  saveMode: ossObject\\n'
+  }
   return item
 }
 export const Data = { 'items|10': [Datum] }
@@ -54,6 +59,7 @@ export const MockList: any = [
 MockMark(MockList)
 
 Mock.mock(/\/v2\/data/, 'post', datumFun)
+Mock.mock(/\/v2\/data/, 'put', datumFun)
 Mock.mock(/\/v1\/osstoken/, 'get', function () {
   return {
     access_key_id: 'STS.NSmFEacMT4Ea6TgdXzjdjzmA6',

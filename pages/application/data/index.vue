@@ -68,7 +68,7 @@ import intercept from '@/filters/intercept'
 
 @Component({
   async asyncData({ app }) {
-    const items = await app.$api.datum.getList({ category: '参考序列' })
+    const items = await app.$api.datum.getList()
     return { items }
   },
   filters: {

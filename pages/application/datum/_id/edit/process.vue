@@ -23,17 +23,14 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { pipeConstants } from '@/constants/PipeConstants'
-import { PipeModel } from '@/types/model/Pipe'
 import LoadingButton from '@/components/LoadingButton.vue'
+import { DatumModel } from '@/types/model/Datum'
 
 @Component({
-  filters: {
-    pipeTypeTranslate: pipeConstants.get,
-  },
   components: { LoadingButton },
   async asyncData({ app, store }) {
-    const item = store.state.datum
-    const items = await app.$axios.$get('/v2/pipes', {
+    const item: DatumModel = store.state.datum
+    const items = await app.$api.pipe.getList({
       params: {
         type: [pipeConstants.items.TYPE_WORK, pipeConstants.items.TYPE_WORKFLOW],
       },
@@ -44,22 +41,21 @@ import LoadingButton from '@/components/LoadingButton.vue'
         label: d.name,
       }
     })
-    return { options, value: item.profile }
+    return { options, value: item.link_pipes }
   },
 })
-export default class process extends Vue {
-  profile = {}
+export default class DatumEditProcess extends Vue {
   options = []
   value = ''
 
-  $refs!: {
-    graph: HTMLFormElement
-  }
-
-  pipeItem!: PipeModel
-
   get item() {
     return this.$store.state.datum
+  }
+  async onSubmit() {
+    const data = { link_pipes: this.value }
+    await this.$api.datum.updateVersion(this.item.resource_id, data).then(() => {
+      this.$store.commit('datum/UPDATE_CURRENT_DATUM', data)
+    })
   }
 }
 </script>

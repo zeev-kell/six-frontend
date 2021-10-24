@@ -7,7 +7,7 @@ export const Pipe = {
   'cwl|+1': /[0-9]{7}/,
   name: '@name',
   version: /v[0-9]\.[0-9]\.[0-9]-r1044/,
-  provider: '@name',
+  provider: 'keziyuan',
   create_at: '@datetime',
   'description|1': [
     'Antisense-induced ribosomal frameshifting',

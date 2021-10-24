@@ -52,5 +52,5 @@ import intercept from '@/filters/intercept'
     ...intercept,
   },
 })
-export default class manage extends BaseTable {}
+export default class DatumManage extends BaseTable {}
 </script>

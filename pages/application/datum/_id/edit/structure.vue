@@ -1,26 +1,18 @@
 <template>
-  <div class="codemirror-box">
-    <code-mirror-client v-model="content" />
+  <div class="container-fluid">
+    <div class="px-15 mb-10 text-muted">类别为数据（包）时由系统自动生成</div>
+    <div class="codemirror-box">
+      <code-mirror-client v-model="content" :options="{ readOnly: true }" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
+import DatumStructure from '@/pages/application/datum/_id/index/structure.vue'
 import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
-import { DatumModel } from '@/types/model/Datum'
-
 @Component({
-  components: {
-    CodeMirrorClient,
-  },
+  components: { CodeMirrorClient },
 })
-export default class DatumEditStructure extends Vue {
-  content = ''
-  get item(): DatumModel {
-    return this.$store.state.datum
-  }
-  mounted(): void {
-    this.content = this.item.content?.toString()
-  }
-}
+export default class DatumEditStructure extends DatumStructure {}
 </script>
