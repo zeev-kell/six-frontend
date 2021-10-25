@@ -36,38 +36,15 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-dialog title="上传数据" :visible.sync="dialogVisible" width="500px" :close-on-click-modal="false">
-      <el-upload action="/api" multiple :limit="3" class="upload-wrap" :http-request="uploadOssFile">
-        <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-        <span class="mx-5">或</span>
-        <el-input placeholder="链接" style="width: 300px">
-          <el-button slot="append" icon="el-icon-check"></el-button>
-        </el-input>
-        <div slot="tip" class="el-upload__tip">只能上传不超过2M的文件</div>
-      </el-upload>
-    </el-dialog>
+    <el-upload-dialog></el-upload-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import BaseTable from '@/pages/application/_components/BaseTable.vue'
-import OSS from 'ali-oss'
 import intercept from '@/filters/intercept'
-interface uploadChunkOption {
-  headers: any
-  withCredentials: boolean
-  file: File
-  data: any
-  filename: string
-  action: string
-  onProgress: (e: ProgressEvent) => void
-  onSuccess: (res: any) => void
-  onError: (e: any) => void
-  _id: string
-  _chunks: number
-  _currentChunk: number
-}
+import ElUploadDialog from '../../_components/ElUploadDialog.vue'
 
 @Component({
   asyncData({ store }) {
@@ -77,52 +54,9 @@ interface uploadChunkOption {
   filters: {
     ...intercept,
   },
+  components: {
+    ElUploadDialog,
+  },
 })
-export default class DatumEditManage extends BaseTable {
-  dialogVisible = false
-  ossPath: string = 'exampledir/'
-  async uploadOssFile(option: uploadChunkOption): Promise<void> {
-    console.log(option)
-    const token = await this.$api.datum.getOssToken()
-    const client = new OSS({
-      // yourRegion填写Bucket所在地域。以华东1（杭州）为例，Region填写为oss-cn-hangzhou。
-      region: token.Region || 'oss-cn-zhangjiakou',
-      // 填写Bucket名称。
-      bucket: token.Bucket || 'sixoclock',
-      // 从STS服务获取的临时访问密钥（AccessKey ID和AccessKey Secret）。
-      accessKeyId: token.access_key_id,
-      accessKeySecret: token.access_key_secret,
-      // 从STS服务获取的安全令牌（SecurityToken）。
-      stsToken: token.security_token,
-      refreshSTSToken: async () => {
-        // 向您搭建的STS服务获取临时访问凭证。
-        const token = await this.$api.datum.getOssToken()
-        return {
-          accessKeyId: token.access_key_id,
-          accessKeySecret: token.access_key_secret,
-          stsToken: token.security_token,
-        }
-      },
-      // 刷新临时访问凭证的时间间隔，单位为毫秒。
-      refreshSTSTokenInterval: 300000,
-    })
-    const storeAs = this.ossPath + option.file.name
-    try {
-      const result = await client.put(storeAs, option.file)
-      console.log(result)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-}
+export default class DatumEditManage extends BaseTable {}
 </script>
-
-<style lang="scss">
-.upload-wrap {
-  text-align: center;
-  padding-bottom: 30px;
-  .el-upload-list {
-    text-align: left;
-  }
-}
-</style>

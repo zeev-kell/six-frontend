@@ -30,9 +30,9 @@ export const getters: GetterTree<PipeModuleState, RootState> = {
   items: (state, getters) => {
     const items = yamlToJson(state.content)
     if (getters.isData) {
-      return [items]
+      return items ? [items] : []
     }
-    return items.resources
+    return items?.resources || []
   },
 }
 

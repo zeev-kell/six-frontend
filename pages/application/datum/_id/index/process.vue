@@ -69,8 +69,8 @@ export default class DatumProcess extends Vue {
     graph: HTMLFormElement
   }
 
-  graphItem!: PipeModel
-  pipeItem!: PipeModel
+  graphItem: PipeModel | null = null
+  pipeItem: PipeModel | null = null
 
   get item() {
     return this.$store.state.datum
@@ -80,7 +80,7 @@ export default class DatumProcess extends Vue {
     // TODO 修改为事件
     // 监听第一次实例化事件
     if (GraphEvent.TriggerPageModalCreate === eventName) {
-      const job = getObject(this.pipeItem.content || {})
+      const job = getObject(this.pipeItem?.content || {})
       this.$nextTick(() => {
         this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
       })

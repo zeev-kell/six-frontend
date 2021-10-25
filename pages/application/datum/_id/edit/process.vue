@@ -31,9 +31,7 @@ import { DatumModel } from '@/types/model/Datum'
   async asyncData({ app, store }) {
     const item: DatumModel = store.state.datum
     const items = await app.$api.pipe.getList({
-      params: {
-        type: [pipeConstants.items.TYPE_WORK, pipeConstants.items.TYPE_WORKFLOW],
-      },
+      type: [pipeConstants.items.TYPE_WORK, pipeConstants.items.TYPE_WORKFLOW],
     })
     const options = items.map((d: any) => {
       return {
