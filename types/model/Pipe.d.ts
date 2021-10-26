@@ -11,7 +11,9 @@ export interface PipeModel {
   download: string
   tutorial: string
   type: number
+  cwl: string
   website: string
+  profile: string
   status: number
   versions: PipeModel[]
   readme: any

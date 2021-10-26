@@ -17,13 +17,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
+import PipeItemMixin from '@/pages/application/pipe/_id/_components/PipeItemMixin.vue'
 
 @Component
-export default class PipeVersion extends Vue {
-  get item() {
-    return this.$store.state.pipe
-  }
+export default class PipeVersion extends PipeItemMixin {
   get versions() {
     return this.item?.versions || []
   }

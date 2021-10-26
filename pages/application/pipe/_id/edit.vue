@@ -48,11 +48,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Getter, Vue, Watch } from 'nuxt-property-decorator'
+import { Component, Getter, mixins, Vue, Watch } from 'nuxt-property-decorator'
 import { pipeConstants } from '@/constants/PipeConstants'
 import CanExamine from '@/components/common/CanExamine.vue'
 import ElTabRouter from '@/pages/application/_components/ElTabRouter.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
+import PipeMixin from '@/pages/application/pipe/_id/_components/PipeMixin.vue'
 
 @Component({
   components: { ToggleEditInfo, CanExamine },
@@ -60,28 +61,8 @@ import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
   filters: {
     pipeTypeTranslate: pipeConstants.get,
   },
-  async middleware({ store, params, app }) {
-    const pipe = store.state.pipe
-    // ID 不同，需要重新请求数据
-    if (params.id !== pipe.resource_id) {
-      // params.id = 'bd5adb8d-8615-4a09-9cf8-fa0005de6518'
-      const item = await app.$api.pipe.getVersion(params.id)
-      // eslint-disable-next-line camelcase
-      if (item.readme?.by_system) {
-        // eslint-disable-next-line camelcase
-        item.readme.by_system = item.readme.by_system?.replace(/[↵ ]{2,}/g, '  \n')
-      }
-      // eslint-disable-next-line camelcase
-      if (item.readme?.by_author) {
-        // eslint-disable-next-line camelcase
-        item.readme.by_author = item.readme.by_author?.replace(/[↵ ]{2,}/g, '  \n')
-      }
-      item.tutorial = item.tutorial?.replace(/[↵ ]{2,}/g, '  \n')
-      store.commit('pipe/UPDATE_CURRENT_WORKFLOW', item)
-    }
-  },
 })
-export default class PipeIdEdit extends ElTabRouter {
+export default class PipeIdEdit extends mixins(ElTabRouter, PipeMixin) {
   get item() {
     return this.$store.state.pipe
   }

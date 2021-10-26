@@ -27,11 +27,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 import { PipeModel } from '@/types/model/Pipe'
 import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
+import PipeItemMixin from '@/pages/application/pipe/_id/_components/PipeItemMixin.vue'
 
 @Component({
   components: {
@@ -40,13 +41,10 @@ import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.v
     GraphIndex,
   },
 })
-export default class Structure extends Vue {
+export default class Structure extends PipeItemMixin {
   activeName = '1'
   content = ''
 
-  get item(): PipeModel {
-    return this.$store.state.pipe
-  }
   get title() {
     if (this.$store.getters['pipe/isSoftware']) {
       // 选择新建类型为”工具”或“工具流”时标题显示为“应用参数结构CWL”

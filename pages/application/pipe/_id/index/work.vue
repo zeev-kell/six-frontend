@@ -41,11 +41,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
 import { pipeConstants } from '@/constants/PipeConstants'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
+import PipeItemMixin from '@/pages/application/pipe/_id/_components/PipeItemMixin.vue'
 
 @Component({
   filters: {
@@ -61,16 +62,12 @@ import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
     }
   },
 })
-export default class Work extends Vue {
+export default class Work extends PipeItemMixin {
   $refs!: {
     graph: HTMLFormElement
   }
 
   graphItem = null
-
-  get item() {
-    return this.$store.state.pipe
-  }
 
   onPropagate(eventName: string): void {
     // TODO 修改为事件

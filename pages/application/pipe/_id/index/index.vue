@@ -41,18 +41,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Getter, Vue } from 'nuxt-property-decorator'
+import { Component, Getter } from 'nuxt-property-decorator'
 import marked from '@/directives/marked/marked'
+import PipeItemMixin from '@/pages/application/pipe/_id/_components/PipeItemMixin.vue'
 
 @Component({
   directives: {
     ...marked,
   },
 })
-export default class PipeIndex extends Vue {
-  get item() {
-    return this.$store.state.pipe
-  }
+export default class PipeIndex extends PipeItemMixin {
   @Getter('user/username')
   username!: number
   get readmeByAuthor() {

@@ -28,6 +28,7 @@ import { CommandLineToolFactory, WorkflowFactory } from 'cwlts/models'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
+import PipeItemMixin from '@/pages/application/pipe/_id/_components/PipeItemMixin.vue'
 
 @Component({
   filters: {
@@ -56,7 +57,7 @@ import LoadingButton from '@/components/LoadingButton.vue'
     return { options, value, graphItem }
   },
 })
-export default class Work extends Vue {
+export default class Work extends PipeItemMixin {
   $refs!: {
     graph: HTMLFormElement
     pipeSelect: HTMLFormElement
@@ -65,9 +66,7 @@ export default class Work extends Vue {
   options = []
   content = ''
   value = ''
-  get item() {
-    return this.$store.state.pipe
-  }
+
   get placeholder() {
     return '引用工作' + (this.$store.getters['pipe/isTool'] ? '' : '流')
   }

@@ -21,9 +21,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import { pipeConstants } from '@/constants/PipeConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
+import PipeItemMixin from '@/pages/application/pipe/_id/_components/PipeItemMixin.vue'
 
 @Component({
   components: { LoadingButton },
@@ -44,13 +45,10 @@ import LoadingButton from '@/components/LoadingButton.vue'
     return { options, value: item.profile }
   },
 })
-export default class Case extends Vue {
+export default class Case extends PipeItemMixin {
   profile = {}
   options = []
   value = ''
-  get item() {
-    return this.$store.state.pipe
-  }
   get placeholder() {
     return '引用工作' + (this.$store.getters['pipe/isTool'] ? '' : '流')
   }

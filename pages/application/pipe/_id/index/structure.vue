@@ -15,15 +15,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
+import PipeItemMixin from '@/pages/application/pipe/_id/_components/PipeItemMixin.vue'
 
 @Component({
   components: { GraphIndex },
 })
-export default class Structure extends Vue {
-  get item() {
-    return this.$store.state.pipe
-  }
-}
+export default class Structure extends PipeItemMixin {}
 </script>
