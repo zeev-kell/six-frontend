@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import PipeItemMixin from '@/pages/application/pipe/_id/_components/PipeItemMixin.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component
 export default class PipeVersion extends PipeItemMixin {

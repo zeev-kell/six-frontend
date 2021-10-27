@@ -51,39 +51,13 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import CanExamine from '@/components/common/CanExamine.vue'
-import { mapGetters } from 'vuex'
-import { datumConstants } from '@/constants/DatumConstants'
-import ElTabRouter from '@/pages/application/_components/ElTabRouter.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
+import DatumMixin from '@/pages/application/datum/_components/DatumMixin.vue'
 
 @Component({
   components: { ToggleEditInfo, CanExamine },
-  scrollToTop: true,
-  filters: {
-    datumTypeTranslate: datumConstants.get,
-  },
-  async middleware({ store, params, app }) {
-    const datum = store.state.datum
-    // ID 不同，需要重新请求数据
-    if (params.id !== datum.resource_id) {
-      const item = await app.$api.datum.get(params.id)
-      store.commit('datum/UPDATE_CURRENT_DATUM', item)
-    }
-  },
-  computed: {
-    ...mapGetters({
-      isFormat: 'datum/isFormat',
-      isData: 'datum/isData',
-      isDataPackage: 'datum/isDataPackage',
-      username: 'user/username',
-    }),
-  },
 })
-export default class DatumIdEdit extends ElTabRouter {
-  get item() {
-    return this.$store.state.datum
-  }
-
+export default class DatumIdEdit extends DatumMixin {
   handleDeleteDatum() {
     this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
       confirmButtonText: '确定',

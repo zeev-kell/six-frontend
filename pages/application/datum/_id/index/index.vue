@@ -31,17 +31,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Getter, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import marked from '@/directives/marked/marked'
+import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
 
 @Component({
   directives: {
     ...marked,
   },
 })
-export default class DatumIndex extends Vue {
-  get item() {
-    return this.$store.state.datum
-  }
-}
+export default class DatumIndex extends DatumItemMixin {}
 </script>

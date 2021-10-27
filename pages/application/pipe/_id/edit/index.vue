@@ -23,10 +23,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import marked from '@/directives/marked/marked'
 import LoadingButton from '@/components/LoadingButton.vue'
 import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   directives: {
@@ -37,16 +38,9 @@ import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
     LoadingButton,
   },
 })
-export default class PipeEditIndex extends Vue {
+export default class PipeEditIndex extends PipeItemMixin {
   readmeByAuthor = null
   readmeBySystem = null
-  get item() {
-    return this.$store.state.pipe
-  }
-  mounted() {
-    this.readmeBySystem = this.item.readme.by_system || ''
-    this.readmeByAuthor = this.item.readme.by_author || ''
-  }
   async onSubmit() {
     const data = { readme: this.readmeByAuthor }
     await this.$api.pipe.update(this.item.pipe_id, data).then(() => {
@@ -57,6 +51,10 @@ export default class PipeEditIndex extends Vue {
         },
       })
     })
+  }
+  mounted() {
+    this.readmeBySystem = this.item.readme.by_system || ''
+    this.readmeByAuthor = this.item.readme.by_author || ''
   }
 }
 </script>

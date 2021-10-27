@@ -18,13 +18,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
+import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
 
 @Component
-export default class DatumVersion extends Vue {
-  get item() {
-    return this.$store.state.datum
-  }
+export default class DatumVersion extends DatumItemMixin {
   get versions() {
     return this.item?.versions || []
   }

@@ -28,7 +28,7 @@ import { CommandLineToolFactory, WorkflowFactory } from 'cwlts/models'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
-import PipeItemMixin from '@/pages/application/pipe/_id/_components/PipeItemMixin.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   filters: {

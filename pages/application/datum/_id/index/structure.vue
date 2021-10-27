@@ -7,20 +7,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
-import { DatumModel } from '@/types/model/Datum'
+import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
 
 @Component({
   components: {
     CodeMirrorClient,
   },
 })
-export default class DatumStructure extends Vue {
+export default class DatumStructure extends DatumItemMixin {
   content = ''
-  get item(): DatumModel {
-    return this.$store.state.datum
-  }
   mounted() {
     this.content = this.item.content?.toString()
   }

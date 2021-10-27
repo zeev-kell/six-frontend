@@ -3,10 +3,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
+import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
 
 @Component
-export default class DatumEditSetting extends Vue {}
+export default class DatumEditSetting extends DatumItemMixin {}
 </script>
-
-<style lang="scss"></style>

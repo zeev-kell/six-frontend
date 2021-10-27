@@ -20,6 +20,7 @@ import marked from '@/directives/marked/marked'
 import LoadingButton from '@/components/LoadingButton.vue'
 import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
 import { DatumModel } from '@/types/model/Datum'
+import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
 
 @Component({
   components: {
@@ -30,10 +31,7 @@ import { DatumModel } from '@/types/model/Datum'
     ...marked,
   },
 })
-export default class DatumIndex extends Vue {
-  get item(): DatumModel {
-    return this.$store.state.datum
-  }
+export default class DatumIndex extends DatumItemMixin {
   readme = ''
   mounted() {
     this.readme = this.item.readme || ''

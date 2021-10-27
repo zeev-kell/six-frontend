@@ -81,36 +81,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Getter, mixins } from 'nuxt-property-decorator'
-import { pipeConstants } from '@/constants/PipeConstants'
+import { Component } from 'nuxt-property-decorator'
 import { stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { downloadStrLink } from '@/utils/download-link'
 import CanCreate from '@/components/common/CanCreate.vue'
 import CanExamine from '@/components/common/CanExamine.vue'
-import ElTabRouter from '@/pages/application/_components/ElTabRouter.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
-import PipeMixin from '@/pages/application/pipe/_id/_components/PipeMixin.vue'
+import PipeMixin from '@/pages/application/pipe/_components/PipeMixin.vue'
 
 @Component({
   components: { ToggleEditInfo, CanExamine, CanCreate },
-  scrollToTop: true,
-  filters: {
-    pipeTypeTranslate: pipeConstants.get,
-  },
 })
-export default class PipeIdIndex extends mixins(ElTabRouter, PipeMixin) {
-  @Getter('user/username')
-  username!: number
-  get item() {
-    return this.$store.state.pipe
-  }
-  get isApp() {
-    return this.$store.getters['pipe/isSoftware']
-  }
-  get isWork() {
-    return this.$store.getters['pipe/isOperation']
-  }
-
+export default class PipeIdIndex extends PipeMixin {
   handleDownload(format = 'yaml') {
     const asYaml = format === 'yaml'
     const data = stringifyObject(this.item.content, asYaml)

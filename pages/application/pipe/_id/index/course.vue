@@ -28,7 +28,7 @@
 import { Component } from 'nuxt-property-decorator'
 import MarkdownToc from '@/components/MarkdownToc.vue'
 import { resourceHelp } from '@/utils/resource-help'
-import PipeItemMixin from '@/pages/application/pipe/_id/_components/PipeItemMixin.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   components: { MarkdownToc },

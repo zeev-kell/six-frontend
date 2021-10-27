@@ -41,13 +41,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import { pipeConstants } from '@/constants/PipeConstants'
 import { GraphEvent } from '@/constants/GraphEvent'
 import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import { PipeModel } from '@/types/model/Pipe'
 import { DatumModel } from '@/types/model/Datum'
+import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
 
 @Component({
   filters: {
@@ -64,17 +65,13 @@ import { DatumModel } from '@/types/model/Datum'
     }
   },
 })
-export default class DatumProcess extends Vue {
+export default class DatumProcess extends DatumItemMixin {
   $refs!: {
     graph: HTMLFormElement
   }
 
   graphItem: PipeModel | null = null
   pipeItem: PipeModel | null = null
-
-  get item() {
-    return this.$store.state.datum
-  }
 
   onPropagate(eventName: string): void {
     // TODO 修改为事件

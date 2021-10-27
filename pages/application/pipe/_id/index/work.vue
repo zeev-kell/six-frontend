@@ -46,7 +46,7 @@ import { GraphEvent } from '@/constants/GraphEvent'
 import { pipeConstants } from '@/constants/PipeConstants'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
-import PipeItemMixin from '@/pages/application/pipe/_id/_components/PipeItemMixin.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   filters: {

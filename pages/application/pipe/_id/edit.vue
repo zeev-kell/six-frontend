@@ -48,31 +48,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Getter, mixins, Vue, Watch } from 'nuxt-property-decorator'
-import { pipeConstants } from '@/constants/PipeConstants'
+import { Component } from 'nuxt-property-decorator'
 import CanExamine from '@/components/common/CanExamine.vue'
-import ElTabRouter from '@/pages/application/_components/ElTabRouter.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
-import PipeMixin from '@/pages/application/pipe/_id/_components/PipeMixin.vue'
+import PipeMixin from '@/pages/application/pipe/_components/PipeMixin.vue'
 
 @Component({
   components: { ToggleEditInfo, CanExamine },
-  scrollToTop: true,
-  filters: {
-    pipeTypeTranslate: pipeConstants.get,
-  },
 })
-export default class PipeIdEdit extends mixins(ElTabRouter, PipeMixin) {
-  get item() {
-    return this.$store.state.pipe
-  }
-  get isApp() {
-    return this.$store.getters['pipe/isSoftware']
-  }
-  get isWork() {
-    return this.$store.getters['pipe/isOperation']
-  }
-
+export default class PipeIdEdit extends PipeMixin {
   handleDelete() {
     return this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
       confirmButtonText: '确定',

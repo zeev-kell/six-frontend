@@ -21,10 +21,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import { pipeConstants } from '@/constants/PipeConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
 import { DatumModel } from '@/types/model/Datum'
+import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
 
 @Component({
   components: { LoadingButton },
@@ -42,13 +43,9 @@ import { DatumModel } from '@/types/model/Datum'
     return { options, value: item.link_pipes }
   },
 })
-export default class DatumEditProcess extends Vue {
+export default class DatumEditProcess extends DatumItemMixin {
   options = []
   value = ''
-
-  get item() {
-    return this.$store.state.datum
-  }
   async onSubmit() {
     const data = { link_pipes: this.value }
     await this.$api.datum.updateVersion(this.item.resource_id, data).then(() => {

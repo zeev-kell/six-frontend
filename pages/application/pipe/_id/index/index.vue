@@ -43,7 +43,7 @@
 <script lang="ts">
 import { Component, Getter } from 'nuxt-property-decorator'
 import marked from '@/directives/marked/marked'
-import PipeItemMixin from '@/pages/application/pipe/_id/_components/PipeItemMixin.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   directives: {
