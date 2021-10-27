@@ -1,0 +1,11 @@
+﻿const a =
+  'eyJjYWxsYmFja1VybCI6Imh0dHA6Ly8zOS4xMDEuMTgwLjM3OjUwMDAvYXBpL3YxL29zc2NhbGxiYWNrIiwiY2FsbGJhY2tCb2R5IjoiYnVja2V0PSR7YnVja2V0fSZvYmplY3Q9JHtvYmplY3R9JmV0YWc9JHtldGFnfSZzaXplPSR7c2l6ZX0mbWltZVR5cGU9JHttaW1lVHlwZX0mdXNlcj0ke3g6dXNlcn0mcmVzb3VyY2VpZD0ke3g6cmVzb3VyY2VpZH0mbmFtZT0ke3g6bmFtZX0mbWQ1PSR7eDptZDV9JmlkPSR7eDppZH0iLCJjYWxsYmFja0JvZHlUeXBlIjoiYXBwbGljYXRpb24veC13d3ctZm9ybS11cmxlbmNvZGVkIn0='
+const b =
+  'eyJ4OnVzZXIiOiIxMGE4ZDZjNS1lYzgwLTQzODktOGVhMy1lZjJhODJjYmU3YzkiLCJ4OnJlc291cmNlaWQiOiJjM2MwN2Y4Yi1kNWVkLTQ3Y2EtODMxYy02MmQxODI1MGE5ODkiLCJ4Om5hbWUiOiJURVNUIiwieDptZDUiOiJmNjczYjQxN2U0NDg0OTFhYjE0YzEwNzg0M2FlOGYzMiIsIng6aWQiOiI3ZTI4Y2ViYS00ZTY1LTQzMmYtYmZlNy02ZmUzNjQ3ODI2ZjUifQ=='
+function con(str: string) {
+  const s = Buffer.from(str, 'base64')
+  console.log(s.toString())
+}
+
+con(a)
+con(b)
