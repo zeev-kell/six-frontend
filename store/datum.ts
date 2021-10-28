@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
-import type { Module, GetterTree, MutationTree } from 'vuex'
+import type { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { datumConstants } from '@/constants/DatumConstants'
 import { NuxtState } from '@nuxt/types/app'
 import { RootState } from '@/store/index'
 import { yamlToJson } from '@/pages/_components/Graph/helpers/YamlHandle'
+import { ApiType } from '@/types/plugin'
 
 export const state = (): NuxtState => ({
   data_id: null,
@@ -41,5 +42,12 @@ export const mutations: MutationTree<NuxtState> = {
     Object.keys(item).forEach((key) => {
       ;(state as any)[key] = item[key]
     })
+  },
+}
+
+export const actions: ActionTree<RootState, PipeModuleState> = {
+  async refresh({ commit }, payload) {
+    const item = await (this.$api as ApiType).datum.get(payload)
+    commit('UPDATE_CURRENT_DATUM', item)
   },
 }

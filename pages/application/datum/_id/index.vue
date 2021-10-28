@@ -45,14 +45,14 @@
       <el-tab-pane v-if="!isFormat" label="数据下载" name="application-datum-id-index-manage" />
       <el-tab-pane v-if="!isFormat" label="处理流程" name="application-datum-id-index-process" />
     </el-tabs>
-    <div class="px-20 mt-5">
+    <div class="px-20 mt-5 pb-10 no-gutters">
       <nuxt-child />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import CanCreate from '@/components/common/CanCreate.vue'
 import CanExamine from '@/components/common/CanExamine.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
@@ -61,7 +61,7 @@ import DatumMixin from '@/pages/application/datum/_components/DatumMixin.vue'
 @Component({
   components: { ToggleEditInfo, CanExamine, CanCreate },
 })
-export default class DatumIdIndex extends DatumMixin {
+export default class DatumIdIndex extends mixins<DatumMixin>(DatumMixin) {
   handleDeleteDatum() {
     this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
       confirmButtonText: '确定',

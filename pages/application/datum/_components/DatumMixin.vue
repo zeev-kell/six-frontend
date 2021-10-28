@@ -20,5 +20,5 @@ import { datumConstants } from '@/constants/DatumConstants'
     }),
   },
 })
-export default class DatumMixin extends mixins(ElTabRouter, DatumMiddlewareMixin, DatumItemMixin) {}
+export default class DatumMixin extends mixins<ElTabRouter>(ElTabRouter, DatumMiddlewareMixin, DatumItemMixin) {}
 </script>

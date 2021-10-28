@@ -48,6 +48,7 @@
     "jszip": "^3.6.0",
     "marked": "^1.2.9",
     "mavon-editor": "^2.9.1",
+    "mime": "^2.5.2",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.15.7",
     "nuxt-fontawesome": "^0.4.0",

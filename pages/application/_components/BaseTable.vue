@@ -84,7 +84,8 @@ import { pipeConstants } from '@/constants/PipeConstants'
   },
 })
 export default class BaseTable extends Vue {
-  items = []
+  items: any[] = []
+  multipleSelection: any[] = []
   query = {
     name: this.$route.query.name || '',
     category: this.$route.query.category || '',
@@ -127,7 +128,13 @@ export default class BaseTable extends Vue {
     }
     return data
   }
+  get hasSelected(): boolean {
+    return this.multipleSelection.length > 0
+  }
 
+  async refresh(): Promise<void> {
+    this.items = await this.$api.pipe.getList()
+  }
   createFilter(str: string) {
     return (name: any) => {
       return name.value.toLowerCase().includes(str.toLowerCase())
@@ -141,6 +148,9 @@ export default class BaseTable extends Vue {
   showVisualModal(id: string) {
     // window.open(`/graph-info/${id}`, '_blank', 'toolbar=0,location=0,menubar=0')
     window.open(`/graph-info/${id}`, '_blank')
+  }
+  handleSelectionChange(selection: []): void {
+    this.multipleSelection = selection
   }
 }
 </script>

@@ -74,14 +74,14 @@
       <el-tab-pane v-if="isApp" label="运行案例" name="application-pipe-id-index-case" />
       <el-tab-pane v-if="isApp" label="历史版本" name="application-pipe-id-index-version" />
     </el-tabs>
-    <div class="px-20 mt-5">
+    <div class="px-20 mt-5 pb-10 no-gutters">
       <nuxt-child />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import { stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { downloadStrLink } from '@/utils/download-link'
 import CanCreate from '@/components/common/CanCreate.vue'
@@ -92,11 +92,11 @@ import PipeMixin from '@/pages/application/pipe/_components/PipeMixin.vue'
 @Component({
   components: { ToggleEditInfo, CanExamine, CanCreate },
 })
-export default class PipeIdIndex extends PipeMixin {
+export default class PipeIdIndex extends mixins(PipeMixin) {
   handleDownload(format = 'yaml') {
     const asYaml = format === 'yaml'
-    const data = stringifyObject(this.item.content, asYaml)
-    const name = this.item?.name + `.${asYaml ? 'cwl' : format}`
+    const data = stringifyObject(this.item!.content, asYaml)
+    const name = this.item!.name + `.${asYaml ? 'cwl' : format}`
     downloadStrLink(data, name)
   }
   handleDeletePipe() {

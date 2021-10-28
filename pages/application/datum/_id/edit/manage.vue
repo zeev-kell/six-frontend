@@ -15,28 +15,33 @@
         </el-form>
       </div>
       <div class="action-box">
-        <el-button type="primary" icon="el-icon-plus" @click="dialogVisible = true"> 新增 </el-button>
+        <el-button type="primary" icon="el-icon-plus" @click="showUploadDialog"> 新增 </el-button>
+        <el-button type="danger" :disabled="!hasSelected" icon="el-icon-delete" @click="onDeleteSelect"> 删 除 </el-button>
       </div>
     </div>
     <div class="table-box">
-      <el-table ref="multipleTable" :data="tableDate" style="width: 100%">
+      <el-table ref="multipleTable" :data="tableDate" style="width: 100%" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column label="文件名称" prop="name" sortable width="280"></el-table-column>
-        <el-table-column label="媒介类型" prop="format" sortable width="120"></el-table-column>
-        <el-table-column label="大小" prop="category" sortable width="120" />
-        <el-table-column label="MD5校验码" prop="version" width="120" />
-        <el-table-column label="格式规范" prop="version" width="120" />
+        <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>
+        <el-table-column label="大小" prop="bytes" sortable width="80" />
+        <el-table-column label="MD5校验码" prop="hash" width="200">
+          <template slot-scope="{ row }">
+            <div v-clipboard="row.hash" class="text-truncate">{{ row.hash }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="格式规范" prop="encoding" width="120" />
         <el-table-column label="说明" prop="description">
           <template slot-scope="{ row }">{{ row.description | intercept }}</template>
         </el-table-column>
         <el-table-column label="操作">
           <template>
-            <el-button>下载</el-button>
+            <el-button size="mini">下载</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <el-upload-dialog></el-upload-dialog>
+    <el-upload-dialog ref="UploadDialog" @change="refresh"></el-upload-dialog>
   </div>
 </template>
 
@@ -44,9 +49,13 @@
 import { Component } from 'nuxt-property-decorator'
 import BaseTable from '@/pages/application/_components/BaseTable.vue'
 import intercept from '@/filters/intercept'
+import clipboard from '@/directives/clipboard'
 import ElUploadDialog from '../../_components/ElUploadDialog.vue'
 
 @Component({
+  directives: {
+    ...clipboard,
+  },
   asyncData({ store }) {
     const items = store.getters['datum/items']
     return { items }
@@ -58,5 +67,31 @@ import ElUploadDialog from '../../_components/ElUploadDialog.vue'
     ElUploadDialog,
   },
 })
-export default class DatumEditManage extends BaseTable {}
+export default class DatumEditManage extends BaseTable {
+  $refs!: {
+    UploadDialog: ElUploadDialog
+  }
+  async refresh() {
+    await this.$store.dispatch('datum/refresh', this.$route.params.id)
+    this.items = this.$store.getters['datum/items']
+  }
+  showUploadDialog(): void {
+    this.$refs.UploadDialog.dialogVisible = true
+  }
+  onDeleteSelect(): void {
+    this.$confirm('此操作将永久删除选择的文件, 是否继续?', '提示', {
+      type: 'warning',
+    }).then(async () => {
+      await this.$api.datum.deleteFile(
+        this.$route.params.id,
+        this.multipleSelection.map((s: any) => s.id)
+      )
+      this.$message({
+        type: 'success',
+        message: '删除成功!',
+      })
+      await this.refresh()
+    })
+  }
+}
 </script>

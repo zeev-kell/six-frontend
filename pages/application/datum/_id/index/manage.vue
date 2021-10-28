@@ -20,16 +20,20 @@
       <el-table ref="multipleTable" :data="tableDate" style="width: 100%">
         <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column label="文件名称" prop="name" sortable width="280"></el-table-column>
-        <el-table-column label="媒介类型" prop="format" sortable width="120"></el-table-column>
-        <el-table-column label="大小" prop="category" sortable width="120" />
-        <el-table-column label="MD5校验码" prop="version" width="120" />
-        <el-table-column label="格式规范" prop="version" width="120" />
+        <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>
+        <el-table-column label="大小" prop="bytes" sortable width="80" />
+        <el-table-column label="MD5校验码" prop="hash" width="200">
+          <template slot-scope="{ row }">
+            <div v-clipboard="row.hash" class="text-truncate">{{ row.hash }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="格式规范" prop="encoding" width="120" />
         <el-table-column label="说明" prop="description">
           <template slot-scope="{ row }">{{ row.description | intercept }}</template>
         </el-table-column>
         <el-table-column label="操作">
           <template>
-            <el-button>下载</el-button>
+            <el-button size="mini">下载</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -42,8 +46,12 @@ import { Component } from 'nuxt-property-decorator'
 import BaseTable from '@/pages/application/_components/BaseTable.vue'
 import OSS from 'ali-oss'
 import intercept from '@/filters/intercept'
+import clipboard from '@/directives/clipboard'
 
 @Component({
+  directives: {
+    ...clipboard,
+  },
   asyncData({ store }) {
     const items = store.getters['datum/items']
     return { items }

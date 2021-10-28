@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="上传数据" :visible.sync="dialogVisible" width="500px" :close-on-click-modal="false">
+  <el-dialog title="上传数据" :visible.sync="dialogVisible" width="500px" :close-on-click-modal="false" @closed="onDialogClosed">
     <el-upload action="/api" multiple :limit="3" class="upload-wrap" :http-request="uploadOssFile">
       <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
       <span class="mx-5">或</span>
@@ -17,12 +17,14 @@ import OSS from 'ali-oss'
 import { uuid4 } from '@/utils/uuid'
 import { uploadOption } from '@/pages/application/datum/_components/uploadOption'
 import { getFileMd5 } from '@/utils/file-md5'
+import { getMimeType } from './mime'
 
 @Component
 export default class ElUploadDialog extends Vue {
-  dialogVisible = true
+  dialogVisible = false
   client: OSS | null = null
   token: any = null
+  hadChanged = false
   async uploadOssFile(option: uploadOption): Promise<void> {
     // TODO element File 不是通用 File
     if (!this.client) {
@@ -32,11 +34,11 @@ export default class ElUploadDialog extends Vue {
     const resourceId = this.$route.params.id
     const userId = this.$store.getters['user/username']
     const file = option.file
+    console.log(file)
     const { size, name } = file
     const path = this.token.ossPath + engineId
     const hash = await getFileMd5(file)
-    // TODO
-    const mediatype = 'text/plain'
+    const mediatype = getMimeType(name)
     const objectOption: OSS.PutObjectOptions = {
       callback: {
         url: this.token.callbackUrl,
@@ -57,7 +59,7 @@ export default class ElUploadDialog extends Vue {
         customValue: {
           user: userId,
           resourceid: resourceId,
-          name: this.$store.state.datum.name,
+          name,
           md5: hash,
           id: engineId,
         },
@@ -77,8 +79,17 @@ export default class ElUploadDialog extends Vue {
           description: 'description',
         },
       })
+      this.$message({
+        type: 'success',
+        message: '上传成功!',
+      })
+      this.hadChanged = true
     } catch (e) {
       console.log(e)
+      this.$message({
+        type: 'error',
+        message: '上传失败！',
+      })
     }
   }
   async initClient(): Promise<void> {
@@ -107,6 +118,12 @@ export default class ElUploadDialog extends Vue {
       // 刷新临时访问凭证的时间间隔，单位为毫秒。
       refreshSTSTokenInterval: 300000,
     })
+  }
+  onDialogClosed(): void {
+    if (this.hadChanged) {
+      this.$emit('change')
+      this.hadChanged = false
+    }
   }
   setToken(token: any): void {
     this.token = token

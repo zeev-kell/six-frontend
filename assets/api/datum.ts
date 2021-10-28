@@ -37,6 +37,9 @@ export class Module {
   addFile(resourceId: string, data: { id: string; oss_tag: 0 | 1; content: any }) {
     return this.$axios.$post(`/v2/data/${resourceId}/file`, data)
   }
+  deleteFile(resourceId: string, data: any[]) {
+    return this.$axios.$delete(`/v2/data/${resourceId}/file`, { data })
+  }
 
   update(dataId: string, data: any) {
     return this.$axios.$put('/v2/data/repository/' + dataId, data).then((response) => {

@@ -253,13 +253,14 @@ section {
 }
 
 .codemirror-box {
-  min-height: 450px;
+  max-height: 340px;
   height: calc(100vh - 130px);
   > .vue-codemirror {
     height: 100%;
 
     > .CodeMirror {
       height: 100%;
+      border: 1px solid #eeeeee;
     }
   }
 }

@@ -41,14 +41,14 @@
       <el-tab-pane v-if="isApp" label="历史版本" name="application-pipe-id-edit-version" />
       <el-tab-pane label="管理" name="application-pipe-id-edit-setting" />
     </el-tabs>
-    <div class="px-20 mt-5">
+    <div class="px-20 mt-5 pb-10 no-gutters">
       <nuxt-child />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import CanExamine from '@/components/common/CanExamine.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
 import PipeMixin from '@/pages/application/pipe/_components/PipeMixin.vue'
@@ -56,7 +56,7 @@ import PipeMixin from '@/pages/application/pipe/_components/PipeMixin.vue'
 @Component({
   components: { ToggleEditInfo, CanExamine },
 })
-export default class PipeIdEdit extends PipeMixin {
+export default class PipeIdEdit extends mixins<PipeMixin>(PipeMixin) {
   handleDelete() {
     return this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
       confirmButtonText: '确定',
