@@ -70,7 +70,7 @@ export default class DatumIdEdit extends mixins<DatumMixin>(DatumMixin) {
             type: 'success',
             message: '删除成功!',
           })
-          this.$I18nRouter.push('/application/datums')
+          this.$I18nRouter.push('/application/data')
         })
       })
       .catch(() => {})

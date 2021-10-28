@@ -92,11 +92,11 @@ import PipeMixin from '@/pages/application/pipe/_components/PipeMixin.vue'
 @Component({
   components: { ToggleEditInfo, CanExamine, CanCreate },
 })
-export default class PipeIdIndex extends mixins(PipeMixin) {
+export default class PipeIdIndex extends mixins<PipeMixin>(PipeMixin) {
   handleDownload(format = 'yaml') {
     const asYaml = format === 'yaml'
-    const data = stringifyObject(this.item!.content, asYaml)
-    const name = this.item!.name + `.${asYaml ? 'cwl' : format}`
+    const data = stringifyObject(this.item.content, asYaml)
+    const name = this.item.name + `.${asYaml ? 'cwl' : format}`
     downloadStrLink(data, name)
   }
   handleDeletePipe() {

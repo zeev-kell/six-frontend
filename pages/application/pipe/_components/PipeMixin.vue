@@ -19,5 +19,5 @@ import { pipeConstants } from '@/constants/PipeConstants'
     }),
   },
 })
-export default class PipeMixin extends mixins(ElTabRouter, PipeMiddlewareMixin, PipeItemMixin) {}
+export default class PipeMixin extends mixins<ElTabRouter>(ElTabRouter, PipeMiddlewareMixin, PipeItemMixin) {}
 </script>
