@@ -82,20 +82,21 @@
 
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
-import { stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
+import { getObject, stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { downloadStrLink } from '@/utils/download-link'
 import CanCreate from '@/components/common/CanCreate.vue'
 import CanExamine from '@/components/common/CanExamine.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
 import PipeMixin from '@/pages/application/pipe/_components/PipeMixin.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   components: { ToggleEditInfo, CanExamine, CanCreate },
 })
-export default class PipeIdIndex extends mixins<PipeMixin>(PipeMixin) {
+export default class PipeIdIndex extends mixins<PipeItemMixin>(PipeMixin) {
   handleDownload(format = 'yaml') {
     const asYaml = format === 'yaml'
-    const data = stringifyObject(this.item.content, asYaml)
+    const data = stringifyObject(getObject(this.item.content), asYaml)
     const name = this.item.name + `.${asYaml ? 'cwl' : format}`
     downloadStrLink(data, name)
   }
