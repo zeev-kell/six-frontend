@@ -85,7 +85,7 @@
 <script lang="ts">
 import { Component, Getter, Vue, Watch } from 'nuxt-property-decorator'
 import { pipeConstants } from '@/constants/PipeConstants'
-import { stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
+import { getObject, stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { downloadStrLink } from '@/utils/download-link'
 import CanCreate from '@/components/common/CanCreate.vue'
 import CanExamine from '@/components/common/CanExamine.vue'
@@ -142,7 +142,7 @@ export default class PipeIdIndex extends Vue {
 
   handleDownload(format = 'yaml') {
     const asYaml = format === 'yaml'
-    const data = stringifyObject(this.item.content, asYaml)
+    const data = stringifyObject(getObject(this.item.content), asYaml)
     const name = this.item?.name + `.${asYaml ? 'cwl' : format}`
     downloadStrLink(data, name)
   }
