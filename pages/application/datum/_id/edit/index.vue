@@ -39,7 +39,7 @@ export default class DatumIndex extends DatumItemMixin {
   async onSubmit() {
     const data = { readme: this.readme }
     await this.$api.datum.update(this.item.data_id, data).then(() => {
-      this.$store.commit('datum/UPDATE_CURRENT_DATUM', data)
+      this.$store.commit('datum/UPDATE_CURRENT_STORE', data)
     })
   }
 }

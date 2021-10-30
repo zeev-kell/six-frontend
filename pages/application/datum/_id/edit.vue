@@ -59,21 +59,13 @@ import DatumMixin from '@/pages/application/datum/_components/DatumMixin.vue'
 })
 export default class DatumIdEdit extends mixins<DatumMixin>(DatumMixin) {
   handleDeleteDatum() {
-    this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
+    this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
       type: 'warning',
-    })
-      .then(() => {
-        return this.$$axios.delete('/v2/datum/' + this.$route.params.id).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!',
-          })
-          this.$I18nRouter.push('/application/data')
-        })
+    }).then(() => {
+      this.$api.datum.removeVersion(this.$route.params.id).then(() => {
+        this.$I18nRouter.push('/application/data')
       })
-      .catch(() => {})
+    })
   }
 }
 </script>

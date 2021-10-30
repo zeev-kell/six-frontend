@@ -25,7 +25,7 @@ export default class DatumEditFormat extends DatumStructure {
   async onSubmit() {
     const data = { content: this.content }
     await this.$api.datum.updateVersion(this.item.resource_id, data).then(() => {
-      this.$store.commit('datum/UPDATE_CURRENT_DATUM', { content: data.content })
+      this.$store.commit('datum/UPDATE_CURRENT_STORE', { content: data.content })
     })
   }
 }

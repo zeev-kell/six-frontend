@@ -29,7 +29,7 @@
             <div style="font-weight: 600; margin-bottom: 10px">
               {{ graphItem.type | pipeTypeTranslate | t }}
             </div>
-            <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + pipeItem.cwl)" :title="pipeItem.cwl">
+            <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + jobItem.cwl)" :title="jobItem.cwl">
               {{ graphItem.name }}
             </nuxt-link>
           </div>
@@ -57,12 +57,15 @@ import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin
   components: { GraphIndex },
   async asyncData({ app, store }) {
     const item: DatumModel = store.state.datum
+    const data: any = {}
     if (item.link_pipes) {
-      const pipeItem = await app.$api.pipe.getVersion(item.link_pipes)
-      // 请求 graph 数据
-      const graphItem = await app.$api.pipe.getVersion(pipeItem.cwl)
-      return { graphItem, pipeItem }
+      const jobItem = await app.$api.pipe.getVersion(item.link_pipes)
+      data.jobItem = jobItem
+      if (jobItem.cwl) {
+        data.graphItem = await app.$api.pipe.getVersion(jobItem.cwl)
+      }
     }
+    return data
   },
 })
 export default class DatumProcess extends DatumItemMixin {
@@ -70,14 +73,16 @@ export default class DatumProcess extends DatumItemMixin {
     graph: HTMLFormElement
   }
 
+  // 工作（流）
+  jobItem: PipeModel | null = null
+  // 图形数据
   graphItem: PipeModel | null = null
-  pipeItem: PipeModel | null = null
 
   onPropagate(eventName: string): void {
     // TODO 修改为事件
     // 监听第一次实例化事件
     if (GraphEvent.TriggerPageModalCreate === eventName) {
-      const job = getObject(this.pipeItem?.content || {})
+      const job = getObject(this.jobItem?.content || {})
       this.$nextTick(() => {
         this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
       })

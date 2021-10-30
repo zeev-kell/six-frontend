@@ -48,6 +48,7 @@ const config = {
     { src: '@/plugins/components' },
     { src: '@/plugins/i18n-router' },
     { src: '@/directives/index', mode: 'client' },
+    { src: '@/plugins/vue-simple-uploader', mode: 'client' },
     // { src: '@/plugins/vue-mavon-editor', mode: 'client' },
   ],
 

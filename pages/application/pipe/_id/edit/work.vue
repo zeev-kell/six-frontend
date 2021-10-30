@@ -74,37 +74,35 @@ export default class Work extends PipeItemMixin {
     this.content = this.item?.content.toString()
   }
   async onSubmit() {
-    const data = Object.assign({}, this.item)
-    data.cwl = this.value
-    data.content = this.content
+    const data = {
+      cwl: this.value,
+      content: this.content,
+    }
     await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
-      this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { cwl: data.cwl, content: data.content })
+      this.$store.commit('pipe/UPDATE_CURRENT_STORE', data)
     })
   }
-  onValueChange(resourceId: string) {
+  async onValueChange(resourceId: string) {
     if (this.content && this.content !== '') {
-      this.$confirm('是否替换新的软件运行模板？')
-        .then(() => {
-          // 不使用 async
-          this.$api.pipe.getVersion(resourceId).then((pipe: any) => {
-            let content = pipe?.content
-            if (content) {
-              // TODO 修改成新的类
-              content = getObject(content)
-              const model =
-                pipe.type === pipeConstants.items.TYPE_TOOL ? CommandLineToolFactory.from(content, 'document') : WorkflowFactory.from(content)
-              let nullJob = JobHelper.getNullJobInputs(model)
-              nullJob = stringifyObject(nullJob, true)
-              this.content = nullJob
-            } else {
-              this.$message.warning('该软件信息不完整')
-            }
-          })
-        })
-        .finally(() => {
-          this.$refs.pipeSelect.blur()
-        })
+      await this.$confirm('是否替换新的软件运行模板？').finally(() => {
+        this.$refs.pipeSelect.blur()
+      })
     }
+    await this.$api.pipe.getVersion(resourceId).then((pipe) => {
+      let content = pipe?.content
+      if (!content) {
+        return this.$message.warning('该软件信息不完整')
+      }
+      // TODO 修改成新的类
+      content = getObject(content)
+      const model = pipe.type === pipeConstants.items.TYPE_TOOL ? CommandLineToolFactory.from(content, 'document') : WorkflowFactory.from(content)
+      let nullJob = JobHelper.getNullJobInputs(model)
+      if (Object.keys(nullJob).length === 0) {
+        return this.$message.warning('该软件没有输入项或者软件输入不完整')
+      }
+      nullJob = stringifyObject(nullJob, true)
+      this.content = nullJob
+    })
   }
 }
 </script>

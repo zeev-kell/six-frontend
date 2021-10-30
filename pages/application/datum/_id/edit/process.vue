@@ -26,20 +26,23 @@ import { pipeConstants } from '@/constants/PipeConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
 import { DatumModel } from '@/types/model/Datum'
 import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
+import { PipeModel } from '@/types/model/Pipe'
 
 @Component({
   components: { LoadingButton },
   async asyncData({ app, store }) {
     const item: DatumModel = store.state.datum
-    const items = await app.$api.pipe.getList({
+    const items: PipeModel[] = await app.$api.pipe.getList({
       type: [pipeConstants.items.TYPE_WORK, pipeConstants.items.TYPE_WORKFLOW],
     })
-    const options = items.map((d: any) => {
-      return {
-        value: d.pipe_id,
-        label: d.name,
-      }
-    })
+    const options = items
+      .filter((d) => [pipeConstants.items.TYPE_WORK, pipeConstants.items.TYPE_WORKFLOW].includes(d.type))
+      .map((d: any) => {
+        return {
+          value: d.resource_id, // 不使用 pipe_id ？
+          label: d.name,
+        }
+      })
     return { options, value: item.link_pipes }
   },
 })
@@ -48,8 +51,8 @@ export default class DatumEditProcess extends DatumItemMixin {
   value = ''
   async onSubmit() {
     const data = { link_pipes: this.value }
-    await this.$api.datum.updateVersion(this.item.resource_id, data).then(() => {
-      this.$store.commit('datum/UPDATE_CURRENT_DATUM', data)
+    await this.$api.datum.update(this.item.data_id, data).then(() => {
+      this.$store.commit('datum/UPDATE_CURRENT_STORE', data)
     })
   }
 }

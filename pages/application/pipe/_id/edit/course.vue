@@ -45,7 +45,7 @@ export default class Course extends PipeItemMixin {
   async onSubmit() {
     const data = { instruction: this.value }
     await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
-      this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { instruction: data.instruction })
+      this.$store.commit('pipe/UPDATE_CURRENT_STORE', { instruction: data.instruction })
     })
   }
 }

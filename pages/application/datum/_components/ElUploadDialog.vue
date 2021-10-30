@@ -1,6 +1,6 @@
 <template>
   <el-dialog title="上传数据" :visible.sync="dialogVisible" width="500px" :close-on-click-modal="false" @closed="onDialogClosed">
-    <el-upload action="/api" multiple :limit="3" class="upload-wrap" :http-request="uploadOssFile">
+    <el-upload action="/api" multiple class="upload-wrap" :http-request="uploadOssFile">
       <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
       <span class="mx-5">或</span>
       <el-input placeholder="链接" style="width: 300px">

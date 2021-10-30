@@ -44,7 +44,7 @@ export default class PipeEditIndex extends PipeItemMixin {
   async onSubmit() {
     const data = { readme: this.readmeByAuthor }
     await this.$api.pipe.update(this.item.pipe_id, data).then(() => {
-      this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', {
+      this.$store.commit('pipe/UPDATE_CURRENT_STORE', {
         readme: {
           by_system: this.readmeBySystem,
           by_author: this.readmeByAuthor,

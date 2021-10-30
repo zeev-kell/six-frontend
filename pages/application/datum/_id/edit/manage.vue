@@ -86,10 +86,6 @@ export default class DatumEditManage extends BaseTable {
         this.$route.params.id,
         this.multipleSelection.map((s: any) => s.id)
       )
-      this.$message({
-        type: 'success',
-        message: '删除成功!',
-      })
       await this.refresh()
     })
   }

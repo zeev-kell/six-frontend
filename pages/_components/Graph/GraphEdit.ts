@@ -86,7 +86,6 @@ export class GraphEdit extends Vue {
     const sourceIn: string[] = []
     // 判断多余的 Output
     outputs.forEach((o: WorkflowOutputParameterModel) => {
-      console.log(o)
       checkSource(o.source, o.id)
     })
     checkError()

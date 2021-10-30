@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { Component, InjectReactive, Vue } from 'nuxt-property-decorator'
+import { Component, InjectReactive } from 'nuxt-property-decorator'
 import InspectorMixins from '@/pages/_components/Graph/components/InspectorMixins'
 import JobStepInspector from '@/pages/_components/Graph/components/JobStepInspector.vue'
 import { StepModel, WorkflowModel } from 'cwlts/models'

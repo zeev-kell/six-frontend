@@ -16,7 +16,7 @@ import { PipeModel } from '@/types/model/Pipe'
         item.readme.by_author = item.readme.by_author?.replace(/[↵ ]{2,}/g, '  \n')
       }
       item.tutorial = item.tutorial?.replace(/[↵ ]{2,}/g, '  \n')
-      store.commit('pipe/UPDATE_CURRENT_WORKFLOW', item)
+      store.commit('pipe/UPDATE_CURRENT_STORE', item)
     }
   },
 })
