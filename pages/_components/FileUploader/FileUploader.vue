@@ -2,41 +2,35 @@
   <div>
     <uploader-drop>
       <p>Drop files here to upload or</p>
-      <uploader-btn>Select File</uploader-btn>
+      <div class="el-row--flex">
+        <uploader-btn>文件</uploader-btn>
+        <uploader-btn :directory="true">文件夹</uploader-btn>
+        <el-button @click="onUpload()">开始上传</el-button>
+      </div>
+      <uploader-list></uploader-list>
     </uploader-drop>
-    <uploader-list></uploader-list>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, ProvideReactive, Vue } from 'nuxt-property-decorator'
-import UploaderDrop from './UploaderDrop.vue'
-import UploaderBtn from './UploaderBtn.vue'
-import UploaderList from './UploaderList.vue'
-import Uploader from './components/uploader.js'
+import { Component } from 'nuxt-property-decorator'
+import UploaderBtn from '@/pages/_components/FileUploader/UploaderBtn.vue'
+import FileUploaderHelper from '@/pages/_components/FileUploader/FileUploaderHelper.vue'
+import UploaderDrop from '@/pages/_components/FileUploader/UploaderDrop.vue'
+import UploaderList from '@/pages/_components/FileUploader/UploaderList.vue'
 
 @Component({
-  components: { UploaderList, UploaderBtn, UploaderDrop },
+  components: { UploaderList, UploaderDrop, UploaderBtn },
+  provide() {
+    return {
+      FileUploader: this,
+    }
+  },
+  data() {
+    return {
+      uploader: null,
+    }
+  },
 })
-export default class FileUploader extends Vue {
-  @ProvideReactive('FileUploader')
-  FileUploader = this
-  @Prop({
-    default() {
-      return {}
-    },
-  })
-  options!: any
-
-  uploader!: Uploader
-  files = []
-  fileList = []
-
-  created(): Promise<any> | void {
-    this.uploader = new Uploader(this.options)
-  }
-  destroyed(): void {
-    ;(this.uploader as any) = null
-  }
-}
+export default class FileUploader extends FileUploaderHelper {}
 </script>

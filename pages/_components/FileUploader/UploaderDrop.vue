@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
-import UploaderMixin from './UploaderMixin.vue'
+import UploaderMixin from './FileUploaderMixin.vue'
 
 @Component
 export default class UploaderDrop extends UploaderMixin {}

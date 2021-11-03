@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="table-box">
-        <el-table ref="multipleTable" :data="tableDate" style="width: 100%">
+        <el-table ref="multipleTable" :data="tableData" style="width: 100%">
           <el-table-column label="名称" prop="name" sortable width="280">
             <template slot-scope="{ row }">
               <div class="el-row--flex is-align-middle">
@@ -109,7 +109,7 @@ export default class BaseTable extends Vue {
       return list
     }, [])
   }
-  get tableDate() {
+  get tableData() {
     let data = this.items
     if (this.query.category !== '') {
       data = data.filter((item: any) => {

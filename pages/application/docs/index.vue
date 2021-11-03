@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="table-box">
-        <el-table ref="multipleTable" :data="tableDate" style="width: 100%" :row-style="{ height: '100px' }" :cell-style="{ padding: '2' }">
+        <el-table ref="multipleTable" :data="tableData" style="width: 100%" :row-style="{ height: '100px' }" :cell-style="{ padding: '2' }">
           <el-table-column label="名称" prop="name" sortable width="280">
             <template slot-scope="{ row }">
               <nuxt-link class="text-truncate" :to="localePath('/application/doc/' + row['id'])" :title="row.name">
@@ -95,7 +95,7 @@ export default class Docs extends Vue {
       return list
     }, [])
   }
-  get tableDate() {
+  get tableData() {
     let data = this.items
     if (this.query.category !== '') {
       data = data.filter((item: any) => {

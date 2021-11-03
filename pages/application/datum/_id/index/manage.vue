@@ -17,7 +17,7 @@
       <div class="action-box"></div>
     </div>
     <div class="table-box">
-      <el-table ref="multipleTable" :data="tableDate" style="width: 100%">
+      <el-table ref="multipleTable" :data="tableData" style="width: 100%">
         <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column label="文件名称" prop="name" sortable width="280"></el-table-column>
         <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>
@@ -44,7 +44,6 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import BaseTable from '@/pages/application/_components/BaseTable.vue'
-import OSS from 'ali-oss'
 import intercept from '@/filters/intercept'
 import clipboard from '@/directives/clipboard'
 

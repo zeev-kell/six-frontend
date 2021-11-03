@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="table-box">
-      <el-table ref="multipleTable" :data="tableDate" style="width: 100%" @selection-change="handleSelectionChange">
+      <el-table ref="multipleTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column label="文件名称" prop="name" sortable width="280"></el-table-column>
         <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>

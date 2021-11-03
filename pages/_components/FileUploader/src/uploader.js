@@ -1,5 +1,5 @@
+const event = require('../components/UEvent')
 const utils = require('./utils')
-const event = require('./event')
 const File = require('./file')
 const Chunk = require('./chunk')
 
