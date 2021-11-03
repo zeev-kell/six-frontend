@@ -27,7 +27,7 @@
                     <span class="pointer text-white">
                       <i class="el-icon-more" />
                     </span>
-                    <el-dropdown-menu slot="dropdown" class="input-dropdown-menu">
+                    <el-dropdown-menu slot="dropdown" class="graph-dropdown-menu">
                       <el-dropdown-item> {{ $t('graph.SetNull') }} </el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>

@@ -54,7 +54,7 @@
                   {{ input.status }}
                   <i class="el-icon-arrow-down el-icon--right" />
                 </span>
-                <el-dropdown-menu slot="dropdown" class="input-dropdown-menu">
+                <el-dropdown-menu slot="dropdown" class="graph-dropdown-menu">
                   <el-dropdown-item
                     v-for="c of dropDownPortOptions"
                     :key="c.value"
@@ -134,11 +134,11 @@ export default class StepInputsInspector extends Vue {
       caption: 'Default',
       description: 'Set default value for execution',
     },
-    // {
-    //   value: 'exposed',
-    //   caption: 'Exposed',
-    //   description: 'Set value with the option to edit on the test page',
-    // },
+    {
+      value: 'exposed',
+      caption: 'Exposed',
+      description: 'Set value with the option to edit on the test page',
+    },
     {
       value: 'port',
       caption: 'Port',
@@ -155,7 +155,9 @@ export default class StepInputsInspector extends Vue {
       .sort((a, b) => b.localeCompare(a))
       .map((key) => ({
         name: key,
-        inputs: grouped[key],
+        inputs: grouped[key].sort((a: WorkflowStepInputModel, b: WorkflowStepInputModel) => {
+          return Number(a.type.isNullable) - Number(b.type.isNullable)
+        }),
       }))
   }
 
