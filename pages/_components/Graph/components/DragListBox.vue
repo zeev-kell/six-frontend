@@ -147,6 +147,9 @@ export default class DragListBox extends Vue {
     &.selected {
       background: #333333;
     }
+    &:focus {
+      border: none;
+    }
   }
   .list-item {
     white-space: nowrap;

@@ -6,6 +6,7 @@ export const state = (): NuxtState => ({
   bodyClass: '',
   isMobile: false,
   dragToolItem: undefined,
+  popoverTime: 0,
 })
 
 export type SystemState = ReturnType<typeof state>
@@ -20,5 +21,8 @@ export const mutations: MutationTree<SystemState> = {
   // 修改当前拖拽的对象
   SET_DRAG_TOOL_ITEM(state: SystemState, item?) {
     state.dragToolItem = item
+  },
+  SET_POPOVER_TIME(state: SystemState) {
+    state.popoverTime++
   },
 }
