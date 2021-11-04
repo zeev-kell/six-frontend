@@ -17,6 +17,7 @@
             <el-option label="流程" value="1" />
             <el-option label="文档" value="2" />
           </el-select>
+          <el-button slot="append" icon="el-icon-search" @click="toSearch"></el-button>
         </el-input>
       </div>
       <p style="line-height: 1.5">
