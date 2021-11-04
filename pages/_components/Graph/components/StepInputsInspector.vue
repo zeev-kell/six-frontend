@@ -38,7 +38,7 @@
             </label>
             <!--Port options for File and array of Files-->
             <div v-if="isType(input, ['File', 'Directory'])" class="el-col-auto">
-              <span v-if="input.type.isNullable"> {{ input.isVisible ? 'Show' : 'Hide' }}</span>
+              <span v-if="input.type.isNullable"> {{ input.isVisible ? $t('btn.show') : $t('btn.hide') }}</span>
               <el-switch
                 v-if="input.type.isNullable"
                 :value="input.isVisible"
@@ -51,7 +51,7 @@
             <div v-else class="input-control el-col-auto">
               <el-dropdown trigger="click" @command="onPortOptionChange($event, input)">
                 <span class="pointer">
-                  {{ input.status }}
+                  {{ $t('common.' + input.status) }}
                   <i class="el-icon-arrow-down el-icon--right" />
                 </span>
                 <el-dropdown-menu slot="dropdown" class="graph-dropdown-menu">
