@@ -21,7 +21,7 @@ export default {
     metadata: '元数据',
     port: '端口',
     exposed: '暴露',
-    none: '不设置',
+    none: '空',
     author: '作者',
     source: '来源',
     cwl_version: 'cwl版本',
@@ -71,6 +71,8 @@ export default {
     to_upload: '上传到服务器',
     save: '保存',
     back: '返回',
+    hide: '隐藏',
+    show: '显示',
   },
   // 常量
   constant: {
@@ -142,5 +144,6 @@ export default {
     required_not_connected: '此节点(必须)未连接',
     merge_nested: '嵌套',
     merge_flattened: '展开',
+    scatter_method: 'Scatter方法',
   },
 }

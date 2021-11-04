@@ -71,6 +71,8 @@ export default {
     to_upload: 'Upload to server',
     save: 'Save',
     back: 'Back',
+    hide: 'Hide',
+    show: 'Show',
   },
   // 常量
   constant: {
@@ -142,5 +144,6 @@ export default {
     required_not_connected: 'This required port is not connected',
     merge_nested: 'Nested',
     merge_flattened: 'Flattened',
+    scatter_method: 'Scatter Method',
   },
 }
