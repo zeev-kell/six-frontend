@@ -9,14 +9,14 @@
       </el-form-item>
 
       <!--Label-->
-      <el-form-item label="Label" prop="label">
+      <el-form-item :label="$t('common.label')" prop="label">
         <input v-model="ruleForm.label" :disabled="readonly" class="form-control" @change="onLabelChange" />
       </el-form-item>
 
       <!--Scatter Method-->
-      <el-form-item v-if="step.hasScatterMethod" label="Scatter Method" prop="label">
+      <el-form-item v-if="step.hasScatterMethod" :label="$t('graph.scatter_method')" prop="label">
         <select v-model="ruleForm.scatterMethod" class="form-control" :disabled="readonly">
-          <option value="">-- none --</option>
+          <option value="">-- {{ $t('common.none') }} --</option>
           <option v-for="method of scatterMethodOptions" :key="method.value" :value="method.value">
             {{ method.caption }}
           </option>
@@ -27,7 +27,7 @@
       <el-form-item label="Scatter">
         <!--Single Scatter-->
         <select v-if="!step.hasMultipleScatter" v-model="ruleForm.scatter" class="form-control" :disabled="readonly">
-          <option value="">-- none --</option>
+          <option value="">-- {{ $t('common.none') }} --</option>
           <option v-for="input of step.in" :key="input.id" :value="input.id">{{ input.label }} (#{{ input.id }})</option>
         </select>
 
@@ -44,7 +44,7 @@
         <textarea v-model="ruleForm.description" class="form-control" rows="4" :disabled="readonly" />
       </el-form-item>
 
-      <selection-step-hints :step="step" :readonly="readonly" />
+      <!--      <selection-step-hints :step="step" :readonly="readonly" />-->
     </el-form>
   </div>
 </template>
@@ -55,11 +55,11 @@ import { StepModel, WorkflowModel } from 'cwlts/models'
 import { Workflow } from 'cwl-svg'
 import { checkKeyWord } from '@/pages/_components/Graph/KeyWords'
 import ElStepItem from '@/components/ElStepItem.vue'
-import SelectionStepHints from '@/pages/_components/Graph/components/SelectionStepHints.vue'
+// import SelectionStepHints from '@/pages/_components/Graph/components/SelectionStepHints.vue'
 import debounce from '@/utils/debounce'
 
 @Component({
-  components: { SelectionStepHints, ElStepItem },
+  components: { ElStepItem },
 })
 export default class WorkflowStepInspectorStep extends Vue {
   @InjectReactive('model')

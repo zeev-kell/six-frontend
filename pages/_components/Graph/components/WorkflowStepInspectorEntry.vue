@@ -23,7 +23,7 @@
         <!--Enums-->
         <template v-if="isInputType('enum')">
           <select v-model="actualValue" class="form-control" :disabled="readonly">
-            <option value="">-- none --</option>
+            <option value="">-- {{ $t('common.none') }} --</option>
             <option v-for="val of input.type.symbols" :key="val" :value="val">
               {{ val }}
             </option>

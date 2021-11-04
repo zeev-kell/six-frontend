@@ -281,6 +281,11 @@ export default class GraphMixin extends GraphEdit {
         unWatch()
       })
     }
+    // 监听更新 job 数据
+    this.$on(GraphEvent.PayloadUpdateJob, (job: any) => {
+      console.log('GraphMixin on update-job', job)
+      this.updateJob(job)
+    })
   }
   beforeDestroy(): void {
     // 销毁流程图

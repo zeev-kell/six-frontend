@@ -1,8 +1,8 @@
 <template>
   <select v-model="actualValue" class="form-control" :disabled="readonly">
-    <option value="">-- none --</option>
-    <option value="merge_nested">Nested</option>
-    <option value="merge_flattened">Flattened</option>
+    <option value="">-- {{ $t('common.none') }} --</option>
+    <option value="merge_nested">{{ $t('graph.merge_nested') }}</option>
+    <option value="merge_flattened">{{ $t('graph.merge_flattened') }}</option>
   </select>
 </template>
 

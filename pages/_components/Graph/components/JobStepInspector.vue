@@ -27,7 +27,7 @@
                     <span class="pointer text-white">
                       <i class="el-icon-more" />
                     </span>
-                    <el-dropdown-menu slot="dropdown" class="input-dropdown-menu">
+                    <el-dropdown-menu slot="dropdown" class="graph-dropdown-menu">
                       <el-dropdown-item> {{ $t('graph.SetNull') }} </el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
@@ -63,8 +63,10 @@
               <div v-if="input.source">
                 <!--No connections-->
                 <div v-if="input.source.length === 0 && input.isVisible">
-                  <span v-if="input.type.isNullable" class="text-warning"> <i class="el-icon-warning" /> This port is not connected </span>
-                  <span v-if="!input.type.isNullable" class="text-danger"> <i class="el-icon-error" /> This required port is not connected </span>
+                  <span v-if="input.type.isNullable" class="text-warning"> <i class="el-icon-warning" /> {{ $t('graph.not_connected') }} </span>
+                  <span v-if="!input.type.isNullable" class="text-danger">
+                    <i class="el-icon-error" /> {{ $t('graph.required_not_connected') }}
+                  </span>
                 </div>
                 <!--List of connections-->
                 <div v-if="input.source.length > 0" class="text-muted">{{ $t('graph.Connections') }}: {{ input.source.join(', ') }}</div>

@@ -1,14 +1,24 @@
 <template>
   <div class="workflow-step-inspector-info">
-    <div><label>TYPE:</label>{{ step.run['class'] }}</div>
-    <div><label>CWL VERSION:</label> {{ step.run['cwlVersion'] }}</div>
-    <div><label>REVISION:</label>{{ step.run.customProps['sbg:revision'] }}</div>
     <div>
-      <label>TOOLKIT:</label>
+      <label>{{ $t('common.type') }}:</label>{{ step.run['class'] }}
+    </div>
+    <div>
+      <label>{{ $t('common.cwl_version') }}:</label> {{ step.run['cwlVersion'] }}
+    </div>
+    <div>
+      <label>{{ $t('common.revision') }}:</label>{{ step.run.customProps['sbg:revision'] }}
+    </div>
+    <div>
+      <label>{{ $t('common.toolkit') }}:</label>
       {{ step.run.customProps['sbg:toolkit'] }} {{ step.run.customProps['sbg:toolkitVersion'] }}
     </div>
-    <div><label>AUTHOR:</label>{{ step.run.customProps['sbg:createdBy'] }}</div>
-    <div><label>SOURCE:</label>{{ source }}</div>
+    <div>
+      <label>{{ $t('common.author') }}:</label>{{ step.run.customProps['sbg:createdBy'] }}
+    </div>
+    <div>
+      <label>{{ $t('common.source') }}:</label>{{ source }}
+    </div>
     <div>
       <label>{{ $t('graph.Description') }}{{ description ? '' : ':' }}</label>
       <div class="el-form-item">
