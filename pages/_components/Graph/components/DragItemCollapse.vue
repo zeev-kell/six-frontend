@@ -7,11 +7,11 @@
         :class="{ expanded: expanded }"
         @click="expanded = !expanded"
       ></span>
-      <drag-item :item="item" class="el-col-full item-padding"></drag-item>
+      <drag-item :item="item" class="el-col-full drag-item"></drag-item>
     </div>
     <el-collapse-transition>
       <div v-show="expanded" class="p-l-1">
-        <drag-item v-for="v of item.versions" :key="v.id" :item="v" class="item-padding">
+        <drag-item v-for="v of item.versions" :key="v.id" :item="v" class="drag-item">
           <fa v-if="v.type === TYPE_TOOL" icon="terminal"></fa>
           <i v-else class="el-icon-share text-warning"></i>
           {{ v.version }}

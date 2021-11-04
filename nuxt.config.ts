@@ -166,7 +166,7 @@ const config = {
         refreshToken: {
           property: 'data.refresh_token',
           data: 'refresh_token',
-          maxAge: 3600 * 24 * 30,
+          maxAge: 3600 * 24 * 15,
         },
         endpoints: {
           login: {

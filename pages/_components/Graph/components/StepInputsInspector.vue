@@ -54,7 +54,7 @@
                   {{ input.status }}
                   <i class="el-icon-arrow-down el-icon--right" />
                 </span>
-                <el-dropdown-menu slot="dropdown" class="input-dropdown-menu">
+                <el-dropdown-menu slot="dropdown" class="graph-dropdown-menu">
                   <el-dropdown-item
                     v-for="c of dropDownPortOptions"
                     :key="c.value"
@@ -83,7 +83,7 @@
           />
           <!--Link Merge Method Group-->
           <div class="el-form-item">
-            <label class="input-label text-muted">Link Merge Method</label>
+            <label class="input-label text-muted">{{ $t('graph.link_merge_method') }}</label>
             <link-merge-select v-model="input.linkMerge.value" :readonly="readonly" />
           </div>
           <!--Connections-->
@@ -91,8 +91,10 @@
             <transition name="el-zoom-in-top">
               <!--No connections-->
               <div v-if="input.source.length === 0 && input.isVisible">
-                <span v-if="input.type.isNullable" class="text-warning"> <i class="el-icon-warning" /> This port is not connected </span>
-                <span v-else-if="!input.type.isNullable" class="text-danger"> <i class="el-icon-error" /> This required port is not connected </span>
+                <span v-if="input.type.isNullable" class="text-warning"> <i class="el-icon-warning" /> {{ $t('graph.not_connected') }} </span>
+                <span v-else-if="!input.type.isNullable" class="text-danger">
+                  <i class="el-icon-error" /> {{ $t('graph.required_not_connected') }}
+                </span>
               </div>
             </transition>
             <transition name="el-zoom-in-top">
@@ -131,18 +133,18 @@ export default class StepInputsInspector extends Vue {
   dropDownPortOptions = [
     {
       value: 'default',
-      caption: 'Default',
-      description: 'Set default value for execution',
+      caption: this.$i18n.t('common.default'),
+      description: this.$i18n.t('graph.port_default'),
     },
-    // {
-    //   value: 'exposed',
-    //   caption: 'Exposed',
-    //   description: 'Set value with the option to edit on the test page',
-    // },
+    {
+      value: 'exposed',
+      caption: this.$i18n.t('common.exposed'),
+      description: this.$i18n.t('graph.port_exposed'),
+    },
     {
       value: 'port',
-      caption: 'Port',
-      description: 'Get value from another node on the canvas',
+      caption: this.$i18n.t('common.port'),
+      description: this.$i18n.t('graph.port_port'),
     },
   ]
 
@@ -155,7 +157,9 @@ export default class StepInputsInspector extends Vue {
       .sort((a, b) => b.localeCompare(a))
       .map((key) => ({
         name: key,
-        inputs: grouped[key],
+        inputs: grouped[key].sort((a: WorkflowStepInputModel, b: WorkflowStepInputModel) => {
+          return Number(a.type.isNullable) - Number(b.type.isNullable)
+        }),
       }))
   }
 

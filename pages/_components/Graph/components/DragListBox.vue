@@ -138,8 +138,15 @@ export default class DragListBox extends Vue {
       }
     }
   }
-  .item-padding {
+  .drag-item {
     padding: 0.25rem 0.25rem 0.25rem 16px;
+    cursor: pointer;
+    .item-name {
+      vertical-align: text-top;
+    }
+    &.selected {
+      background: #333333;
+    }
   }
   .list-item {
     white-space: nowrap;
