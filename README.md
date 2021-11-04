@@ -1,5 +1,8 @@
 # six-frontend
 
+## TODO
+
+- [ ] pipe详情页编辑界面右上角新增删除按钮用于删除版本。
 ## Build Setup
 
 ```bash
