@@ -9,7 +9,7 @@
       </el-form-item>
 
       <!--Label-->
-      <el-form-item label="Label" prop="label">
+      <el-form-item :label="$t('common.label')" prop="label">
         <input v-model="ruleForm.label" :disabled="readonly" class="form-control" @change="onLabelChange" />
       </el-form-item>
 
