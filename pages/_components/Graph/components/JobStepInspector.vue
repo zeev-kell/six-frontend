@@ -184,7 +184,9 @@ export default class JobStepInspector extends Vue {
       .sort((a, b) => b.localeCompare(a))
       .map((key) => ({
         name: key,
-        inputs: grouped[key],
+        inputs: grouped[key].sort((a: WorkflowStepInputModel, b: WorkflowStepInputModel) => {
+          return Number(a.type.isNullable) - Number(b.type.isNullable)
+        }),
       }))
   }
   stepInputsAreSame(previousValue: any, currentValue: any) {
