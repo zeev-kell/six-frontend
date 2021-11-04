@@ -63,8 +63,10 @@
               <div v-if="input.source">
                 <!--No connections-->
                 <div v-if="input.source.length === 0 && input.isVisible">
-                  <span v-if="input.type.isNullable" class="text-warning"> <i class="el-icon-warning" /> This port is not connected </span>
-                  <span v-if="!input.type.isNullable" class="text-danger"> <i class="el-icon-error" /> This required port is not connected </span>
+                  <span v-if="input.type.isNullable" class="text-warning"> <i class="el-icon-warning" /> {{ $t('graph.not_connected') }} </span>
+                  <span v-if="!input.type.isNullable" class="text-danger">
+                    <i class="el-icon-error" /> {{ $t('graph.required_not_connected') }}
+                  </span>
                 </div>
                 <!--List of connections-->
                 <div v-if="input.source.length > 0" class="text-muted">{{ $t('graph.Connections') }}: {{ input.source.join(', ') }}</div>

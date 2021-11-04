@@ -50,6 +50,7 @@
   // el-tabs
   .el-tabs {
     height: 100%;
+    padding-bottom: 10px;
   }
   .el-tabs__active-bar {
     height: 1px;
@@ -321,7 +322,6 @@
     display: block;
   }
 }
-
 .el-dialog-dark {
   color: white;
 

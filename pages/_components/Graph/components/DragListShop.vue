@@ -27,12 +27,10 @@ import { tableQuery } from '@/types/table'
 import { PipeModel } from '@/types/model/Pipe'
 import { pipeConstants } from '@/constants/PipeConstants'
 import DragItemCollapse from '@/pages/_components/Graph/components/DragItemCollapse.vue'
-import DragItem from './DragItem.vue'
 
 @Component({
   components: {
     DragItemCollapse,
-    DragItem,
   },
 })
 export default class DragListShop extends TableMixins<PipeModel> {

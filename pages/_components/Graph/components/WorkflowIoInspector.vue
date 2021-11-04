@@ -15,7 +15,7 @@
     <div v-if="!isInput" class="m-b-05">
       <!--No connections-->
       <div v-if="step['source'].length === 0">
-        <span class="text-warning small"> <i class="el-icon-warning" /> This port is not connected </span>
+        <span class="text-warning small"> <i class="el-icon-warning" /> {{ $t('graph.not_connected') }} </span>
       </div>
       <!--List of connections-->
       <div v-if="step['source'].length > 0" class="text-muted small">
