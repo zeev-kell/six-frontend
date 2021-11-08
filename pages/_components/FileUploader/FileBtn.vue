@@ -1,6 +1,8 @@
 ﻿<template>
-  <div>
-    <el-button type="primary" @click="onOpenSelect"><slot></slot></el-button>
+  <div class="d-inline-b">
+    <el-button type="primary" size="small" @click="onOpenSelect">
+      <slot></slot>
+    </el-button>
     <input ref="input" type="file" style="visibility: hidden; position: absolute; width: 1px; height: 1px" @change="onChangeFile" />
   </div>
 </template>
@@ -10,7 +12,7 @@ import { Component, Prop } from 'vue-property-decorator'
 import FileUploaderMixin from './FileUploaderMixin.vue'
 
 @Component
-export default class UploaderBtn extends FileUploaderMixin {
+export default class FileUploaderBtn extends FileUploaderMixin {
   $refs!: {
     input: HTMLInputElement
   }
@@ -30,7 +32,7 @@ export default class UploaderBtn extends FileUploaderMixin {
   }
   onChangeFile(e: Event): void {
     if ((e.target as HTMLInputElement).value) {
-      this.FileUploader.addFiles!((e.target as HTMLInputElement)!.files, e)
+      this.FileUploader.addFiles!((e.target as HTMLInputElement)!.files as FileList, e)
       ;(e.target as HTMLInputElement).value = ''
     }
   }

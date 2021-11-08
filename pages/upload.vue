@@ -1,16 +1,16 @@
 <template>
   <div>
     <file-uploader></file-uploader>
-    <client-only>
-      <uploader class="uploader-example">
-        <uploader-drop>
-          <p>Drop files here to upload or</p>
-          <uploader-btn>select files</uploader-btn>
-          <uploader-btn :directory="true">select files</uploader-btn>
-        </uploader-drop>
-        <uploader-list></uploader-list>
-      </uploader>
-    </client-only>
+    <!--    <client-only>-->
+    <!--      <uploader class="uploader-example">-->
+    <!--        <uploader-drop>-->
+    <!--          <p>Drop files here to upload or</p>-->
+    <!--          <uploader-btn>select files</uploader-btn>-->
+    <!--          <uploader-btn :directory="true">select files</uploader-btn>-->
+    <!--        </uploader-drop>-->
+    <!--        <uploader-list></uploader-list>-->
+    <!--      </uploader>-->
+    <!--    </client-only>-->
   </div>
 </template>
 

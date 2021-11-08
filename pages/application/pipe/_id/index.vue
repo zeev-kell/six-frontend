@@ -101,9 +101,7 @@ export default class PipeIdIndex extends mixins<PipeItemMixin>(PipeMixin) {
     downloadStrLink(data, name)
   }
   handleDeletePipe() {
-    this.$confirm('此操作将永久删除该, 是否继续?', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
+    this.$confirm('此操作将永久删除该软件, 是否继续?', '提示', {
       type: 'warning',
     })
       .then(() => {

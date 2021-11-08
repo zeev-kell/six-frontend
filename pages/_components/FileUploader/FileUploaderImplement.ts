@@ -1,12 +1,9 @@
-import { Uploader } from '@/pages/_components/FileUploader/components/Uploader'
+import UFile from '@/pages/_components/FileUploader/UFile'
 
 export default class FileUploaderImplement {
-  uploader!: Uploader
   // 文件
-  files: any[] = []
-  // 可能有文件夹
-  fileList: any[] = []
-
-  addFiles: any
-  uploadFile: any
+  files: UFile[] = []
+  options!: any[]
+  addFiles!: (files: FileList, e?: Event) => void
+  removeFile!: (files: FileList, e?: Event) => void
 }

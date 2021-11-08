@@ -70,8 +70,6 @@ export default class DragListBox extends Vue {
   // 返回
   actionGoBack(): void {
     this.$confirm('是否确定返回主页?', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
       type: 'warning',
     }).then(() => {
       this.$I18nRouter.push('/application')

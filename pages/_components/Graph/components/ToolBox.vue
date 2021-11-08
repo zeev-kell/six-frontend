@@ -113,8 +113,6 @@ export default class ToolBox extends Vue {
   // 清空
   actionToEmpty(): void {
     this.$confirm('此操作将清空当前画布和临时缓存的所有数据, 是否继续?', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
       type: 'warning',
     }).then(() => {
       this.toolEvent(GraphEvent.TriggerGraphEmpty)

@@ -15,6 +15,7 @@
         </el-form>
       </div>
       <div class="action-box">
+        <el-button icon="el-icon-plus" @click="showFileUploadDialog"> 新增 </el-button>
         <el-button type="primary" icon="el-icon-plus" @click="showUploadDialog"> 新增 </el-button>
         <el-button type="danger" :disabled="!hasSelected" icon="el-icon-delete" @click="onDeleteSelect"> 删 除 </el-button>
       </div>
@@ -42,6 +43,7 @@
       </el-table>
     </div>
     <el-upload-dialog ref="UploadDialog" @change="refresh"></el-upload-dialog>
+    <file-upload-dialog ref="FileUploadDialog" @change="refresh"></file-upload-dialog>
   </div>
 </template>
 
@@ -50,7 +52,8 @@ import { Component } from 'nuxt-property-decorator'
 import BaseTable from '@/pages/application/_components/BaseTable.vue'
 import intercept from '@/filters/intercept'
 import clipboard from '@/directives/clipboard'
-import ElUploadDialog from '../../_components/ElUploadDialog.vue'
+import FileUploadDialog from '@/pages/application/datum/_components/FileUploadDialog.vue'
+import ElUploadDialog from '@/pages/application/datum/_components/ElUploadDialog.vue'
 
 @Component({
   directives: {
@@ -64,12 +67,14 @@ import ElUploadDialog from '../../_components/ElUploadDialog.vue'
     ...intercept,
   },
   components: {
+    FileUploadDialog,
     ElUploadDialog,
   },
 })
 export default class DatumEditManage extends BaseTable {
   $refs!: {
     UploadDialog: ElUploadDialog
+    FileUploadDialog: FileUploadDialog
   }
   async refresh() {
     await this.$store.dispatch('datum/refresh', this.$route.params.id)
@@ -77,6 +82,9 @@ export default class DatumEditManage extends BaseTable {
   }
   showUploadDialog(): void {
     this.$refs.UploadDialog.dialogVisible = true
+  }
+  showFileUploadDialog(): void {
+    this.$refs.FileUploadDialog.dialogVisible = true
   }
   onDeleteSelect(): void {
     this.$confirm('此操作将永久删除选择的文件, 是否继续?', '提示', {

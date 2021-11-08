@@ -1,6 +1,6 @@
 import SparkMD5 from 'spark-md5'
 
-export function getFileMd5(file: File) {
+export function getFileMd5(file: File): Promise<string> {
   const CHUNK_SIZE = 1024 * 1024 * 5 // 切片的大小
   const blobSlice = File.prototype.slice || (File.prototype as any).mozSlice || (File.prototype as any).webkitSlice
   const chunks = Math.ceil(file.size / CHUNK_SIZE) // 切片个数
