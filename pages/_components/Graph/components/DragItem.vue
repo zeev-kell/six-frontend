@@ -8,7 +8,7 @@
     <div style="position: fixed; top: -1000px">
       <div ref="image" :class="imageClass"></div>
     </div>
-    <el-popover v-model="showPopper" ref="popover" placement="bottom-start" trigger="click" :offset="80" width="400" popper-class="el-popover-dark">
+    <el-popover ref="popover" v-model="showPopper" placement="bottom-start" trigger="click" :offset="80" width="400" popper-class="el-popover-dark">
       <el-table :data="tableData" size="mini">
         <el-table-column label="名称" prop="name" width="120">
           <template slot-scope="{ row }">

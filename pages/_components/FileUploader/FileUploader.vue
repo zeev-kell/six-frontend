@@ -141,7 +141,7 @@ export default class FileUploader extends Vue implements FileUploaderImplement {
       this.files.push(file)
     }
   }
-  public removeFile(file: UFile) {
+  public removeFile(file: UFile): void {
     const index = this.files.findIndex((f) => f === file)
     if (index >= 0) {
       this.files.splice(index, 1)
@@ -234,7 +234,7 @@ export default class FileUploader extends Vue implements FileUploaderImplement {
         id,
       }),
     }
-    await this.client.put(path, file, objectOption)
+    await this.client!.put(path, file, objectOption)
     await this.addFileToDatum(uFile)
   }
   protected async addFileToDatum(uFile: UFile) {

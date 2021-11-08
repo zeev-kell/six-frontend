@@ -5,5 +5,5 @@ export default class FileUploaderImplement {
   files: UFile[] = []
   options!: any[]
   addFiles!: (files: FileList, e?: Event) => void
-  removeFile!: (files: FileList, e?: Event) => void
+  removeFile!: (files: UFile) => void
 }
