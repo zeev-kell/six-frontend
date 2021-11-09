@@ -7,7 +7,9 @@
       <file-uploader-link></file-uploader-link>
     </div>
     <file-uploader-list></file-uploader-list>
-    <el-button @click="onUpload()">开始上传</el-button>
+    <div class="text-right">
+      <el-button @click="onUpload()">开始上传</el-button>
+    </div>
   </file-uploader-drop>
 </template>
 
@@ -78,22 +80,27 @@ function toUrlParams(obj: any): string {
       FileUploader: this,
     }
   },
+  async asyncData({ app }): Promise<any> {
+    const items = await app.$api.datum.getList()
+    const options = [
+      {
+        value: '选项1',
+        label: '黄金糕',
+      },
+      {
+        value: '选项2',
+        label: '双皮奶',
+      },
+    ]
+    return { options }
+  },
 })
 export default class FileUploader extends Vue implements FileUploaderImplement {
   client: OSS | null = null
   token: any = null
   opts = defaults
   files: UFile[] = []
-  options = [
-    {
-      value: '选项1',
-      label: '黄金糕',
-    },
-    {
-      value: '选项2',
-      label: '双皮奶',
-    },
-  ]
+  options = []
   private initClientPromise: null | Promise<any> = null
   private refreshSTSTokenPromise: null | Promise<any> = null
 

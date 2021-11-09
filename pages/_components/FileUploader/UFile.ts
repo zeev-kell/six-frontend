@@ -40,6 +40,9 @@ export default class UFile {
     }
     this.id = uuid4()
   }
+  get loading(): boolean {
+    return this.status === STATUS.READING
+  }
   initHash(): void {
     this.status = STATUS.READING
     getFileMd5(this.file as File).then((hash: string) => {
@@ -71,8 +74,5 @@ export default class UFile {
   uploadError(e: any): void {
     console.log(e)
     this.status = STATUS.ERROR
-  }
-  get loading(): boolean {
-    return true || this.status === STATUS.READING
   }
 }

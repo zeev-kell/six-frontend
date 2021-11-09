@@ -30,6 +30,9 @@ export class Module {
       return token
     })
   }
+  getFormatList(): Promise<any> {
+    return this.$axios.$get('/v1/osstoken')
+  }
 
   // eslint-disable-next-line camelcase
   addFile(resourceId: string, data: { id: string; oss_tag: 0 | 1; content: any }) {
