@@ -52,10 +52,10 @@ export default class FileUploaderItem extends FileUploaderInject {
     ],
   }
 
-  validateItem(): Promise<void> {
+  validateItem(): Promise<any> {
     // 目前没有只是把结果返回
-    return new Promise((resolve, reject) => {
-      this.$refs.ruleForm.validate((valid: boolean) => {
+    return new Promise((resolve): void => {
+      this.$refs.ruleForm.validate((valid: boolean): void => {
         this.item.valid = valid
         resolve(valid)
       })

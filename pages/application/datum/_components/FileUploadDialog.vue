@@ -26,6 +26,7 @@ import FileBtn from '@/pages/_components/FileUploader/FileBtn.vue'
 import FileLink from '@/pages/_components/FileUploader/FileLink.vue'
 import FileList from '@/pages/_components/FileUploader/FileList.vue'
 import { Prop } from 'vue-property-decorator'
+import { DatumModel } from '@/types/model/Datum'
 
 @Component({
   components: { FileList, FileLink, FileBtn, FileDrop, FileUploader },
@@ -36,7 +37,7 @@ export default class FileUploadDialog extends FileUploaderMixin {
       return false
     },
   })
-  isMultiple: boolean
+  isMultiple!: boolean
 
   dialogVisible = false
   hadChanged = false
@@ -45,7 +46,7 @@ export default class FileUploadDialog extends FileUploaderMixin {
     this.dialogVisible = true
     if (this.options.length === 0) {
       const options = await this.$api.datum.getFormatList()
-      this.options = options.map((o) => ({
+      this.options = options.map((o: DatumModel) => ({
         value: o.resource_id,
         label: o.name,
       }))

@@ -261,12 +261,12 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
     }
   }
   created() {
-    this.$on('upload.file.addField', (field) => {
+    this.$on('upload.file.addField', (field: any) => {
       if (field) {
         this.fields.push(field)
       }
     })
-    this.$on('upload.file.removeField', (field) => {
+    this.$on('upload.file.removeField', (field: any) => {
       if (field.prop) {
         this.fields.splice(this.fields.indexOf(field), 1)
       }

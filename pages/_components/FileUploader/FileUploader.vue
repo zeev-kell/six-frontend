@@ -297,5 +297,7 @@ export default class FileUploader extends Vue implements FileUploaderImplement {
     }
     return allowedNumber
   }
+
+  hasFile = false
 }
 </script>
