@@ -48,6 +48,6 @@ export const mutations: MutationTree<NuxtState> = {
 export const actions: ActionTree<RootState, PipeModuleState> = {
   async refresh({ commit }, payload) {
     const item = await (this.$api as ApiType).datum.get(payload)
-    commit('UPDATE_CURRENT_DATUM', item)
+    commit('UPDATE_CURRENT_STORE', item)
   },
 }

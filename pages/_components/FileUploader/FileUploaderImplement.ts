@@ -4,6 +4,7 @@ export default class FileUploaderImplement {
   // 文件
   files: UFile[] = []
   options!: any[]
-  addFiles!: (files: FileList, e?: Event) => void
+  hasFile!: boolean
+  addFiles!: (files: FileList | string, e?: Event) => void
   removeFile!: (files: UFile) => void
 }

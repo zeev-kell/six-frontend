@@ -21,7 +21,11 @@
         <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column label="文件名称" prop="name" sortable width="280"></el-table-column>
         <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>
-        <el-table-column label="大小" prop="bytes" sortable width="80" />
+        <el-table-column label="大小" prop="bytes" sortable width="80">
+          <template slot-scope="{ row }">
+            <div>{{ row.bytes | formatbytes }}</div>
+          </template>
+        </el-table-column>
         <el-table-column label="MD5校验码" prop="hash" width="200">
           <template slot-scope="{ row }">
             <div v-clipboard="row.hash" class="text-truncate">{{ row.hash }}</div>
@@ -45,6 +49,7 @@
 import { Component } from 'nuxt-property-decorator'
 import BaseTable from '@/pages/application/_components/BaseTable.vue'
 import intercept from '@/filters/intercept'
+import formatbytes from '@/filters/formatbytes'
 import clipboard from '@/directives/clipboard'
 
 @Component({
@@ -57,6 +62,7 @@ import clipboard from '@/directives/clipboard'
   },
   filters: {
     ...intercept,
+    ...formatbytes,
   },
 })
 export default class DatumManage extends BaseTable {}

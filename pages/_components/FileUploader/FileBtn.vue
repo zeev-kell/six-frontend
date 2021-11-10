@@ -9,10 +9,10 @@
 
 <script lang="ts">
 import { Component, Prop } from 'vue-property-decorator'
-import FileUploaderMixin from './FileUploaderMixin.vue'
+import FileUploaderInject from './FileUploaderInject.vue'
 
 @Component
-export default class FileUploaderBtn extends FileUploaderMixin {
+export default class FileUploaderBtn extends FileUploaderInject {
   $refs!: {
     input: HTMLInputElement
   }

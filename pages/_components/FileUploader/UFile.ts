@@ -13,6 +13,7 @@ const STATUS = {
 export default class UFile {
   uniqueIdentifier: string = ''
   id: string = ''
+  valid: boolean = false
   resourceId: string = ''
   file: File | null = null
   path: string = ''
@@ -43,6 +44,9 @@ export default class UFile {
   get loading(): boolean {
     return this.status === STATUS.READING
   }
+  get canEdit(): boolean {
+    return [STATUS.READING, STATUS.PENDING, STATUS.ERROR].includes(this.status)
+  }
   initHash(): void {
     this.status = STATUS.READING
     getFileMd5(this.file as File).then((hash: string) => {
@@ -54,7 +58,7 @@ export default class UFile {
     return this.file !== null
   }
   isPending(): boolean {
-    return this.status === STATUS.PENDING
+    return this.valid && this.status === STATUS.PENDING
   }
   isUploading(): boolean {
     return this.status === STATUS.UPLOADING
@@ -65,8 +69,11 @@ export default class UFile {
   isDone(): boolean {
     return this.status === STATUS.SUCCESS || this.status === STATUS.ERROR
   }
+  isValid(): boolean {
+    return this.valid
+  }
   uploadStart(): void {
-    this.status = STATUS.UPLOADING
+    this.valid && (this.status = STATUS.UPLOADING)
   }
   uploaded(): void {
     this.status = STATUS.SUCCESS

@@ -6,10 +6,10 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import FileUploaderMixin from '@/pages/_components/FileUploader/FileUploaderMixin.vue'
+import FileUploaderInject from '@/pages/_components/FileUploader/FileUploaderInject.vue'
 
 @Component
-export default class FileLink extends FileUploaderMixin {
+export default class FileLink extends FileUploaderInject {
   input = ''
 
   onSubmit(): void {

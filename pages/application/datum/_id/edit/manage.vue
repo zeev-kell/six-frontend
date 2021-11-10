@@ -25,7 +25,11 @@
         <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column label="文件名称" prop="name" sortable width="280"></el-table-column>
         <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>
-        <el-table-column label="大小" prop="bytes" sortable width="80" />
+        <el-table-column label="大小" prop="bytes" sortable width="80">
+          <template slot-scope="{ row }">
+            <div>{{ row.bytes | formatbytes }}</div>
+          </template>
+        </el-table-column>
         <el-table-column label="MD5校验码" prop="hash" width="200">
           <template slot-scope="{ row }">
             <div v-clipboard="row.hash" class="text-truncate">{{ row.hash }}</div>
@@ -43,7 +47,7 @@
       </el-table>
     </div>
     <el-upload-dialog ref="UploadDialog" @change="refresh"></el-upload-dialog>
-    <file-upload-dialog ref="FileUploadDialog" @change="refresh"></file-upload-dialog>
+    <file-upload-dialog ref="FileUploadDialog" :is-multiple="isMultiple" @change="refresh"></file-upload-dialog>
   </div>
 </template>
 
@@ -54,6 +58,7 @@ import intercept from '@/filters/intercept'
 import clipboard from '@/directives/clipboard'
 import FileUploadDialog from '@/pages/application/datum/_components/FileUploadDialog.vue'
 import ElUploadDialog from '@/pages/application/datum/_components/ElUploadDialog.vue'
+import formatbytes from '@/filters/formatbytes'
 
 @Component({
   directives: {
@@ -65,6 +70,7 @@ import ElUploadDialog from '@/pages/application/datum/_components/ElUploadDialog
   },
   filters: {
     ...intercept,
+    ...formatbytes,
   },
   components: {
     FileUploadDialog,
@@ -76,6 +82,9 @@ export default class DatumEditManage extends BaseTable {
     UploadDialog: ElUploadDialog
     FileUploadDialog: FileUploadDialog
   }
+  get isMultiple(): boolean {
+    return this.$store.getters['datum/isDataPackage']
+  }
   async refresh() {
     await this.$store.dispatch('datum/refresh', this.$route.params.id)
     this.items = this.$store.getters['datum/items']
@@ -84,7 +93,7 @@ export default class DatumEditManage extends BaseTable {
     this.$refs.UploadDialog.dialogVisible = true
   }
   showFileUploadDialog(): void {
-    this.$refs.FileUploadDialog.dialogVisible = true
+    this.$refs.FileUploadDialog.onShowDialog()
   }
   onDeleteSelect(): void {
     this.$confirm('此操作将永久删除选择的文件, 是否继续?', '提示', {

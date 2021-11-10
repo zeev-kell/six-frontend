@@ -1,6 +1,7 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { Context } from '@nuxt/types'
 import { MESSAGE_SUCCESS, MESSAGE_ERROR } from '@/utils/reponse-helper'
+import { datumConstants } from '@/constants/DatumConstants'
 
 export class Module {
   private $axios: NuxtAxiosInstance
@@ -30,9 +31,6 @@ export class Module {
       return token
     })
   }
-  getFormatList(): Promise<any> {
-    return this.$axios.$get('/v1/osstoken')
-  }
 
   // eslint-disable-next-line camelcase
   addFile(resourceId: string, data: { id: string; oss_tag: 0 | 1; content: any }) {
@@ -61,6 +59,13 @@ export class Module {
   }
   getList(params?: any): Promise<any[]> {
     return this.$axios.$get<any[]>('/v2/datas', { params })
+  }
+  getFormatList(): Promise<any> {
+    return this.$axios.$get<any[]>('/v2/datas', {
+      params: {
+        type: datumConstants.items.TYPE_FORMAT,
+      },
+    })
   }
 }
 

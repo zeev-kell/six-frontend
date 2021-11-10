@@ -27,8 +27,8 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <el-button type="primary" icon="el-icon-caret-right"> 校验数据 </el-button>
-        <el-button type="info" icon="el-icon-download"> 下载 </el-button>
+        <!--        <el-button type="primary" icon="el-icon-caret-right"> 校验数据 </el-button>-->
+        <!--        <el-button type="info" icon="el-icon-download"> 下载 </el-button>-->
         <can-create v-if="item.provider === username">
           <toggle-edit-info type="primary" icon="el-icon-edit"> 编辑 </toggle-edit-info>
         </can-create>

@@ -7,9 +7,7 @@
       <file-uploader-link></file-uploader-link>
     </div>
     <file-uploader-list></file-uploader-list>
-    <div class="text-right">
-      <el-button @click="onUpload()">开始上传</el-button>
-    </div>
+    <div class="text-right"></div>
   </file-uploader-drop>
 </template>
 
