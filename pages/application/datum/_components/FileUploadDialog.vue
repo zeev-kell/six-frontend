@@ -11,8 +11,8 @@
       <file-list v-show="hasFile"></file-list>
     </div>
     <div v-show="hasFile" slot="footer" class="dialog-footer">
-      <el-button @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" :loading="uploading" @click="onUpload()">开始上传</el-button>
+      <el-button @click="onDialogClosed">关 闭</el-button>
+      <el-button type="primary" :loading="uploading" @click="onUpload">开始上传</el-button>
     </div>
   </el-dialog>
 </template>
@@ -38,10 +38,28 @@ export default class FileUploadDialog extends FileUploaderMixin {
     },
   })
   isMultiple!: boolean
-
-  dialogVisible = false
   hadChanged = false
+  dialogVisible = false
 
+  public cleanUp(): void {
+    // TODO 增加对上传的中断
+    this.files = []
+    this.dialogVisible = false
+    if (this.hadChanged) {
+      this.$emit('change')
+      this.hadChanged = false
+    }
+  }
+  public async onDialogClosed(): Promise<any> {
+    if (!this.uploading) {
+      return this.cleanUp()
+    }
+    await this.$confirm('正在上传文件，是否继续取消所有文件上传并关闭窗口？', '提示', {
+      type: 'warning',
+    }).then(() => {
+      this.cleanUp()
+    })
+  }
   async onShowDialog(): Promise<void> {
     this.dialogVisible = true
     if (this.options.length === 0) {
@@ -50,12 +68,6 @@ export default class FileUploadDialog extends FileUploaderMixin {
         value: o.resource_id,
         label: o.name,
       }))
-    }
-  }
-  onDialogClosed(): void {
-    if (this.hadChanged) {
-      this.$emit('change')
-      this.hadChanged = false
     }
   }
   created() {

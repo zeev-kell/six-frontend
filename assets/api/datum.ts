@@ -39,6 +39,12 @@ export class Module {
   deleteFile(resourceId: string, data: any[]) {
     return this.$axios.$delete(`/v2/data/${resourceId}/file`, { data }).then(MESSAGE_SUCCESS).catch(MESSAGE_ERROR)
   }
+  updateFile(resourceId: string, data: any): Promise<any> {
+    return this.$axios.$put(`/v2/data/${resourceId}/file`, data)
+  }
+  getFile(resourceId: string, fileId: string): Promise<any> {
+    return this.$axios.$get(`/v2/data/${resourceId}/file/${fileId}`)
+  }
 
   update(dataId: string, data: any) {
     return this.$axios

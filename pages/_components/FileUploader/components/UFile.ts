@@ -1,4 +1,4 @@
-import { uuid4 } from '@/utils/uuid'
+import { S4, uuid4 } from '@/utils/uuid'
 import { getMimeType } from '@/pages/application/datum/_components/mime'
 import { getFileMd5 } from '@/utils/file-md5'
 import FileUploaderImplement from '@/pages/_components/FileUploader/FileUploaderImplement'
@@ -11,6 +11,16 @@ const STATUS = {
   ERROR: 'error',
   RETRY: 'retry',
   REFUSE: 'refuse',
+}
+const getFileNameByUrl = function (url: string) {
+  if (!url) {
+    return ''
+  }
+  const name = url.split('?')[0].split('/').pop()
+  if (name && name.includes('.')) {
+    return name
+  }
+  return 'file_' + S4()
 }
 export default class UFile {
   uniqueIdentifier: string = ''
@@ -35,6 +45,7 @@ export default class UFile {
   constructor(file: File | string, FileUploader: FileUploaderImplement) {
     if (typeof file === 'string') {
       this.file = null
+      this.name = getFileNameByUrl(file)
       this.path = file
       this.status = STATUS.PENDING
     } else {

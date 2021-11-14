@@ -14,7 +14,9 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="action-box"></div>
+      <div class="action-box">
+        <el-button type="info" icon="el-icon-download"> 下载 </el-button>
+      </div>
     </div>
     <div class="table-box">
       <el-table ref="multipleTable" :data="tableData" style="width: 100%">
@@ -36,8 +38,8 @@
           <template slot-scope="{ row }">{{ row.description | intercept }}</template>
         </el-table-column>
         <el-table-column label="操作">
-          <template>
-            <el-button size="mini">下载</el-button>
+          <template slot-scope="{ row }">
+            <el-button size="mini" :loading="row._loading" @click="onDownload(row)">下载</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -51,6 +53,7 @@ import BaseTable from '@/pages/application/_components/BaseTable.vue'
 import intercept from '@/filters/intercept'
 import formatbytes from '@/filters/formatbytes'
 import clipboard from '@/directives/clipboard'
+import OSS from 'ali-oss'
 
 @Component({
   directives: {
@@ -65,5 +68,21 @@ import clipboard from '@/directives/clipboard'
     ...formatbytes,
   },
 })
-export default class DatumManage extends BaseTable {}
+export default class DatumManage extends BaseTable {
+  async onDownload(row: any): Promise<any> {
+    const resourceId = this.$store.state.datum.resource_id
+    const { stsToken, content } = await this.$api.datum.getFile(resourceId, row.id)
+    const region = stsToken.region?.split('.')[0] || 'oss-cn-zhangjiakou'
+    const client = new OSS({
+      secure: true, // https
+      region,
+      accessKeyId: stsToken.access_key_id,
+      accessKeySecret: stsToken.access_key_secret,
+      stsToken: stsToken.security_token,
+      bucket: stsToken.bucket || 'sixoclock',
+    })
+    const url = client.signatureUrl(content.path)
+    console.log(url)
+  }
+}
 </script>

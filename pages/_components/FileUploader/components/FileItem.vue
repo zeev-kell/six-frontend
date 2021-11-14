@@ -100,6 +100,7 @@ export default class FileUploaderItem extends FileUploaderInject {
     name: [
       { required: true, message: '请输入文件名称', trigger: 'blur' },
       { min: 3, max: 25, message: '长度在 3 到 25 个字符', trigger: 'change' },
+      { validator: this.validator, trigger: 'blur' },
     ],
   }
 
@@ -114,7 +115,22 @@ export default class FileUploaderItem extends FileUploaderInject {
       transform: style,
     }
   }
+  get items(): any[] {
+    return this.$store.getters['datum/items']
+  }
 
+  validator(rule: any, value: string, callback: any): any {
+    if (value !== '') {
+      const files = this.FileUploader.files.concat(this.items).filter((f) => f.name === value)
+      if (files.length > 1) {
+        this.$message.error('文件名称有重复')
+        callback(new Error('文件名称有重复'))
+        return
+      }
+      return callback()
+    }
+    callback()
+  }
   validateItem(): Promise<any> {
     // 目前没有只是把结果返回
     return new Promise((resolve): void => {

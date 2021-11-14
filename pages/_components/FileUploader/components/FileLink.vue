@@ -13,8 +13,12 @@ export default class FileLink extends FileUploaderInject {
   input = ''
 
   onSubmit(): void {
-    this.FileUploader.addFiles(this.input)
-    this.input = ''
+    if (/(https?|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/.test(this.input)) {
+      this.FileUploader.addFiles(this.input)
+      this.input = ''
+    } else {
+      this.$message.error('请输入正确的文件链接')
+    }
   }
 }
 </script>
