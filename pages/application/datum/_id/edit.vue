@@ -7,9 +7,7 @@
         <i v-else-if="isDataPackage" class="el-icon-files" style="font-size: 36px" />
       </div>
       <div class="el-col el-col-16 text-truncate mx-0">
-        <h2 class="text-truncate my-0" :title="item['name']">
-          {{ item['name'] }}
-        </h2>
+        <h2 v-truncate="item['name']" class="my-0"></h2>
         <p class="m-y-05">ID: {{ item.resource_id }}</p>
         <div class="el-row el-row--flex info-tip">
           <div class="el-col">

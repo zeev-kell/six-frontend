@@ -37,6 +37,14 @@ export default {
   TYPE_FORMAT: '格式',
   TYPE_DATA: '数据',
   TYPE_DATA_PACKAGE: '数据包',
+  STATUS_READING: '读取中',
+  STATUS_PENDING: '等待',
+  STATUS_UPLOADING: '上传中',
+  STATUS_PROGRESS: 'progress',
+  STATUS_SUCCESS: '成功',
+  STATUS_ERROR: '失败',
+  STATUS_RETRY: '重试',
+  STATUS_REFUSE: '禁止',
   // 导航条
   nav: {
     index: '主页',

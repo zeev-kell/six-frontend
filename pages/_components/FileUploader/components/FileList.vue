@@ -20,9 +20,9 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import FileItem from '@/pages/_components/FileUploader/FileItem.vue'
+import FileItem from '@/pages/_components/FileUploader/components/FileItem.vue'
 import FileUploaderInject from '@/pages/_components/FileUploader/FileUploaderInject.vue'
-import UFile from '@/pages/_components/FileUploader/UFile'
+import UFile from '@/pages/_components/FileUploader/components/UFile'
 
 @Component({
   components: { FileItem },

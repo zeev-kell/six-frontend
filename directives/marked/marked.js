@@ -31,6 +31,7 @@ marked.setOptions({
  */
 function translateMark(el, binding) {
   /**
+   * modifiers：一个包含修饰符的对象。例如：v-my-directive.foo.bar 中，修饰符对象为 { foo: true, bar: true }。
    * replace 是否替换回车
    * safe 是否是可信任的字符
    */

@@ -1,11 +1,11 @@
 ﻿<script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import OSS from 'ali-oss'
-import FileUploaderBtn from '@/pages/_components/FileUploader/FileBtn.vue'
-import FileUploaderLink from '@/pages/_components/FileUploader/FileLink.vue'
-import FileUploaderDrop from '@/pages/_components/FileUploader/FileDrop.vue'
-import FileUploaderList from '@/pages/_components/FileUploader/FileList.vue'
-import UFile from '@/pages/_components/FileUploader/UFile'
+import FileUploaderBtn from '@/pages/_components/FileUploader/components/FileBtn.vue'
+import FileUploaderLink from '@/pages/_components/FileUploader/components/FileLink.vue'
+import FileUploaderDrop from '@/pages/_components/FileUploader/components/FileDrop.vue'
+import FileUploaderList from '@/pages/_components/FileUploader/components/FileList.vue'
+import UFile from '@/pages/_components/FileUploader/components/UFile'
 import FileUploaderImplement from '@/pages/_components/FileUploader/FileUploaderImplement'
 
 const isServer = typeof window === 'undefined'
@@ -45,7 +45,7 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
   files: UFile[] = []
   errorFiles: UFile[] = []
   fields: any[] = []
-  options = []
+  options: any[] = []
   private initClientPromise: null | Promise<any> = null
   private refreshSTSTokenPromise: null | Promise<any> = null
   get hasFile(): boolean {

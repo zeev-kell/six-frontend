@@ -2,9 +2,7 @@
   <transition name="el-fade-in-linear">
     <div v-if="showPanel" class="right-panel">
       <div class="card-header">
-        <div class="f-b text-truncate" :title="labelName">
-          {{ labelName }}
-        </div>
+        <div v-truncate="labelName" class="f-b"></div>
         <button type="button" class="el-dialog__headerbtn" style="top: 15px" @click="showPanel = false">
           <i class="el-dialog__close el-icon el-icon-close" />
         </button>

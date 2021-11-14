@@ -1,4 +1,4 @@
-import UFile from '@/pages/_components/FileUploader/UFile'
+import UFile from '@/pages/_components/FileUploader/components/UFile'
 import { Vue } from 'nuxt-property-decorator'
 
 export default class FileUploaderImplement extends Vue {

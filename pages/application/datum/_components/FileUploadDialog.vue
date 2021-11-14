@@ -21,10 +21,10 @@
 import { Component } from 'nuxt-property-decorator'
 import FileUploader from '@/pages/_components/FileUploader/FileUploader.vue'
 import FileUploaderMixin from '@/pages/_components/FileUploader/FileUploaderMixin.vue'
-import FileDrop from '@/pages/_components/FileUploader/FileDrop.vue'
-import FileBtn from '@/pages/_components/FileUploader/FileBtn.vue'
-import FileLink from '@/pages/_components/FileUploader/FileLink.vue'
-import FileList from '@/pages/_components/FileUploader/FileList.vue'
+import FileDrop from '@/pages/_components/FileUploader/components/FileDrop.vue'
+import FileBtn from '@/pages/_components/FileUploader/components/FileBtn.vue'
+import FileLink from '@/pages/_components/FileUploader/components/FileLink.vue'
+import FileList from '@/pages/_components/FileUploader/components/FileList.vue'
 import { Prop } from 'vue-property-decorator'
 import { DatumModel } from '@/types/model/Datum'
 
@@ -39,7 +39,7 @@ export default class FileUploadDialog extends FileUploaderMixin {
   })
   isMultiple!: boolean
 
-  dialogVisible = true
+  dialogVisible = false
   hadChanged = false
 
   async onShowDialog(): Promise<void> {

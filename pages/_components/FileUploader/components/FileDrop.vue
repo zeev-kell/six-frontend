@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
-import FileUploaderInject from './FileUploaderInject.vue'
+import FileUploaderInject from '../FileUploaderInject.vue'
 
 @Component
 export default class FileUploaderDrop extends FileUploaderInject {}

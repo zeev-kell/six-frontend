@@ -19,7 +19,7 @@
             <span class="el-icon-loading"></span>
             计算中...
           </div>
-          <div v-else class="text-truncate" :title="item.hash">{{ item.hash }}</div>
+          <div v-else v-truncate="item.hash"></div>
         </transition>
       </el-form-item>
       <el-form-item class="el-col el-col-3">
@@ -43,32 +43,30 @@
       <div class="file-progress" :style="progressStyle"></div>
       <div class="file-info">
         <div class="el-form-item el-col el-col-3">
-          <div class="text-truncate" :title="item.name">{{ item.name }}</div>
+          <div v-truncate="item.name"></div>
         </div>
         <div class="el-form-item el-col el-col-3">
-          {{ item.mediaType }}
+          <div v-truncate="item.mediaType"></div>
         </div>
         <div class="el-form-item el-col el-col-3">
-          {{ item.label }}
+          <div v-truncate="item.label"></div>
         </div>
         <div class="el-form-item el-col el-col-2">
           {{ item.bytes | formatbytes }}
         </div>
         <div class="el-form-item el-col el-col-5">
-          <div class="text-truncate" :title="item.hash">{{ item.hash }}</div>
+          <div v-truncate="item.label"></div>
         </div>
         <div class="el-form-item el-col el-col-3">
           {{ item.encoding }}
         </div>
-        <div class="el-form-item el-col el-col-3">
-          {{ item.description }}
-        </div>
+        <div class="el-form-item el-col el-col-3"><div v-truncate="item.description"></div></div>
         <div class="el-form-item el-col el-col-2">
           <el-tooltip v-if="item.errorMsg" effect="light" :content="item.errorMsg" placement="top">
             <span class="el-icon-error text-danger"></span>
           </el-tooltip>
           <span v-if="item.isSuccess()" class="el-icon-success text-success"> </span>
-          <span>{{ item.status }}</span>
+          <span>{{ item.status | fileTypeTranslate | t }}</span>
         </div>
       </div>
     </div>
@@ -77,13 +75,15 @@
 
 <script lang="ts">
 import { Component, Prop } from 'vue-property-decorator'
-import UFile from '@/pages/_components/FileUploader/UFile'
+import UFile from '@/pages/_components/FileUploader/components/UFile'
 import FileUploaderInject from '@/pages/_components/FileUploader/FileUploaderInject.vue'
 import formatbytes from '@/filters/formatbytes'
+import { fileConstants } from '@/constants/FileConstants'
 
 @Component({
   filters: {
     ...formatbytes,
+    fileTypeTranslate: fileConstants.get,
   },
 })
 export default class FileUploaderItem extends FileUploaderInject {
@@ -163,6 +163,10 @@ export default class FileUploaderItem extends FileUploaderInject {
   overflow: hidden;
   &:hover {
     background-color: hsla(0, 0%, 94%, 0.2);
+  }
+  ::v-deep .el-form-item > .text-truncate {
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
 </style>
