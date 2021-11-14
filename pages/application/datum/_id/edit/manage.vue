@@ -15,8 +15,7 @@
         </el-form>
       </div>
       <div class="action-box">
-        <el-button icon="el-icon-plus" @click="showFileUploadDialog"> 新增 </el-button>
-        <el-button type="primary" icon="el-icon-plus" @click="showUploadDialog"> 新增 </el-button>
+        <el-button type="primary" icon="el-icon-plus" @click="showFileUploadDialog"> 新增 </el-button>
         <el-button type="danger" :disabled="!hasSelected" icon="el-icon-delete" @click="onDeleteSelect"> 删 除 </el-button>
       </div>
     </div>
@@ -46,7 +45,6 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-upload-dialog ref="UploadDialog" @change="refresh"></el-upload-dialog>
     <file-upload-dialog ref="FileUploadDialog" :is-multiple="isMultiple" @change="refresh"></file-upload-dialog>
   </div>
 </template>
@@ -57,7 +55,6 @@ import BaseTable from '@/pages/application/_components/BaseTable.vue'
 import intercept from '@/filters/intercept'
 import clipboard from '@/directives/clipboard'
 import FileUploadDialog from '@/pages/application/datum/_components/FileUploadDialog.vue'
-import ElUploadDialog from '@/pages/application/datum/_components/ElUploadDialog.vue'
 import formatbytes from '@/filters/formatbytes'
 
 @Component({
@@ -74,12 +71,10 @@ import formatbytes from '@/filters/formatbytes'
   },
   components: {
     FileUploadDialog,
-    ElUploadDialog,
   },
 })
 export default class DatumEditManage extends BaseTable {
   $refs!: {
-    UploadDialog: ElUploadDialog
     FileUploadDialog: FileUploadDialog
   }
   get isMultiple(): boolean {
@@ -88,9 +83,6 @@ export default class DatumEditManage extends BaseTable {
   async refresh() {
     await this.$store.dispatch('datum/refresh', this.$route.params.id)
     this.items = this.$store.getters['datum/items']
-  }
-  showUploadDialog(): void {
-    this.$refs.UploadDialog.dialogVisible = true
   }
   showFileUploadDialog(): void {
     this.$refs.FileUploadDialog.onShowDialog()

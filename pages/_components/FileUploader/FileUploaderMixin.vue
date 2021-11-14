@@ -10,6 +10,7 @@ import FileUploaderImplement from '@/pages/_components/FileUploader/FileUploader
 
 const isServer = typeof window === 'undefined'
 const ie10plus = isServer ? false : window.navigator.msPointerEnabled
+const MAX_SIZE = 2 * 1024 * 1024
 
 function generateUniqueIdentifier(file: any): string {
   const relativePath = file.relativePath || file.webkitRelativePath || file.fileName || file.name
@@ -36,11 +37,13 @@ function toUrlParams(obj: any): string {
 export default class FileUploaderMixin extends Vue implements FileUploaderImplement {
   private client: OSS | null = null
   private token: any = null
+  error = false
   opts = {
     simultaneousUploads: 3,
     singleFile: false,
   }
   files: UFile[] = []
+  errorFiles: UFile[] = []
   fields: any[] = []
   options = []
   private initClientPromise: null | Promise<any> = null
@@ -48,8 +51,12 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
   get hasFile(): boolean {
     return this.files.length > 0
   }
+  get uploading(): boolean {
+    return this.files.some((f) => f.isUploading())
+  }
 
   public async onUpload(): Promise<void> {
+    this.error = false
     await this.validateItem()
     // 获取目前允许上传的数量
     const allowedNumber: number = this.getUploadingNumber()
@@ -68,7 +75,7 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
   }
   public addFiles(files: FileList | string) {
     if (typeof files === 'string') {
-      const file = new UFile(files)
+      const file = new UFile(files, this)
       if (this.opts.singleFile) {
         this.files = [file]
       } else {
@@ -77,6 +84,7 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
       return
     }
     const _files: UFile[] = []
+    let ignoreNum = 0
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
       // Uploading empty file IE10/IE11 hangs indefinitely
@@ -84,10 +92,12 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
       // Ignore already added files
       if ((!ie10plus || (ie10plus && file.size > 0)) && !(file.size % 4096 === 0 && (file.name === '.' || (file as any).fileName === '.'))) {
         const uniqueIdentifier = generateUniqueIdentifier(file)
-        if (!this.getFromUniqueIdentifier(uniqueIdentifier)) {
-          const _file = new UFile(file)
+        if (!this.getFromUniqueIdentifier(uniqueIdentifier) && file.size <= MAX_SIZE) {
+          const _file = new UFile(file, this)
           _file.uniqueIdentifier = uniqueIdentifier
           _files.push(_file)
+        } else {
+          ignoreNum++
         }
       }
     }
@@ -96,6 +106,9 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
         this.removeFile(this.files[0])
       }
       this.files.push(file)
+    }
+    if (ignoreNum) {
+      this.$message.warning(`忽略${ignoreNum}个文件，请不要上传相同文件或者大于2M的文件`)
     }
   }
   public removeFile(file: UFile): void {
@@ -191,7 +204,10 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
         id,
       }),
     }
+    // 关于进度条，只有分片上传才有
+    uFile.progress = 0
     await this.client!.put(path, file, objectOption)
+    uFile.progress = 1
     await this.addFileToDatum(uFile)
   }
   protected async addFileToDatum(uFile: UFile) {
@@ -217,12 +233,16 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
         this.uploadFile(uFile)
           .then(() => {
             uFile.uploaded()
-            // 完成当前的上传之后，启动下一个上传
             this.$emit('upload.file.success')
-            this.uploadNextFile()
           })
           .catch((e) => {
             uFile.uploadError(e)
+            this.errorFiles.push(uFile)
+            this.error = true
+          })
+          .then(() => {
+            // 完成当前的上传之后，启动下一个上传
+            this.uploadNextFile()
           })
         return true
       }
@@ -230,9 +250,14 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
     // 已经没有需要启动的文件，检查所有的是否完成（包含失败）
     const everyDone = this.files.every((file) => file.isDone())
     if (everyDone && this.files.length) {
-      // All chunks have been uploaded, complete
-      this.$message.success('文件上传完毕')
-      this.$emit('onComplete')
+      // TODO 修改 计算MD5 的时候完成上传
+      if (this.error) {
+        this.$message.warning('部分文件发生错误，请检查...')
+      } else {
+        // All chunks have been uploaded, complete
+        this.$message.success('文件上传完毕')
+      }
+      this.$emit('upload.file.complete')
     }
     // 返回 !everySuccess 判断是否已经启动成功
     return !everyDone
@@ -267,8 +292,17 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
       }
     })
     this.$on('upload.file.removeField', (field: any) => {
-      if (field.prop) {
+      if (field) {
         this.fields.splice(this.fields.indexOf(field), 1)
+      }
+    })
+    this.$on('upload.file.initHash', (uFile: UFile) => {
+      const items: any[] = this.$store.getters['datum/items']
+      if (items.findIndex((f) => f.hash === uFile.hash) !== -1) {
+        uFile.uploadRefuse('已经存在相同MD5的文件')
+      } else {
+        // TODO
+        uFile.status = 'pending'
       }
     })
   }

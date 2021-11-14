@@ -1,13 +1,14 @@
 ﻿<template>
   <div class="file-list border p-10">
     <div class="file-list__header">
-      <div class="el-row">
-        <div class="el-col el-col-4"><span class="text-danger">*</span>文件名称</div>
+      <div class="el-row row">
+        <div class="el-col el-col-3">文件名称<span class="text-danger">*</span></div>
         <div class="el-col el-col-3">媒介类型</div>
         <div class="el-col el-col-3">标签</div>
+        <div class="el-col el-col-2">大小</div>
         <div class="el-col el-col-5">MD5校验码</div>
         <div class="el-col el-col-3">格式规范</div>
-        <div class="el-col el-col-4">说明</div>
+        <div class="el-col el-col-3">说明</div>
         <div class="el-col el-col-2"></div>
       </div>
     </div>
@@ -36,8 +37,8 @@ export default class FileUploaderList extends FileUploaderInject {
 <style lang="scss" scoped>
 .file-list__header {
   .el-col {
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 1px;
+    padding-right: 1px;
   }
 }
 .file-list-body {
@@ -45,7 +46,7 @@ export default class FileUploaderList extends FileUploaderInject {
   overflow-y: auto;
 }
 .file-list ::v-deep {
-  .el-row {
+  .row {
     border-bottom: 1px solid rgb(235, 238, 245);
   }
   .el-col {
@@ -54,6 +55,8 @@ export default class FileUploaderList extends FileUploaderInject {
   }
   .el-form-item {
     margin: 0;
+    padding-left: 1px;
+    padding-right: 1px;
   }
   input {
     padding: 0 5px;

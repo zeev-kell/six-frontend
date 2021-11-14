@@ -120,7 +120,7 @@ export default class FileUploader extends Vue implements FileUploaderImplement {
   }
   public addFiles(files: FileList | string) {
     if (typeof files === 'string') {
-      const file = new UFile(files)
+      const file = new UFile(files, this)
       this.files.push(file)
       return
     }
@@ -133,7 +133,7 @@ export default class FileUploader extends Vue implements FileUploaderImplement {
       if ((!ie10plus || (ie10plus && file.size > 0)) && !(file.size % 4096 === 0 && (file.name === '.' || (file as any).fileName === '.'))) {
         const uniqueIdentifier = generateUniqueIdentifier(file)
         if (!this.getFromUniqueIdentifier(uniqueIdentifier)) {
-          const _file = new UFile(file)
+          const _file = new UFile(file, this)
           _file.uniqueIdentifier = uniqueIdentifier
           _files.push(_file)
         }

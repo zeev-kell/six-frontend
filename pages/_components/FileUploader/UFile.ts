@@ -1,6 +1,7 @@
 import { uuid4 } from '@/utils/uuid'
 import { getMimeType } from '@/pages/application/datum/_components/mime'
 import { getFileMd5 } from '@/utils/file-md5'
+import FileUploaderImplement from '@/pages/_components/FileUploader/FileUploaderImplement'
 const STATUS = {
   READING: 'reading',
   PENDING: 'pending',
@@ -9,10 +10,12 @@ const STATUS = {
   SUCCESS: 'success',
   ERROR: 'error',
   RETRY: 'retry',
+  REFUSE: 'refuse',
 }
 export default class UFile {
   uniqueIdentifier: string = ''
   id: string = ''
+  // 数据校验
   valid: boolean = false
   resourceId: string = ''
   file: File | null = null
@@ -21,12 +24,15 @@ export default class UFile {
   fileType: string = ''
   bytes: number = 0
   status: string = ''
+  errorMsg: string | undefined
   hash: string = ''
   mediaType: string = ''
   label: string = ''
   encoding: string = ''
   description: string = ''
-  constructor(file: File | string) {
+  progress: number = 0
+  FileUploader: FileUploaderImplement
+  constructor(file: File | string, FileUploader: FileUploaderImplement) {
     if (typeof file === 'string') {
       this.file = null
       this.path = file
@@ -40,6 +46,7 @@ export default class UFile {
       this.initHash()
     }
     this.id = uuid4()
+    this.FileUploader = FileUploader
   }
   get loading(): boolean {
     return this.status === STATUS.READING
@@ -51,7 +58,7 @@ export default class UFile {
     this.status = STATUS.READING
     getFileMd5(this.file as File).then((hash: string) => {
       this.hash = hash
-      this.status = STATUS.PENDING
+      this.FileUploader.$emit('upload.file.initHash', this)
     })
   }
   isOssFile(): boolean {
@@ -67,7 +74,7 @@ export default class UFile {
     return this.status === STATUS.SUCCESS
   }
   isDone(): boolean {
-    return this.status === STATUS.SUCCESS || this.status === STATUS.ERROR
+    return [STATUS.SUCCESS, STATUS.ERROR].includes(this.status)
   }
   isValid(): boolean {
     return this.valid
@@ -81,5 +88,12 @@ export default class UFile {
   uploadError(e: any): void {
     console.log(e)
     this.status = STATUS.ERROR
+    this.errorMsg = e?.msg || e
   }
+  uploadRefuse(e: any): void {
+    this.valid = false
+    this.status = STATUS.REFUSE
+    this.errorMsg = e?.msg || e
+  }
+  // resetError(): void {}
 }

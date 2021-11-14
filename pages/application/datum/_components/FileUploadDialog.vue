@@ -12,7 +12,7 @@
     </div>
     <div v-show="hasFile" slot="footer" class="dialog-footer">
       <el-button @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="onUpload()">开始上传</el-button>
+      <el-button type="primary" :loading="uploading" @click="onUpload()">开始上传</el-button>
     </div>
   </el-dialog>
 </template>
@@ -39,7 +39,7 @@ export default class FileUploadDialog extends FileUploaderMixin {
   })
   isMultiple!: boolean
 
-  dialogVisible = false
+  dialogVisible = true
   hadChanged = false
 
   async onShowDialog(): Promise<void> {
