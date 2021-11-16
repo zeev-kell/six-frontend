@@ -13,7 +13,7 @@
       <el-form-item class="el-col el-col-2">
         {{ item.bytes | formatbytes }}
       </el-form-item>
-      <el-form-item class="el-col el-col-5">
+      <el-form-item class="el-col el-col-5 el-form-item_content_full">
         <transition name="fade">
           <div v-if="item.loading">
             <span class="el-icon-loading"></span>
@@ -23,7 +23,7 @@
         </transition>
       </el-form-item>
       <el-form-item class="el-col el-col-3">
-        <el-select v-model="item.encoding" placeholder="格式规范">
+        <el-select v-model="item.schema" placeholder="格式规范">
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
         </el-select>
       </el-form-item>
@@ -55,10 +55,10 @@
           {{ item.bytes | formatbytes }}
         </div>
         <div class="el-form-item el-col el-col-5">
-          <div v-truncate="item.label"></div>
+          <div v-truncate="item.hash"></div>
         </div>
         <div class="el-form-item el-col el-col-3">
-          {{ item.encoding }}
+          {{ getSchemaName(item.schema) }}
         </div>
         <div class="el-form-item el-col el-col-3"><div v-truncate="item.description"></div></div>
         <div class="el-form-item el-col el-col-2">
@@ -119,6 +119,9 @@ export default class FileUploaderItem extends FileUploaderInject {
     return this.$store.getters['datum/items']
   }
 
+  getSchemaName(value: string): string {
+    return this.options.find((o: any) => o.value === value).label
+  }
   validator(rule: any, value: string, callback: any): any {
     if (value !== '') {
       const files = this.FileUploader.files.concat(this.items).filter((f) => f.name === value)
@@ -164,6 +167,7 @@ export default class FileUploaderItem extends FileUploaderInject {
   }
 }
 </script>
+
 <style scoped lang="scss">
 .file-progress {
   position: absolute;

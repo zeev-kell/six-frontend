@@ -15,37 +15,39 @@
         </el-form>
       </div>
       <div class="action-box">
-        <el-button type="primary" icon="el-icon-plus" @click="showFileUploadDialog"> 新增 </el-button>
-        <el-button type="danger" :disabled="!hasSelected" icon="el-icon-delete" @click="onDeleteSelect"> 删 除 </el-button>
+        <loading-button type="info" icon="el-icon-download" :callback="onBatchDownload" :disabled="!hasSelected">下载</loading-button>
       </div>
     </div>
     <div class="table-box">
       <el-table ref="multipleTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55"> </el-table-column>
-        <el-table-column label="文件名称" prop="name" sortable width="280"></el-table-column>
+        <el-table-column label="文件名称" prop="name" sortable width="250"></el-table-column>
         <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>
         <el-table-column label="大小" prop="bytes" sortable width="80">
           <template slot-scope="{ row }">
             <div>{{ row.bytes | formatbytes }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="MD5校验码" prop="hash" width="200">
+        <el-table-column label="MD5校验码" prop="hash" width="230">
           <template slot-scope="{ row }">
             <div v-clipboard="row.hash" class="text-truncate">{{ row.hash }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="格式规范" prop="encoding" width="120" />
+        <el-table-column label="格式规范" width="120">
+          <template slot-scope="{ row }">
+            <schema-name :schema="row.schema"></schema-name>
+          </template>
+        </el-table-column>
         <el-table-column label="说明" prop="description">
           <template slot-scope="{ row }">{{ row.description | intercept }}</template>
         </el-table-column>
         <el-table-column label="操作">
-          <template>
-            <el-button size="mini">下载</el-button>
+          <template slot-scope="{ row }">
+            <loading-button type="icon" size="mini" :callback="onDownload" :args="[row]" icon="el-icon-download" title="下载"></loading-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <file-upload-dialog ref="FileUploadDialog" :is-multiple="isMultiple" @change="refresh"></file-upload-dialog>
   </div>
 </template>
 
@@ -53,11 +55,14 @@
 import { Component } from 'nuxt-property-decorator'
 import BaseTable from '@/pages/application/_components/BaseTable.vue'
 import intercept from '@/filters/intercept'
-import clipboard from '@/directives/clipboard'
-import FileUploadDialog from '@/pages/application/datum/_components/FileUploadDialog.vue'
 import formatbytes from '@/filters/formatbytes'
+import clipboard from '@/directives/clipboard'
+import OSS from 'ali-oss'
+import LoadingButton from '@/components/LoadingButton.vue'
+import SchemaName from '@/pages/application/datum/_components/SchemaName.vue'
 
 @Component({
+  components: { SchemaName, LoadingButton },
   directives: {
     ...clipboard,
   },
@@ -69,33 +74,37 @@ import formatbytes from '@/filters/formatbytes'
     ...intercept,
     ...formatbytes,
   },
-  components: {
-    FileUploadDialog,
-  },
 })
-export default class DatumEditManage extends BaseTable {
-  $refs!: {
-    FileUploadDialog: FileUploadDialog
+export default class DatumFile extends BaseTable {
+  async onDownload($event: unknown, row: any): Promise<any> {
+    try {
+      const resourceId = this.$store.state.datum.resource_id
+      const { stsToken, content } = await this.$api.datum.getFile(resourceId, row.id)
+      const region = stsToken.region?.split('.')[0] || 'oss-cn-zhangjiakou'
+      const client = new OSS({
+        secure: true, // https
+        region,
+        accessKeyId: stsToken.access_key_id,
+        accessKeySecret: stsToken.access_key_secret,
+        stsToken: stsToken.security_token,
+        bucket: stsToken.bucket || 'sixoclock',
+      })
+      const url = client.signatureUrl(content.path, {
+        response: {
+          'content-disposition': `attachment; filename=${encodeURIComponent(content.name)}`,
+        },
+      })
+      window.open(url, '_blank')
+    } catch (e) {
+      this.$message.error(`下载 ${row.name} 失败`)
+    }
   }
-  get isMultiple(): boolean {
-    return this.$store.getters['datum/isDataPackage']
-  }
-  async refresh() {
-    await this.$store.dispatch('datum/refresh', this.$route.params.id)
-    this.items = this.$store.getters['datum/items']
-  }
-  showFileUploadDialog(): void {
-    this.$refs.FileUploadDialog.onShowDialog()
-  }
-  onDeleteSelect(): void {
-    this.$confirm('此操作将永久删除选择的文件, 是否继续?', '提示', {
-      type: 'warning',
-    }).then(async () => {
-      await this.$api.datum.deleteFile(
-        this.$route.params.id,
-        this.multipleSelection.map((s: any) => s.id)
-      )
-      await this.refresh()
+  async onBatchDownload(): Promise<any> {
+    await this.$confirm(`即将下载${this.multipleSelection.length}个文件`).then(async () => {
+      for (const row of this.multipleSelection) {
+        await this.onDownload(null, row)
+      }
+      this.$refs.multipleTable.clearSelection()
     })
   }
 }

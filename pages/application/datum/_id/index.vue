@@ -39,7 +39,7 @@
       <el-tab-pane v-if="isFormat" label="格式规范" name="application-datum-id-index-format" />
       <el-tab-pane v-if="isFormat" label="历史版本" name="application-datum-id-index-version" />
       <el-tab-pane v-if="!isFormat" label="数据结构" name="application-datum-id-index-structure" />
-      <el-tab-pane v-if="!isFormat" label="文件" name="application-datum-id-index-manage" />
+      <el-tab-pane v-if="!isFormat" label="文件" name="application-datum-id-index-file" />
       <el-tab-pane v-if="!isFormat" label="处理流程" name="application-datum-id-index-process" />
     </el-tabs>
     <div class="px-20 mt-5 pb-10 no-gutters">

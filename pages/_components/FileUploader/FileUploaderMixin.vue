@@ -211,7 +211,7 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
     await this.addFileToDatum(uFile)
   }
   protected async addFileToDatum(uFile: UFile) {
-    const { id, bytes, name, mediaType, hash, path, description, resourceId } = uFile
+    const { id, bytes, name, mediaType, hash, path, description, resourceId, schema } = uFile
     await this.$api.datum.addFile(resourceId, {
       id,
       oss_tag: uFile.file ? 1 : 0,
@@ -220,6 +220,7 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
         path,
         hash,
         bytes,
+        schema,
         mediatype: mediaType,
         description,
       },

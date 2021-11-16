@@ -39,6 +39,7 @@ export default class UFile {
   mediaType: string = ''
   label: string = ''
   encoding: string = ''
+  schema: string = ''
   description: string = ''
   progress: number = 0
   FileUploader: FileUploaderImplement

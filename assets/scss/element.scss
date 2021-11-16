@@ -46,6 +46,12 @@
   width: 100%;
 }
 
+.el-button--icon {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+}
+
 .el-link {
   &.block {
     display: block;
@@ -206,4 +212,8 @@
 
 .el-popover {
   border-radius: 2px;
+}
+
+.el-form-item_content_full .el-form-item__content {
+  width: 100%;
 }

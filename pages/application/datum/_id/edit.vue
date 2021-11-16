@@ -36,7 +36,7 @@
       <el-tab-pane v-if="isFormat" label="格式规范" name="application-datum-id-edit-format" />
       <el-tab-pane v-if="isFormat" label="历史版本" name="application-datum-id-edit-version" />
       <el-tab-pane v-if="!isFormat" label="数据结构" name="application-datum-id-edit-structure" />
-      <el-tab-pane v-if="!isFormat" label="文件" name="application-datum-id-edit-manage" />
+      <el-tab-pane v-if="!isFormat" label="文件" name="application-datum-id-edit-file" />
       <el-tab-pane v-if="!isFormat" label="处理流程" name="application-datum-id-edit-process" />
       <el-tab-pane label="管理" name="application-datum-id-edit-setting" />
     </el-tabs>

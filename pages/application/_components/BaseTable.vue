@@ -71,6 +71,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
 import { pipeConstants } from '@/constants/PipeConstants'
+import { ElTable } from 'element-ui/types/table'
 
 @Component({
   components: { CanCreate },
@@ -84,6 +85,9 @@ import { pipeConstants } from '@/constants/PipeConstants'
   },
 })
 export default class BaseTable extends Vue {
+  $refs!: {
+    multipleTable: ElTable
+  }
   items: any[] = []
   multipleSelection: any[] = []
   query = {
