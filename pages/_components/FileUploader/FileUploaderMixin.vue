@@ -7,6 +7,7 @@ import FileUploaderDrop from '@/pages/_components/FileUploader/components/FileDr
 import FileUploaderList from '@/pages/_components/FileUploader/components/FileList.vue'
 import UFile from '@/pages/_components/FileUploader/components/UFile'
 import FileUploaderImplement from '@/pages/_components/FileUploader/FileUploaderImplement'
+import { DatumItemModel } from '@/types/model/Datum'
 
 const isServer = typeof window === 'undefined'
 const ie10plus = isServer ? false : window.navigator.msPointerEnabled
@@ -183,7 +184,7 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
     }
   }
   protected async uploadFile(uFile: UFile): Promise<void> {
-    uFile.resourceId = this.$route.params.id || 'd31d2d6e-1ce9-499c-b0d5-e0ff960914af'
+    uFile.resourceId = this.$route.params.id
     // 上传 link 文件
     if (!uFile.isOssFile()) {
       return await this.addFileToDatum(uFile)
@@ -223,7 +224,7 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
         schema,
         mediatype: mediaType,
         description,
-      },
+      } as DatumItemModel,
     })
   }
   // 每次启动一个，需要返回告知启动成功

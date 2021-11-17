@@ -120,7 +120,7 @@ export default class FileUploaderItem extends FileUploaderInject {
   }
 
   getSchemaName(value: string): string {
-    return this.options.find((o: any) => o.value === value).label
+    return this.options.find((o: any) => o.value === value)?.label
   }
   validator(rule: any, value: string, callback: any): any {
     if (value !== '') {

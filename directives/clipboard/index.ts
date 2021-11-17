@@ -13,6 +13,7 @@ function copyText(text: string, container?: HTMLElement) {
     const fakeElement = document.createElement('button')
     const clipboard = new Clipboard(fakeElement, {
       text() {
+        console.log(text)
         return text
       },
       action() {

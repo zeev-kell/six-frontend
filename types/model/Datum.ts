@@ -19,3 +19,16 @@ export interface DatumModel {
   content: any
   link_pipes: string
 }
+
+export interface DatumItemModel {
+  id: string
+  path: string
+  name: string
+  mediatype: string
+  bytes: number
+  hash: string
+  schema: string
+  description: string
+  encoding: string
+  saveMode: string
+}

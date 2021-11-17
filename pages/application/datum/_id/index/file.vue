@@ -43,7 +43,15 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="{ row }">
-            <loading-button type="icon" size="mini" :callback="onDownload" :args="[row]" icon="el-icon-download" title="下载"></loading-button>
+            <loading-button
+              type="icon el-button--info"
+              size="mini"
+              :callback="onDownload"
+              :args="[row]"
+              icon="el-icon-download"
+              title="下载"
+            ></loading-button>
+            <loading-button type="icon" size="mini" :callback="onGetDownloadUrl" :args="[row]" icon="el-icon-link" title="获取链接"></loading-button>
           </template>
         </el-table-column>
       </el-table>
@@ -56,10 +64,11 @@ import { Component } from 'nuxt-property-decorator'
 import BaseTable from '@/pages/application/_components/BaseTable.vue'
 import intercept from '@/filters/intercept'
 import formatbytes from '@/filters/formatbytes'
-import clipboard from '@/directives/clipboard'
+import clipboard, { copyText } from '@/directives/clipboard'
 import OSS from 'ali-oss'
 import LoadingButton from '@/components/LoadingButton.vue'
 import SchemaName from '@/pages/application/datum/_components/SchemaName.vue'
+import { DatumItemModel } from '@/types/model/Datum'
 
 @Component({
   components: { SchemaName, LoadingButton },
@@ -67,7 +76,7 @@ import SchemaName from '@/pages/application/datum/_components/SchemaName.vue'
     ...clipboard,
   },
   asyncData({ store }) {
-    const items = store.getters['datum/items']
+    const items: DatumItemModel[] = store.getters['datum/items']
     return { items }
   },
   filters: {
@@ -76,28 +85,66 @@ import SchemaName from '@/pages/application/datum/_components/SchemaName.vue'
   },
 })
 export default class DatumFile extends BaseTable {
-  async onDownload($event: unknown, row: any): Promise<any> {
+  typeList = []
+  get nameList() {
+    return []
+  }
+  async getUrl(row: DatumItemModel) {
+    const resourceId = this.$store.state.datum.resource_id
+    const { stsToken, content } = await this.$api.datum.getFile(resourceId, row.id)
+    const region = stsToken.Region?.split('.')[0] || 'oss-cn-zhangjiakou'
+    const client = new OSS({
+      secure: true, // https
+      region,
+      accessKeyId: stsToken.access_key_id,
+      accessKeySecret: stsToken.access_key_secret,
+      stsToken: stsToken.security_token,
+      bucket: stsToken.Bucket || 'sixoclock',
+    })
+    return client.signatureUrl(content.path, {
+      response: {
+        'content-disposition': `attachment; filename=${encodeURIComponent(content.name)}`,
+      },
+    })
+  }
+  async onDownload($event: unknown, row: DatumItemModel): Promise<any> {
     try {
-      const resourceId = this.$store.state.datum.resource_id
-      const { stsToken, content } = await this.$api.datum.getFile(resourceId, row.id)
-      const region = stsToken.region?.split('.')[0] || 'oss-cn-zhangjiakou'
-      const client = new OSS({
-        secure: true, // https
-        region,
-        accessKeyId: stsToken.access_key_id,
-        accessKeySecret: stsToken.access_key_secret,
-        stsToken: stsToken.security_token,
-        bucket: stsToken.bucket || 'sixoclock',
-      })
-      const url = client.signatureUrl(content.path, {
-        response: {
-          'content-disposition': `attachment; filename=${encodeURIComponent(content.name)}`,
-        },
-      })
+      const url = row.saveMode === 'ossObject' ? await this.getUrl(row) : row.path
       window.open(url, '_blank')
     } catch (e) {
       this.$message.error(`下载 ${row.name} 失败`)
     }
+  }
+  async onGetDownloadUrl($event: unknown, row: DatumItemModel) {
+    const url = row.saveMode === 'ossObject' ? await this.getUrl(row) : row.path
+    const h = this.$createElement
+    return this.$msgbox({
+      title: '提示',
+      message: h('div', undefined, [
+        h(
+          'div',
+          {
+            style: {
+              overflow: 'hidden',
+              display: '-webkit-box',
+              'word-break': 'break-all',
+              'text-overflow': 'ellipsis',
+              '-webkit-line-clamp': 4,
+              '-webkit-box-orient': 'vertical',
+            },
+            on: {
+              click: (): void => {
+                copyText(url).then(() => {
+                  this.$message.success('复制成功')
+                })
+              },
+            },
+          },
+          url
+        ),
+        row.saveMode === 'ossObject' ? h('p', undefined, [h('span', { class: 'text-warning' }, '30分钟'), '内有效。']) : '',
+      ]),
+    })
   }
   async onBatchDownload(): Promise<any> {
     await this.$confirm(`即将下载${this.multipleSelection.length}个文件`).then(async () => {
