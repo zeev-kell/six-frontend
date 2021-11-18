@@ -4,12 +4,42 @@ import OSS from 'ali-oss'
 import UFile from '@/pages/_components/FileUploader/components/UFile'
 import { DatumItemModel } from '@/types/model/Datum'
 
+function toUrlParams(obj: any): string {
+  return (
+    '{' +
+    Object.keys(obj)
+      .map((k) => `"${k}":${obj[k]}`)
+      .join(',') +
+    '}'
+  )
+}
+
 @Component
 export default class OssUploadMixin extends Vue {
   protected client: OSS | null = null
   protected token: any = null
   protected initClientPromise: null | Promise<any> = null
   protected refreshSTSTokenPromise: null | Promise<any> = null
+  protected createCallback(customValue: any) {
+    return {
+      url: this.token.callbackUrl,
+      contentType: 'application/json',
+      body: toUrlParams({
+        /* eslint no-template-curly-in-string: [0] */
+        bucket: '${bucket}',
+        object: '${object}',
+        etag: '${etag}',
+        size: '${size}',
+        mimeType: '${mimeType}',
+        user: '${x:user}',
+        resourceid: '${x:resourceid}',
+        name: '${x:name}',
+        md5: '${x:md5}',
+        id: '${x:id}',
+      }),
+      customValue,
+    }
+  }
   protected refreshSTSToken(): Promise<any> {
     if (this.refreshSTSTokenPromise === null) {
       this.refreshSTSTokenPromise = this.$api.datum.getOssToken().then((data) => {
@@ -50,6 +80,28 @@ export default class OssUploadMixin extends Vue {
       })
     }
     return this.initClientPromise
+  }
+  protected async uploadOssFile(uFile: UFile): Promise<void> {
+    // 上传 OSS 文件
+    if (!this.client) {
+      await this.initClient()
+    }
+    uFile.path = this.token.ossPath + uFile.id
+    const { id, name, hash, file, path } = uFile
+    const userId = this.$store.getters['user/username']
+    const objectOption: OSS.PutObjectOptions = {
+      callback: this.createCallback({
+        user: userId,
+        resourceid: uFile.resourceId,
+        name,
+        md5: hash,
+        id,
+      }),
+    }
+    // 关于进度条，只有分片上传才有
+    uFile.progress = 0
+    await this.client!.put(path, file, objectOption)
+    uFile.progress = 1
   }
   protected async addFileToDatum(uFile: UFile) {
     const { id, bytes, name, mediaType, hash, path, description, resourceId, schema } = uFile

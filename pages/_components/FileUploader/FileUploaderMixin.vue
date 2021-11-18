@@ -1,5 +1,5 @@
 ﻿<script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import OSS from 'ali-oss'
 import FileUploaderBtn from '@/pages/_components/FileUploader/components/FileBtn.vue'
 import FileUploaderLink from '@/pages/_components/FileUploader/components/FileLink.vue'
@@ -7,7 +7,6 @@ import FileUploaderDrop from '@/pages/_components/FileUploader/components/FileDr
 import FileUploaderList from '@/pages/_components/FileUploader/components/FileList.vue'
 import UFile from '@/pages/_components/FileUploader/components/UFile'
 import FileUploaderImplement from '@/pages/_components/FileUploader/FileUploaderImplement'
-import { DatumItemModel } from '@/types/model/Datum'
 import OssUploadMixin from '@/pages/application/datum/_components/OssUploadMixin.vue'
 
 const isServer = typeof window === 'undefined'
@@ -17,15 +16,6 @@ const MAX_SIZE = 2 * 1024 * 1024
 function generateUniqueIdentifier(file: any): string {
   const relativePath = file.relativePath || file.webkitRelativePath || file.fileName || file.name
   return file.size + '-' + relativePath.replace(/[^0-9a-zA-Z_-]/gim, '')
-}
-function toUrlParams(obj: any): string {
-  return (
-    '{' +
-    Object.keys(obj)
-      .map((k) => `"${k}":${obj[k]}`)
-      .join(',') +
-    '}'
-  )
 }
 
 @Component({
@@ -115,56 +105,20 @@ export default class FileUploaderMixin extends OssUploadMixin implements FileUpl
       this.files.splice(index, 1)
     }
   }
+  public cleanFile(): void {
+    this.files = []
+  }
   getFromUniqueIdentifier(uniqueIdentifier: string): UFile | undefined {
     return this.files.find((file) => file.uniqueIdentifier === uniqueIdentifier)
   }
 
-  protected createCallback(customValue: any) {
-    return {
-      url: this.token.callbackUrl,
-      contentType: 'application/json',
-      body: toUrlParams({
-        /* eslint no-template-curly-in-string: [0] */
-        bucket: '${bucket}',
-        object: '${object}',
-        etag: '${etag}',
-        size: '${size}',
-        mimeType: '${mimeType}',
-        user: '${x:user}',
-        resourceid: '${x:resourceid}',
-        name: '${x:name}',
-        md5: '${x:md5}',
-        id: '${x:id}',
-      }),
-      customValue,
-    }
-  }
   protected async uploadFile(uFile: UFile): Promise<void> {
     uFile.resourceId = this.$route.params.id
     // 上传 link 文件
     if (!uFile.isOssFile()) {
       return await this.addFileToDatum(uFile)
     }
-    // 上传 OSS 文件
-    if (!this.client) {
-      await this.initClient()
-    }
-    uFile.path = this.token.ossPath + uFile.id
-    const { id, name, hash, file, path } = uFile
-    const userId = this.$store.getters['user/username']
-    const objectOption: OSS.PutObjectOptions = {
-      callback: this.createCallback({
-        user: userId,
-        resourceid: uFile.resourceId,
-        name,
-        md5: hash,
-        id,
-      }),
-    }
-    // 关于进度条，只有分片上传才有
-    uFile.progress = 0
-    await this.client!.put(path, file, objectOption)
-    uFile.progress = 1
+    await this.uploadOssFile(uFile)
     await this.addFileToDatum(uFile)
   }
   // 每次启动一个，需要返回告知启动成功

@@ -135,11 +135,7 @@ export default class DatumFile extends BaseTable {
             },
             style: {
               overflow: 'hidden',
-              display: '-webkit-box',
               'word-break': 'break-all',
-              'text-overflow': 'ellipsis',
-              '-webkit-line-clamp': 4,
-              '-webkit-box-orient': 'vertical',
               'margin-bottom': '10px',
               cursor: 'pointer',
             },

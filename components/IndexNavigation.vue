@@ -1,5 +1,5 @@
 <template>
-  <el-header id="header" class="nav-fixed">
+  <el-header id="header" class="nav-fixed" :class="headerClass">
     <div class="navbar-header el-row--flex pr-20">
       <div class="navbar el-col-auto">
         <div class="navbar-logo">
@@ -136,15 +136,49 @@ import DocsLink from '@/components/common/DocsLink.vue'
 })
 export default class IndexNavigation extends Vue {
   showMobileMenu = false
-  RESOURCES_URL = process.env.RESOURCES_URL
   SCROLL_TRANSPORT = 100
+  headerClass = ['nav-white']
   get username() {
     return this.$store.getters['user/username']
   }
+
   @Watch('$route.name')
   onWatchRouteName() {
     this.$nextTick(this.onWindowScroll)
     this.showMobileMenu = false
+  }
+  onWindowScroll() {
+    const header = document.querySelector('#header') as HTMLElement
+    if (!header) {
+      return
+    }
+    if (this.getRouteBaseName() === 'index') {
+      header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)'
+      this.headerClass = ['nav-white']
+    } else {
+      const scrollTop = document.documentElement.scrollTop
+      const scrollPercent = scrollTop <= this.SCROLL_TRANSPORT ? scrollTop / 140 : 0.96
+      header.style.backgroundColor = 'rgba(255, 255, 255,' + scrollPercent + ')'
+      scrollTop >= this.SCROLL_TRANSPORT ? (this.headerClass = ['nav-white']) : (this.headerClass = [])
+    }
+  }
+  goAnchor(selector: string) {
+    // 最好加个定时器给页面缓冲时间
+    setTimeout(() => {
+      // 获取锚点元素
+      const anchor = document.querySelector(selector)
+      anchor?.scrollIntoView()
+    }, 300)
+  }
+  beforeMount(): void {
+    const header = document.querySelector('#header') as HTMLElement
+    if (!header) {
+      return
+    }
+    if (this.getRouteBaseName() !== 'index') {
+      header.style.backgroundColor = 'rgba(255, 255, 255, 0)'
+      this.headerClass = []
+    }
   }
   mounted() {
     this.onWindowScroll()
@@ -155,29 +189,6 @@ export default class IndexNavigation extends Vue {
   }
   beforeDestroy() {
     window.removeEventListener('scroll', this.onWindowScroll, true)
-  }
-  onWindowScroll() {
-    const header = document.querySelector('#header') as HTMLElement
-    if (!header) {
-      return
-    }
-    if (this.getRouteBaseName() === 'index') {
-      header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)'
-      header.classList.add('nav-white')
-    } else {
-      const scrollTop = document.documentElement.scrollTop
-      const scrollPercent = scrollTop <= this.SCROLL_TRANSPORT ? scrollTop / 140 : 0.96
-      header.style.backgroundColor = 'rgba(255, 255, 255,' + scrollPercent + ')'
-      scrollTop >= this.SCROLL_TRANSPORT ? header.classList.add('nav-white') : header.classList.remove('nav-white')
-    }
-  }
-  goAnchor(selector: string) {
-    // 最好加个定时器给页面缓冲时间
-    setTimeout(() => {
-      // 获取锚点元素
-      const anchor = document.querySelector(selector)
-      anchor?.scrollIntoView()
-    }, 300)
   }
 }
 </script>

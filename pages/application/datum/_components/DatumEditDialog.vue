@@ -1,6 +1,5 @@
 <template>
   <el-dialog title="修改文件" :visible.sync="dialogVisible" width="50%">
-    {{ uFile }}
     <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" class="demo-ruleForm">
       <el-form-item label="名称" prop="name">
         <el-input v-model="ruleForm.name"></el-input>
@@ -9,7 +8,7 @@
         <el-input v-model="ruleForm.mediatype"></el-input>
       </el-form-item>
       <el-form-item label="大小" prop="bytes">
-        <el-input v-model="ruleForm.bytes"></el-input>
+        <el-input v-model="ruleForm.bytes" type="number"></el-input>
       </el-form-item>
       <el-form-item v-if="isOss" label="MD5校验码" prop="hash">
         <div class="el-row el-row--flex">
@@ -55,6 +54,7 @@ import { DatumItemModel, DatumModel } from '@/types/model/Datum'
 import FileBtn from '@/pages/_components/FileUploader/components/FileBtn.vue'
 import FileUploaderMixin from '@/pages/_components/FileUploader/FileUploaderMixin.vue'
 import UFile from '@/pages/_components/FileUploader/components/UFile'
+import { ElForm } from 'element-ui/types/form'
 @Component({
   components: { FileBtn, LoadingButton },
   directives: {
@@ -63,7 +63,11 @@ import UFile from '@/pages/_components/FileUploader/components/UFile'
 })
 export default class DatumEditDialog extends FileUploaderMixin {
   $refs!: {
-    ruleForm: HTMLFormElement
+    ruleForm: ElForm
+  }
+  opts = {
+    simultaneousUploads: 1,
+    singleFile: true,
   }
   dialogVisible = false
   item: any = {}
@@ -82,17 +86,27 @@ export default class DatumEditDialog extends FileUploaderMixin {
       { min: 3, max: 25, message: '长度在 3 到 25 个字符', trigger: 'change' },
       { validator: this.validator, trigger: 'change' },
     ],
+    hash: [{ validator: this.validatorHash, trigger: 'change' }],
   }
   options: any[] = []
+
   get uFile(): UFile {
     return this.files[0] || {}
   }
-
   get items(): any[] {
     return this.$store.getters['datum/items']
   }
   get isOss(): boolean {
     return this.item.saveMode === 'ossObject'
+  }
+
+  @Watch('uFile.hash')
+  onWatchUFileHash(): void {
+    if (this.uFile.hash) {
+      this.ruleForm.hash = this.uFile.hash
+      this.ruleForm.bytes = this.uFile.bytes
+    }
+    this.$refs.ruleForm.validateField('hash')
   }
 
   async onShowDialog(item: any): Promise<void> {
@@ -119,13 +133,31 @@ export default class DatumEditDialog extends FileUploaderMixin {
     }
     callback()
   }
+  validatorHash(rule: any, value: string, callback: any): any {
+    if (value === '' || (this.uFile && this.uFile.file && this.uFile.hash === '')) {
+      callback(new Error('需要等待计算完毕'))
+      return
+    }
+    if (this.uFile.errorMsg) {
+      callback(new Error(this.uFile.errorMsg))
+      return
+    }
+    callback()
+  }
   resetForm() {
+    this.cleanFile()
     Object.keys(this.ruleForm).forEach((k) => {
       this.ruleForm[k] = this.item[k] || ''
     })
+    // this.$refs.ruleForm.resetFields()
   }
   async onSubmit(): Promise<void> {
     await this.$refs.ruleForm.validate()
+    // 判断是否有新的文件上传
+    if (this.uFile && this.uFile.file) {
+      await this.uploadOssFile(this.uFile)
+      this.ruleForm.path = this.uFile.path
+    }
     const data = {
       id: this.item.id,
       oss_tag: this.isOss ? 1 : 0,
