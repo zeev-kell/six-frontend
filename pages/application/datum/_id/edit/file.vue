@@ -51,13 +51,14 @@
           <template slot-scope="{ row }">{{ row.description | intercept }}</template>
         </el-table-column>
         <el-table-column label="操作">
-          <template>
-            <el-button type="icon" size="mini" icon="el-icon-edit" title="编辑"></el-button>
+          <template slot-scope="{ row }">
+            <el-button type="icon" size="mini" icon="el-icon-edit" title="编辑" @click="showDatumEditDialog(row)" />
           </template>
         </el-table-column>
       </el-table>
     </div>
     <file-upload-dialog ref="FileUploadDialog" :is-multiple="isMultiple" @change="refresh"></file-upload-dialog>
+    <datum-edit-dialog ref="DatumEditDialog"></datum-edit-dialog>
   </div>
 </template>
 
@@ -70,6 +71,8 @@ import FileUploadDialog from '@/pages/application/datum/_components/FileUploadDi
 import formatbytes from '@/filters/formatbytes'
 import SchemaName from '@/pages/application/datum/_components/SchemaName.vue'
 import { ElTable } from 'element-ui/types/table'
+import LoadingButton from '@/components/LoadingButton.vue'
+import DatumEditDialog from '@/pages/application/datum/_components/DatumEditDialog.vue'
 
 @Component({
   directives: {
@@ -84,6 +87,8 @@ import { ElTable } from 'element-ui/types/table'
     ...formatbytes,
   },
   components: {
+    DatumEditDialog,
+    LoadingButton,
     SchemaName,
     FileUploadDialog,
   },
@@ -91,6 +96,7 @@ import { ElTable } from 'element-ui/types/table'
 export default class DatumEditFile extends BaseTable {
   $refs!: {
     FileUploadDialog: FileUploadDialog
+    DatumEditDialog: DatumEditDialog
     multipleTable: ElTable
   }
   get isMultiple(): boolean {
@@ -100,9 +106,13 @@ export default class DatumEditFile extends BaseTable {
     // 数据包 或者 没有文件
     return this.isMultiple || this.items.length === 0
   }
+
   async refresh() {
     await this.$store.dispatch('datum/refresh', this.$route.params.id)
     this.items = this.$store.getters['datum/items']
+  }
+  showDatumEditDialog(row: any): void {
+    this.$refs.DatumEditDialog.onShowDialog(row)
   }
   showFileUploadDialog(): void {
     this.$refs.FileUploadDialog.onShowDialog()

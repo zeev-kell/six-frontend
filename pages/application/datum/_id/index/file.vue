@@ -107,7 +107,7 @@ export default class DatumFile extends BaseTable {
       },
     })
   }
-  async onDownload($event: unknown, row: DatumItemModel): Promise<any> {
+  async onDownload(row: DatumItemModel): Promise<any> {
     try {
       const url = row.saveMode === 'ossObject' ? await this.getUrl(row) : row.path
       window.open(url, '_blank')
@@ -115,15 +115,18 @@ export default class DatumFile extends BaseTable {
       this.$message.error(`下载 ${row.name} 失败`)
     }
   }
-  async onGetDownloadUrl($event: unknown, row: DatumItemModel) {
+  async onGetDownloadUrl(row: DatumItemModel) {
     const url = row.saveMode === 'ossObject' ? await this.getUrl(row) : row.path
     const h = this.$createElement
     return this.$msgbox({
-      title: '提示',
+      title: '获取下载链接',
       message: h('div', undefined, [
         h(
           'div',
           {
+            attrs: {
+              title: url,
+            },
             style: {
               overflow: 'hidden',
               display: '-webkit-box',
@@ -131,14 +134,17 @@ export default class DatumFile extends BaseTable {
               'text-overflow': 'ellipsis',
               '-webkit-line-clamp': 4,
               '-webkit-box-orient': 'vertical',
+              'margin-bottom': '10px',
+              cursor: 'pointer',
             },
             on: {
               click: (): void => {
-                copyText(url).then(() => {
+                copyText(url, (this.$refs as any).msgBox).then(() => {
                   this.$message.success('复制成功')
                 })
               },
             },
+            ref: 'msgBox',
           },
           url
         ),
@@ -149,7 +155,7 @@ export default class DatumFile extends BaseTable {
   async onBatchDownload(): Promise<any> {
     await this.$confirm(`即将下载${this.multipleSelection.length}个文件`).then(async () => {
       for (const row of this.multipleSelection) {
-        await this.onDownload(null, row)
+        await this.onDownload(row)
       }
       this.$refs.multipleTable.clearSelection()
     })

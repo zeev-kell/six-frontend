@@ -62,7 +62,7 @@ export default class AuthorizePage extends Vue {
     description: '',
   }
 
-  onDelete($event: never, id: string): Promise<any> {
+  onDelete(id: string): Promise<any> {
     return this.$confirm('此操作将删除该Token, 是否继续?', '提示', {
       type: 'warning',
     }).then(() => {
