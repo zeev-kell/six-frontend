@@ -230,7 +230,7 @@ export default class WorkflowIoInspector extends Vue {
     }
   }
   @Watch('graph', { immediate: true })
-  onWatchGraph() {
+  onWatchGraph(): void {
     // If there was a custom value in batchByList and model is changed (Undo/Redo...) we have to remove that
     // custom value from batchByList
     if (this.batchByListInitialLength > this.batchByList.length) {

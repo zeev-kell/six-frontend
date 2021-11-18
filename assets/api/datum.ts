@@ -21,7 +21,7 @@ export class Module {
       .catch(MESSAGE_ERROR)
   }
 
-  getOssToken() {
+  getOssToken(): Promise<any> {
     return this.$axios.$get('/v1/osstoken').then((response) => {
       const token = response.data
       token.region = token.Region?.split('.')[0] || 'oss-cn-zhangjiakou'
@@ -33,33 +33,34 @@ export class Module {
   }
 
   // eslint-disable-next-line camelcase
-  addFile(resourceId: string, data: { id: string; oss_tag: 0 | 1; content: any }) {
+  addFile(resourceId: string, data: { id: string; oss_tag: number; content: any }): Promise<any> {
     return this.$axios.$post(`/v2/data/${resourceId}/file`, data)
   }
-  deleteFile(resourceId: string, data: any[]) {
+  deleteFile(resourceId: string, data: any[]): Promise<any> {
     return this.$axios.$delete(`/v2/data/${resourceId}/file`, { data }).then(MESSAGE_SUCCESS).catch(MESSAGE_ERROR)
   }
-  updateFile(resourceId: string, data: any): Promise<any> {
+  // eslint-disable-next-line camelcase
+  updateFile(resourceId: string, data: { id: string; oss_tag: number; content: any }): Promise<any> {
     return this.$axios.$put(`/v2/data/${resourceId}/file`, data)
   }
   getFile(resourceId: string, fileId: string): Promise<any> {
     return this.$axios.$get(`/v2/data/${resourceId}/file/${fileId}`)
   }
 
-  update(dataId: string, data: any) {
+  update(dataId: string, data: any): Promise<any> {
     return this.$axios
       .$put('/v2/data/repository/' + dataId, data)
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }
-  updateVersion(resourceId: string, data: any) {
+  updateVersion(resourceId: string, data: any): Promise<any> {
     return this.$axios
       .$put('/v2/data/' + resourceId, data)
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }
 
-  get(resourceId: string) {
+  get(resourceId: string): Promise<any> {
     // return this.$axios.$get('/v2/data/' + 'b2effdab-173f-40ac-8a0f-e70374217fa5')
     return this.$axios.$get('/v2/data/' + resourceId)
   }

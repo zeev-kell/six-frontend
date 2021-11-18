@@ -12,7 +12,7 @@ const STATUS = {
   RETRY: 'retry',
   REFUSE: 'refuse',
 }
-const getFileNameByUrl = function (url: string) {
+const getFileNameByUrl = function (url: string): string {
   if (!url) {
     return ''
   }

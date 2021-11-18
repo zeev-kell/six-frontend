@@ -8,6 +8,7 @@ import FileUploaderList from '@/pages/_components/FileUploader/components/FileLi
 import UFile from '@/pages/_components/FileUploader/components/UFile'
 import FileUploaderImplement from '@/pages/_components/FileUploader/FileUploaderImplement'
 import { DatumItemModel } from '@/types/model/Datum'
+import OssUploadMixin from '@/pages/application/datum/_components/OssUploadMixin.vue'
 
 const isServer = typeof window === 'undefined'
 const ie10plus = isServer ? false : window.navigator.msPointerEnabled
@@ -35,9 +36,7 @@ function toUrlParams(obj: any): string {
     }
   },
 })
-export default class FileUploaderMixin extends Vue implements FileUploaderImplement {
-  private client: OSS | null = null
-  private token: any = null
+export default class FileUploaderMixin extends OssUploadMixin implements FileUploaderImplement {
   error = false
   opts = {
     simultaneousUploads: 3,
@@ -47,8 +46,6 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
   errorFiles: UFile[] = []
   fields: any[] = []
   options: any[] = []
-  private initClientPromise: null | Promise<any> = null
-  private refreshSTSTokenPromise: null | Promise<any> = null
   get hasFile(): boolean {
     return this.files.length > 0
   }
@@ -122,47 +119,6 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
     return this.files.find((file) => file.uniqueIdentifier === uniqueIdentifier)
   }
 
-  protected refreshSTSToken(): Promise<any> {
-    if (this.refreshSTSTokenPromise === null) {
-      this.refreshSTSTokenPromise = this.$api.datum.getOssToken().then((data) => {
-        this.refreshSTSTokenPromise = null
-        return data
-      })
-    }
-    return this.refreshSTSTokenPromise
-  }
-  protected initClient(): Promise<void> {
-    if (this.initClientPromise === null) {
-      this.initClientPromise = this.refreshSTSToken().then((token: any) => {
-        this.token = token
-        this.client = new OSS({
-          // yourRegion填写Bucket所在地域。以华东1（杭州）为例，Region填写为oss-cn-hangzhou。
-          region: this.token.region,
-          // 填写Bucket名称。
-          bucket: this.token.bucket,
-          // 从STS服务获取的临时访问密钥（AccessKey ID和AccessKey Secret）。
-          accessKeyId: token.access_key_id,
-          accessKeySecret: token.access_key_secret,
-          // 从STS服务获取的安全令牌（SecurityToken）。
-          stsToken: token.security_token,
-          refreshSTSToken: async () => {
-            // 向您搭建的STS服务获取临时访问凭证。
-            const token = await this.refreshSTSToken()
-            this.token = token
-            return {
-              accessKeyId: token.access_key_id,
-              accessKeySecret: token.access_key_secret,
-              stsToken: token.security_token,
-            }
-          },
-          // 刷新临时访问凭证的时间间隔，单位为毫秒。
-          refreshSTSTokenInterval: 300000,
-        })
-        this.initClientPromise = null
-      })
-    }
-    return this.initClientPromise
-  }
   protected createCallback(customValue: any) {
     return {
       url: this.token.callbackUrl,
@@ -210,22 +166,6 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
     await this.client!.put(path, file, objectOption)
     uFile.progress = 1
     await this.addFileToDatum(uFile)
-  }
-  protected async addFileToDatum(uFile: UFile) {
-    const { id, bytes, name, mediaType, hash, path, description, resourceId, schema } = uFile
-    await this.$api.datum.addFile(resourceId, {
-      id,
-      oss_tag: uFile.file ? 1 : 0,
-      content: {
-        name,
-        path,
-        hash,
-        bytes,
-        schema,
-        mediatype: mediaType,
-        description,
-      } as DatumItemModel,
-    })
   }
   // 每次启动一个，需要返回告知启动成功
   protected uploadNextFile(): boolean {
@@ -307,6 +247,11 @@ export default class FileUploaderMixin extends Vue implements FileUploaderImplem
         uFile.status = 'pending'
       }
     })
+  }
+  beforeDestroy(): void {
+    this.$off('upload.file.addField')
+    this.$off('upload.file.removeField')
+    this.$off('upload.file.initHash')
   }
 }
 </script>

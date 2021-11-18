@@ -5,7 +5,7 @@ import { Component, Vue, Watch } from 'nuxt-property-decorator'
 export default class ElTabRouter extends Vue {
   activeTab = this.getRouteBaseName()
   @Watch('$route.params')
-  onWatchParams() {
+  onWatchParams(): void {
     this.$nextTick(() => {
       // 强制使当前 tab 切换到当前路由
       // 会触发 onBeforeLeave onAbort

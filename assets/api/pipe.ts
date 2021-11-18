@@ -18,27 +18,27 @@ export class Module {
     return this.$axios.$post('/v2/pipe', data)
   }
 
-  removeVersion(resourceId: string) {
+  removeVersion(resourceId: string): Promise<any> {
     return this.$axios
       .$delete('/v2/pipe/' + resourceId)
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }
 
-  update(pipeId: string, data: any) {
+  update(pipeId: string, data: any): Promise<any> {
     return this.$axios
       .$put('/v2/pipe/repository/' + pipeId, data)
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }
-  updateVersion(resourceId: string, data: any) {
+  updateVersion(resourceId: string, data: any): Promise<any> {
     return this.$axios
       .$put('/v2/pipe/' + resourceId, data)
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }
 
-  get(pipeId: string) {
+  get(pipeId: string): Promise<any> {
     return this.$axios.$get('/v2/pipe/repository/' + pipeId)
   }
   getList(params?: any): Promise<PipeModel[]> {

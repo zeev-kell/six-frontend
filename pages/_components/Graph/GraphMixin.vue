@@ -290,6 +290,7 @@ export default class GraphMixin extends GraphEdit {
   beforeDestroy(): void {
     // 销毁流程图
     this.graph?.destroy()
+    this.$off(GraphEvent.PayloadUpdateJob)
   }
 }
 </script>

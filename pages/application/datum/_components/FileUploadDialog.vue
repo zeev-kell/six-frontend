@@ -70,11 +70,14 @@ export default class FileUploadDialog extends FileUploaderMixin {
       }))
     }
   }
-  created() {
+  created(): void {
     this.opts.singleFile = !this.isMultiple
     this.$on('upload.file.success', () => {
       this.hadChanged = true
     })
+  }
+  beforeDestroy(): void {
+    this.$off('upload.file.success')
   }
 }
 </script>

@@ -88,6 +88,7 @@ export default class BaseTable extends Vue {
   $refs!: {
     multipleTable: ElTable
   }
+  watchRefresh = true
   items: any[] = []
   multipleSelection: any[] = []
   query = {
@@ -144,17 +145,22 @@ export default class BaseTable extends Vue {
       return name.value.toLowerCase().includes(str.toLowerCase())
     }
   }
-  queryName(str: string, cb: any) {
+  queryName(str: string, cb: any): void {
     const nameList = this.nameList
     const results = str ? nameList.filter(this.createFilter(str)) : nameList
     cb(results)
   }
-  showVisualModal(id: string) {
+  showVisualModal(id: string): void {
     // window.open(`/graph-info/${id}`, '_blank', 'toolbar=0,location=0,menubar=0')
     window.open(`/graph-info/${id}`, '_blank')
   }
   handleSelectionChange(selection: []): void {
     this.multipleSelection = selection
+  }
+  mounted(): void {
+    if (this.watchRefresh) {
+      this.$watch('$store.state.system.tableTime', this.refresh)
+    }
   }
 }
 </script>

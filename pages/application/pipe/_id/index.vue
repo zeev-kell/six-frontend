@@ -92,7 +92,7 @@ import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vu
   components: { ToggleEditInfo, CanExamine, CanCreate },
 })
 export default class PipeIdIndex extends mixins<PipeItemMixin>(PipeMixin) {
-  handleDownload(format = 'yaml') {
+  handleDownload(format = 'yaml'): void {
     const asYaml = format === 'yaml'
     const data = stringifyObject(getObject(this.item.content), asYaml)
     const name = this.item.name + `.${asYaml ? 'cwl' : format}`

@@ -74,7 +74,7 @@ export default class DocsPage extends BaseTable {
   items = []
   typeList = []
 
-  get categoryList() {
+  get categoryList(): any[] {
     return this.items.reduce((list: any, item: any) => {
       if (!list.includes(item.category)) {
         list.push(item.category)
@@ -82,7 +82,7 @@ export default class DocsPage extends BaseTable {
       return list
     }, [])
   }
-  get nameList() {
+  get nameList(): any[] {
     return this.items.reduce((list: any, item: any) => {
       if (!list.includes(item.name)) {
         list.push({ value: item.name })

@@ -31,4 +31,5 @@ export interface DatumItemModel {
   description: string
   encoding: string
   saveMode: string
+  [index: string]: any
 }
