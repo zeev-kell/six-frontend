@@ -33,17 +33,17 @@ export class Module {
   }
 
   // eslint-disable-next-line camelcase
-  addFile(resourceId: string, data: { id: string; oss_tag: number; content: any }): Promise<any> {
+  addFile(resourceId: string, data: any): any {
     return this.$axios.$post(`/v2/data/${resourceId}/file`, data)
   }
-  deleteFile(resourceId: string, data: any[]): Promise<any> {
+  deleteFile(resourceId: string, data: any[]): any {
     return this.$axios.$delete(`/v2/data/${resourceId}/file`, { data }).then(MESSAGE_SUCCESS).catch(MESSAGE_ERROR)
   }
   // eslint-disable-next-line camelcase
-  updateFile(resourceId: string, data: { id: string; oss_tag: number; content: any }): Promise<any> {
+  updateFile(resourceId: string, data: any): any {
     return this.$axios.$put(`/v2/data/${resourceId}/file`, data)
   }
-  getFile(resourceId: string, fileId: string): Promise<any> {
+  getFile(resourceId: string, fileId: string): any {
     return this.$axios.$get(`/v2/data/${resourceId}/file/${fileId}`)
   }
 

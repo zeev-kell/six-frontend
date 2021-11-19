@@ -64,6 +64,8 @@ export default class FileUploaderMixin extends OssUploadMixin implements FileUpl
   public addFiles(files: FileList | string) {
     if (typeof files === 'string') {
       const file = new UFile(files, this)
+      // TODO 修改文件实例化
+      file.resourceId = this.$route.params.id
       if (this.opts.singleFile) {
         this.files = [file]
       } else {
@@ -93,6 +95,7 @@ export default class FileUploaderMixin extends OssUploadMixin implements FileUpl
       if (this.opts.singleFile && this.files.length > 0) {
         this.removeFile(this.files[0])
       }
+      // TODO 修改文件实例化
       file.resourceId = this.$route.params.id
       this.files.push(file)
     }
