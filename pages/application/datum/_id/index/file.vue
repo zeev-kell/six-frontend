@@ -22,7 +22,9 @@
       <el-table ref="multipleTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="40"> </el-table-column>
         <el-table-column label="文件名称" prop="name" sortable width="250">
-          <template slot-scope="{ row }"> <span :class="['mr-2 ', isOss(row) ? 'el-icon-document' : 'el-icon-link']"></span>{{ row.name }} </template>
+          <template slot-scope="{ row }">
+            <span :class="['mr-2 ', isOssObject(row) ? 'el-icon-document' : 'el-icon-link']"></span>{{ row.name }}
+          </template>
         </el-table-column>
         <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>
         <el-table-column label="大小" prop="bytes" sortable width="80">
@@ -92,7 +94,7 @@ export default class DatumFile extends BaseTable {
     return []
   }
 
-  isOss(row: any): boolean {
+  isOssObject(row: any): boolean {
     return row.saveMode === 'ossObject'
   }
   async getUrl(row: DatumItemModel) {
@@ -115,14 +117,14 @@ export default class DatumFile extends BaseTable {
   }
   async onDownload(row: DatumItemModel): Promise<any> {
     try {
-      const url = this.isOss(row) ? await this.getUrl(row) : row.path
+      const url = this.isOssObject(row) ? await this.getUrl(row) : row.path
       window.open(url, '_blank')
     } catch (e) {
       this.$message.error(`下载 ${row.name} 失败`)
     }
   }
   async onGetDownloadUrl(row: DatumItemModel) {
-    const url = this.isOss(row) ? await this.getUrl(row) : row.path
+    const url = this.isOssObject(row) ? await this.getUrl(row) : row.path
     const h = this.$createElement
     return this.$msgbox({
       title: '获取下载链接',
@@ -150,7 +152,7 @@ export default class DatumFile extends BaseTable {
           },
           url
         ),
-        this.isOss(row) ? h('p', undefined, [h('span', { class: 'text-warning' }, '30分钟'), '内有效。']) : '',
+        this.isOssObject(row) ? h('p', undefined, [h('span', { class: 'text-warning' }, '30分钟'), '内有效。']) : '',
       ]),
     })
   }

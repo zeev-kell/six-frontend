@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Watch } from 'nuxt-property-decorator'
 import { Prop } from 'vue-property-decorator'
 
 @Component
@@ -19,12 +19,13 @@ export default class SchemaName extends Vue {
   schema!: string
   loading = false
   schemaName = ''
-  async mounted(): Promise<void> {
-    if (!this.schema) {
+  @Watch('schema', { immediate: true })
+  async onWatchSchema(value: string): Promise<void> {
+    if (!value) {
       return
     }
     this.loading = true
-    const item = await this.$api.datum.get(this.schema).finally(() => (this.loading = false))
+    const item = await this.$api.datum.get(value).finally(() => (this.loading = false))
     this.schemaName = item.name
   }
 }

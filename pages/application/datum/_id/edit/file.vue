@@ -31,7 +31,9 @@
       <el-table ref="multipleTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="40"> </el-table-column>
         <el-table-column label="文件名称" prop="name" sortable width="250">
-          <template slot-scope="{ row }"> <span :class="['mr-2 ', isOss(row) ? 'el-icon-document' : 'el-icon-link']"></span>{{ row.name }} </template>
+          <template slot-scope="{ row }">
+            <span :class="['mr-2 ', isOssObject(row) ? 'el-icon-document' : 'el-icon-link']"></span>{{ row.name }}
+          </template>
         </el-table-column>
         <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>
         <el-table-column label="大小" prop="bytes" sortable width="80">
@@ -109,7 +111,7 @@ export default class DatumEditFile extends BaseTable {
     return this.isMultiple || this.items.length === 0
   }
 
-  isOss(row: any): boolean {
+  isOssObject(row: any): boolean {
     return row.saveMode === 'ossObject'
   }
   showDatumEditDialog(row: any): void {

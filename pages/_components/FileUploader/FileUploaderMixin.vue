@@ -93,6 +93,7 @@ export default class FileUploaderMixin extends OssUploadMixin implements FileUpl
       if (this.opts.singleFile && this.files.length > 0) {
         this.removeFile(this.files[0])
       }
+      file.resourceId = this.$route.params.id
       this.files.push(file)
     }
     if (ignoreNum) {
@@ -113,7 +114,6 @@ export default class FileUploaderMixin extends OssUploadMixin implements FileUpl
   }
 
   protected async uploadFile(uFile: UFile): Promise<void> {
-    uFile.resourceId = this.$route.params.id
     // 上传 link 文件
     if (!uFile.isOssFile()) {
       return await this.addFileToDatum(uFile)
