@@ -109,11 +109,12 @@ export default class DatumFile extends BaseTable {
       stsToken: stsToken.security_token,
       bucket: stsToken.Bucket || 'sixoclock',
     })
-    return client.signatureUrl(content.path, {
+    const url = client.signatureUrl(content.path.replace(/^six:\/\//, ''), {
       response: {
         'content-disposition': `attachment; filename=${encodeURIComponent(content.name)}`,
       },
     })
+    return url.replace(/^https:\/\/.*?\//, 'https://bucket.sixoclock.net/')
   }
   async onDownload(row: DatumItemModel): Promise<any> {
     try {
