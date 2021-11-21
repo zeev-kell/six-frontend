@@ -81,7 +81,6 @@ export default class RegisterPage extends Vue {
     code: '',
     checked: false,
   }
-
   rules = {
     username: [
       { required: true, message: '账号不能为空', trigger: 'blur' },
@@ -132,7 +131,6 @@ export default class RegisterPage extends Vue {
       },
     ],
   }
-
   showUAVisible = false
   userAgreement = null
   isDisabledCode = false
