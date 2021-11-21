@@ -68,8 +68,8 @@ import OssUploadMixin from '@/pages/application/datum/_components/OssUploadMixin
 import { uploadChunkOption } from '@/types/ElUpload'
 import UFile from '@/pages/_components/FileUploader/components/UFile'
 
-const cubic = (value) => Math.pow(value, 3)
-const easeInOutCubic = (value) => (value < 0.5 ? cubic(value * 2) / 2 : 1 - cubic((1 - value) * 2) / 2)
+const cubic = (value: number) => Math.pow(value, 3)
+const easeInOutCubic = (value: number) => (value < 0.5 ? cubic(value * 2) / 2 : 1 - cubic((1 - value) * 2) / 2)
 
 @Component({
   components: {
@@ -106,7 +106,7 @@ export default class DocNewPage extends OssUploadMixin {
   fullScreen = false
   loading = false
   isSetting = false
-  el = null
+  el!: HTMLElement
   publicSettingHead = 700
 
   async onSubmit() {
@@ -161,7 +161,7 @@ export default class DocNewPage extends OssUploadMixin {
   onWindowScroll(): void {
     this.isSetting = this.el.scrollTop + this.publicSettingHead > this.el.scrollHeight
   }
-  scrollTo(negative) {
+  scrollTo(negative: number) {
     const el = this.el
     const scrollHeight = el.scrollHeight
     const start = el.scrollTop
@@ -182,7 +182,7 @@ export default class DocNewPage extends OssUploadMixin {
   }
 
   mounted(): void {
-    this.el = document.querySelector('.el-main')
+    this.el = document.querySelector('.el-main') as HTMLElement
     this.el.addEventListener('scroll', this.onWindowScroll)
   }
   beforeDestroy(): void {
