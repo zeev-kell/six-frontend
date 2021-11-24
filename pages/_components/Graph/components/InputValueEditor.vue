@@ -149,7 +149,7 @@ import NativeFileBrowserFormField from '@/pages/_components/Graph/components/Nat
 import { FormArray, FormControl, FormGroup } from '@/components/FormControl.js'
 
 @Component({
-  components: { InputValueEditorModal, NativeFileBrowserFormField },
+  components: { InputValueEditorModal, NativeFileBrowserFormField, InputValueEditor: () => import('./InputValueEditor.vue') },
 })
 export default class InputValueEditor extends Vue {
   $refs!: {
