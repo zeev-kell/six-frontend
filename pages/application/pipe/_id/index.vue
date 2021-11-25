@@ -63,9 +63,9 @@
             <el-button type="primary" icon="el-icon-edit" @click="navigate" @keypress.enter="navigate"> 编辑 </el-button>
           </nuxt-link>
         </can-create>
-        <can-examine>
-          <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe"> 删除 </el-button>
-        </can-examine>
+        <can-create v-if="item.provider === username">
+          <el-button type="danger" icon="el-icon-delete" class="mx-0" @click="handleDeletePipe"> 删除 </el-button>
+        </can-create>
       </div>
     </div>
     <el-tabs v-model="activeTab" class="pipe-el-tabs" :before-leave="onBeforeLeave">
