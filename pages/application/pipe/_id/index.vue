@@ -64,7 +64,7 @@
           </nuxt-link>
         </can-create>
         <can-create v-if="item.provider === username">
-          <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe"> 删除 </el-button>
+          <el-button type="danger" icon="el-icon-delete" class="mx-0" @click="handleDeletePipe"> 删除 </el-button>
         </can-create>
       </div>
     </div>
