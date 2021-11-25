@@ -3,7 +3,7 @@
     <el-aside width="240px">
       <div class="card mb-10">
         <div class="card-body el-row--flex el-row">
-          <div class="el-col-equal el-row--flex el-column--flex is-justify-center f-b p-l-1">
+          <div class="el-col-equal el-row--flex is-column is-justify-center f-b p-l-1">
             <label>{{ username }}</label>
             <label class="text-truncate">{{ email }}</label>
           </div>

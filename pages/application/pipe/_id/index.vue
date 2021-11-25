@@ -60,7 +60,7 @@
           <toggle-edit-info type="primary" icon="el-icon-edit"> 编辑 </toggle-edit-info>
         </can-create>
         <can-create v-if="item.provider === username">
-          <el-button type="danger" icon="el-icon-delete" @click="handleDeletePipe"> 删除 </el-button>
+          <el-button type="danger" icon="el-icon-delete" class="mx-0" @click="handleDeletePipe"> 删除 </el-button>
         </can-create>
       </div>
     </div>
