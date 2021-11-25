@@ -49,13 +49,14 @@
         <!--Files and array of Files-->
         <template v-else-if="isInputType('File')">
           <div class="el-row" style="width: 100%">
-            <native-file-browser-form-field :form-control="control.get('path')" @onUpdate="onChildUpdate($event, control.get('path'))" />
+            <native-file-browser-form-field :form-control="control.get('path')" @onUpdate="onUpdate($event, control.get('path'))" />
             <el-button v-if="control.get('path').enabled" size="mini" type="text" @click="promptFileMetadata()">
               <div v-if="metadataKeysCount > 0 || secondaryFilesCount > 0">
                 {{ secondaryFilesCount }} secondary {{ secondaryFilesCount === 1 ? 'file' : 'files' }}, {{ metadataKeysCount }} metadata
               </div>
               <span v-else>{{ $t('graph.add_files_and_metadata') }}</span>
             </el-button>
+            <input-value-editor-modal ref="fileMetadata" />
           </div>
         </template>
 
@@ -92,7 +93,7 @@
 
       <!--Arrays-->
       <template v-else-if="isInputType('array')">
-        <div v-for="(ctrl, idx) of control.controls" :key="idx" class="array-row">
+        <div v-for="(ctrl, idx) of control.controls" :key="idx" class="el-row el-row--flex is-column">
           <!--Delete button if array of maps-->
           <div v-if="inputArrayItemsType === 'map'" class="pb-1">
             <span class="text-muted"> [{{ idx }}] </span>
@@ -101,7 +102,7 @@
             </el-tooltip>
           </div>
 
-          <div class="array-entry">
+          <div class="el-row el-row--flex">
             <input-value-editor
               ref="arrayItem"
               :input-type="inputArrayItemsType"
@@ -109,12 +110,13 @@
               :input-record-fields="inputRecordFields"
               :readonly="readonly"
               :form-control="ctrl"
-              @onChildUpdate="onChildUpdate"
+              class="el-col-full"
+              @on-child-update="onChildUpdate($event, ctrl)"
             />
 
             <!--Delete button if not array of maps-->
             <el-tooltip v-if="inputArrayItemsType !== 'map' && !readonly" content="Delete">
-              <i class="el-icon-delete-solid clickable remove-icon pull-right" @click="deleteFromArray(idx)" />
+              <i class="el-icon-delete-solid clickable remove-icon" @click="deleteFromArray(idx)" />
             </el-tooltip>
           </div>
         </div>
@@ -128,9 +130,9 @@
 
           <!--Add array item button in case that element is File or Directory-->
           <div v-else>
-            <button v-if="!readonly" type="button" class="btn pl-0 btn-link" @click="addArrayFileOrDirectory()">
-              <i class="el-icon-plus" /> New {{ inputArrayItemsType }}
-            </button>
+            <el-button v-if="!readonly" type="text" size="mini" icon="el-icon-plus" @click="addArrayFileOrDirectory()">
+              New {{ inputArrayItemsType }}
+            </el-button>
           </div>
         </div>
       </template>
@@ -138,7 +140,6 @@
       <!--Unknown-->
       <template v-else> Unknown input type: {{ inputType || 'null' }} </template>
     </div>
-    <input-value-editor-modal ref="fileMetadata" />
   </div>
 </template>
 
@@ -149,7 +150,7 @@ import NativeFileBrowserFormField from '@/pages/_components/Graph/components/Nat
 import { FormArray, FormControl, FormGroup } from '@/components/FormControl.js'
 
 @Component({
-  components: { InputValueEditorModal, NativeFileBrowserFormField },
+  components: { InputValueEditorModal, NativeFileBrowserFormField, InputValueEditor: () => import('./InputValueEditor.vue') },
 })
 export default class InputValueEditor extends Vue {
   $refs!: {
@@ -197,11 +198,11 @@ export default class InputValueEditor extends Vue {
     return this.control?.value
   }
   set actualValue(value) {
+    // 只对普通类型有效
     console.log('set actualValue', value)
     // TODO 修改数据更新方式
     this.formControl.setValue(value)
     this.recalculateSecondaryFilesAndMetadataCounts()
-    // this.$emit('onUpdate', value)
   }
 
   @Watch('changeInput', { immediate: true })
@@ -323,11 +324,7 @@ export default class InputValueEditor extends Vue {
   addArrayFileOrDirectory(): void {
     const properties = ['multiSelections']
     properties.push(this.inputArrayItemsType === 'File' ? 'openFile' : 'openDirectory')
-    // this.native.openFileChoiceDialog({ properties }).then((filePaths) => {
-    //   const fileOrDirEntries = filePaths.map((p) => ({ class: this.inputArrayItemsType, path: p }))
-    //   fileOrDirEntries.forEach((entry) => this.control.push(new FormControl(entry)))
-    //   this.cdr.markForCheck()
-    // })
+    this.control.push(new FormControl({ class: this.inputArrayItemsType, path: '' }))
   }
   bindValuePropagationOnControlSetup(): void {
     // let typecheckedChange = change;
@@ -431,9 +428,22 @@ export default class InputValueEditor extends Vue {
     // eslint-disable-next-line no-prototype-builtins
     this.metadataKeysCount = Object.prototype.isPrototypeOf(metadata) ? Object.keys(metadata).length : 0
   }
-  onChildUpdate(value: any, control: any): void {
+  onUpdate(value: any, control: any): void {
+    console.log('on child update', value)
+    // 非普通类型的更新方式
     control.setValue(value)
+    this.formControl.setValue(this.control.value)
+    this.$emit('on-child-update')
+  }
+  onChildUpdate() {
     this.formControl.setValue(this.control.value)
   }
 }
 </script>
+<style>
+.remove-icon {
+  display: flex;
+  height: 1rem;
+  margin: 1em 0.5em 0 1em;
+}
+</style>
