@@ -30,12 +30,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
+
 @Component({
   components: { LoadingButton },
 })
-export default class Setting extends Vue {
+export default class Setting extends PipeItemMixin {
   $refs!: {
     formModel: HTMLFormElement
   }
@@ -51,9 +53,7 @@ export default class Setting extends Vue {
       { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
     ],
   }
-  get item() {
-    return this.$store.state.pipe
-  }
+
   get versions() {
     return this.item.versions.map((version: any) => {
       return {
@@ -64,14 +64,14 @@ export default class Setting extends Vue {
   }
   mounted() {
     this.formModel = ['name', 'version', 'category', 'website', 'description'].reduce((obj: any, key: string) => {
-      obj[key] = this.item[key]
+      obj[key] = (this.item as any)[key]
       return obj
     }, {})
   }
   async onSubmit() {
     await this.$refs.formModel.validate()
     await this.$api.pipe.update(this.item.pipe_id, this.formModel).then(() => {
-      this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', this.formModel)
+      this.$store.commit('pipe/UPDATE_CURRENT_STORE', this.formModel)
     })
   }
 }

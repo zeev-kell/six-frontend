@@ -17,13 +17,25 @@ export default class LoadingButton extends Vue {
     },
   })
   args!: string[]
+  @Prop({
+    required: false,
+    default() {
+      return false
+    },
+  })
+  event!: boolean
 
   loading = false
 
   onClick($event: Event): void {
     if (!this.loading) {
       this.loading = true
-      this.callback($event, ...this.args)
+      const args: any = [...this.args]
+      if (this.event) {
+        args.unshift($event)
+      }
+      this.callback
+        .apply(null, args)
         .finally(() => {
           this.loading = false
         })

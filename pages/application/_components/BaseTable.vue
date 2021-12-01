@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="table-box">
-        <el-table ref="multipleTable" :data="tableDate" style="width: 100%">
+        <el-table ref="multipleTable" :data="tableData" style="width: 100%">
           <el-table-column label="名称" prop="name" sortable width="280">
             <template slot-scope="{ row }">
               <div class="el-row--flex is-align-middle">
@@ -71,6 +71,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
 import { pipeConstants } from '@/constants/PipeConstants'
+import { ElTable } from 'element-ui/types/table'
 
 @Component({
   components: { CanCreate },
@@ -84,7 +85,12 @@ import { pipeConstants } from '@/constants/PipeConstants'
   },
 })
 export default class BaseTable extends Vue {
-  items = []
+  $refs!: {
+    multipleTable: ElTable
+  }
+  watchRefresh = true
+  items: any[] = []
+  multipleSelection: any[] = []
   query = {
     name: this.$route.query.name || '',
     category: this.$route.query.category || '',
@@ -108,7 +114,7 @@ export default class BaseTable extends Vue {
       return list
     }, [])
   }
-  get tableDate() {
+  get tableData() {
     let data = this.items
     if (this.query.category !== '') {
       data = data.filter((item: any) => {
@@ -127,20 +133,34 @@ export default class BaseTable extends Vue {
     }
     return data
   }
+  get hasSelected(): boolean {
+    return this.multipleSelection.length > 0
+  }
 
+  async refresh(): Promise<void> {
+    this.items = await this.$api.pipe.getList()
+  }
   createFilter(str: string) {
     return (name: any) => {
       return name.value.toLowerCase().includes(str.toLowerCase())
     }
   }
-  queryName(str: string, cb: any) {
+  queryName(str: string, cb: any): void {
     const nameList = this.nameList
     const results = str ? nameList.filter(this.createFilter(str)) : nameList
     cb(results)
   }
-  showVisualModal(id: string) {
+  showVisualModal(id: string): void {
     // window.open(`/graph-info/${id}`, '_blank', 'toolbar=0,location=0,menubar=0')
     window.open(`/graph-info/${id}`, '_blank')
+  }
+  handleSelectionChange(selection: []): void {
+    this.multipleSelection = selection
+  }
+  mounted(): void {
+    if (this.watchRefresh) {
+      this.$watch('$store.state.system.tableTime', this.refresh)
+    }
   }
 }
 </script>

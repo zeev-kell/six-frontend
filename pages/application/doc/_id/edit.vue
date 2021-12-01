@@ -19,12 +19,9 @@
         <h2 class="mx-0">拟写正文</h2>
       </div>
       <div class="card-body marked-content">
-        <client-only placeholder="Loading...">
-          <markdown v-model="formModel.content" />
-        </client-only>
+        <markdown-client v-model="formModel.content" />
       </div>
     </div>
-
     <div class="el-row text-right mt-20">
       <el-button type="success" icon="el-icon-plus" :loading="loading" @click="onSubmit"> 保存 </el-button>
     </div>
@@ -33,10 +30,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
 
 @Component({
   components: {
-    Markdown: () => import('@/pages/application/_components/markdown/simple'),
+    MarkdownClient,
   },
   async asyncData({ app, params }) {
     const item: any = await app.$axios.$get(`/v1/blog/${params.id}`)
@@ -73,15 +71,7 @@ export default class DocEdit extends Vue {
       { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
     ],
   }
-  cmOptions = {
-    tabSize: 4,
-    styleActiveLine: true,
-    lineNumbers: true,
-    line: true,
-    mode: 'text/yaml',
-    lineWrapping: true,
-    theme: 'default',
-  }
+
   loading = false
 
   onSubmit(): void {

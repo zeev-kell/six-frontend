@@ -25,9 +25,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import MarkdownToc from '@/components/MarkdownToc.vue'
 import { resourceHelp } from '@/utils/resource-help'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   components: { MarkdownToc },
@@ -40,14 +41,10 @@ import { resourceHelp } from '@/utils/resource-help'
     }
   },
 })
-export default class Course extends Vue {
+export default class Course extends PipeItemMixin {
   markdown = null
   toc = []
   imageList = []
   currentImage = null
-
-  get item() {
-    return this.$store.state.pipe
-  }
 }
 </script>

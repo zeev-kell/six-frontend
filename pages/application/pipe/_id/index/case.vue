@@ -7,7 +7,7 @@
             <h2 class="mx-0 el-col-equal">双击图标查看案例参数</h2>
           </div>
           <div class="card-body">
-            <div class="workflow-box">
+            <div class="page-graph-box">
               <graph-index ref="graph" class="h-100" :item="item" config-type="run" tools="download|plus,minus,fit" @propagate-event="onPropagate" />
             </div>
           </div>
@@ -34,11 +34,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
 import { pipeConstants } from '@/constants/PipeConstants'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   filters: {
@@ -46,15 +47,11 @@ import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
   },
   components: { GraphIndex },
 })
-export default class Case extends Vue {
+export default class Case extends PipeItemMixin {
   $refs!: {
     graph: HTMLFormElement
   }
   profile: any = {}
-
-  get item() {
-    return this.$store.state.pipe
-  }
 
   async onPropagate(eventName: string): Promise<void> {
     // TODO 修改为事件
@@ -80,10 +77,3 @@ export default class Case extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.workflow-box {
-  min-height: 450px;
-  height: calc(100vh - 60px);
-}
-</style>

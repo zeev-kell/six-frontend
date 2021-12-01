@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="versions" style="width: 100%">
+  <el-table :data="version" style="width: 100%">
     <el-table-column prop="resource_id" label="ID">
       <template slot-scope="scope">
         <span v-if="scope.row['resource_id'] === $route.params.id" class="text-muted p-r el-row--flex is-align-middle">
@@ -17,13 +17,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component
-export default class Versions extends Vue {
-  get item() {
-    return this.$store.state.pipe
-  }
+export default class PipeVersion extends PipeItemMixin {
   get versions() {
     return this.item?.versions || []
   }

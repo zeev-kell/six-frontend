@@ -14,9 +14,7 @@
     </div>
     <div class="card-body">
       <div class="codemirror-box">
-        <client-only placeholder="Loading...">
-          <codemirror v-model="content" :options="cmOptions" />
-        </client-only>
+        <code-mirror-client v-model="content" />
       </div>
     </div>
   </div>
@@ -28,12 +26,18 @@ import { pipeConstants } from '@/constants/PipeConstants'
 import { getObject, stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { CommandLineToolFactory, WorkflowFactory } from 'cwlts/models'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
+import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   filters: {
     pipeTypeTranslate: pipeConstants.get,
   },
-  components: { codemirror: () => import('@/pages/application/_components/CodeMirror.vue') },
+  components: {
+    LoadingButton,
+    CodeMirrorClient,
+  },
   async asyncData({ app, store }) {
     const item = store.state.pipe
     const type = store.getters['pipe/isWork'] ? pipeConstants.items.TYPE_TOOL : pipeConstants.items.TYPE_APP
@@ -53,27 +57,16 @@ import { JobHelper } from 'cwlts/models/helpers/JobHelper'
     return { options, value, graphItem }
   },
 })
-export default class Work extends Vue {
+export default class Work extends PipeItemMixin {
   $refs!: {
     graph: HTMLFormElement
     pipeSelect: HTMLFormElement
   }
   graphItem = null
-  cmOptions = {
-    tabSize: 4,
-    styleActiveLine: true,
-    lineNumbers: true,
-    line: true,
-    mode: 'text/yaml',
-    lineWrapping: true,
-    theme: 'default',
-  }
   options = []
   content = ''
   value = ''
-  get item() {
-    return this.$store.state.pipe
-  }
+
   get placeholder() {
     return '引用工作' + (this.$store.getters['pipe/isTool'] ? '' : '流')
   }
@@ -81,44 +74,35 @@ export default class Work extends Vue {
     this.content = this.item?.content.toString()
   }
   async onSubmit() {
-    const data = Object.assign({}, this.item)
-    data.cwl = this.value
-    data.content = this.content
+    const data = {
+      cwl: this.value,
+      content: this.content,
+    }
     await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
-      this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { cwl: data.cwl, content: data.content })
+      this.$store.commit('pipe/UPDATE_CURRENT_STORE', data)
     })
   }
-  onValueChange(resourceId: string) {
+  async onValueChange(resourceId: string) {
     if (this.content && this.content !== '') {
-      this.$confirm('是否替换新的软件运行模板？')
-        .then(() => {
-          // 不使用 async
-          this.$api.pipe.getVersion(resourceId).then((pipe: any) => {
-            let content = pipe?.content
-            if (content) {
-              // TODO 修改成新的类
-              content = getObject(content)
-              const model =
-                pipe.type === pipeConstants.items.TYPE_TOOL ? CommandLineToolFactory.from(content, 'document') : WorkflowFactory.from(content)
-              let nullJob = JobHelper.getNullJobInputs(model)
-              nullJob = stringifyObject(nullJob, true)
-              this.content = nullJob
-            } else {
-              this.$message.warning('该软件信息不完整')
-            }
-          })
-        })
-        .finally(() => {
-          this.$refs.pipeSelect.blur()
-        })
+      await this.$confirm('是否替换新的软件运行模板？').finally(() => {
+        this.$refs.pipeSelect.blur()
+      })
     }
+    await this.$api.pipe.getVersion(resourceId).then((pipe) => {
+      let content = pipe?.content
+      if (!content) {
+        return this.$message.warning('该软件信息不完整')
+      }
+      // TODO 修改成新的类
+      content = getObject(content)
+      const model = pipe.type === pipeConstants.items.TYPE_TOOL ? CommandLineToolFactory.from(content, 'document') : WorkflowFactory.from(content)
+      let nullJob = JobHelper.getNullJobInputs(model)
+      if (Object.keys(nullJob).length === 0) {
+        return this.$message.warning('该软件没有输入项或者软件输入不完整')
+      }
+      nullJob = stringifyObject(nullJob, true)
+      this.content = nullJob
+    })
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.workflow-box {
-  min-height: 450px;
-  height: calc(100vh - 60px);
-}
-</style>

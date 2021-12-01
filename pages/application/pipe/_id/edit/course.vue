@@ -21,8 +21,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   components: { LoadingButton },
@@ -38,16 +39,13 @@ import LoadingButton from '@/components/LoadingButton.vue'
     return { options, value: item.instruction }
   },
 })
-export default class Course extends Vue {
+export default class Course extends PipeItemMixin {
   options = []
   value = ''
-  get item() {
-    return this.$store.state.pipe
-  }
   async onSubmit() {
     const data = { instruction: this.value }
     await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
-      this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', { instruction: data.instruction })
+      this.$store.commit('pipe/UPDATE_CURRENT_STORE', { instruction: data.instruction })
     })
   }
 }

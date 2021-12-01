@@ -1,5 +1,6 @@
 export interface PipeModel {
   pipe_id: string
+  resource_id: string
   name: string
   pipe_name: string
   version: string
@@ -10,10 +11,11 @@ export interface PipeModel {
   download: string
   tutorial: string
   type: number
+  cwl: string
   website: string
-  status: 16
+  profile: string
+  status: number
   versions: PipeModel[]
   readme: any
-  resource_id?: string
   content: any
 }

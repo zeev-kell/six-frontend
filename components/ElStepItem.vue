@@ -7,7 +7,7 @@
 <script lang="ts">
 import { Component, InjectReactive, Prop, Vue, Watch } from 'nuxt-property-decorator'
 
-function broadcast(this: any, componentName: any, eventName: any, params: any) {
+function broadcast(this: any, componentName: any, eventName: any, params: any): void {
   this.$children.forEach((child: any) => {
     const name: any = child.$options.componentName
     if (name === componentName) {

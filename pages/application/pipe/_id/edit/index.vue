@@ -13,9 +13,7 @@
             <div v-marked="readmeBySystem" />
           </el-collapse-item>
         </el-collapse>
-        <client-only placeholder="Loading...">
-          <markdown v-model="readmeByAuthor" />
-        </client-only>
+        <markdown-client v-model="readmeByAuthor" />
       </div>
       <div class="card-footer">
         <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
@@ -25,34 +23,38 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import marked from '@/directives/marked/marked'
 import LoadingButton from '@/components/LoadingButton.vue'
+import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   directives: {
     ...marked,
   },
   components: {
+    MarkdownClient,
     LoadingButton,
-    Markdown: () => import('@/pages/application/_components/markdown/simple'),
   },
 })
-export default class PipeEditIndex extends Vue {
+export default class PipeEditIndex extends PipeItemMixin {
   readmeByAuthor = null
   readmeBySystem = null
-  get item() {
-    return this.$store.state.pipe
+  async onSubmit() {
+    const data = { readme: this.readmeByAuthor }
+    await this.$api.pipe.update(this.item.pipe_id, data).then(() => {
+      this.$store.commit('pipe/UPDATE_CURRENT_STORE', {
+        readme: {
+          by_system: this.readmeBySystem,
+          by_author: this.readmeByAuthor,
+        },
+      })
+    })
   }
   mounted() {
     this.readmeBySystem = this.item.readme.by_system || ''
     this.readmeByAuthor = this.item.readme.by_author || ''
-  }
-  async onSubmit() {
-    const data = { readme: this.readmeByAuthor }
-    await this.$api.pipe.update(this.item.pipe_id, data).then(() => {
-      this.$store.commit('pipe/UPDATE_CURRENT_WORKFLOW', data)
-    })
   }
 }
 </script>

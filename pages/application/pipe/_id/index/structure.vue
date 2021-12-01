@@ -5,7 +5,7 @@
         <h2 class="mx-0 el-col-equal">软件结构与参数配置（双击图标查看配置）</h2>
       </div>
       <div class="card-body">
-        <div class="workflow-box">
+        <div class="page-graph-box">
           <graph-index :item="item" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
         </div>
       </div>
@@ -15,22 +15,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   components: { GraphIndex },
 })
-export default class Structure extends Vue {
-  get item() {
-    return this.$store.state.pipe
-  }
-}
+export default class Structure extends PipeItemMixin {}
 </script>
-
-<style lang="scss" scoped>
-.workflow-box {
-  min-height: 450px;
-  height: calc(100vh - 60px);
-}
-</style>
