@@ -10,6 +10,7 @@ export class Module {
   }
 
   get(id: string): Promise<BlogModel> {
+    console.log(`/v1/blog/${id}`)
     return this.$axios.$get<BlogModel>(`/v1/blog/${id}`)
   }
 }

@@ -1,15 +1,15 @@
 import { Plugin } from '@nuxt/types'
 
-const DEFAULT_RESPONSE = { status: 500, msg: '服务器异常' }
+const DEFAULT_RESPONSE: any = { status: 500, msg: '服务器异常' }
 
-const AxiosPlugin: Plugin = ({ $axios, store }) => {
+const AxiosPlugin: Plugin = ({ $axios, store, app, redirect }) => {
   $axios.onRequest((config) => {
     return config
   })
-  $axios.onRequestError((error) => {
-    // eslint-disable-next-line no-console
-    console.log('onRequestError', error)
-  })
+  // $axios.onRequestError((error) => {
+  // eslint-disable-next-line no-console
+  // console.log('onRequestError', error)
+  // })
   $axios.onResponse((response) => {
     if (process.client) {
       if (process.env.NODE_ENV === 'development') {
@@ -25,16 +25,12 @@ const AxiosPlugin: Plugin = ({ $axios, store }) => {
   })
   $axios.onResponseError(async (error) => {
     // eslint-disable-next-line no-console
-    console.log('onResponseError', error.response)
+    console.log('onResponseError', error.response?.data || error)
     if (!error.response || !error.response.status) {
-      return Promise.reject(DEFAULT_RESPONSE)
+      return Promise.reject(error)
     }
+    // 登录失效，主动退出
     if (error.response.status === 401) {
-      if (process.env.NODE_ENV === 'development') {
-        console.log(error.response.data)
-      }
-      // eslint-disable-next-line no-console
-      console.error(error.response.config?.url)
       if (!error.response.config?.url?.includes('/logout')) {
         await store.dispatch('user/ACTION_LOGOUT')
       }
@@ -46,7 +42,15 @@ const AxiosPlugin: Plugin = ({ $axios, store }) => {
     }
     return Promise.reject(res)
   })
-  // $axios.onError(() => {})}
+  $axios.onError((error) => {
+    // eslint-disable-next-line no-console
+    console.log('onError', error)
+    if (error?.name === 'ExpiredAuthSessionError') {
+      app.$auth.reset()
+      redirect('/access')
+    }
+    return Promise.reject(error || DEFAULT_RESPONSE)
+  })
 }
 
 export default AxiosPlugin
