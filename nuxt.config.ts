@@ -205,6 +205,10 @@ const config = {
 
   router: {
     middleware: ['class'],
+    prefetchLinks: false, // 全局禁用所有链接上的预取
+  },
+  render: {
+    resourceHints: false, // 添加prefetch和preload，以加快初始化页面加载时间。如果有许多页面和路由，可禁用此项
   },
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {},
