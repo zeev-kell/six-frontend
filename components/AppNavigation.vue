@@ -43,7 +43,7 @@
                 {{ username }}
                 <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
               </div>
-              <el-dropdown-menu slot="dropdown" :visible-arrow="false" class="el-submenu-dropdown-menu">
+              <el-dropdown-menu slot="dropdown" :visible-arrow="false" class="app-dropdown-menu">
                 <el-dropdown-item command="application-u-center">
                   <span class="el-icon-user"></span>
                   帐号设置

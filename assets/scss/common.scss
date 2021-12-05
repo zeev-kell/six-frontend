@@ -49,6 +49,14 @@ hr {
   margin-right: 0;
 }
 
+.mr-2 {
+  margin-right: 2px;
+}
+
+.mr-5 {
+  margin-right: 5px;
+}
+
 .mr-10 {
   margin-right: 10px;
 }
@@ -89,6 +97,10 @@ hr {
   margin-left: 0 !important;
 }
 
+.ml-5 {
+  margin-left: 5px;
+}
+
 .ml-10 {
   margin-left: 10px;
 }
@@ -104,6 +116,11 @@ hr {
 .mx-0 {
   @extend .ml-0;
   @extend .mr-0;
+}
+
+.mx-5 {
+  @extend .ml-5;
+  @extend .mr-5;
 }
 
 .m-x-1 {
@@ -124,6 +141,10 @@ hr {
 .m-y-1 {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.m-10 {
+  margin: 10px;
 }
 
 //
@@ -228,6 +249,10 @@ hr {
 
 .p-20 {
   padding: 20px;
+}
+
+.no-gutters > * {
+  padding: 0;
 }
 
 //

@@ -23,13 +23,22 @@ export function getObject(str: string | object): any {
     return str
   }
   try {
-    const obj = JSON.parse(str)
-    if (typeof obj === 'object' && obj) {
+    const obj = parseObj(str)
+    if (obj) {
       return obj
-    } else {
-      return Yaml.load(str, { json: true })
     }
-  } catch (e) {
     return Yaml.load(str, { json: true })
+  } catch (e) {
+    console.log(`can't parse obj: ${str}`)
+    console.log(e)
+    return null
+  }
+}
+
+function parseObj(str: string) {
+  try {
+    return JSON.parse(str)
+  } catch (e) {
+    return null
   }
 }

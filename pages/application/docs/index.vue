@@ -47,7 +47,11 @@
               </nuxt-link>
             </template>
           </el-table-column>
-          <el-table-column label="类别" prop="type" sortable width="120" />
+          <el-table-column label="类别" prop="type" sortable width="120">
+            <template slot-scope="{ row }">
+              {{ row.type | blogTypeTranslate | t({ prefix: 'constant.' }) }}
+            </template>
+          </el-table-column>
           <el-table-column label="分类" prop="category" sortable width="120" />
           <el-table-column label="摘要" prop="description">
             <template slot-scope="{ row }">
@@ -64,11 +68,13 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
+import { blogConstants } from '@/constants/BlogConstants'
 
 @Component({
   components: { CanCreate },
   filters: {
     ...intercept,
+    blogTypeTranslate: blogConstants.get,
   },
   async asyncData({ app }) {
     const items = await app.$axios.$get('/v1/blogs')

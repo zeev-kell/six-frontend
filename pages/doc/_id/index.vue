@@ -3,7 +3,10 @@
     <section class="header-banner el-row el-row--flex"></section>
     <section class="container py-40">
       <h1 v-truncate="blog.title" class="title">{{ blog.title }}</h1>
-      <p>{{ blog.type }} 发布于 {{ blog.created_at }} {{ blog.provider }} <a class="pointer" @click="onCopyUrl">分享</a></p>
+      <p>
+        {{ blog.type | blogTypeTranslate | t({ prefix: 'constant.' }) }} 发布于 {{ blog.created_at }} {{ blog.provider }}
+        <a class="pointer" @click="onCopyUrl">分享</a>
+      </p>
       <el-container>
         <el-main class="main-container">
           <div ref="markdown" v-html="markdown" />
@@ -30,10 +33,15 @@ import { resourceHelp } from '@/utils/resource-help'
 import { BlogModel } from '@/types/model/Blog'
 import { Context } from '@nuxt/types'
 import { copyText } from '@/directives/clipboard'
+import { blogConstants } from '@/constants/BlogConstants'
 
 @Component({
+  layout: 'IndexLayoutBase',
   scrollToTop: true,
   components: { MarkdownToc },
+  filters: {
+    blogTypeTranslate: blogConstants.get,
+  },
   async asyncData({ app, params }: Context) {
     const blog: BlogModel = await app.$api.blog.get(params.id)
     const { markdown, toc, imageList } = resourceHelp(blog.content)
