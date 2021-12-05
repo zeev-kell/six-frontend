@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { Action, Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
 import Copyright from '@/components/Copyright.vue'
 
@@ -54,8 +54,6 @@ export default class access extends Vue {
     username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
     password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
   }
-  @Action('user/ACTION_LOGIN')
-  ACTION_LOGIN!: (data: any) => Promise<void>
   async onSubmit(): Promise<void> {
     await this.$refs.form.validate()
     await this.$store.dispatch('user/ACTION_LOGIN', this.form)

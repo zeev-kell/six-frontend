@@ -8,5 +8,5 @@ import BaseTable from '@/pages/application/_components/BaseTable.vue'
     return { items }
   },
 })
-export default class IndexPage extends BaseTable {}
+export default class PipeList extends BaseTable {}
 </script>

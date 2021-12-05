@@ -15,7 +15,7 @@
             </el-form-item>
             <el-form-item>
               <el-select v-model="query.type" placeholder="按类别筛选" clearable>
-                <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value" />
+                <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
               </el-select>
             </el-form-item>
             <el-form-item>
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="table-box">
-        <el-table ref="multipleTable" :data="tableData" style="width: 100%" :row-style="{ height: '100px' }" :cell-style="{ padding: '2' }">
+        <el-table ref="multipleTable" :data="tableData" style="width: 100%">
           <el-table-column label="名称" prop="name" sortable width="280">
             <template slot-scope="{ row }">
               <nuxt-link v-slot="{ href }" :to="localePath('/doc/' + row['id'])" custom>
@@ -52,7 +52,9 @@
               {{ row.type | blogTypeTranslate | t({ prefix: 'constant.' }) }}
             </template>
           </el-table-column>
-          <el-table-column label="分类" prop="category" sortable width="120" />
+          <el-table-column label="分类" prop="category" width="120">
+            <template slot-scope="{ row }">{{ row.category.map((c) => c.name).join(',') }}</template>
+          </el-table-column>
           <el-table-column label="摘要" prop="description">
             <template slot-scope="{ row }">
               {{ row.content | intercept }}
@@ -77,24 +79,26 @@ import { blogConstants } from '@/constants/BlogConstants'
     blogTypeTranslate: blogConstants.get,
   },
   async asyncData({ app }) {
-    const items = await app.$axios.$get('/v1/blogs')
+    const items = await app.$api.blog.getList()
     return { items }
   },
 })
-export default class Docs extends Vue {
+export default class DocList extends Vue {
   query = {
     name: this.$route.query.name || '',
     category: this.$route.query.category || '',
     type: this.$route.query.type ? Number(this.$route.query.type) : '',
   }
   items = []
-  typeList = []
+  typeList = blogConstants.getItemsList('TYPE_')
 
   get categoryList() {
     return this.items.reduce((list: any, item: any) => {
-      if (!list.includes(item.category)) {
-        list.push(item.category)
-      }
+      item.category.forEach((category: any) => {
+        if (!list.includes(category.name)) {
+          list.push(category.name)
+        }
+      })
       return list
     }, [])
   }
@@ -110,7 +114,7 @@ export default class Docs extends Vue {
     let data = this.items
     if (this.query.category !== '') {
       data = data.filter((item: any) => {
-        return item.category === this.query.category
+        return item.category.findIndex((c) => c.name === this.query.category) !== -1
       })
     }
     if (this.query.name !== '') {
