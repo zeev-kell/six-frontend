@@ -26,7 +26,7 @@
 import { Component } from 'nuxt-property-decorator'
 import marked from '@/directives/marked/marked'
 import LoadingButton from '@/components/LoadingButton.vue'
-import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
+import MarkdownClient from '@/pages/application/_components/markdown/MarkdownClient.vue'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({

@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="table-box">
-        <el-table ref="multipleTable" :data="tableData" style="width: 100%">
+        <el-table ref="multipleTable" :data="tableData" class="w-100">
           <el-table-column label="名称" prop="name" sortable width="280">
             <template slot-scope="{ row }">
               <nuxt-link v-slot="{ href }" :to="localePath('/doc/' + row['id'])" custom>
@@ -42,7 +42,7 @@
                   <i class="el-icon-search"></i>
                 </a>
               </nuxt-link>
-              <nuxt-link class="text-truncate" :to="localePath('/application/doc/' + row['id'])" :title="row.name">
+              <nuxt-link class="text-truncate" :to="localePath('/application/doc/' + row['id'] + '/edit')" :title="row.name">
                 {{ row.title }}
               </nuxt-link>
             </template>
@@ -52,12 +52,12 @@
               {{ row.type | blogTypeTranslate | t({ prefix: 'constant.' }) }}
             </template>
           </el-table-column>
-          <el-table-column label="分类" prop="category" width="120">
-            <template slot-scope="{ row }">{{ row.category.map((c) => c.name).join(',') }}</template>
+          <el-table-column label="分类" prop="category" width="150">
+            <template slot-scope="{ row }">{{ row.category.map((c) => c.name).join(' ') }}</template>
           </el-table-column>
-          <el-table-column label="摘要" prop="description">
+          <el-table-column label="描述" prop="description">
             <template slot-scope="{ row }">
-              {{ row.content | intercept }}
+              {{ row.description | intercept }}
             </template>
           </el-table-column>
         </el-table>
@@ -114,7 +114,7 @@ export default class DocList extends Vue {
     let data = this.items
     if (this.query.category !== '') {
       data = data.filter((item: any) => {
-        return item.category.findIndex((c) => c.name === this.query.category) !== -1
+        return item.category.findIndex((c: any) => c.name === this.query.category) !== -1
       })
     }
     if (this.query.name !== '') {

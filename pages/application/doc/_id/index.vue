@@ -5,7 +5,10 @@
         <h1 class="title">
           {{ blog.title }}
         </h1>
-        <p class="caption">发布于 {{ blog.created_at }}</p>
+        <p class="caption">
+          <span class="mr-5">{{ blog.type | blogTypeTranslate | t({ prefix: 'constant.' }) }} </span>
+          <span class="mr-5">发布于 {{ blog.created_at }} {{ blog.provider }}</span>
+        </p>
       </div>
       <div class="el-col el-col-8 text-right">
         <can-create>
@@ -13,9 +16,9 @@
             <el-button type="primary" icon="el-icon-edit" @click="navigate" @keypress.enter="navigate"> 编辑 </el-button>
           </nuxt-link>
         </can-create>
-        <can-examine>
+        <can-create>
           <el-button type="danger" icon="el-icon-delete" @click="handleDelete"> 删除 </el-button>
-        </can-examine>
+        </can-create>
       </div>
     </div>
     <el-container>
@@ -24,16 +27,6 @@
         <el-image v-if="imageList.length !== 0" ref="elImage" style="width: 0; height: 0" :src="currentImage" :preview-src-list="imageList" />
       </el-main>
       <el-aside width="240px" class="toc-aside">
-        <div class="card">
-          <div class="card-header el-row el-row--flex is-align-middle py-5">
-            <h4>作者</h4>
-          </div>
-          <div class="card-body">
-            <div style="font-weight: 600; margin-bottom: 10px">
-              {{ blog.provider }}
-            </div>
-          </div>
-        </div>
         <client-only>
           <markdown-toc :toc="toc" />
         </client-only>
@@ -48,9 +41,13 @@ import MarkdownToc from '@/components/MarkdownToc.vue'
 import { resourceHelp } from '@/utils/resource-help'
 import CanCreate from '@/components/common/CanCreate.vue'
 import CanExamine from '@/components/common/CanExamine.vue'
+import { blogConstants } from '@/constants/BlogConstants'
 
 @Component({
   components: { CanExamine, CanCreate, MarkdownToc },
+  filters: {
+    blogTypeTranslate: blogConstants.get,
+  },
   async asyncData({ app, params }) {
     const blog = await app.$axios.$get(`/v1/blog/${params.id}`)
     const { markdown, toc, imageList } = resourceHelp(blog.content)

@@ -136,11 +136,12 @@
         </li>
       </el-menu>
     </div>
+    <el-backtop :visibility-height="400" />
   </el-header>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch, Action } from 'nuxt-property-decorator'
+import { Component, Vue, Watch, Action, Prop } from 'nuxt-property-decorator'
 import LogoPng from '@/components/LogoPng.vue'
 import DocsLink from '@/components/common/DocsLink.vue'
 
@@ -151,6 +152,9 @@ import DocsLink from '@/components/common/DocsLink.vue'
   },
 })
 export default class IndexNavigation extends Vue {
+  @Prop({ default: false })
+  withScroll!: boolean
+
   showMobileMenu = false
   RESOURCES_URL = process.env.RESOURCES_URL
   SCROLL_TRANSPORT = 100
@@ -161,7 +165,9 @@ export default class IndexNavigation extends Vue {
 
   @Watch('$route.name')
   onWatchRouteName() {
-    this.$nextTick(this.onWindowScroll)
+    if (this.withScroll) {
+      this.$nextTick(this.onWindowScroll)
+    }
     this.showMobileMenu = false
   }
 
@@ -190,25 +196,23 @@ export default class IndexNavigation extends Vue {
       document.querySelector(selector)?.scrollIntoView()
     }, 300)
   }
-  beforeMount(): void {
-    const header = document.querySelector('#header') as HTMLElement
-    if (!header) {
-      return
-    }
-    if (this.getRouteBaseName() !== 'index') {
-      header.style.backgroundColor = 'rgba(255, 255, 255, 0)'
-      this.headerClass = []
-    }
-  }
   mounted() {
-    this.onWindowScroll()
-    window.addEventListener('scroll', this.onWindowScroll, true)
+    if (this.withScroll) {
+      this.onWindowScroll()
+      window.addEventListener('scroll', this.onWindowScroll, true)
+    }
     if (window.location.hash) {
       this.goAnchor(window.location.hash)
     }
   }
   beforeDestroy() {
-    window.removeEventListener('scroll', this.onWindowScroll, true)
+    if (this.withScroll) {
+      try {
+        window.removeEventListener('scroll', this.onWindowScroll, true)
+      } catch (e) {
+        console.log(e)
+      }
+    }
   }
 }
 </script>
@@ -269,6 +273,7 @@ export default class IndexNavigation extends Vue {
 #header.nav-white ::v-deep {
   color: var(--s-theme-color--dark);
   box-shadow: 0 0 2px #e4e4e4;
+  background: #ffffff;
   .el-menu .el-menu-item:hover,
   .el-menu .el-menu-item:focus {
     color: var(--s-theme-color--dark);

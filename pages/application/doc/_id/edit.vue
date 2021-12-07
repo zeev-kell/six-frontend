@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
+import MarkdownClient from '@/pages/application/_components/markdown/MarkdownClient.vue'
 import DocNewPage from '@/pages/application/doc/new.vue'
 
 @Component({
@@ -9,7 +9,7 @@ import DocNewPage from '@/pages/application/doc/new.vue'
   },
   async asyncData({ app, params }) {
     const item: any = await app.$api.blog.get(params.id)
-    item.category = item.category.map((c) => c.name)
+    item.category = item.category.map((c: any) => c.name)
     return { formModel: item }
   },
 })

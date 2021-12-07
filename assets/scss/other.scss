@@ -50,3 +50,12 @@
 .marked-p > p:first-child {
   margin-top: 4px;
 }
+
+.markdown-body {
+  .hljs {
+    background: transparent;
+  }
+  pre code {
+    font-size: 1em;
+  }
+}

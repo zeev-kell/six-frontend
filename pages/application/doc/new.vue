@@ -31,8 +31,8 @@
       <div class="card-header">
         <h2 class="mx-0">拟写正文</h2>
       </div>
-      <div class="card-body marked-content">
-        <markdown-client v-model="formModel.content" />
+      <div class="card-body">
+        <mavon-editor-client v-model="formModel.content"></mavon-editor-client>
       </div>
     </div>
     <div class="el-row text-right mt-20">
@@ -43,14 +43,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
 import { blogConstants } from '@/constants/BlogConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
+import MavonEditorClient from '@/pages/application/_components/mavonEditor/MavonEditorClient.vue'
 
 @Component({
   components: {
+    MavonEditorClient,
     LoadingButton,
-    MarkdownClient,
   },
 })
 export default class DocNewPage extends Vue {

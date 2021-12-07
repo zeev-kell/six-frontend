@@ -29,7 +29,6 @@
         <div class="down-btn" />
       </div>
     </div>
-    <el-backtop :visibility-height="400" />
   </section>
 </template>
 
