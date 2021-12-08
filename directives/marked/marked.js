@@ -1,7 +1,7 @@
 import marked from 'marked'
 import sanitizeHtml from 'sanitize-html'
 import highlight from 'highlight.js'
-import 'highlight.js/styles/darcula.css'
+// import 'highlight.js/styles/darcula.css'
 import '@/directives/marked/marked.scss'
 
 let toc = []

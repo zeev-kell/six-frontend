@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer" :style="style">
+  <footer class="footer" :style="footerStyle">
     <div v-if="withSubscribe" class="p-y-2 bg inset text-center">
       <div class="container">
         <h2><span>Six<span>O</span>'clock</span> 电子报刊</h2>
@@ -149,13 +149,14 @@ import DocsLink from '@/components/common/DocsLink.vue'
   },
 })
 export default class IndexFooter extends Vue {
-  @Prop({ default: true })
+  // 是否含有订阅
+  @Prop({ default: false })
   withSubscribe!: Boolean
 
   RESOURCES_URL = process.env.RESOURCES_URL
   showUA = false
 
-  get style() {
+  get footerStyle() {
     return this.withSubscribe ? '' : 'box-shadow: 0 -8px 8px -8px rgba(0, 0, 0, 0.1)'
   }
 }
@@ -214,7 +215,6 @@ export default class IndexFooter extends Vue {
   }
   .copyright {
     padding-top: 50px;
-    padding-bottom: 50px;
   }
 }
 </style>

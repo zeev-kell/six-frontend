@@ -90,6 +90,14 @@ export default {
     STATUS_DRAFT: 'Draft',
     STATUS_OFF: 'Off',
     STATUS_ON: 'On',
+    TYPE_TOOL: 'Tool',
+    TYPE_APP: 'Workflow',
+    TYPE_DOCKER: 'Dockerfile',
+    TYPE_WORK: 'Work',
+    TYPE_WORKFLOW: 'Work flow',
+    TYPE_WIKI: 'wiki',
+    TYPE_COURSE: 'Course',
+    TYPE_ARTICLE: 'Article',
   },
   // 错误信息
   error: {

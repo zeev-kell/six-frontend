@@ -26,7 +26,7 @@ import { pipeConstants } from '@/constants/PipeConstants'
 import { getObject, stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { CommandLineToolFactory, WorkflowFactory } from 'cwlts/models'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
-import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
+import CodeMirrorClient from '@/pages/application/_components/codeMirror/CodeMirrorClient.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 

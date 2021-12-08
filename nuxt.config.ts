@@ -49,7 +49,8 @@ const config = {
     { src: '@/plugins/i18n-router' },
     { src: '@/directives/index', mode: 'client' },
     { src: '@/plugins/vue-simple-uploader', mode: 'client' },
-    // { src: '@/plugins/vue-mavon-editor', mode: 'client' },
+    { src: '@/plugins/vue-mavon-editor', mode: 'client' },
+    { src: '@/plugins/vue-clipboard2', mode: 'client' },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

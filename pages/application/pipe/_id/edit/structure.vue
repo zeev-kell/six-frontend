@@ -30,7 +30,7 @@
 import { Component } from 'nuxt-property-decorator'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
-import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
+import CodeMirrorClient from '@/pages/application/_components/codeMirror/CodeMirrorClient.vue'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({

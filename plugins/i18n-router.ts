@@ -11,8 +11,11 @@ if (!Vue.__i18nMixin__) {
     beforeCreate() {
       const filters = this.$options.filters as { [index: string]: any }
       if (filters.t === undefined) {
-        filters.t = (key: string) => {
-          return this.$i18n.t(key)
+        filters.t = (key: number | string, options: { prefix?: string } = {}) => {
+          if (options.prefix) {
+            key = options.prefix + key
+          }
+          return this.$i18n.t(key as string)
         }
       }
     },

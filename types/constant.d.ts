@@ -16,6 +16,10 @@ export interface Record {
   TYPE_DATA?: MapKey
   TYPE_DATA_PACKAGE?: MapKey
 
+  TYPE_WIKI?: MapKey
+  TYPE_COURSE?: MapKey
+  TYPE_ARTICLE?: MapKey
+
   [index: string]: MapKey
 }
 
