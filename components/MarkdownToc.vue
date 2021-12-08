@@ -85,7 +85,7 @@ export default class MarkdownToc extends Vue {
 .markdown-toc {
   position: sticky;
   top: 60px;
-  padding: 20px;
+  padding: 5px 20px;
 }
 .md-nav__list {
   margin: 0;

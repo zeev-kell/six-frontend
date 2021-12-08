@@ -46,6 +46,7 @@
     "js-cookie": "^2.2.1",
     "js-yaml": "^4.0.0",
     "jszip": "^3.6.0",
+    "markdown-it-toc": "^1.1.0",
     "marked": "^1.2.9",
     "mavon-editor": "^2.10.1",
     "normalize.css": "^8.0.1",

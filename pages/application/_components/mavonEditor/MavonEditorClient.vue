@@ -1,6 +1,14 @@
 <template>
   <client-only placeholder="Loading...">
-    <mavon-editor v-model="content" :external-link="externalLink" v-bind="$attrs" v-on="$listeners" />
+    <mavon-editor
+      ref="md"
+      v-model="content"
+      :subfield="subfield"
+      :code-style="codeStyle"
+      :external-link="externalLink"
+      v-bind="$attrs"
+      v-on="$listeners"
+    />
   </client-only>
 </template>
 
@@ -10,6 +18,12 @@ import ClientMixin from '@/pages/application/_components/ClientMixin.vue'
 
 @Component
 export default class MavonEditorClient extends ClientMixin {
+  $refs!: {
+    md: HTMLFormElement
+  }
+
+  subfield = false
+  codeStyle = 'github'
   externalLink = {
     markdown_css() {
       // 这是你的markdown css文件路径
@@ -19,13 +33,13 @@ export default class MavonEditorClient extends ClientMixin {
       // 这是你的hljs文件路径
       return '/highlight/highlight.min.js'
     },
-    hljs_css(css) {
+    hljs_css(css: string) {
       // 这是你的代码高亮配色文件路径
       return '/highlight/styles/' + css + '.css'
     },
-    hljs_lang(lang) {
+    hljs_lang(lang: string) {
       // 这是你的代码高亮语言解析路径
-      return '/highlight/lib//languages/' + lang + '.min.js'
+      return '/highlight/lib/languages/' + lang + '.js'
     },
     katex_css() {
       // 这是你的katex配色方案路径路径

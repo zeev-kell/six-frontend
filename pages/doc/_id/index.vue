@@ -12,10 +12,11 @@
       </p>
       <el-container>
         <el-main class="main-container">
-          <mavon-editor-render-client v-model="blog.content"></mavon-editor-render-client>
+          <mavon-editor-render-client ref="MavonEditor" v-model="blog.content"></mavon-editor-render-client>
         </el-main>
         <el-aside width="240px" class="toc-aside overflow-v">
           <client-only>
+            {{ navigation }}
             <markdown-toc :toc="toc" />
           </client-only>
         </el-aside>
@@ -46,8 +47,6 @@ import { Context } from '@nuxt/types'
 import { copyText } from '@/directives/clipboard'
 import { blogConstants } from '@/constants/BlogConstants'
 import RecommendBlog from '@/pages/doc/_id/_components/RecommendBlog.vue'
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
 
 @Component({
@@ -64,10 +63,15 @@ import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor
   },
 })
 export default class DocIndexPage extends Vue {
+  $refs!: {
+    MavonEditor: MavonEditorRenderClient
+  }
+
   blog!: BlogModel
   markdown = null
   toc = []
   currentImage = null
+
   onCopyUrl(): void {
     copyText(location.href).then(() => {
       this.$message.success('链接复制成功')
@@ -75,6 +79,9 @@ export default class DocIndexPage extends Vue {
   }
   get bannerImage(): string {
     return this.blog.image || '/images/banner.jpg'
+  }
+  get navigation(): string {
+    return ''
   }
 }
 </script>

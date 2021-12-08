@@ -1,18 +1,39 @@
 <template>
-  <div class="markdown-body" v-html="rawHtml"></div>
+  <client-only placeholder="Loading...">
+    <mavon-editor
+      ref="md"
+      v-model="content"
+      class="read-only"
+      preview-background="#ffffff"
+      default-open="preview"
+      :subfield="false"
+      :toolbars-flag="false"
+      :editable="false"
+      :box-shadow="false"
+      :transition="true"
+      :code-style="codeStyle"
+      :external-link="externalLink"
+      :navigation="true"
+      v-bind="$attrs"
+      v-on="$listeners"
+    />
+  </client-only>
 </template>
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import ClientMixin from '@/pages/application/_components/ClientMixin.vue'
-import '../markdown/github-markdown.min.css'
-import mavonEditor from 'mavon-editor'
+import MavonEditorClient from '@/pages/application/_components/mavonEditor/MavonEditorClient.vue'
 
 @Component
-export default class MavonEditorRenderClient extends ClientMixin {
-  get rawHtml(): string {
-    console.log(process.client ? mavonEditor.markdownIt.render(this.value) : '')
-    return process.client ? mavonEditor.markdownIt.render(this.value) : ''
+export default class MavonEditorRenderClient extends MavonEditorClient {}
+</script>
+
+<style lang="scss">
+.read-only.v-note-wrapper {
+  z-index: 1;
+  border: none;
+  .v-show-content {
+    padding: 0 !important;
   }
 }
-</script>
+</style>

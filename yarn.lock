@@ -7511,6 +7511,11 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+markdown-it-toc@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.nlark.com/markdown-it-toc/download/markdown-it-toc-1.1.0.tgz#6d189858e32b3deb4ff3ad2713fa927439c957e0"
+  integrity sha1-bRiYWOMrPetP860nE/qSdDnJV+A=
+
 markdown-table@^2.0.0:
   version "2.0.0"
   resolved "https://registry.nlark.com/markdown-table/download/markdown-table-2.0.0.tgz#194a90ced26d31fe753d8b9434430214c011865b"
