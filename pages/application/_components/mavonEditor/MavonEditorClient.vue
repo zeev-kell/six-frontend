@@ -52,3 +52,18 @@ export default class MavonEditorClient extends ClientMixin {
   }
 }
 </script>
+
+<style lang="scss">
+.markdown-body {
+  .hljs {
+    background: transparent;
+  }
+  pre code {
+    font-size: 1em;
+  }
+  a:not([href]) {
+    position: relative;
+    top: -70px;
+  }
+}
+</style>

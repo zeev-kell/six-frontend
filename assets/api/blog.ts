@@ -19,8 +19,14 @@ export class Module {
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }
-  get(id: string): Promise<BlogModel> {
-    return this.$axios.$get<BlogModel>(`/v1/blog/${id}`)
+  get(blogId: string): Promise<BlogModel> {
+    return this.$axios.$get<BlogModel>(`/v1/blog/${blogId}`)
+  }
+  remove(blogId: string): Promise<any> {
+    return this.$axios
+      .$delete('/v1/blog/' + blogId)
+      .then(MESSAGE_SUCCESS)
+      .catch(MESSAGE_ERROR)
   }
 
   getList(params?: any): Promise<BlogModel[]> {

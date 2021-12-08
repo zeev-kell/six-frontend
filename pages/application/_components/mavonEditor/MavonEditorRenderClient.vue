@@ -13,7 +13,6 @@
       :transition="true"
       :code-style="codeStyle"
       :external-link="externalLink"
-      :navigation="true"
       v-bind="$attrs"
       v-on="$listeners"
     />
@@ -25,7 +24,30 @@ import { Component } from 'nuxt-property-decorator'
 import MavonEditorClient from '@/pages/application/_components/mavonEditor/MavonEditorClient.vue'
 
 @Component
-export default class MavonEditorRenderClient extends MavonEditorClient {}
+export default class MavonEditorRenderClient extends MavonEditorClient {
+  getNavigation(): any[] {
+    const $div = document.createElement('div')
+    $div.innerHTML = this.$refs.md.d_render
+    const nodes = $div.children
+    const list: any[] = []
+    Array.from(nodes).forEach((node) => {
+      if (/^H[1-6]$/.exec(node.tagName)) {
+        const id = node.querySelector('a')?.id
+        if (id) {
+          list.push({
+            tag: node.tagName,
+            id,
+            text: node.textContent,
+            level: node.tagName.substring(1),
+            index: list.length,
+            children: [],
+          })
+        }
+      }
+    })
+    return list
+  }
+}
 </script>
 
 <style lang="scss">

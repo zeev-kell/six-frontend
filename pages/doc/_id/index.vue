@@ -1,14 +1,21 @@
 <template>
   <div class="doc-container">
     <section class="container mt-20">
-      <el-image :src="bannerImage" fit="cover" :alt="blog.title"></el-image>
+      <el-image :src="bannerImage" fit="cover" :alt="blog.title">
+        <div slot="placeholder" style="min-height: 200px">加载中...</div>
+      </el-image>
     </section>
     <section class="container py-40">
       <h1 v-truncate="blog.title" class="title">{{ blog.title }}</h1>
       <p>
-        <span class="mr-5">{{ blog.type | blogTypeTranslate | t({ prefix: 'constant.' }) }} </span>
-        <span class="mr-5">发布于 {{ blog.created_at }} {{ blog.provider }}</span>
-        <a class="pointer" @click="onCopyUrl">分享</a>
+        <strong class="mr-10">{{ blog.type | blogTypeTranslate | t({ prefix: 'constant.' }) }} </strong>
+        <span class="mr-10">发布于 {{ blog.created_at }} {{ blog.provider }}</span>
+        <a class="pointer mr-10" @click="onCopyUrl">分享</a>
+        <can-create>
+          <nuxt-link :to="localePath('application-doc-new')">
+            <el-button type="primary" plain>写文章<i class="feather icon-feather ml-5"></i> </el-button>
+          </nuxt-link>
+        </can-create>
       </p>
       <el-container>
         <el-main class="main-container">
@@ -16,16 +23,20 @@
         </el-main>
         <el-aside width="240px" class="toc-aside overflow-v">
           <client-only>
-            {{ navigation }}
-            <markdown-toc :toc="toc" />
+            <div style="position: sticky; top: 60px">
+              <el-scrollbar :native="false">
+                <mavon-editor-toc :toc="toc" style="height: calc(100vh - 80px)"></mavon-editor-toc>
+              </el-scrollbar>
+            </div>
           </client-only>
         </el-aside>
       </el-container>
       <p class="category">
-        <el-tag v-for="category of blog.category" :key="category.id" class="mr-5">{{ category.name }}</el-tag>
+        <el-tag v-for="category of blog.category" :key="category.id" class="mr-5" size="lg">{{ category.name }}</el-tag>
       </p>
       <div>
         <a class="pointer" @click="onCopyUrl">分享</a>
+        转载请注明出处
       </div>
     </section>
     <section class="py-40" style="background: #f9f9f9">
@@ -40,26 +51,25 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import MarkdownToc from '@/components/MarkdownToc.vue'
-import { resourceHelp } from '@/utils/resource-help'
 import { BlogModel } from '@/types/model/Blog'
 import { Context } from '@nuxt/types'
 import { copyText } from '@/directives/clipboard'
 import { blogConstants } from '@/constants/BlogConstants'
 import RecommendBlog from '@/pages/doc/_id/_components/RecommendBlog.vue'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
+import MavonEditorToc from '@/pages/application/_components/mavonEditor/MavonEditorToc.vue'
+import CanCreate from '@/components/common/CanCreate.vue'
 
 @Component({
   layout: 'IndexLayout',
   scrollToTop: true,
-  components: { MavonEditorRenderClient, RecommendBlog, MarkdownToc },
+  components: { CanCreate, MavonEditorToc, MavonEditorRenderClient, RecommendBlog },
   filters: {
     blogTypeTranslate: blogConstants.get,
   },
   async asyncData({ app, params }: Context) {
     const blog: BlogModel = await app.$api.blog.get(params.id)
-    const { markdown, toc, imageList } = resourceHelp(blog.content)
-    return { blog, markdown, toc, imageList }
+    return { blog }
   },
 })
 export default class DocIndexPage extends Vue {
@@ -68,9 +78,7 @@ export default class DocIndexPage extends Vue {
   }
 
   blog!: BlogModel
-  markdown = null
-  toc = []
-  currentImage = null
+  toc: any[] = []
 
   onCopyUrl(): void {
     copyText(location.href).then(() => {
@@ -80,8 +88,11 @@ export default class DocIndexPage extends Vue {
   get bannerImage(): string {
     return this.blog.image || '/images/banner.jpg'
   }
-  get navigation(): string {
-    return ''
+
+  mounted(): Promise<any> | void {
+    this.$nextTick(() => {
+      this.toc = this.$refs.MavonEditor.getNavigation()
+    })
   }
 }
 </script>
@@ -101,6 +112,8 @@ export default class DocIndexPage extends Vue {
 .category {
   .el-tag {
     border-radius: 100px;
+    margin-right: 10px;
+    padding: 0 15px;
   }
 }
 </style>

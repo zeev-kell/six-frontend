@@ -42,7 +42,7 @@
                   <i class="el-icon-search"></i>
                 </a>
               </nuxt-link>
-              <nuxt-link class="text-truncate" :to="localePath('/application/doc/' + row['id'] + '/edit')" :title="row.name">
+              <nuxt-link class="text-truncate" :to="localePath('/application/doc/' + row['id'])" :title="row.name">
                 {{ row.title }}
               </nuxt-link>
             </template>
