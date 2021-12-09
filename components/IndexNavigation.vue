@@ -136,7 +136,7 @@
         </li>
       </el-menu>
     </div>
-    <el-backtop :visibility-height="400" />
+    <el-backtop :visibility-height="400" :bottom="100" />
   </el-header>
 </template>
 

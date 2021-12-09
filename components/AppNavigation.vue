@@ -62,6 +62,7 @@
         </el-menu>
       </div>
     </div>
+    <el-backtop :visibility-height="400" :bottom="100" />
   </el-header>
 </template>
 

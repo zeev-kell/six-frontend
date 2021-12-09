@@ -23,7 +23,7 @@
         </el-main>
         <el-aside width="240px" class="toc-aside overflow-v">
           <client-only>
-            <div style="position: sticky; top: 60px">
+            <div class="p-s" style="top: 60px">
               <el-scrollbar :native="false">
                 <mavon-editor-toc :toc="toc" style="height: calc(100vh - 80px)"></mavon-editor-toc>
               </el-scrollbar>
@@ -42,8 +42,8 @@
     <section class="py-40" style="background: #f9f9f9">
       <div class="container">
         <h3 class="title mb-50">相关阅读</h3>
-        <recommend-blog :blog="blog.previous"></recommend-blog>
-        <recommend-blog :blog="blog.next" style="margin-top: 40px"></recommend-blog>
+        <recommend-blog v-if="blog.id !== blog.previous.id" :blog="blog.previous"></recommend-blog>
+        <recommend-blog v-if="blog.id !== blog.next.id" :blog="blog.next" style="margin-top: 40px"></recommend-blog>
       </div>
     </section>
   </div>
