@@ -147,7 +147,7 @@
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
 import InputValueEditorModal from '@/pages/_components/Graph/components/InputValueEditorModal.vue'
 import NativeFileBrowserFormField from '@/pages/_components/Graph/components/NativeFileBrowserFormField.vue'
-import { FormArray, FormControl, FormGroup } from '@/components/FormControl'
+import { FormArray, FormControl, FormGroup } from '@/components/FormControl.js'
 
 @Component({
   components: { InputValueEditorModal, NativeFileBrowserFormField, InputValueEditor: () => import('./InputValueEditor.vue') },

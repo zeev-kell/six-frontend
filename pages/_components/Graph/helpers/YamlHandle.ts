@@ -42,3 +42,11 @@ function parseObj(str: string) {
     return null
   }
 }
+
+export function yamlToJson(str: string | object): any {
+  if (typeof str !== 'string' && str) {
+    // TODO
+    return str
+  }
+  return Yaml.load(str, { json: true })
+}

@@ -55,5 +55,8 @@ export default class GraphIndex extends Vue {
       this.$refs.graph.$emit(eventName, ...arg)
     })
   }
+  beforeDestroy(): void {
+    this.$off(GraphEvent.Dispatch)
+  }
 }
 </script>

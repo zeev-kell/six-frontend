@@ -57,4 +57,8 @@ module.exports = {
       },
     },
   ],
+  globals: {
+    PipeModel: 'readonly',
+    DatumModel: 'readonly',
+  },
 }

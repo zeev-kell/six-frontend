@@ -2,9 +2,7 @@
   <transition name="el-fade-in-linear">
     <div v-if="showPanel" class="cwl-run-panel right-panel">
       <div class="card-header">
-        <div class="f-b text-truncate" :title="labelName">
-          {{ labelName }}
-        </div>
+        <div v-truncate="labelName" class="f-b"></div>
         <button type="button" class="el-dialog__headerbtn" style="top: 15px" @click="showPanel = false">
           <i class="el-dialog__close el-icon el-icon-close" />
         </button>
@@ -17,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { Component, InjectReactive, Vue } from 'nuxt-property-decorator'
+import { Component, InjectReactive } from 'nuxt-property-decorator'
 import InspectorMixins from '@/pages/_components/Graph/components/InspectorMixins'
 import JobStepInspector from '@/pages/_components/Graph/components/JobStepInspector.vue'
 import { StepModel, WorkflowModel } from 'cwlts/models'

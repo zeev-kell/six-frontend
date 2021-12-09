@@ -85,7 +85,7 @@
 <script lang="ts">
 import { Component, InjectReactive, Prop, Vue, Watch } from 'nuxt-property-decorator'
 import { WorkflowModel } from 'cwlts/models'
-import { FormControl, FormGroup } from '@/components/FormControl'
+import { FormControl, FormGroup } from '@/components/FormControl.js'
 import { WorkflowStepInputModel } from 'cwlts/models/generic/WorkflowStepInputModel'
 import { WorkflowInputParameterModel } from 'cwlts/models/generic/WorkflowInputParameterModel'
 import CollapseItem from '@/components/CollapseItem.vue'

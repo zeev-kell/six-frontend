@@ -35,32 +35,33 @@ function copyText(text: string, container?: HTMLElement) {
 }
 
 interface ClipboardElement extends HTMLElement {
-  _vClipboard_success?: (e: any) => void
-  _vClipboard_error?: (e: any) => void
-  _vClipboard: any
+  _clipboard_success?: (e: any) => void
+  _clipboard_error?: (e: any) => void
+  _clipboard: any
 }
 
 export default {
   clipboard: {
     update(el: ClipboardElement, binding: DirectiveBinding) {
       if (binding.arg === 'success') {
-        el._vClipboard_success = binding.value
+        el._clipboard_success = binding.value
       } else if (binding.arg === 'error') {
-        el._vClipboard_error = binding.value
+        el._clipboard_error = binding.value
       } else {
-        el._vClipboard.text = function () {
+        el._clipboard.text = function () {
           return binding.value
         }
-        el._vClipboard.action = function () {
+        el._clipboard.action = function () {
           return binding.arg === 'cut' ? 'cut' : 'copy'
         }
+        el.setAttribute('title', binding.value)
       }
     },
     bind(el: ClipboardElement, binding: DirectiveBinding) {
       if (binding.arg === 'success') {
-        el._vClipboard_success = binding.value
+        el._clipboard_success = binding.value
       } else if (binding.arg === 'error') {
-        el._vClipboard_error = binding.value
+        el._clipboard_error = binding.value
       } else {
         const clipboard = new Clipboard(el, {
           text() {
@@ -72,7 +73,7 @@ export default {
           container: VueClipboardConfig.autoSetContainer ? el : undefined,
         })
         clipboard.on('success', function (e) {
-          const callback = el._vClipboard_success
+          const callback = el._clipboard_success
           if (callback) {
             callback(e)
           } else {
@@ -80,7 +81,7 @@ export default {
           }
         })
         clipboard.on('error', function (e) {
-          const callback = el._vClipboard_error
+          const callback = el._clipboard_error
           if (callback) {
             callback(e)
           } else {
@@ -88,17 +89,18 @@ export default {
             Element.Message.error('复制失败，请手动复制...')
           }
         })
-        el._vClipboard = clipboard
+        el._clipboard = clipboard
+        el.setAttribute('title', binding.value)
       }
     },
     unbind(el: ClipboardElement, binding: DirectiveBinding) {
       if (binding.arg === 'success') {
-        delete el._vClipboard_success
+        delete el._clipboard_success
       } else if (binding.arg === 'error') {
-        delete el._vClipboard_error
+        delete el._clipboard_error
       } else {
-        el._vClipboard.destroy()
-        delete el._vClipboard
+        el._clipboard.destroy()
+        delete el._clipboard
       }
     },
     inserted(el: ClipboardElement) {

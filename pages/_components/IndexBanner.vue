@@ -36,6 +36,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import scrollTop from '@/utils/animate-scroll'
 import DocsLink from '@/components/common/DocsLink.vue'
+
 @Component({
   components: { DocsLink },
 })
