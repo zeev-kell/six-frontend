@@ -1,124 +1,13 @@
-<template>
-  <div class="container-fluid p-20">
-    <div class="card card-body">
-      <div class="el-row--flex is-justify-space-between pb-10">
-        <div class="search-box">
-          <el-form class="form-inline" :inline="true" :model="query" @submit.native.prevent="">
-            <el-form-item>
-              <el-autocomplete v-model="query.name" :fetch-suggestions="queryName" placeholder="按名字筛选">
-                <template slot-scope="{ item }">
-                  <div class="name">
-                    {{ item.value }}
-                  </div>
-                </template>
-              </el-autocomplete>
-            </el-form-item>
-            <el-form-item>
-              <el-select v-model="query.type" placeholder="按类别筛选" clearable>
-                <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-select v-model="query.category" placeholder="按类型筛选" clearable>
-                <el-option v-for="item in categoryList" :key="item" :label="item" :value="item" />
-              </el-select>
-            </el-form-item>
-          </el-form>
-        </div>
-        <div class="action-box">
-          <can-create>
-            <nuxt-link v-slot="{ navigate }" :to="localePath('application-doc-new')" custom>
-              <el-button type="primary" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
-            </nuxt-link>
-          </can-create>
-        </div>
-      </div>
-      <div class="table-box">
-        <el-table ref="multipleTable" :data="tableData" style="width: 100%" :row-style="{ height: '100px' }" :cell-style="{ padding: '2' }">
-          <el-table-column label="名称" prop="name" sortable width="280">
-            <template slot-scope="{ row }">
-              <nuxt-link class="text-truncate" :to="localePath('/application/doc/' + row['id'])" :title="row.name">
-                {{ row.title }}
-              </nuxt-link>
-            </template>
-          </el-table-column>
-          <el-table-column label="类别" prop="type" sortable width="120" />
-          <el-table-column label="分类" prop="category" sortable width="120" />
-          <el-table-column label="摘要" prop="description">
-            <template slot-scope="{ row }">
-              {{ row.content | intercept }}
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import BaseTable from '@/pages/application/_components/BaseTable.vue'
+import DocListPage from '@/pages/application/docs/index.vue'
+import { BlogModel } from '@/types/model/Blog'
 
 @Component({
   async asyncData({ app }) {
-    const items = await app.$api.user.getDocs()
+    const items: BlogModel[] = await app.$api.user.getDocs()
     return { items }
   },
 })
-export default class DocsPage extends BaseTable {
-  query = {
-    name: this.$route.query.name || '',
-    category: this.$route.query.category || '',
-    type: this.$route.query.type ? Number(this.$route.query.type) : '',
-  }
-  items = []
-  typeList = []
-
-  get categoryList(): any[] {
-    return this.items.reduce((list: any, item: any) => {
-      if (!list.includes(item.category)) {
-        list.push(item.category)
-      }
-      return list
-    }, [])
-  }
-  get nameList(): any[] {
-    return this.items.reduce((list: any, item: any) => {
-      if (!list.includes(item.name)) {
-        list.push({ value: item.name })
-      }
-      return list
-    }, [])
-  }
-  get tableData() {
-    let data = this.items
-    if (this.query.category !== '') {
-      data = data.filter((item: any) => {
-        return item.category === this.query.category
-      })
-    }
-    if (this.query.name !== '') {
-      data = data.filter((item: any) => {
-        return item.name.includes(this.query.name)
-      })
-    }
-    if (this.query.type !== '') {
-      data = data.filter((item: any) => {
-        return item.type === this.query.type
-      })
-    }
-    return data
-  }
-
-  createFilter(str: string) {
-    return (name: any) => {
-      return name.value.toLowerCase().includes(str.toLowerCase())
-    }
-  }
-  queryName(str: string, cb: any) {
-    const nameList = this.nameList
-    const results = str ? nameList.filter(this.createFilter(str)) : nameList
-    cb(results)
-  }
-}
+export default class DocsPage extends DocListPage {}
 </script>

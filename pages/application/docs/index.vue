@@ -71,6 +71,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
 import { blogConstants } from '@/constants/BlogConstants'
+import { BlogModel } from '@/types/model/Blog'
 
 @Component({
   components: { CanCreate },
@@ -79,11 +80,11 @@ import { blogConstants } from '@/constants/BlogConstants'
     blogTypeTranslate: blogConstants.get,
   },
   async asyncData({ app }) {
-    const items = await app.$api.blog.getList()
+    const items: BlogModel[] = await app.$api.blog.getList()
     return { items }
   },
 })
-export default class DocList extends Vue {
+export default class DocListPage extends Vue {
   query = {
     name: this.$route.query.name || '',
     category: this.$route.query.category || '',
