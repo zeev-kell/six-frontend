@@ -52,8 +52,8 @@
           </nuxt-link>
         </div>
         <div class="el-col-auto m-b-2 text-center pro-panel">
-          <nuxt-link v-slot="{ navigate }" :to="localePath('/application/data')" custom>
-            <div class="pointer" @click="navigate" @keypress.enter="navigate">
+          <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link">
+            <div class="pointer">
               <el-card shadow="hover" class="pro-card">
                 <div class="pro-icon">
                   <span class="fa-stack fa-3x text-primary">
@@ -72,7 +72,7 @@
                 </div>
               </el-card>
             </div>
-          </nuxt-link>
+          </a>
         </div>
         <div class="el-col-auto m-b-2 text-center pro-panel">
           <nuxt-link v-slot="{ navigate }" :to="localePath('/application/docs')" custom>

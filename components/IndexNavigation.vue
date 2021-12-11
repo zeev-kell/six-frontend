@@ -156,6 +156,7 @@ export default class IndexNavigation extends Vue {
   withScroll!: boolean
 
   showMobileMenu = false
+  RESOURCES_URL = process.env.RESOURCES_URL
   SCROLL_TRANSPORT = 100
   headerClass = ['nav-white']
   get username() {
