@@ -12,8 +12,8 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
-import DatumStructure from '@/pages/application/datum/_id/index/structure.vue'
 import CodeMirrorClient from '@/pages/application/_components/codeMirror/CodeMirrorClient.vue'
+import DatumStructure from '@/pages/application/datum/_id/index/structure.vue'
 
 @Component({
   components: {

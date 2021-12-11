@@ -6,6 +6,7 @@
       :subfield="subfield"
       :code-style="codeStyle"
       :external-link="externalLink"
+      :box-shadow="false"
       v-bind="$attrs"
       v-on="$listeners"
     />

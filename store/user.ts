@@ -51,7 +51,6 @@ export const actions: ActionTree<UserModuleState, RootState> = {
       .then((response: any) => {
         const data = response.data.data
         const user = $auth.user as any
-        // user.permissions = data.permissions
         // eslint-disable-next-line camelcase
         user.refreshToken = data.refresh_token
         $auth.$storage.setLocalStorage('user', user)
