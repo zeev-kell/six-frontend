@@ -18,7 +18,7 @@
 import { Component, Getter, Vue } from 'nuxt-property-decorator'
 import marked from '@/directives/marked/marked'
 import LoadingButton from '@/components/LoadingButton.vue'
-import MarkdownClient from '@/pages/application/_components/MarkdownClient.vue'
+import MarkdownClient from '@/pages/application/_components/markdown/MarkdownClient.vue'
 import { DatumModel } from '@/types/model/Datum'
 import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
 

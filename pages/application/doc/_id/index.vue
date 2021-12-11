@@ -48,9 +48,9 @@
         </el-main>
         <el-aside width="240px" class="toc-aside overflow-v">
           <client-only>
-            <div class="p-s" style="top: 60px">
+            <div class="p-s" style="top: 10px">
               <el-scrollbar :native="false">
-                <mavon-editor-toc :toc="toc" style="height: calc(100vh - 80px)"></mavon-editor-toc>
+                <mavon-editor-toc :toc="toc" style="height: calc(100vh - 30px)"></mavon-editor-toc>
               </el-scrollbar>
             </div>
           </client-only>

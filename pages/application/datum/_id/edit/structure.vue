@@ -10,7 +10,7 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import DatumStructure from '@/pages/application/datum/_id/index/structure.vue'
-import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
+import CodeMirrorClient from '@/pages/application/_components/codeMirror/CodeMirrorClient.vue'
 @Component({
   components: { CodeMirrorClient },
 })

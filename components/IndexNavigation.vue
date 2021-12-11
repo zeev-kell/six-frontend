@@ -24,7 +24,9 @@
               </nuxt-link>
             </li>
             <el-menu-item :index="localePath('graph-info-new')"> 流程组合 </el-menu-item>
-            <el-menu-item :index="localePath('application-data')"> 数据库 </el-menu-item>
+            <el-menu-item class="px-0">
+              <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link px-10">数据库</a>
+            </el-menu-item>
             <el-menu-item :index="localePath('application-docs')"> 知识库 </el-menu-item>
           </el-submenu>
           <el-menu-item :index="localePath('download-center')">
@@ -105,7 +107,9 @@
             <a :href="localePath('index') + '#section-product'" @click="showMobileMenu = false">云协作</a>
           </li>
           <el-menu-item :index="localePath('graph-info-new')"> 流程组合 </el-menu-item>
-          <el-menu-item :index="localePath('application-data')"> 数据库 </el-menu-item>
+          <el-menu-item class="px-0">
+            <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link pl-40 d-inline-b w-100">数据库</a>
+          </el-menu-item>
           <el-menu-item :index="localePath('application-docs')"> 知识库 </el-menu-item>
         </el-submenu>
         <el-menu-item :index="localePath('download-center')">

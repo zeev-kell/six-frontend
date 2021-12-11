@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import CodeMirrorClient from '@/pages/application/_components/CodeMirrorClient.vue'
+import CodeMirrorClient from '@/pages/application/_components/codeMirror/CodeMirrorClient.vue'
 import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
 
 @Component({
