@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="version" style="width: 100%">
+  <el-table :data="versions" style="width: 100%">
     <el-table-column prop="resource_id" label="ID">
       <template slot-scope="scope">
         <span v-if="scope.row['resource_id'] === $route.params.id" class="text-muted p-r el-row--flex is-align-middle">
