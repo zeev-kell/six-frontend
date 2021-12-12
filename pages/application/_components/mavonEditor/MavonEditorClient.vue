@@ -51,6 +51,9 @@ export default class MavonEditorClient extends ClientMixin {
       return '/katex/katex.min.js'
     },
   }
+  $img2Url(...args: unknown[]): void {
+    this.$refs.md.$img2Url(...args)
+  }
 }
 </script>
 

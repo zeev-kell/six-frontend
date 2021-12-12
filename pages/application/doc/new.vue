@@ -1,16 +1,36 @@
 <template>
   <div class="container-fluid p-20">
     <div class="card" style="padding-bottom: 20px">
-      <div class="card-header">
-        <el-input v-model="formModel.title" placeholder="请输入标题（最多100个字）" class="title"></el-input>
-      </div>
-      <div class="card-body">
-        <mavon-editor-client v-model="formModel.content" placeholder="请输入正文" @fullScreen="onFullScreen"></mavon-editor-client>
-      </div>
-      <div class="card-body">
-        <el-form ref="formModel" label-width="80px" :model="formModel" :rules="rules" size="medium">
+      <el-form ref="formModel" label-width="80px" :model="formModel" :rules="rules" size="medium">
+        <div class="card-header">
+          <el-form-item prop="title" label-width="0" class="form-title">
+            <el-input v-model="formModel.title" placeholder="请输入标题（最多100个字）"></el-input>
+          </el-form-item>
+        </div>
+        <div class="card-body">
+          <mavon-editor-client
+            ref="md"
+            v-model="formModel.content"
+            placeholder="请输入正文"
+            @fullScreen="onFullScreen"
+            @imgAdd="$imgAdd"
+            @imgDel="$imgDel"
+          ></mavon-editor-client>
+        </div>
+        <div class="card-body">
           <el-form-item label="添加封面" prop="image">
-            <el-input v-model="formModel.image" placeholder="标题地址" />
+            <el-upload
+              action=""
+              class="image-cover"
+              :http-request="httpRequest"
+              :show-file-list="false"
+              :on-success="onSuccess"
+              :before-upload="beforeUpload"
+            >
+              <img v-if="formModel.image" :src="formModel.image" class="avatar" alt="" />
+              <i v-else class="el-icon-plus uploader-icon"></i>
+              <div slot="tip" class="el-upload__tip">图片上传格式支持 JPEG、JPG、PNG</div>
+            </el-upload>
           </el-form-item>
           <el-form-item label="类别" prop="type">
             <el-select v-model="formModel.type" placeholder="请选择类别" clearable style="width: 100%">
@@ -25,8 +45,8 @@
           <el-form-item label="描述" prop="description">
             <el-input v-model="formModel.description" type="textarea" :rows="4" placeholder="请输入描述" />
           </el-form-item>
-        </el-form>
-      </div>
+        </div>
+      </el-form>
     </div>
     <div v-show="!fullScreen" class="actions el-row">
       <div class="el-col-equal"></div>
@@ -42,10 +62,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import { blogConstants } from '@/constants/BlogConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
 import MavonEditorClient from '@/pages/application/_components/mavonEditor/MavonEditorClient.vue'
+import OssUploadMixin from '@/pages/application/datum/_components/OssUploadMixin.vue'
+import { uploadChunkOption } from '@/types/ElUpload'
+import UFile from '@/pages/_components/FileUploader/components/UFile'
 
 @Component({
   components: {
@@ -53,9 +76,10 @@ import MavonEditorClient from '@/pages/application/_components/mavonEditor/Mavon
     LoadingButton,
   },
 })
-export default class DocNewPage extends Vue {
+export default class DocNewPage extends OssUploadMixin {
   $refs!: {
     formModel: HTMLFormElement
+    md: MavonEditorClient
   }
 
   formModel = {
@@ -63,14 +87,11 @@ export default class DocNewPage extends Vue {
     type: undefined,
     category: [],
     content: '',
-    image: '',
+    image: 'http://dd',
     description: '',
   }
   rules = {
-    title: [
-      { required: true, message: '请输入标题', trigger: 'blur' },
-      { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' },
-    ],
+    title: [{ required: true, trigger: 'change' }],
     type: [{ required: true, message: '请输入类别', trigger: 'blue' }],
     category: [{ required: true, message: '请输入分类', trigger: 'blue' }],
   }
@@ -96,14 +117,67 @@ export default class DocNewPage extends Vue {
   onFullScreen(fullScreen: boolean) {
     this.fullScreen = fullScreen
   }
+  onSuccess(res: never, file: any): void {
+    this.formModel.image = URL.createObjectURL(file.raw)
+  }
+  beforeUpload(file: File): boolean {
+    const isJPG = file.type === 'image/jpeg'
+    const isLt2M = file.size / 1024 / 1024 < 0.5
+    if (!isJPG) {
+      this.$message.error('上传封面只能是 JPG 格式!')
+    }
+    if (!isLt2M) {
+      this.$message.error('上传图片大小不能超过 500kB!')
+    }
+    return isJPG && isLt2M
+  }
+  async httpRequest(option: uploadChunkOption): Promise<any> {
+    const file = option.file
+    const uFile = new UFile(file)
+    uFile.resourceId = 'd31d2d6e-1ce9-499c-b0d5-e0ff960914af'
+    await this.uploadOssFile(uFile).catch((e) => {
+      uFile.uploadError(e)
+      option.onError(e.message || e)
+    })
+    option.onSuccess(uFile)
+    return {
+      abort: () => {},
+    }
+  }
+  async $imgAdd(filename: string, file: File): Promise<void> {
+    const uFile = new UFile(file)
+    uFile.resourceId = 'd31d2d6e-1ce9-499c-b0d5-e0ff960914af'
+    await this.uploadOssFile(uFile).catch((e) => {
+      uFile.uploadError(e)
+    })
+    this.$refs.md.$img2Url(filename, uFile.path)
+  }
+  $imgDel(filename: string): void {
+    console.log('on imgDele:', filename)
+  }
 }
 </script>
 
 <style scoped lang="scss">
-.title ::v-deep > input {
-  border: none !important;
-  font-size: 2em;
-  font-weight: bold;
+.form-title {
+  margin-bottom: 0;
+  ::v-deep {
+    .el-input__inner {
+      border-width: 0;
+      font-size: 2em;
+      padding: 10px;
+      height: 56px;
+      font-weight: bold;
+    }
+    .el-form-item__error {
+      display: none !important;
+    }
+  }
+  &.is-error ::v-deep {
+    .el-input__inner {
+      border-width: 1px;
+    }
+  }
 }
 .actions {
   text-align: right;
@@ -120,5 +194,30 @@ export default class DocNewPage extends Vue {
   border-top: 1px solid #ebebeb;
   background: #ffffff;
   -webkit-font-smoothing: subpixel-antialiased;
+}
+.image-cover {
+  ::v-deep > .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    text-align: center;
+  }
+  .avatar {
+    width: auto;
+    height: 150px;
+    display: block;
+  }
+}
+.el-upload__tip {
+  margin-top: 0;
 }
 </style>

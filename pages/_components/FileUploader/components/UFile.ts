@@ -42,8 +42,8 @@ export default class UFile {
   schema: string = ''
   description: string = ''
   progress: number = 0
-  FileUploader: FileUploaderImplement
-  constructor(file: File | string, FileUploader: FileUploaderImplement) {
+  FileUploader: FileUploaderImplement | undefined
+  constructor(file: File | string, FileUploader?: FileUploaderImplement) {
     if (typeof file === 'string') {
       this.file = null
       this.name = getFileNameByUrl(file)
@@ -70,7 +70,7 @@ export default class UFile {
     this.status = STATUS.READING
     getFileMd5(this.file as File).then((hash: string) => {
       this.hash = hash
-      this.FileUploader.$emit('upload.file.initHash', this)
+      this.FileUploader?.$emit('upload.file.initHash', this)
     })
   }
   isOssFile(): boolean {

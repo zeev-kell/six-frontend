@@ -119,5 +119,8 @@ export default class OssUploadMixin extends Vue {
       } as DatumItemModel,
     })
   }
+  protected abort(...args: any[]) {
+    console.log('abort', args)
+  }
 }
 </script>
