@@ -3,6 +3,7 @@ import { Context } from '@nuxt/types'
 import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { PipeModel } from '@/types/model/Pipe'
 import { MESSAGE_SUCCESS, MESSAGE_ERROR } from '@/utils/reponse-helper'
+import { tableResponse } from '@/types/table'
 
 export class Module {
   private $axios: NuxtAxiosInstance
@@ -58,6 +59,11 @@ export class Module {
   }
   getVersion(resourceId: string): Promise<PipeModel> {
     return this.$axios.$get('/v2/pipe/' + resourceId)
+  }
+
+  search(params?: any): Promise<tableResponse<PipeModel>> {
+    console.log(params)
+    return this.$axios.$get<tableResponse<PipeModel>>('/v1/search/pipe', { params })
   }
 }
 

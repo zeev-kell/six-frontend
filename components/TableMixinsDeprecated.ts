@@ -2,7 +2,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import { tableQuery, tableResponse } from '@/types/table'
 
 @Component
-export default class TableMixins<T> extends Vue {
+export default class TableMixinsDeprecated<T> extends Vue {
   // 查询参数
   protected listQuery: tableQuery = {
     page: 1,
@@ -16,14 +16,8 @@ export default class TableMixins<T> extends Vue {
   protected total = 0
   protected immediate = false
   protected listQueryKeys: string[] = []
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getTableData(listQuery: tableQuery): Promise<tableResponse<T> | any> {
     throw new Error('Method not implemented.')
-  }
-  async resetQuery(): Promise<void> {
-    // 刷新需要重置查询条件
-    this.listQuery.name = undefined
-    await this.searchQuery()
   }
   async searchQuery(): Promise<void> {
     // 查询需要重置页数

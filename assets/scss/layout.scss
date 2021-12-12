@@ -136,6 +136,9 @@
     padding: 0;
     background-color: $nav-darken-bg;
   }
+  > .el-main {
+    height: calc(100vh - 60px);
+  }
 }
 
 //
