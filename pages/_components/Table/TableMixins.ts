@@ -49,7 +49,7 @@ export class TableMixinsHelper {
       .map(([key, value]) => `${key}:${value}`)
       .join('&')
   }
-  static exportTerm(str: string): any {
+  static exportTerm(str: any): any {
     return decodeURIComponent(str)
       .split('&')
       .map((s) => s.split(':'))
