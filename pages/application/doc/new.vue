@@ -76,7 +76,7 @@ export default class DocNewPage extends OssUploadMixin {
     md: MavonEditorClient
   }
 
-  formModel = {
+  formModel: any = {
     title: '',
     type: undefined,
     category: [],
