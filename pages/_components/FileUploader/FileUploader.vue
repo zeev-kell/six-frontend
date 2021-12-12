@@ -218,7 +218,7 @@ export default class FileUploader extends Vue implements FileUploaderImplement {
     }
   }
   protected async uploadFile(uFile: UFile): Promise<void> {
-    uFile.resourceId = this.$route.params.id || 'd31d2d6e-1ce9-499c-b0d5-e0ff960914af'
+    uFile.resourceId = this.$route.params.id
     // 上传 link 文件
     if (!uFile.isOssFile()) {
       return await this.addFileToDatum(uFile)

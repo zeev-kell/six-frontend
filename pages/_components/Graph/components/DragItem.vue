@@ -24,7 +24,7 @@
         </el-table-column>
         <el-table-column label="分类" prop="category" width="100" />
         <el-table-column label="最近版本" prop="version" width="120" />
-        <el-table-column label="介绍" prop="description" width="300">
+        <el-table-column label="描述" prop="description" width="300">
           <template slot-scope="{ row }">
             {{ row.description | intercept(22) }}
           </template>

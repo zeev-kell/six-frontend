@@ -14,12 +14,6 @@ import DocNewPage from '@/pages/application/doc/new.vue'
   },
 })
 export default class DocEditPage extends DocNewPage {
-  formModel: any = {
-    title: '',
-    category: '',
-    content: '',
-  }
-
   async onSubmit() {
     await this.$refs.formModel.validate().catch((e: Error) => {
       this.$message.warning('请填写完整信息')

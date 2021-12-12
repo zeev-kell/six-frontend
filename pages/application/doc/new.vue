@@ -13,21 +13,14 @@
             v-model="formModel.content"
             placeholder="请输入正文"
             @fullScreen="onFullScreen"
-            @imgAdd="$imgAdd"
-            @imgDel="$imgDel"
+            @imgAdd="addImage"
+            @imgDel="removeImage"
           ></mavon-editor-client>
         </div>
         <div class="card-body">
           <a id=""></a>
-          <el-form-item label="添加封面" prop="image">
-            <el-upload
-              action=""
-              class="image-cover"
-              :http-request="httpRequest"
-              :show-file-list="false"
-              :on-success="onSuccess"
-              :before-upload="beforeUpload"
-            >
+          <el-form-item label="添加封面" prop="image" :loading="loading">
+            <el-upload action="" class="image-cover" :http-request="httpRequest" :show-file-list="false" :before-upload="beforeUpload">
               <img v-if="formModel.image" :src="formModel.image" class="avatar" alt="" />
               <i v-else class="el-icon-plus uploader-icon"></i>
               <div slot="tip" class="el-upload__tip">图片上传格式支持 JPEG、JPG、PNG</div>
@@ -53,9 +46,9 @@
       <div class="el-col-equal"></div>
       <div class="el-col-equal text-right">
         <span class="mr-10 text-muted">字数：{{ formModel.content.length }} 字</span>
-        <nuxt-link v-slot="{ href }" :to="localePath('doc-preview')" custom>
-          <a class="el-button el-button--info el-button--medium" target="_blank" :href="href">预览</a>
-        </nuxt-link>
+        <!--        <nuxt-link v-slot="{ href }" :to="localePath('doc-preview')" custom>-->
+        <!--          <a class="el-button el-button&#45;&#45;info el-button&#45;&#45;medium" target="_blank" :href="href">预览</a>-->
+        <!--        </nuxt-link>-->
         <loading-button type="success" icon="el-icon-plus" :callback="onSubmit"> 保存 </loading-button>
       </div>
     </div>
@@ -104,6 +97,7 @@ export default class DocNewPage extends OssUploadMixin {
     },
   ]
   fullScreen = false
+  loading = false
 
   async onSubmit() {
     await this.$refs.formModel.validate().catch((e: Error) => {
@@ -117,9 +111,6 @@ export default class DocNewPage extends OssUploadMixin {
   }
   onFullScreen(fullScreen: boolean) {
     this.fullScreen = fullScreen
-  }
-  onSuccess(res: never, file: any): void {
-    this.formModel.image = URL.createObjectURL(file.raw)
   }
   beforeUpload(file: File): boolean {
     const isJPG = ['image/jpeg', 'image/png'].includes(file.type)
@@ -135,26 +126,27 @@ export default class DocNewPage extends OssUploadMixin {
   async httpRequest(option: uploadChunkOption): Promise<any> {
     const file = option.file
     const uFile = new UFile(file)
-    uFile.resourceId = 'd31d2d6e-1ce9-499c-b0d5-e0ff960914af'
-    await this.uploadOssFile(uFile).catch((e) => {
-      uFile.uploadError(e)
-      option.onError(e.message || e)
-    })
+    this.loading = true
+    await this.uploadOssFile(uFile, false)
+      .catch((e) => {
+        uFile.uploadError(e)
+        option.onError(e.message || e)
+      })
+      .finally(() => {
+        this.loading = false
+      })
     option.onSuccess(uFile)
-    return {
-      abort: () => {},
-    }
+    this.formModel.image = uFile.ossPath
   }
-  async $imgAdd(filename: string, file: File): Promise<void> {
+  async addImage(filename: string, file: File): Promise<void> {
     const uFile = new UFile(file)
-    uFile.resourceId = 'd31d2d6e-1ce9-499c-b0d5-e0ff960914af'
-    await this.uploadOssFile(uFile).catch((e) => {
+    await this.uploadOssFile(uFile, false).catch((e) => {
       uFile.uploadError(e)
     })
-    this.$refs.md.$img2Url(filename, uFile.path)
+    this.$refs.md.$img2Url(filename, uFile.ossPath)
   }
-  $imgDel(filename: string): void {
-    console.log('on imgDele:', filename)
+  removeImage(filename: string): void {
+    console.log('on img delete:', filename)
   }
 }
 </script>

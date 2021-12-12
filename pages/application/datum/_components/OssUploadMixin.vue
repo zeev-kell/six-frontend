@@ -81,7 +81,7 @@ export default class OssUploadMixin extends Vue {
     }
     return this.initClientPromise
   }
-  protected async uploadOssFile(uFile: UFile): Promise<void> {
+  protected async uploadOssFile(uFile: UFile, isCallback = true): Promise<void> {
     // 上传 OSS 文件
     if (!this.client) {
       await this.initClient()
@@ -89,19 +89,24 @@ export default class OssUploadMixin extends Vue {
     uFile.path = this.token.ossPath + uFile.id
     const { id, name, hash, file, path } = uFile
     const userId = this.$store.getters['user/username']
-    const objectOption: OSS.PutObjectOptions = {
-      callback: this.createCallback({
-        user: userId,
-        resourceid: uFile.resourceId,
-        name,
-        md5: hash,
-        id,
-      }),
-    }
     // 关于进度条，只有分片上传才有
     uFile.progress = 0
-    await this.client!.put(path, file, objectOption)
+    if (isCallback) {
+      await this.client!.put(path, file, {
+        callback: this.createCallback({
+          user: userId,
+          resourceid: uFile.resourceId,
+          name,
+          md5: hash,
+          id,
+        }),
+      } as OSS.PutObjectOptions)
+    } else {
+      await this.client!.put(path, file)
+    }
     uFile.progress = 1
+    uFile.ossPath = this.client!.generateObjectUrl(path)
+    console.log(uFile.ossPath)
   }
   protected async addFileToDatum(uFile: UFile) {
     const { id, bytes, name, mediaType, hash, path, description, resourceId, schema } = uFile

@@ -42,6 +42,7 @@ export default class UFile {
   schema: string = ''
   description: string = ''
   progress: number = 0
+  ossPath = ''
   FileUploader: FileUploaderImplement | undefined
   constructor(file: File | string, FileUploader?: FileUploaderImplement) {
     if (typeof file === 'string') {

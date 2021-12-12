@@ -1,5 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator'
-import { tableQuery, tableResponse } from '@/types/table'
+import { tableQuery } from '@/types/table'
 import { ElTable } from 'element-ui/types/table'
 import { Route } from 'vue-router'
 
@@ -14,19 +14,15 @@ export default class TableMixins<T> extends Vue {
   protected listQuery: tableQuery = {
     page: 1,
     size: 20,
+    term: '',
   }
   // 其他附加参数
   protected otherQuery: { [index: string]: string | number | undefined } = {}
   protected tableData: T[] = []
   protected count = 0
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getTableData(listQuery: tableQuery): Promise<tableResponse<T> | any> {
-    throw new Error('Method not implemented.')
-  }
   async resetQuery(): Promise<void> {
     // 刷新需要重置查询条件
-    Object.keys(this.otherQuery).forEach((k) => (this.otherQuery[k] = undefined))
-    console.log(this.otherQuery)
+    Object.keys(this.otherQuery).forEach((k) => (this.otherQuery[k] = ''))
     await this.searchQuery()
   }
   async searchQuery(): Promise<void> {
@@ -35,6 +31,7 @@ export default class TableMixins<T> extends Vue {
     await this.refreshTable()
   }
   async refreshTable(): Promise<void> {
+    // 分页可以直接查询
     this.listQuery.term = TableMixinsHelper.getTerm(this.otherQuery)
     await this.$I18nRouter.push({
       query: this.listQuery as any,
@@ -58,11 +55,11 @@ export class TableMixinsHelper {
         return obj
       }, {})
   }
-  static initListQuery(query: Route['query'], otherQuery: any) {
+  static initListQuery(query: Route['query'], otherQuery: any, fixedQuery: any = {}) {
     return {
       page: Number(query.page) || 1,
       size: Number(query.size) || 20,
-      term: TableMixinsHelper.getTerm(otherQuery),
+      term: TableMixinsHelper.getTerm(Object.assign({}, otherQuery, fixedQuery)),
     }
   }
 }

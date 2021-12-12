@@ -55,7 +55,7 @@
       </el-table-column>
       <el-table-column label="分类" prop="category" sortable width="120" />
       <el-table-column label="最近版本" prop="version" width="120" />
-      <el-table-column label="介绍" prop="description">
+      <el-table-column label="描述" prop="description">
         <template slot-scope="{ row }">
           {{ row.description | intercept }}
         </template>
@@ -76,6 +76,7 @@ import intercept from '@/filters/intercept'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
 import TableMixins, { TableMixinsHelper } from '@/pages/_components/Table/TableMixins'
 import TablePagination from '@/pages/_components/Table/TablePagination.vue'
+import { Context } from '@nuxt/types'
 
 @Component({
   components: { TablePagination, LayoutBox, CanCreate },
@@ -83,7 +84,7 @@ import TablePagination from '@/pages/_components/Table/TablePagination.vue'
     ...intercept,
     pipeTypeTranslate: pipeConstants.get,
   },
-  async asyncData({ app, query }): Promise<any> {
+  async asyncData({ app, query }: Context): Promise<any> {
     const term = TableMixinsHelper.exportTerm(query.term)
     const otherQuery = {
       name: term.name || '',
@@ -108,9 +109,5 @@ export default class PipeListPage extends TableMixins<PipeModel> {
   }
   typeList = pipeConstants.getItemsList('TYPE_')
   categoryList = []
-  showVisualModal(id: string) {
-    // window.open(`/graph-info/${id}`, '_blank', 'toolbar=0,location=0,menubar=0')
-    window.open(`/graph-info/${id}`, '_blank')
-  }
 }
 </script>

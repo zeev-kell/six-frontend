@@ -55,7 +55,7 @@
           </el-table-column>
           <el-table-column label="分类" prop="category" sortable width="120" />
           <el-table-column label="最近版本" prop="version" width="120" />
-          <el-table-column label="介绍" prop="description">
+          <el-table-column label="描述" prop="description">
             <template slot-scope="{ row }">
               {{ row.description | intercept }}
             </template>
