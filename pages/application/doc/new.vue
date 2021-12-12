@@ -18,6 +18,7 @@
           ></mavon-editor-client>
         </div>
         <div class="card-body">
+          <a id=""></a>
           <el-form-item label="添加封面" prop="image">
             <el-upload
               action=""

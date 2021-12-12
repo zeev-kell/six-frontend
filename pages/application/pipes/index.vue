@@ -8,11 +8,11 @@
           </el-form-item>
           <el-form-item>
             <el-select v-model="otherQuery.type" placeholder="按类别筛选" clearable @change="searchQuery">
-              <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value" />
+              <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="otherQuery.category" placeholder="按类型筛选" clearable @change="searchQuery">
+            <el-select v-model="otherQuery.category" placeholder="按分类筛选" clearable @change="searchQuery">
               <el-option v-for="item in categoryList" :key="item" :label="item" :value="item" />
             </el-select>
           </el-form-item>
@@ -31,12 +31,16 @@
         </nuxt-link>
       </div>
     </div>
-    <el-table ref="multipleTable" :data="tableData" style="width: 100%" height="100px" :loading="loading">
+    <el-table ref="multipleTable" :data="tableData" class="w-100" height="200px">
       <el-table-column label="名称" prop="name" sortable width="280">
         <template slot-scope="{ row }">
           <div class="el-row--flex is-align-middle">
             <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
-              <el-button type="text" icon="el-icon-search" class="px-5 py-0" @click.stop="showVisualModal(row['resource_id'])" />
+              <nuxt-link v-slot="{ href }" :to="localePath('/graph-info/' + row['resource_id'])" custom>
+                <a target="_blank" class="pointer mr-5" :href="href">
+                  <i class="el-icon-search"></i>
+                </a>
+              </nuxt-link>
             </el-tooltip>
             <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + row['resource_id'])" :title="row.name">
               {{ row.provider + '/' + row.name }}
@@ -86,11 +90,7 @@ import TablePagination from '@/pages/_components/Table/TablePagination.vue'
       category: term.category || '',
       type: term.type ? Number(term.type) : '',
     }
-    const listQuery = {
-      page: Number(query.page) || 1,
-      size: Number(query.size) || 20,
-      term: TableMixinsHelper.getTerm(otherQuery),
-    }
+    const listQuery = TableMixinsHelper.initListQuery(query, otherQuery)
     const { count, data } = await app.$api.pipe.search(listQuery)
     return {
       otherQuery,
@@ -100,7 +100,7 @@ import TablePagination from '@/pages/_components/Table/TablePagination.vue'
     }
   },
 })
-export default class IndexPage extends TableMixins<PipeModel> {
+export default class PipeListPage extends TableMixins<PipeModel> {
   protected otherQuery!: {
     name: string
     category: string
@@ -108,5 +108,9 @@ export default class IndexPage extends TableMixins<PipeModel> {
   }
   typeList = pipeConstants.getItemsList('TYPE_')
   categoryList = []
+  showVisualModal(id: string) {
+    // window.open(`/graph-info/${id}`, '_blank', 'toolbar=0,location=0,menubar=0')
+    window.open(`/graph-info/${id}`, '_blank')
+  }
 }
 </script>

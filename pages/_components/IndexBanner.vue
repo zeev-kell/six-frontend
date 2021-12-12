@@ -49,21 +49,20 @@ export default class IndexBanner extends Vue {
     scrollTop(height)
   }
   toSearch() {
-    const name = this.searchInput.trim()
-    if (name) {
+    const value = this.searchInput.trim()
+    if (value) {
       if (this.searchType === '2') {
         this.$I18nRouter.push({
           path: '/application/docs',
           query: {
-            name,
+            term: `title:${value}`,
           },
         })
       } else {
         this.$I18nRouter.push({
           path: '/application/pipes',
           query: {
-            name,
-            type: this.searchType,
+            term: `name:${value} AND type:${this.searchType}`,
           },
         })
       }

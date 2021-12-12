@@ -1,6 +1,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { tableQuery, tableResponse } from '@/types/table'
 import { ElTable } from 'element-ui/types/table'
+import { Route } from 'vue-router'
 
 @Component({
   watchQuery: ['page', 'size', 'term'],
@@ -17,7 +18,6 @@ export default class TableMixins<T> extends Vue {
   // 其他附加参数
   protected otherQuery: { [index: string]: string | number | undefined } = {}
   protected tableData: T[] = []
-  protected loading = false
   protected count = 0
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getTableData(listQuery: tableQuery): Promise<tableResponse<T> | any> {
@@ -57,5 +57,12 @@ export class TableMixinsHelper {
         obj[key] = value
         return obj
       }, {})
+  }
+  static initListQuery(query: Route['query'], otherQuery: any) {
+    return {
+      page: Number(query.page) || 1,
+      size: Number(query.size) || 20,
+      term: TableMixinsHelper.getTerm(otherQuery),
+    }
   }
 }

@@ -2,7 +2,7 @@ import { Context } from '@nuxt/types'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { BlogModel } from '@/types/model/Blog'
 import { MESSAGE_ERROR, MESSAGE_SUCCESS } from '@/utils/reponse-helper'
-import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
+import { tableResponse } from '@/types/table'
 
 export class Module {
   private $axios: NuxtAxiosInstance
@@ -19,9 +19,6 @@ export class Module {
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }
-  get(blogId: string): Promise<BlogModel> {
-    return this.$axios.$get<BlogModel>(`/v1/blog/${blogId}`)
-  }
   remove(blogId: string): Promise<any> {
     return this.$axios
       .$delete('/v1/blog/' + blogId)
@@ -29,8 +26,15 @@ export class Module {
       .catch(MESSAGE_ERROR)
   }
 
+  get(blogId: string): Promise<BlogModel> {
+    return this.$axios.$get<BlogModel>(`/v1/blog/${blogId}`)
+  }
   getList(params?: any): Promise<BlogModel[]> {
     return this.$axios.$get<BlogModel[]>('/v1/blogs', { params })
+  }
+
+  search(params?: any): Promise<tableResponse<BlogModel>> {
+    return this.$axios.$get<tableResponse<BlogModel>>('/v1/search/doc', { params })
   }
 }
 
