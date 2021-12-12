@@ -87,7 +87,7 @@ export default class DocNewPage extends OssUploadMixin {
     type: undefined,
     category: [],
     content: '',
-    image: 'http://dd',
+    image: '',
     description: '',
   }
   rules = {
@@ -214,6 +214,7 @@ export default class DocNewPage extends OssUploadMixin {
   .avatar {
     width: auto;
     height: 150px;
+    min-width: 150px;
     display: block;
   }
 }
