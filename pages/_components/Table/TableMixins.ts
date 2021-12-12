@@ -47,11 +47,11 @@ export class TableMixinsHelper {
     return Object.entries(obj as { [index: string]: string })
       .filter(([key, value]) => value !== '' && value !== undefined)
       .map(([key, value]) => `${key}:${value}`)
-      .join('&')
+      .join(' AND ')
   }
   static exportTerm(str: any): any {
     return decodeURIComponent(str)
-      .split('&')
+      .split(' AND ')
       .map((s) => s.split(':'))
       .reduce((obj: any, [key, value]) => {
         obj[key] = value

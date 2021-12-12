@@ -17,8 +17,8 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" class="el-button--icon" native-type="button" @click="searchQuery"></el-button>
             <el-button type="primary" icon="el-icon-refresh" class="ml-10 el-button--icon" native-type="button" @click="resetQuery"></el-button>
+            <el-button type="primary" icon="el-icon-search" class="el-button--icon" native-type="button" @click="searchQuery"></el-button>
           </el-form-item>
         </el-form>
       </div>
