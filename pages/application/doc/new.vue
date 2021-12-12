@@ -121,10 +121,10 @@ export default class DocNewPage extends OssUploadMixin {
     this.formModel.image = URL.createObjectURL(file.raw)
   }
   beforeUpload(file: File): boolean {
-    const isJPG = file.type === 'image/jpeg'
+    const isJPG = ['image/jpeg', 'image/png'].includes(file.type)
     const isLt2M = file.size / 1024 / 1024 < 0.5
     if (!isJPG) {
-      this.$message.error('上传封面只能是 JPG 格式!')
+      this.$message.error('上传封面只能是 JPEG、JPG、PNG 格式!')
     }
     if (!isLt2M) {
       this.$message.error('上传图片大小不能超过 500kB!')
