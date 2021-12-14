@@ -34,6 +34,7 @@ export class Module {
   }
 
   search(params?: any): Promise<tableResponse<BlogModel>> {
+    console.log(params)
     return this.$axios.$get<tableResponse<BlogModel>>('/v1/search/doc', { params })
   }
 }

@@ -55,14 +55,14 @@ export default class IndexBanner extends Vue {
         this.$I18nRouter.push({
           path: '/application/docs',
           query: {
-            term: `title:${value}`,
+            term: `keywords:${value}`,
           },
         })
       } else {
         this.$I18nRouter.push({
           path: '/application/pipes',
           query: {
-            term: `name:${value} AND type:${this.searchType}`,
+            term: `keywords:${value} AND type:${this.searchType}`,
           },
         })
       }

@@ -4,7 +4,7 @@
       <div class="search-box">
         <el-form class="form-inline" :inline="true" :model="otherQuery" @submit.native.prevent="searchQuery">
           <el-form-item>
-            <el-input v-model="otherQuery.title" placeholder="按关键字筛选" clearable @keyup.enter.native="searchQuery"></el-input>
+            <el-input v-model="otherQuery.keywords" placeholder="按关键字筛选" clearable @keyup.enter.native="searchQuery"></el-input>
           </el-form-item>
           <el-form-item>
             <el-select v-model="otherQuery.type" placeholder="按类别筛选" clearable @change="searchQuery">
@@ -12,9 +12,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="otherQuery.category" placeholder="按分类筛选" clearable @change="searchQuery">
-              <el-option v-for="item in categoryList" :key="item" :label="item" :value="item" />
-            </el-select>
+            <category-select v-model="otherQuery.tag" type="blog" @change="searchQuery"></category-select>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" icon="el-icon-refresh" class="ml-10 el-button--icon" native-type="button" @click="resetQuery"></el-button>
@@ -76,21 +74,28 @@ import intercept from '@/filters/intercept'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
 import TableMixins, { TableMixinsHelper } from '@/pages/_components/Table/TableMixins'
 import TablePagination from '@/pages/_components/Table/TablePagination.vue'
+import CategorySelect from '@/pages/_components/CategorySelect.vue'
 
 @Component({
-  components: { TablePagination, LayoutBox, CanCreate },
+  components: { CategorySelect, TablePagination, LayoutBox, CanCreate },
   filters: {
     ...intercept,
     blogTypeTranslate: blogConstants.get,
   },
   async asyncData({ app, query }): Promise<any> {
-    const term = TableMixinsHelper.exportTerm(query.term)
+    const term = TableMixinsHelper.getTermObj(query.term)
     const otherQuery = {
-      title: term.title || '',
-      category: term.category || '',
+      keywords: term.keywords || '',
+      tag: term.tag || '',
       type: term.type ? Number(term.type) : '',
     }
-    const listQuery = TableMixinsHelper.initListQuery(query, otherQuery)
+    const listQuery = TableMixinsHelper.getPageSize(query)
+    listQuery.term = TableMixinsHelper.getTermStr(otherQuery, ([key, value]: any) => {
+      if (key === 'keywords') {
+        return `title:${value} OR description:${value}`
+      }
+      return `${key}:${value}`
+    })
     const { count, data } = await app.$api.blog.search(listQuery)
     return {
       otherQuery,
@@ -102,11 +107,10 @@ import TablePagination from '@/pages/_components/Table/TablePagination.vue'
 })
 export default class DocListPage extends TableMixins<BlogModel> {
   protected otherQuery!: {
-    title: string
-    category: string
+    keywords: string
+    tag: string
     type: number
   }
   typeList = blogConstants.getItemsList('TYPE_')
-  categoryList = []
 }
 </script>

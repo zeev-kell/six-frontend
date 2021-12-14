@@ -17,12 +17,18 @@ export default class TableMixins<T> extends Vue {
     term: '',
   }
   // 其他附加参数
-  protected otherQuery: { [index: string]: string | number | undefined } = {}
+  protected otherQuery: { [index: string]: string | number | undefined | any[] } = {}
   protected tableData: T[] = []
   protected count = 0
   async resetQuery(): Promise<void> {
     // 刷新需要重置查询条件
-    Object.keys(this.otherQuery).forEach((k) => (this.otherQuery[k] = ''))
+    Object.keys(this.otherQuery).forEach((k) => {
+      if (Array.isArray(this.otherQuery)) {
+        this.otherQuery[k] = []
+      } else {
+        this.otherQuery[k] = ''
+      }
+    })
     await this.searchQuery()
   }
   async searchQuery(): Promise<void> {
@@ -32,7 +38,7 @@ export default class TableMixins<T> extends Vue {
   }
   async refreshTable(): Promise<void> {
     // 分页可以直接查询
-    this.listQuery.term = TableMixinsHelper.getTerm(this.otherQuery)
+    this.listQuery.term = TableMixinsHelper.getUrlTermStr(this.otherQuery)
     await this.$I18nRouter.push({
       query: this.listQuery as any,
     })
@@ -40,15 +46,40 @@ export default class TableMixins<T> extends Vue {
 }
 
 export class TableMixinsHelper {
-  static getTerm(obj: any): string {
+  private readonly getTermStrMap: ([key, value]: any) => {}
+  constructor(getTermStrMap: ([key, value]: any) => {}) {
+    this.getTermStrMap = getTermStrMap
+  }
+  static getPageSize(query: Route['query']): any {
+    return {
+      page: Number(query.page) || 1,
+      size: Number(query.size) || 20,
+    }
+  }
+  static getTermObj(str: any): any {
+    return decodeURIComponent(str)
+      .split(/ (AND|OR) /)
+      .map((s) => s.split(':'))
+      .reduce((obj: any, [key, value]) => {
+        obj[key] = value
+        return obj
+      }, {})
+  }
+  static getTermStr(obj: { [index: string]: any }, getTermStrMap: ([key, value]: any) => {}): any {
+    return Object.entries(obj)
+      .filter(([key, value]) => value !== undefined && value !== '' && value.length !== 0)
+      .map(getTermStrMap)
+      .join(' AND ')
+  }
+  static getUrlTermStr(obj: any): string {
     return Object.entries(obj as { [index: string]: string })
-      .filter(([key, value]) => value !== '' && value !== undefined)
+      .filter(([key, value]) => value !== undefined && value !== '' && value.length !== 0)
       .map(([key, value]) => `${key}:${value}`)
       .join(' AND ')
   }
   static exportTerm(str: any): any {
     return decodeURIComponent(str)
-      .split(' AND ')
+      .split(/ (AND|OR) /)
       .map((s) => s.split(':'))
       .reduce((obj: any, [key, value]) => {
         obj[key] = value
@@ -59,7 +90,7 @@ export class TableMixinsHelper {
     return {
       page: Number(query.page) || 1,
       size: Number(query.size) || 20,
-      term: TableMixinsHelper.getTerm(Object.assign({}, otherQuery, fixedQuery)),
+      term: TableMixinsHelper.getUrlTermStr(Object.assign({}, otherQuery, fixedQuery)),
     }
   }
 }

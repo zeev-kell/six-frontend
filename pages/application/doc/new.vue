@@ -17,8 +17,7 @@
             @imgDel="removeImage"
           ></mavon-editor-client>
         </div>
-        <div class="card-body">
-          <a id=""></a>
+        <div id="publicSetting" class="card-body">
           <el-form-item label="添加封面" prop="image" :loading="loading">
             <el-upload action="" class="image-cover" :http-request="httpRequest" :show-file-list="false" :before-upload="beforeUpload">
               <img v-if="formModel.image" :src="formModel.image" class="avatar" alt="" />
@@ -43,7 +42,12 @@
       </el-form>
     </div>
     <div v-show="!fullScreen" class="actions el-row">
-      <div class="el-col-equal"></div>
+      <div class="el-col-equal">
+        <transition name="el-zoom-in-top">
+          <el-button v-if="isSetting" type="text" @click.stop="scrollTo()">回到顶部 <i class="el-icon-arrow-up"></i></el-button>
+          <el-button v-else type="text" @click.stop="scrollTo(400)">发布设置 <i class="el-icon-arrow-down"></i></el-button>
+        </transition>
+      </div>
       <div class="el-col-equal text-right">
         <span class="mr-10 text-muted">字数：{{ formModel.content.length }} 字</span>
         <!--        <nuxt-link v-slot="{ href }" :to="localePath('doc-preview')" custom>-->
@@ -56,13 +60,16 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'nuxt-property-decorator'
+import { Component, Watch } from 'nuxt-property-decorator'
 import { blogConstants } from '@/constants/BlogConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
 import MavonEditorClient from '@/pages/application/_components/mavonEditor/MavonEditorClient.vue'
 import OssUploadMixin from '@/pages/application/datum/_components/OssUploadMixin.vue'
 import { uploadChunkOption } from '@/types/ElUpload'
 import UFile from '@/pages/_components/FileUploader/components/UFile'
+
+const cubic = (value) => Math.pow(value, 3)
+const easeInOutCubic = (value) => (value < 0.5 ? cubic(value * 2) / 2 : 1 - cubic((1 - value) * 2) / 2)
 
 @Component({
   components: {
@@ -98,6 +105,9 @@ export default class DocNewPage extends OssUploadMixin {
   ]
   fullScreen = false
   loading = false
+  isSetting = false
+  el = null
+  publicSettingHead = 700
 
   async onSubmit() {
     await this.$refs.formModel.validate().catch((e: Error) => {
@@ -148,6 +158,36 @@ export default class DocNewPage extends OssUploadMixin {
   removeImage(filename: string): void {
     console.log('on img delete:', filename)
   }
+  onWindowScroll(): void {
+    this.isSetting = this.el.scrollTop + this.publicSettingHead > this.el.scrollHeight
+  }
+  scrollTo(negative) {
+    const el = this.el
+    const scrollHeight = el.scrollHeight
+    const start = el.scrollTop
+    const end = negative ? scrollHeight - negative : 0
+    const beginTime = Date.now()
+    const beginValue = end - start
+    const rAF = window.requestAnimationFrame || ((func) => setTimeout(func, 16))
+    const frameFunc = () => {
+      const progress = (Date.now() - beginTime) / 500
+      if (progress < 1) {
+        el.scrollTop = end - beginValue * (1 - easeInOutCubic(progress))
+        rAF(frameFunc)
+      } else {
+        el.scrollTop = end
+      }
+    }
+    rAF(frameFunc)
+  }
+
+  mounted(): void {
+    this.el = document.querySelector('.el-main')
+    this.el.addEventListener('scroll', this.onWindowScroll)
+  }
+  beforeDestroy(): void {
+    this.el.removeEventListener('scroll', this.onWindowScroll)
+  }
 }
 </script>
 
@@ -173,7 +213,6 @@ export default class DocNewPage extends OssUploadMixin {
   }
 }
 .actions {
-  text-align: right;
   padding: 10px 40px;
   position: fixed;
   bottom: 0;

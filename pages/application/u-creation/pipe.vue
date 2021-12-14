@@ -6,14 +6,19 @@ import { TableMixinsHelper } from '@/pages/_components/Table/TableMixins'
 
 @Component({
   async asyncData({ app, query, store }: Context): Promise<any> {
-    const term = TableMixinsHelper.exportTerm(query.term)
+    const term = TableMixinsHelper.getTermObj(query.term)
     const otherQuery = {
-      name: term.name || '',
-      category: term.category || '',
+      keywords: term.keywords || '',
+      tag: term.tag || '',
       type: term.type ? Number(term.type) : '',
     }
-    const listQuery = TableMixinsHelper.initListQuery(query, otherQuery, {
-      provider: store.getters['user/username'],
+    const listQuery = TableMixinsHelper.getPageSize(query)
+    const fixedQuery = { provider: store.getters['user/username'] }
+    listQuery.term = TableMixinsHelper.getTermStr(Object.assign({}, otherQuery, fixedQuery), ([key, value]: any) => {
+      if (key === 'keywords') {
+        return `name:${value} OR description:${value}`
+      }
+      return `${key}:${value}`
     })
     const { count, data } = await app.$api.pipe.search(listQuery)
     return {
