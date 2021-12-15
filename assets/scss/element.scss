@@ -24,7 +24,10 @@
 }
 
 .el-button--icon {
-  padding: 10px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+
   &.text {
     border: transparent;
     background: transparent !important;
@@ -130,6 +133,10 @@
   }
 }
 
+.el-auto {
+  flex: 0 0 auto;
+}
+
 // 按实际大小显示
 .el-col-auto {
   -ms-flex: 0 0 auto;
@@ -207,4 +214,8 @@
 
 .el-popover {
   border-radius: 2px;
+}
+
+.el-form-item_content_full .el-form-item__content {
+  width: 100%;
 }

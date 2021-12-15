@@ -1,7 +1,7 @@
 <template>
   <div>
     <label> {{ $t('common.metadata') }}</label>
-    <div v-for="(ctrl, i) of metadata" :key="i" class="el-row el-row--flex mt-10-a list-item">
+    <div v-for="(ctrl, i) of metadata" :key="i" class="el-row el-row--flex mt-10-a list-item is-align-middle">
       <el-input v-model="ctrl.key" placeholder="key"></el-input>
       <span class="add-on">:</span>
       <el-input v-model="ctrl.value" placeholder="value"></el-input>
@@ -9,7 +9,7 @@
         v-if="!readonly"
         type="dark"
         icon="el-icon-delete"
-        class="el-button--icon m-l-1"
+        class="el-button--icon ml-5 el-auto"
         :title="$t('btn.delete')"
         size="mini"
         @click="remove(i)"

@@ -3,20 +3,17 @@
     <el-form @submit.native.prevent>
       <div class="form-group">
         <label>{{ $t('graph.SecondaryFiles') }}</label>
-        <div v-for="(group, idx) of controls" :key="idx" class="m-b-1 el-input el-input-group el-input-group--append">
+        <div v-for="(group, idx) of controls" :key="idx" class="mt-10-a el-row el-row--flex is-align-middle">
           <native-file-browser-form-field
             class="el-input__inner"
             :form-control="group.get('path')"
             :selection-type="group.get('class').value === 'File' ? 'file' : 'directory'"
             @onUpdate="onUpdate($event, group.get('path'))"
           />
-          <span class="el-input-group__append" style="background: transparent; border: none">
-            <button :disabled="readonly" type="button" class="pointer el-button--text" @click="deleteSecondaryFile(idx)">
-              <i class="el-icon-delete" />
-            </button>
-          </span>
+          <el-button :disabled="readonly" type="dark" class="el-button--icon ml-5 el-auto" icon="el-icon-delete" @click="deleteSecondaryFile(idx)">
+          </el-button>
         </div>
-        <div>
+        <div class="mt-5">
           <el-button type="text" size="mini" @click="addSecondaryFile('', 'File')"> <i class="el-icon-plus" /> {{ $t('graph.add_file') }} </el-button>
           <template v-if="allowDirectories">
             {{ $t('common.or') }}

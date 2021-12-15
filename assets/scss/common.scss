@@ -49,6 +49,14 @@ hr {
   margin-right: 0;
 }
 
+.mr-2 {
+  margin-right: 2px;
+}
+
+.mr-5 {
+  margin-right: 5px;
+}
+
 .mr-10 {
   margin-right: 10px;
 }
@@ -89,8 +97,16 @@ hr {
   margin-left: 0 !important;
 }
 
+.ml-5 {
+  margin-left: 5px;
+}
+
 .ml-10 {
   margin-left: 10px;
+}
+
+.ml-20 {
+  margin-left: 20px;
 }
 
 .m-l-05 {
@@ -104,6 +120,11 @@ hr {
 .mx-0 {
   @extend .ml-0;
   @extend .mr-0;
+}
+
+.mx-5 {
+  @extend .ml-5;
+  @extend .mr-5;
 }
 
 .m-x-1 {
@@ -126,6 +147,10 @@ hr {
   margin-bottom: 1rem;
 }
 
+.m-10 {
+  margin: 10px;
+}
+
 //
 // padding
 // p-5   使用像素
@@ -143,6 +168,10 @@ hr {
 
 .pt-5 {
   padding-top: 5px;
+}
+
+.pt-10 {
+  padding-top: 10px;
 }
 
 .pt-15 {
@@ -200,6 +229,11 @@ hr {
   padding-bottom: 5px;
 }
 
+.py-10 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .py-40 {
   padding-top: 40px;
   padding-bottom: 40px;
@@ -228,6 +262,10 @@ hr {
 
 .p-20 {
   padding: 20px;
+}
+
+.no-gutters > * {
+  padding: 0;
 }
 
 //
@@ -382,6 +420,11 @@ ul {
   position: relative;
 }
 
+.p-s {
+  position: sticky;
+  position: -webkit-sticky;
+}
+
 //
 // image
 //
@@ -528,4 +571,8 @@ img {
 
 .scrollbar {
   overflow-y: auto;
+}
+
+.overflow-v {
+  overflow: visible;
 }
