@@ -164,5 +164,6 @@ export default {
     merge_nested: 'Nested',
     merge_flattened: 'Flattened',
     scatter_method: 'Scatter Method',
+    no_entries_defined: 'No entries defined',
   },
 }

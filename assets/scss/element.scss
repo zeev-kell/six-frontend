@@ -23,14 +23,24 @@
   padding-right: 15px;
 }
 
+.el-button--icon {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+
+  &.text {
+    border: transparent;
+    background: transparent !important;
+    padding: 6px;
+  }
+  &.is-loading > span {
+    display: none;
+  }
+}
+
 .el-button {
   @include m(dark) {
     @include button-variant($--button-dark-font-color, $--button-dark-background-color, $--button-dark-border-color);
-  }
-
-  &.block {
-    display: block;
-    width: 100%;
   }
 
   &.pass {
@@ -42,21 +52,9 @@
   }
 }
 
-.el-button-block {
+.el-button--block {
   width: 100%;
-}
-
-.el-button--icon {
-  width: 30px;
-  height: 30px;
-  padding: 0;
-}
-
-.el-link {
-  &.block {
-    display: block;
-    width: 100%;
-  }
+  display: block;
 }
 
 .el-dialog__header {
@@ -133,6 +131,10 @@
   .el-dropdown-menu__item--divided::before {
     background-color: transparent;
   }
+}
+
+.el-auto {
+  flex: 0 0 auto;
 }
 
 // 按实际大小显示

@@ -3,19 +3,17 @@
     <el-form @submit.native.prevent>
       <div class="form-group">
         <label>{{ $t('graph.SecondaryFiles') }}</label>
-        <div v-for="(group, idx) of controls" :key="idx" class="m-b-1 el-input el-input-group el-input-group--append">
+        <div v-for="(group, idx) of controls" :key="idx" class="mt-10-a el-row el-row--flex is-align-middle">
           <native-file-browser-form-field
             class="el-input__inner"
             :form-control="group.get('path')"
             :selection-type="group.get('class').value === 'File' ? 'file' : 'directory'"
+            @onUpdate="onUpdate($event, group.get('path'))"
           />
-          <span class="el-input-group__append" style="background: transparent; border: none">
-            <button :disabled="readonly" type="button" class="pointer el-button--text" @click="deleteSecondaryFile(idx)">
-              <i class="el-icon-delete" />
-            </button>
-          </span>
+          <el-button :disabled="readonly" type="dark" class="el-button--icon ml-5 el-auto" icon="el-icon-delete" @click="deleteSecondaryFile(idx)">
+          </el-button>
         </div>
-        <div>
+        <div class="mt-5">
           <el-button type="text" size="mini" @click="addSecondaryFile('', 'File')"> <i class="el-icon-plus" /> {{ $t('graph.add_file') }} </el-button>
           <template v-if="allowDirectories">
             {{ $t('common.or') }}
@@ -25,36 +23,38 @@
           </template>
         </div>
       </div>
-      <div class="form-group m-b-1">
-        <label> {{ $t('common.metadata') }}</label>
-        <!-- TODO -->
-      </div>
+      <map-list ref="MapList" class="form-group m-b-1"></map-list>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button type="dark" size="mini" @click="onClose"> 取 消 </el-button>
-      <el-button type="primary" size="mini" @click="onSubmit"> 确 定 </el-button>
+      <el-button type="primary" native-type="submit" size="mini" @click="onSubmit"> 确 定 </el-button>
     </div>
   </el-dialog>
 </template>
 
 <script lang="ts">
-import { Component, InjectReactive, Vue } from 'nuxt-property-decorator'
+import { Component, InjectReactive, Prop, Vue } from 'nuxt-property-decorator'
 import NativeFileBrowserFormField from '@/pages/_components/Graph/components/NativeFileBrowserFormField.vue'
 import { WorkflowModel } from 'cwlts/models'
 import { FormArray, FormControl, FormGroup } from '@/components/FormControl.js'
+import MapList from '@/pages/_components/Graph/components/MapList.vue'
 
 @Component({
-  components: { NativeFileBrowserFormField },
+  components: { MapList, NativeFileBrowserFormField },
 })
 export default class InputValueEditorModal extends Vue {
+  $refs!: {
+    MapList: MapList
+  }
   @InjectReactive('model')
   model!: WorkflowModel
+  @Prop({ default: false })
+  readonly!: boolean
 
   dialogFormVisible = false
   metadata: any = null
   secondaryFiles: any = null
   relativePathRoot = ''
-  readonly = false
   form = new FormGroup({})
 
   get allowDirectories(): boolean {
@@ -72,7 +72,23 @@ export default class InputValueEditorModal extends Vue {
       secondaryFiles: new FormArray([]),
       metadata: new FormControl(this.metadata),
     })
+    try {
+      for (const entry of this.secondaryFiles) {
+        const formArray = this.form.get('secondaryFiles') as FormArray
+        formArray.push(
+          new FormGroup({
+            class: new FormControl(entry.class),
+            path: new FormControl(entry.path),
+          })
+        )
+      }
+    } catch (ex) {
+      console.warn('Invalid secondary files format', this.secondaryFiles)
+    }
     this.dialogFormVisible = true
+    this.$nextTick(() => {
+      this.$refs.MapList.setMetaDate(this.metadata)
+    })
   }
   deleteSecondaryFile(index: number): void {
     const ctrl: any = this.form.get('secondaryFiles')
@@ -87,10 +103,18 @@ export default class InputValueEditorModal extends Vue {
       })
     )
   }
+  onUpdate(value: any, control: any): void {
+    // 非普通类型的更新方式
+    control.setValue(value)
+  }
   onClose(): void {
     this.dialogFormVisible = false
   }
   onSubmit(): void {
+    const fVal = this.form.value
+    fVal.metadata = this.$refs.MapList.getMetadata()
+    fVal.secondaryFiles = fVal.secondaryFiles.filter((entry: any) => entry.path.trim() !== '')
+    this.$emit('on-update', fVal)
     this.dialogFormVisible = false
   }
 }

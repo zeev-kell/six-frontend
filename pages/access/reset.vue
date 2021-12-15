@@ -17,7 +17,7 @@
           </el-input>
         </el-form-item>
         <el-form-item>
-          <loading-button class="el-button-block" round type="primary" native-type="submit" :callback="reset"> 提交 </loading-button>
+          <loading-button class="el-button--block" round type="primary" native-type="submit" :callback="reset"> 提交 </loading-button>
         </el-form-item>
         <el-form-item>
           <div class="text-right">

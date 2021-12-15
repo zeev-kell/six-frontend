@@ -164,5 +164,6 @@ export default {
     merge_nested: '嵌套',
     merge_flattened: '展开',
     scatter_method: 'Scatter方法',
+    no_entries_defined: '未定义任何元数据',
   },
 }
