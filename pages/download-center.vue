@@ -36,7 +36,7 @@
               <h3 class="text-center">Sixoclock python包</h3>
               <p class="text-justify">在python中运行下载自sixoclock软件仓库的软件与流程</p>
               <a href="https://pypi.org/project/sixrunr/" target="_blank" class="no-underline">
-                <el-button type="primary" class="block">去下载</el-button>
+                <el-button type="primary" class="el-button--block">去下载</el-button>
               </a>
             </el-card>
           </el-col>
@@ -48,7 +48,7 @@
               <h3 class="text-center">Sixoclock软件仓库</h3>
               <p class="text-justify">查找并下载需要的数据处理软件<br />&nbsp;</p>
               <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipes')" custom>
-                <el-button type="primary" class="block" @click="navigate" @keypress.enter="navigate"> 登录系统 </el-button>
+                <el-button type="primary" class="el-button--block" @click="navigate" @keypress.enter="navigate"> 登录系统 </el-button>
               </nuxt-link>
             </el-card>
           </el-col>
@@ -60,7 +60,7 @@
               <h3 class="text-center">使用sixoclock处理数据</h3>
               <p class="text-justify">运行下载自sixoclock软件仓库的流程处理本地数据</p>
               <docs-link to="/">
-                <el-button type="primary" class="block">阅读教程 </el-button>
+                <el-button type="primary" class="el-button--block">阅读教程 </el-button>
               </docs-link>
             </el-card>
           </el-col>

@@ -20,7 +20,7 @@
           </el-input>
         </el-form-item>
         <el-form-item>
-          <loading-button class="el-button-block" round type="primary" native-type="submit" :callback="register"> 立即注册 </loading-button>
+          <loading-button class="el-button--block" round type="primary" native-type="submit" :callback="register"> 立即注册 </loading-button>
         </el-form-item>
         <el-form-item class="text-center mb-0 el-form_error_rl" prop="checked">
           <el-checkbox v-model="form.checked"> 注册即代表同意 </el-checkbox>

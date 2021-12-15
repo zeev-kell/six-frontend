@@ -50,13 +50,13 @@
         <template v-else-if="isInputType('File')">
           <div class="el-row" style="width: 100%">
             <native-file-browser-form-field :form-control="control.get('path')" @onUpdate="onUpdate($event, control.get('path'))" />
-            <el-button v-if="control.get('path').enabled" size="mini" type="text" @click="promptFileMetadata()">
+            <el-button v-if="control.get('path').value && control.get('path').enabled" size="mini" type="text" @click="promptFileMetadata()">
               <div v-if="metadataKeysCount > 0 || secondaryFilesCount > 0">
-                {{ secondaryFilesCount }} secondary {{ secondaryFilesCount === 1 ? 'file' : 'files' }}, {{ metadataKeysCount }} metadata
+                {{ secondaryFilesCount }} {{ $t('graph.SecondaryFiles') }}, {{ metadataKeysCount }} {{ $t('common.metadata') }}
               </div>
               <span v-else>{{ $t('graph.add_files_and_metadata') }}</span>
             </el-button>
-            <input-value-editor-modal ref="fileMetadata" />
+            <input-value-editor-modal ref="fileMetadata" @on-update="onUpdateFileMetadata" />
           </div>
         </template>
 
@@ -390,6 +390,11 @@ export default class InputValueEditor extends Vue {
   }
   promptFileMetadata(): void {
     this.$refs.fileMetadata.showDialog(this.control.value, this.relativePathRoot)
+  }
+  onUpdateFileMetadata(value: any): void {
+    this.control.patchValue(value)
+    this.formControl.setValue(this.control.value)
+    this.$emit('on-child-update')
   }
   makeControlForArray(): any {
     switch (this.inputArrayItemsType) {

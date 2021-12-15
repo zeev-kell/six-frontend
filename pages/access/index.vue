@@ -10,7 +10,7 @@
           <el-input v-model="form.password" placeholder="请输入密码" type="password" />
         </el-form-item>
         <el-form-item>
-          <loading-button class="el-button-block" round type="primary" native-type="submit" :callback="onSubmit"> 登录 </loading-button>
+          <loading-button class="el-button--block" round type="primary" native-type="submit" :callback="onSubmit"> 登录 </loading-button>
         </el-form-item>
         <el-form-item>
           <div class="el-row el-row--flex">
