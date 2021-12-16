@@ -3,7 +3,7 @@
     <div class="card card-body">
       <div class="el-row--flex is-justify-space-between pb-10">
         <div class="search-box">
-          <el-form class="form-inline" :inline="true" :model="query" @submit.native.prevent="">
+          <el-form class="form-inline" :inline="true" size="small" :model="query" @submit.native.prevent="">
             <el-form-item>
               <el-autocomplete v-model="query.name" :fetch-suggestions="queryName" placeholder="按名字筛选">
                 <template slot-scope="{ item }">
@@ -27,10 +27,12 @@
         </div>
         <div class="action-box">
           <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-new')" custom>
-            <el-button type="primary" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
+            <el-button type="primary" size="small" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
           </nuxt-link>
           <nuxt-link v-slot="{ navigate }" :to="localePath('graph-info-new')" custom>
-            <el-button type="default" role="link" icon="el-icon-share" @click="navigate" @keypress.enter="navigate"> 流程组合 </el-button>
+            <el-button type="default" size="small" role="link" icon="el-icon-share" @click="navigate" @keypress.enter="navigate">
+              流程组合
+            </el-button>
           </nuxt-link>
         </div>
       </div>

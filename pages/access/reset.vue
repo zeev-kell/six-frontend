@@ -87,18 +87,12 @@ export default class ResetPage extends Vue {
 
   async reset(): Promise<void> {
     await this.$refs.form.validate()
-    await this.$$axios
-      .$post('/v1/user/security', {
-        email: this.form.email,
-        password: this.form.password,
-        code: this.form.code,
-      })
-      .then(() => {
-        this.$message.success('重置成功，正在跳转至登录...')
-        setTimeout(() => {
-          this.$I18nRouter.push('/access')
-        }, 3000)
-      })
+    await this.$$axios.$post('/v1/user/security', this.form).then(() => {
+      this.$message.success('重置成功，正在跳转至登录...')
+      setTimeout(() => {
+        this.$I18nRouter.push('/access')
+      }, 3000)
+    })
   }
 }
 </script>

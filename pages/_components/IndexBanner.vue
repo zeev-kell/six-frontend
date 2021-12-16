@@ -50,22 +50,23 @@ export default class IndexBanner extends Vue {
   }
   toSearch() {
     const value = this.searchInput.trim()
-    if (value) {
-      if (this.searchType === '2') {
-        this.$I18nRouter.push({
-          path: '/application/docs',
-          query: {
-            term: `keywords:${value}`,
-          },
-        })
-      } else {
-        this.$I18nRouter.push({
-          path: '/application/pipes',
-          query: {
-            term: `keywords:${value} AND type:${this.searchType}`,
-          },
-        })
-      }
+    if (!value) {
+      return
+    }
+    if (this.searchType === '2') {
+      this.$I18nRouter.push({
+        path: '/application/docs',
+        query: {
+          term: `keywords:${value}`,
+        },
+      })
+    } else {
+      this.$I18nRouter.push({
+        path: '/application/pipes',
+        query: {
+          term: `keywords:${value} AND type:${this.searchType}`,
+        },
+      })
     }
   }
 }

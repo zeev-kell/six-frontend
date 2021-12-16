@@ -1,15 +1,9 @@
-import { Context } from '@nuxt/types'
-import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { BlogModel } from '@/types/model/Blog'
 import { MESSAGE_ERROR, MESSAGE_SUCCESS } from '@/utils/reponse-helper'
 import { tableResponse } from '@/types/table'
+import BaseModule from '@/assets/api/BaseModule'
 
-export class Module {
-  private $axios: NuxtAxiosInstance
-
-  constructor({ $axios }: Context) {
-    this.$axios = $axios
-  }
+export class Module extends BaseModule {
   create(data: any): Promise<any> {
     return this.$axios.$post('/v1/blog', data)
   }

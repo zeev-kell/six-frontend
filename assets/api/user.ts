@@ -1,15 +1,8 @@
 // 增加处理异常的 message 提示
-import { NuxtAxiosInstance } from '@nuxtjs/axios'
-import { Context } from '@nuxt/types'
 import Element from 'element-ui'
+import BaseModule from '@/assets/api/BaseModule'
 
-export class Module {
-  private $axios: NuxtAxiosInstance
-
-  constructor({ $axios }: Context) {
-    this.$axios = $axios
-  }
-
+export class Module extends BaseModule {
   getInfo(): any {
     return this.$axios.$get(`/v1/user/profile`)
   }

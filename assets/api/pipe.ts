@@ -1,17 +1,10 @@
-import { NuxtAxiosInstance } from '@nuxtjs/axios'
-import { Context } from '@nuxt/types'
 import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { PipeModel } from '@/types/model/Pipe'
 import { MESSAGE_SUCCESS, MESSAGE_ERROR } from '@/utils/reponse-helper'
 import { tableResponse } from '@/types/table'
+import BaseModule from '@/assets/api/BaseModule'
 
-export class Module {
-  private $axios: NuxtAxiosInstance
-
-  constructor({ $axios }: Context) {
-    this.$axios = $axios
-  }
-
+export class Module extends BaseModule {
   create(data: any): Promise<any> {
     if (typeof data.content !== 'string') {
       data.content = JSON.stringify(data.content)

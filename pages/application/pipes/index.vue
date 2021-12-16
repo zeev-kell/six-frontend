@@ -2,7 +2,7 @@
   <layout-box class="py-10">
     <div slot="header" class="el-row--flex is-justify-space-between">
       <div class="search-box">
-        <el-form class="form-inline" :inline="true" :model="otherQuery" @submit.native.prevent="searchQuery">
+        <el-form class="form-inline" :inline="true" size="small" :model="otherQuery" @submit.native.prevent="searchQuery">
           <el-form-item>
             <el-input v-model="otherQuery.keywords" placeholder="按关键字筛选" clearable @keyup.enter.native="searchQuery"></el-input>
           </el-form-item>
@@ -15,17 +15,17 @@
             <category-select v-model="otherQuery.tag" type="pipe" @change="searchQuery"></category-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-refresh" class="ml-10 el-button--icon" native-type="button" @click="resetQuery"></el-button>
+            <el-button type="primary" icon="el-icon-refresh" class="el-button--icon" native-type="button" @click="resetQuery"></el-button>
             <el-button type="primary" icon="el-icon-search" class="el-button--icon" native-type="button" @click="searchQuery"></el-button>
           </el-form-item>
         </el-form>
       </div>
       <div class="action-box">
         <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-new')" custom>
-          <el-button type="primary" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
+          <el-button type="primary" size="small" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
         </nuxt-link>
         <nuxt-link v-slot="{ navigate }" :to="localePath('graph-info-new')" custom>
-          <el-button type="default" role="link" icon="el-icon-share" @click="navigate" @keypress.enter="navigate"> 流程组合 </el-button>
+          <el-button type="default" size="small" role="link" icon="el-icon-share" @click="navigate" @keypress.enter="navigate"> 流程组合 </el-button>
         </nuxt-link>
       </div>
     </div>

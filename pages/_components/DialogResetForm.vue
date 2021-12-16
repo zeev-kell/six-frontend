@@ -22,12 +22,8 @@ export default class DialogResetForm extends Vue {
     }
   }
 
-  validateForm(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.$refs.ruleForm.validate((valid: boolean) => {
-        valid ? resolve() : reject(valid)
-      })
-    })
+  async validateForm(): Promise<void> {
+    await this.$refs.ruleForm.validate()
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

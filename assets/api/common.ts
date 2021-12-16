@@ -1,13 +1,6 @@
-import { Context } from '@nuxt/types'
-import { NuxtAxiosInstance } from '@nuxtjs/axios'
+import BaseModule from '@/assets/api/BaseModule'
 
-export class Module {
-  private $axios: NuxtAxiosInstance
-
-  constructor({ $axios }: Context) {
-    this.$axios = $axios
-  }
-
+export class Module extends BaseModule {
   getTags(params?: any): Promise<any> {
     return this.$axios.$get<any>('/v1/tags', { params })
   }

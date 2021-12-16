@@ -1,26 +1,19 @@
-import { NuxtAxiosInstance } from '@nuxtjs/axios'
-import { Context } from '@nuxt/types'
 import { MESSAGE_SUCCESS, MESSAGE_ERROR } from '@/utils/reponse-helper'
 import { datumConstants } from '@/constants/DatumConstants'
+import BaseModule from '@/assets/api/BaseModule'
+import { tableResponse } from '@/types/table'
+import { DatumModel } from '@/types/model/Datum'
 
-export class Module {
-  private $axios: NuxtAxiosInstance
-
-  constructor({ $axios }: Context) {
-    this.$axios = $axios
-  }
-
+export class Module extends BaseModule {
   create(data: any): Promise<any> {
     return this.$axios.$post('/v2/data', data)
   }
-
   removeVersion(resourceId: string) {
     return this.$axios
       .$delete('/v2/data/' + resourceId)
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }
-
   getOssToken(): Promise<any> {
     return this.$axios.$get('/v1/osstoken').then((response) => {
       const token = response.data
@@ -73,6 +66,10 @@ export class Module {
         type: datumConstants.items.TYPE_FORMAT,
       },
     })
+  }
+  search(params?: any): Promise<any> {
+    console.log(params)
+    return this.$axios.$get<tableResponse<DatumModel>>('/v1/search/data', { params })
   }
 }
 

@@ -1,0 +1,12 @@
+.search-box,
+.action-box {
+  .el-button--icon {
+    height: 32px;
+    line-height: 32px;
+    font-size: 12px;
+    width: 32px;
+  }
+  .el-button + .el-button {
+    margin-left: 5px;
+  }
+}

@@ -2,6 +2,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { tableQuery } from '@/types/table'
 import { ElTable } from 'element-ui/types/table'
 import { Route } from 'vue-router'
+import './TableMixins.scss'
 
 @Component({
   watchQuery: ['page', 'size', 'term'],

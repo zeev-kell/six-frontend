@@ -8,7 +8,7 @@ export default class MavonEditorToc extends Vue {
   navList = []
   @Watch('toc', { immediate: true })
   onWatchToc(value: string[]) {
-    const toc = JSON.parse(JSON.stringify(value))
+    const toc: any[] = JSON.parse(JSON.stringify(value))
     const levelStack: any[] = []
     const root: any = {
       level: 0,

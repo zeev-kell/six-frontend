@@ -2,7 +2,7 @@
   <div class="container-fluid p-20">
     <div class="el-row--flex is-justify-space-between pb-10">
       <div class="search-box">
-        <el-form class="form-inline" :inline="true" :model="query" @submit.native.prevent="">
+        <el-form class="form-inline" :inline="true" size="small" :model="query" @submit.native.prevent="">
           <el-form-item>
             <el-autocomplete v-model="query.name" :fetch-suggestions="queryName" placeholder="按名字筛选">
               <template slot-scope="{ item }">
@@ -15,7 +15,7 @@
         </el-form>
       </div>
       <div class="action-box">
-        <loading-button type="info" icon="el-icon-download" :callback="onBatchDownload" :disabled="!hasSelected">下载</loading-button>
+        <loading-button type="info" size="small" icon="el-icon-download" :callback="onBatchDownload" :disabled="!hasSelected">下载</loading-button>
       </div>
     </div>
     <div class="table-box">
