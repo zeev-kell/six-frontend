@@ -7,7 +7,7 @@ import { CaseModel } from '@/types/model/Case'
   async middleware({ store, params, app }) {
     const item: CaseModel = store.state.case
     // ID 不同，需要重新请求数据
-    if (params.id !== item.id?.toString()) {
+    if (params.id !== item.resource_id) {
       const item = await app.$api.case.get(params.id)
       store.commit('case/UPDATE_CURRENT_STORE', item)
     }

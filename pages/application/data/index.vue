@@ -8,7 +8,7 @@
           </el-form-item>
           <el-form-item>
             <el-select v-model="otherQuery.type" placeholder="按类别筛选" clearable>
-              <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value" />
+              <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
             </el-select>
           </el-form-item>
           <el-form-item>

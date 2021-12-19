@@ -23,25 +23,14 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <el-dropdown trigger="click" size="medium" @command="handleDownload">
-          <el-button type="info" icon="el-icon-download"> 下载 </el-button>
-          <el-dropdown-menu slot="dropdown" class="el-dropdown-info">
-            <el-dropdown-item command="json"> JSON 格式 </el-dropdown-item>
-            <el-dropdown-item command="yaml"> YAML 格式 </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <can-create :is-user="item.provider">
-          <toggle-edit-info type="primary" icon="el-icon-edit"> 编辑 </toggle-edit-info>
-        </can-create>
-        <can-create :is-user="item.provider">
-          <el-button type="danger" icon="el-icon-delete" class="mx-0" @click="handleDelete"> 删除 </el-button>
-        </can-create>
+        <toggle-edit-info type="warning" icon="el-icon-back"> 详情 </toggle-edit-info>
       </div>
     </div>
     <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">
-      <el-tab-pane label="资源介绍" name="application-case-id-index" />
-      <el-tab-pane label="工作结构" name="application-case-id-index-work" />
-      <el-tab-pane label="使用教程" name="application-case-id-index-course" />
+      <el-tab-pane label="资源介绍" name="application-case-id-edit" />
+      <el-tab-pane label="工作结构" name="application-case-id-edit-work" />
+      <el-tab-pane label="使用教程" name="application-case-id-edit-course" />
+      <el-tab-pane label="管理" name="application-case-id-edit-setting" />
     </el-tabs>
     <div class="px-20 mt-5 pb-10 no-gutters">
       <nuxt-child />
@@ -63,7 +52,7 @@ import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vu
 @Component({
   components: { LayoutBox, ToggleEditInfo, CanExamine, CanCreate },
 })
-export default class CaseIdIndex extends mixins<CaseItemMixin>(CaseMixin) {
+export default class CaseIdEditIndex extends mixins<CaseItemMixin>(CaseMixin) {
   handleDownload(format = 'yaml'): void {
     const asYaml = format === 'yaml'
     const data = stringifyObject(getObject(this.item.content), asYaml)
@@ -75,6 +64,10 @@ export default class CaseIdIndex extends mixins<CaseItemMixin>(CaseMixin) {
       type: 'warning',
     }).then(() => {
       return this.$api.case.remove(this.$route.params.id).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!',
+        })
         this.$I18nRouter.push('/application/cases')
       })
     })

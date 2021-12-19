@@ -161,7 +161,7 @@ export default class DocNewPage extends OssUploadMixin {
   onWindowScroll(): void {
     this.isSetting = this.el.scrollTop + this.publicSettingHead > this.el.scrollHeight
   }
-  scrollTo(negative: number) {
+  scrollTo(negative = 0) {
     const el = this.el
     const scrollHeight = el.scrollHeight
     const start = el.scrollTop

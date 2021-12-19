@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div v-if="item.profile" class="el-row el-row--flex">
+    <div v-if="graphItem.content" class="el-row el-row--flex">
       <div class="el-col el-col-18 pr-20">
         <div class="card">
           <div class="card-header el-row--flex is-align-middle">
@@ -8,7 +8,14 @@
           </div>
           <div class="card-body">
             <div class="page-graph-box">
-              <graph-index ref="graph" class="h-100" :item="item" config-type="run" tools="download|plus,minus,fit" @propagate-event="onPropagate" />
+              <graph-index
+                ref="graph"
+                class="h-100"
+                :item="graphItem"
+                config-type="run"
+                tools="download|plus,minus,fit"
+                @propagate-event="onPropagate"
+              />
             </div>
           </div>
         </div>
@@ -20,16 +27,16 @@
           </div>
           <div class="card-body">
             <div style="font-weight: 600; margin-bottom: 10px">
-              {{ profile.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}
+              {{ graphItem.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}
             </div>
-            <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + item.profile)" :title="item.profile">
-              {{ profile.name }}
+            <nuxt-link v-if="graphItem.source" class="text-truncate" :to="localePath('/application/pipe/' + graphItem.source)">
+              {{ graphItem.source }}
             </nuxt-link>
           </div>
         </div>
       </div>
     </div>
-    <div v-else>暂无运行案例</div>
+    <div v-else>暂无工作结构</div>
   </div>
 </template>
 
@@ -39,7 +46,9 @@ import { GraphEvent } from '@/constants/GraphEvent'
 import { pipeConstants } from '@/constants/PipeConstants'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
-import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
+import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
+import { CommandLineTool } from 'cwlts/mappings/v1.0/CommandLineTool'
+import { Workflow } from 'cwlts/mappings/v1.0'
 
 @Component({
   filters: {
@@ -47,33 +56,30 @@ import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vu
   },
   components: { GraphIndex },
 })
-export default class Case extends PipeItemMixin {
+export default class Work extends CaseItemMixin {
   $refs!: {
     graph: HTMLFormElement
   }
-  profile: any = {}
 
-  async onPropagate(eventName: string): Promise<void> {
+  get graphItem() {
+    return {
+      type: this.$store.getters['case/type'],
+      content: this.content.workflow,
+      version: this.content.version,
+      input: this.content.input,
+      source: this.content.source,
+    }
+  }
+
+  onPropagate(eventName: string): void {
     // TODO 修改为事件
     // 监听第一次实例化事件
     if (GraphEvent.TriggerPageModalCreate === eventName) {
-      const profile = this.profile
-      if (profile?.content) {
-        this.updateGraphJob()
-      } else {
-        const profileId = this.item.profile
-        if (profileId) {
-          this.profile = await this.$axios.$get(`/v2/pipe/${profileId}`)
-          this.updateGraphJob()
-        }
-      }
+      const job = getObject(this.graphItem.input || {})
+      this.$nextTick(() => {
+        this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
+      })
     }
-  }
-  updateGraphJob() {
-    const job = getObject(this.profile.content)
-    this.$nextTick(() => {
-      this.$refs.graph.dispatchAction('updateJob', job)
-    })
   }
 }
 </script>

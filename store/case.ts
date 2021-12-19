@@ -3,21 +3,37 @@ import type { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { NuxtState } from '@nuxt/types/app'
 import { RootState } from '@/store/index'
 import { ApiType } from '@/types/plugin'
+import { CaseContent } from '@/types/model/Case'
+import { pipeConstants } from '@/constants/PipeConstants'
 
 export const state = (): NuxtState => ({
-  id: null,
   resource_id: undefined,
   type: undefined,
   name: '',
   description: '',
   content: null,
+  create_at: '',
+  updated_at: '',
+  instruction: '',
+  status: undefined,
+  readme: '',
+  provider: '',
+  category: [],
 })
 
 export type CaseModuleState = ReturnType<typeof state>
 
 export const getters: GetterTree<CaseModuleState, RootState> = {
-  items: (state) => {
-    return JSON.parse(state.content)
+  content(state): CaseContent | {} {
+    try {
+      return JSON.parse(state.content)
+    } catch (e) {
+      console.log(e)
+      return {}
+    }
+  },
+  type(state, getters): string {
+    return (getters.content?.workflow?.class === 'CommandLineTool' ? pipeConstants.items.TYPE_TOOL : pipeConstants.items.TYPE_WORKFLOW) as string
   },
 }
 

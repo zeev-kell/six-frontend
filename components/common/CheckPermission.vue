@@ -18,7 +18,7 @@ export default class CheckPermission extends Vue {
   isUser!: string
   protected verification = 0
   get hadPermissive() {
-    if (this.isUser !== ' ') {
+    if (this.isUser !== '') {
       return this.isUser === this.username && this.permissions & this.verification
     }
     return this.permissions & this.verification

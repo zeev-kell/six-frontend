@@ -31,9 +31,6 @@ import LoadingButton from '@/components/LoadingButton.vue'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
-  filters: {
-    pipeTypeTranslate: pipeConstants.get,
-  },
   components: {
     LoadingButton,
     CodeMirrorClient,
@@ -62,7 +59,6 @@ export default class Work extends PipeItemMixin {
     graph: HTMLFormElement
     pipeSelect: HTMLFormElement
   }
-  graphItem = null
   options = []
   content = ''
   value = ''

@@ -18,7 +18,7 @@
         </el-form>
       </div>
       <div class="action-box">
-        <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-id-case-new')" custom>
+        <nuxt-link v-slot="{ navigate }" :to="localePath('application-case-new')" custom>
           <el-button type="primary" size="small" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
         </nuxt-link>
       </div>
@@ -26,7 +26,7 @@
     <el-table ref="multipleTable" :data="tableData" class="w-100" height="200px">
       <el-table-column label="名称" prop="name" sortable width="280">
         <template slot-scope="{ row }">
-          <nuxt-link class="text-truncate" :to="localePath('/application/case/' + row['id'])" :title="row.name">
+          <nuxt-link class="text-truncate" :to="localePath('/application/case/' + row['resource_id'])" :title="row.name">
             {{ row.name }}
           </nuxt-link>
         </template>
@@ -36,7 +36,6 @@
           {{ row.type | caseTypeTranslate | t({ prefix: 'constant.' }) }}
         </template>
       </el-table-column>
-      <el-table-column label="关联" prop="resource_id" width="120" />
       <el-table-column label="描述" prop="description">
         <template slot-scope="{ row }">
           {{ row.description | intercept }}
@@ -51,7 +50,7 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import { PipeModel } from '@/types/model/Pipe'
+import { CaseModel } from '@/types/model/Case'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
@@ -80,7 +79,7 @@ import { caseConstants } from '@/constants/CaseConstants'
       }
       return `${key}:${value}`
     })
-    const { count, data } = await app.$api.case.search(listQuery)
+    const { count, data } = await app.$api.case.getList(listQuery)
     return {
       otherQuery,
       listQuery,
@@ -89,7 +88,7 @@ import { caseConstants } from '@/constants/CaseConstants'
     }
   },
 })
-export default class CasesIndexPage extends TableMixins<PipeModel> {
+export default class CaseListPage extends TableMixins<CaseModel> {
   protected otherQuery!: {
     keywords: string
     type: number

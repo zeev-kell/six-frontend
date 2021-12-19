@@ -19,7 +19,7 @@
             </el-form-item>
             <el-form-item label="类别" prop="type">
               <el-select v-model="formModel.type" placeholder="请选择类别" clearable style="width: 100%" :disabled="disabledType">
-                <el-option v-for="item in typeList" :key="item.value" :label="$t(item.label)" :value="item.value" />
+                <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
               </el-select>
             </el-form-item>
             <el-form-item label="描述" prop="description">

@@ -37,8 +37,8 @@ import MavonEditorClient from '@/pages/application/_components/mavonEditor/Mavon
   },
 })
 export default class PipeEditIndex extends PipeItemMixin {
-  readmeByAuthor = null
-  readmeBySystem = null
+  readmeByAuthor = ''
+  readmeBySystem = ''
   async onSubmit() {
     const data = { readme: this.readmeByAuthor }
     await this.$api.pipe.update(this.item.pipe_id, data).then(() => {

@@ -12,10 +12,10 @@
       </div>
       <div class="search-wrap mb-50">
         <el-input v-model="searchInput" style="max-width: 450px" placeholder="提供1000+种工具和知识" @keyup.enter.native="toSearch">
-          <el-select slot="prepend" v-model="searchType" placeholder="请选择" style="width: 80px">
-            <el-option label="工具" value="0" />
-            <el-option label="流程" value="1" />
-            <el-option label="文档" value="2" />
+          <el-select slot="prepend" v-model="searchType" style="width: 80px">
+            <el-option label="软件" value="pipes" />
+            <el-option label="文档" value="docs" />
+            <el-option label="案例" value="cases" />
           </el-select>
           <el-button slot="append" icon="el-icon-search" @click="toSearch"></el-button>
         </el-input>
@@ -42,7 +42,7 @@ import DocsLink from '@/components/common/DocsLink.vue'
 })
 export default class IndexBanner extends Vue {
   searchInput = ''
-  searchType = '0'
+  searchType = 'pipes'
 
   scrollToNext() {
     const height = (document.querySelector('.index-banner') as HTMLElement).offsetHeight
@@ -50,24 +50,12 @@ export default class IndexBanner extends Vue {
   }
   toSearch() {
     const value = this.searchInput.trim()
-    if (!value) {
-      return
-    }
-    if (this.searchType === '2') {
-      this.$I18nRouter.push({
-        path: '/application/docs',
-        query: {
-          term: `keywords:${value}`,
-        },
-      })
-    } else {
-      this.$I18nRouter.push({
-        path: '/application/pipes',
-        query: {
-          term: `keywords:${value} AND type:${this.searchType}`,
-        },
-      })
-    }
+    this.$I18nRouter.push({
+      path: '/application/' + this.searchType,
+      query: {
+        term: `keywords:${value}`,
+      },
+    })
   }
 }
 </script>

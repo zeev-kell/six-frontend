@@ -5,13 +5,8 @@
         <div class="card-header el-row el-row--flex is-align-middle py-5">
           <h2>{{ item.name }}</h2>
         </div>
-        <div v-if="item.readme">
-          <div v-if="readmeBySystem" class="card-body">
-            <mavon-editor-render-client v-model="readmeBySystem" />
-          </div>
-          <div v-if="readmeByAuthor" class="card-body">
-            <mavon-editor-render-client v-model="readmeByAuthor" />
-          </div>
+        <div v-if="item.readme" class="card-body">
+          <mavon-editor-render-client v-model="item.readme" />
         </div>
         <div v-else class="card-body">
           {{ item.description }}
@@ -33,7 +28,7 @@
         </div>
         <div class="card-body">
           <p>创建时间<br />{{ item.create_at }}</p>
-          <p>资源分类<br />{{ item.category }}</p>
+          <p>资源分类<br />{{ item.category.map((c) => c.name).join(' ') }}</p>
         </div>
       </div>
     </div>
@@ -48,16 +43,5 @@ import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vu
 @Component({
   components: { MavonEditorRenderClient },
 })
-export default class CaseIndex extends CaseItemMixin {
-  @Getter('user/username')
-  username!: number
-  get readmeByAuthor() {
-    // eslint-disable-next-line camelcase
-    return this.item?.readme.by_author
-  }
-  get readmeBySystem() {
-    // eslint-disable-next-line camelcase
-    return this.item?.readme.by_system
-  }
-}
+export default class CaseIndex extends CaseItemMixin {}
 </script>
