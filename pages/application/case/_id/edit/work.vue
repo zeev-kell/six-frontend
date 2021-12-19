@@ -24,7 +24,7 @@ export default class Work extends CaseItemMixin {
   contentStr = ''
 
   mounted() {
-    this.contentStr = this.item?.content as string
+    this.contentStr = this.item?.content
   }
   async onSubmit() {
     const data = {

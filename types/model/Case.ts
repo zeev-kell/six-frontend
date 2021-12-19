@@ -5,7 +5,7 @@ export interface CaseModel {
   title: string
   provider: string
   category: { id: string; name: string }[]
-  content: CaseContent
+  content: string
   description: string
   resource_id: string
   type: number
