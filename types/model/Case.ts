@@ -7,13 +7,13 @@ export interface CaseModel {
   category: { id: string; name: string }[]
   content: CaseContent
   description: string
-  resource_id: undefined
-  type: undefined
+  resource_id: string
+  type: number
   name: string
   create_at: string
   updated_at: string
   instruction: string
-  status: undefined
+  status: number
   readme: string
 }
 

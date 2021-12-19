@@ -35,9 +35,9 @@ export default class CaseSetting extends CaseItemMixin {
   $refs!: {
     formModel: HTMLFormElement
   }
-  formModel = {
+  formModel: any = {
     name: '',
-    category: '',
+    category: [],
     description: '',
   }
   rules = {
@@ -47,9 +47,9 @@ export default class CaseSetting extends CaseItemMixin {
     ],
     category: [{ required: true, message: '请输入分类', trigger: 'blue' }],
   }
-  categoryList = []
+  categoryList: any[] = []
 
-  mounted() {
+  mounted(): void {
     this.formModel.name = this.item.name
     this.formModel.category = this.item.category.map((c: any) => (typeof c === 'string' ? c : c.name))
     this.formModel.description = this.item.description
