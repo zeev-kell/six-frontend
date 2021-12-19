@@ -12,47 +12,31 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <category-select v-model="otherQuery.tag" type="pipe" @change="searchQuery"></category-select>
-          </el-form-item>
-          <el-form-item>
             <el-button type="primary" icon="el-icon-refresh" class="el-button--icon" native-type="button" @click="resetQuery"></el-button>
             <el-button type="primary" icon="el-icon-search" class="el-button--icon" native-type="button" @click="searchQuery"></el-button>
           </el-form-item>
         </el-form>
       </div>
       <div class="action-box">
-        <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-new')" custom>
+        <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-id-case-new')" custom>
           <el-button type="primary" size="small" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
-        </nuxt-link>
-        <nuxt-link v-slot="{ navigate }" :to="localePath('graph-info-new')" custom>
-          <el-button type="default" size="small" role="link" icon="el-icon-share" @click="navigate" @keypress.enter="navigate"> 流程组合 </el-button>
         </nuxt-link>
       </div>
     </div>
     <el-table ref="multipleTable" :data="tableData" class="w-100" height="200px">
       <el-table-column label="名称" prop="name" sortable width="280">
         <template slot-scope="{ row }">
-          <div class="el-row--flex is-align-middle">
-            <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
-              <nuxt-link v-slot="{ href }" :to="localePath('/graph-info/' + row['resource_id'])" custom>
-                <a target="_blank" class="pointer mr-5" :href="href">
-                  <i class="el-icon-search"></i>
-                </a>
-              </nuxt-link>
-            </el-tooltip>
-            <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + row['resource_id'])" :title="row.name">
-              {{ row.provider + '/' + row.name }}
-            </nuxt-link>
-          </div>
+          <nuxt-link class="text-truncate" :to="localePath('/application/case/' + row['id'])" :title="row.name">
+            {{ row.name }}
+          </nuxt-link>
         </template>
       </el-table-column>
       <el-table-column label="类别" prop="type" sortable width="120">
         <template slot-scope="{ row }">
-          {{ row.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}
+          {{ row.type | caseTypeTranslate | t({ prefix: 'constant.' }) }}
         </template>
       </el-table-column>
-      <el-table-column label="分类" prop="category" sortable width="120" />
-      <el-table-column label="最近版本" prop="version" width="120" />
+      <el-table-column label="关联" prop="resource_id" width="120" />
       <el-table-column label="描述" prop="description">
         <template slot-scope="{ row }">
           {{ row.description | intercept }}
@@ -68,7 +52,6 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import { PipeModel } from '@/types/model/Pipe'
-import { pipeConstants } from '@/constants/PipeConstants'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
@@ -76,18 +59,18 @@ import TableMixins, { TableMixinsHelper } from '@/pages/_components/Table/TableM
 import TablePagination from '@/pages/_components/Table/TablePagination.vue'
 import { Context } from '@nuxt/types'
 import CategorySelect from '@/pages/_components/CategorySelect.vue'
+import { caseConstants } from '@/constants/CaseConstants'
 
 @Component({
   components: { CategorySelect, TablePagination, LayoutBox, CanCreate },
   filters: {
     ...intercept,
-    pipeTypeTranslate: pipeConstants.get,
+    caseTypeTranslate: caseConstants.get,
   },
   async asyncData({ app, query }: Context): Promise<any> {
     const term = TableMixinsHelper.getTermObj(query.term)
     const otherQuery = {
       keywords: term.keywords || '',
-      tag: term.tag || '',
       type: term.type ? Number(term.type) : '',
     }
     const listQuery = TableMixinsHelper.getPageSize(query)
@@ -97,7 +80,7 @@ import CategorySelect from '@/pages/_components/CategorySelect.vue'
       }
       return `${key}:${value}`
     })
-    const { count, data } = await app.$api.pipe.search(listQuery)
+    const { count, data } = await app.$api.case.search(listQuery)
     return {
       otherQuery,
       listQuery,
@@ -106,12 +89,11 @@ import CategorySelect from '@/pages/_components/CategorySelect.vue'
     }
   },
 })
-export default class PipeListPage extends TableMixins<PipeModel> {
+export default class CasesIndexPage extends TableMixins<PipeModel> {
   protected otherQuery!: {
     keywords: string
-    tag: string
     type: number
   }
-  typeList = pipeConstants.getItemsList('TYPE_')
+  typeList = caseConstants.getItemsList('TYPE_')
 }
 </script>

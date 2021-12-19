@@ -5,7 +5,7 @@
         <h2>{{ item.name }}</h2>
       </div>
       <div class="card-body marked-content">
-        <markdown-client v-model="readme" />
+        <mavon-editor-client v-model="readme" />
       </div>
       <div class="card-footer">
         <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
@@ -15,20 +15,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Getter, Vue } from 'nuxt-property-decorator'
-import marked from '@/directives/marked/marked'
+import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
-import MarkdownClient from '@/pages/application/_components/markdown/MarkdownClient.vue'
-import { DatumModel } from '@/types/model/Datum'
 import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
+import MavonEditorClient from '@/pages/application/_components/mavonEditor/MavonEditorClient.vue'
 
 @Component({
   components: {
-    MarkdownClient,
+    MavonEditorClient,
     LoadingButton,
-  },
-  directives: {
-    ...marked,
   },
 })
 export default class DatumIndex extends DatumItemMixin {

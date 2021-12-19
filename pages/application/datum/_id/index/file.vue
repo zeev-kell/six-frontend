@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid p-20">
-    <div class="el-row--flex is-justify-space-between pb-10">
+  <layout-box class="py-10">
+    <div slot="header" class="el-row--flex is-justify-space-between">
       <div class="search-box">
         <el-form class="form-inline" :inline="true" size="small" :model="query" @submit.native.prevent="">
           <el-form-item>
@@ -18,49 +18,47 @@
         <loading-button type="info" size="small" icon="el-icon-download" :callback="onBatchDownload" :disabled="!hasSelected">下载</loading-button>
       </div>
     </div>
-    <div class="table-box">
-      <el-table ref="multipleTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="40"> </el-table-column>
-        <el-table-column label="文件名称" prop="name" sortable width="250">
-          <template slot-scope="{ row }">
-            <span :class="['mr-2 ', isOssObject(row) ? 'el-icon-document' : 'el-icon-link']"></span>{{ row.name }}
-          </template>
-        </el-table-column>
-        <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>
-        <el-table-column label="大小" prop="bytes" sortable width="80">
-          <template slot-scope="{ row }">
-            <div>{{ row.bytes | formatbytes }}</div>
-          </template>
-        </el-table-column>
-        <el-table-column label="MD5校验码" prop="hash" width="230">
-          <template slot-scope="{ row }">
-            <div v-clipboard="row.hash" class="text-truncate">{{ row.hash }}</div>
-          </template>
-        </el-table-column>
-        <el-table-column label="格式规范" width="120">
-          <template slot-scope="{ row }">
-            <schema-name :schema="row.schema"></schema-name>
-          </template>
-        </el-table-column>
-        <el-table-column label="说明" prop="description">
-          <template slot-scope="{ row }">{{ row.description | intercept }}</template>
-        </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="{ row }">
-            <loading-button
-              type="icon el-button--info"
-              size="mini"
-              :callback="onDownload"
-              :args="[row]"
-              icon="el-icon-download"
-              title="下载"
-            ></loading-button>
-            <loading-button type="icon" size="mini" :callback="onGetDownloadUrl" :args="[row]" icon="el-icon-link" title="获取链接"></loading-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
-  </div>
+    <el-table ref="multipleTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="40"> </el-table-column>
+      <el-table-column label="文件名称" prop="name" sortable width="250">
+        <template slot-scope="{ row }">
+          <span :class="['mr-2 ', isOssObject(row) ? 'el-icon-document' : 'el-icon-link']"></span>{{ row.name }}
+        </template>
+      </el-table-column>
+      <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>
+      <el-table-column label="大小" prop="bytes" sortable width="80">
+        <template slot-scope="{ row }">
+          <div>{{ row.bytes | formatbytes }}</div>
+        </template>
+      </el-table-column>
+      <el-table-column label="MD5校验码" prop="hash" width="230">
+        <template slot-scope="{ row }">
+          <div v-clipboard="row.hash" class="text-truncate">{{ row.hash }}</div>
+        </template>
+      </el-table-column>
+      <el-table-column label="格式规范" width="120">
+        <template slot-scope="{ row }">
+          <schema-name :schema="row.schema"></schema-name>
+        </template>
+      </el-table-column>
+      <el-table-column label="说明" prop="description">
+        <template slot-scope="{ row }">{{ row.description | intercept }}</template>
+      </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="{ row }">
+          <loading-button
+            type="icon el-button--info"
+            size="mini"
+            :callback="onDownload"
+            :args="[row]"
+            icon="el-icon-download"
+            title="下载"
+          ></loading-button>
+          <loading-button type="icon" size="mini" :callback="onGetDownloadUrl" :args="[row]" icon="el-icon-link" title="获取链接"></loading-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </layout-box>
 </template>
 
 <script lang="ts">
@@ -73,9 +71,10 @@ import OSS from 'ali-oss'
 import LoadingButton from '@/components/LoadingButton.vue'
 import SchemaName from '@/pages/application/datum/_components/SchemaName.vue'
 import { DatumItemModel } from '@/types/model/Datum'
+import LayoutBox from '@/pages/_components/LayoutBox.vue'
 
 @Component({
-  components: { SchemaName, LoadingButton },
+  components: { LayoutBox, SchemaName, LoadingButton },
   directives: {
     ...clipboard,
   },

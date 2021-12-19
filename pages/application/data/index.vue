@@ -40,7 +40,7 @@
       </el-table-column>
       <el-table-column label="类别" prop="type" sortable width="120">
         <template slot-scope="{ row }">
-          {{ row.type | dateTypeTranslate | t }}
+          {{ row.type | dateTypeTranslate | t({ prefix: 'constant.' }) }}
         </template>
       </el-table-column>
       <el-table-column label="分类" prop="category" sortable width="120" />

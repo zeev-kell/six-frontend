@@ -12,7 +12,7 @@
         <div class="el-row el-row--flex info-tip">
           <div class="el-col">
             <div class="title">类别</div>
-            <div>{{ item.type | datumTypeTranslate | t }}</div>
+            <div>{{ item.type | datumTypeTranslate | t({ prefix: 'constant.' }) }}</div>
           </div>
           <div class="el-col">
             <div class="title">版本</div>
@@ -26,7 +26,7 @@
       </div>
       <div class="el-col el-col-8 text-right">
         <!--        <el-button type="primary" icon="el-icon-caret-right"> 校验数据 </el-button>-->
-        <can-create v-if="item.provider === username">
+        <can-create :is-user="item.provider">
           <toggle-edit-info type="primary" icon="el-icon-edit"> 编辑 </toggle-edit-info>
         </can-create>
         <can-examine>

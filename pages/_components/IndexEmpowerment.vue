@@ -24,10 +24,10 @@
       <div v-if="!isMobile" class="container">
         <div v-for="(content_1, i) of content1" :key="i" class="el-row mb-50">
           <div v-for="(item, j) of content_1" :key="j" class="el-col-12 el-row">
-            <div class="el-col-12 text-right image">
+            <div class="el-col-10 text-right image">
               <fa :icon="item.icon" class="fa-4x text-primary" />
             </div>
-            <div class="el-col-12 text-left">
+            <div class="el-col-14 text-left">
               <h3 class="title">
                 {{ item.title }}
               </h3>

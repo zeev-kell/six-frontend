@@ -4,16 +4,16 @@
       <div class="card-header el-row el-row--flex is-align-middle py-5">
         <h2>{{ item.name }}</h2>
       </div>
-      <div class="card-body marked-content">
+      <div class="card-body">
         <el-collapse accordion class="mb-20">
           <el-collapse-item>
             <template slot="title">
               <b>系统自动生成部分（只读）</b>
             </template>
-            <div v-marked="readmeBySystem" />
+            <mavon-editor-render-client v-model="readmeBySystem" />
           </el-collapse-item>
         </el-collapse>
-        <markdown-client v-model="readmeByAuthor" />
+        <mavon-editor-client v-model="readmeByAuthor" />
       </div>
       <div class="card-footer">
         <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
@@ -24,17 +24,15 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import marked from '@/directives/marked/marked'
 import LoadingButton from '@/components/LoadingButton.vue'
-import MarkdownClient from '@/pages/application/_components/markdown/MarkdownClient.vue'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
+import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
+import MavonEditorClient from '@/pages/application/_components/mavonEditor/MavonEditorClient.vue'
 
 @Component({
-  directives: {
-    ...marked,
-  },
   components: {
-    MarkdownClient,
+    MavonEditorClient,
+    MavonEditorRenderClient,
     LoadingButton,
   },
 })

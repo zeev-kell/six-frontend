@@ -66,7 +66,7 @@
             <span class="el-icon-error text-danger"></span>
           </el-tooltip>
           <span v-if="item.isSuccess()" class="el-icon-success text-success"> </span>
-          <span>{{ item.status | fileTypeTranslate | t }}</span>
+          <span>{{ item.status | fileTypeTranslate | t({ prefix: 'constant.' }) }}</span>
         </div>
       </div>
     </div>

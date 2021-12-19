@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div v-if="graphItem" class="el-row el-row--flex">
+    <div v-if="item.profile" class="el-row el-row--flex">
       <div class="el-col el-col-18 pr-20">
         <div class="card">
           <div class="card-header el-row--flex is-align-middle">
@@ -8,14 +8,7 @@
           </div>
           <div class="card-body">
             <div class="page-graph-box">
-              <graph-index
-                ref="graph"
-                class="h-100"
-                :item="graphItem"
-                config-type="run"
-                tools="download|plus,minus,fit"
-                @propagate-event="onPropagate"
-              />
+              <graph-index ref="graph" class="h-100" :item="item" config-type="run" tools="download|plus,minus,fit" @propagate-event="onPropagate" />
             </div>
           </div>
         </div>
@@ -27,16 +20,16 @@
           </div>
           <div class="card-body">
             <div style="font-weight: 600; margin-bottom: 10px">
-              {{ graphItem.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}
+              {{ profile.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}
             </div>
-            <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + item.cwl)" :title="item.cwl">
-              {{ graphItem.name }}
+            <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + item.profile)" :title="item.profile">
+              {{ profile.name }}
             </nuxt-link>
           </div>
         </div>
       </div>
     </div>
-    <div v-else>暂无工作结构</div>
+    <div v-else>暂无运行案例</div>
   </div>
 </template>
 
@@ -53,31 +46,34 @@ import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vu
     pipeTypeTranslate: pipeConstants.get,
   },
   components: { GraphIndex },
-  async asyncData({ app, store }) {
-    const item = store.state.pipe
-    if (item.cwl) {
-      // 请求 graph 数据
-      const graphItem = await app.$api.pipe.getVersion(item.cwl)
-      return { graphItem }
-    }
-  },
 })
-export default class Work extends PipeItemMixin {
+export default class Case extends PipeItemMixin {
   $refs!: {
     graph: HTMLFormElement
   }
+  profile: any = {}
 
-  graphItem = null
-
-  onPropagate(eventName: string): void {
+  async onPropagate(eventName: string): Promise<void> {
     // TODO 修改为事件
     // 监听第一次实例化事件
     if (GraphEvent.TriggerPageModalCreate === eventName) {
-      const job = getObject(this.item?.content || {})
-      this.$nextTick(() => {
-        this.$refs.graph.$emit(GraphEvent.Dispatch, GraphEvent.PayloadUpdateJob, job)
-      })
+      const profile = this.profile
+      if (profile?.content) {
+        this.updateGraphJob()
+      } else {
+        const profileId = this.item.profile
+        if (profileId) {
+          this.profile = await this.$axios.$get(`/v2/pipe/${profileId}`)
+          this.updateGraphJob()
+        }
+      }
     }
+  }
+  updateGraphJob() {
+    const job = getObject(this.profile.content)
+    this.$nextTick(() => {
+      this.$refs.graph.dispatchAction('updateJob', job)
+    })
   }
 }
 </script>

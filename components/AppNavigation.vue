@@ -17,7 +17,7 @@
           text-color="#fff"
           active-text-color="#ffd04b"
         >
-          <el-menu-item :index="localePath('application-pipes')"> 主页 </el-menu-item>
+          <el-menu-item :index="localePath('application-pipes')"> 应用 </el-menu-item>
           <el-submenu v-create :index="localePath('application-u-creation')">
             <template slot="title">我的创作</template>
             <el-menu-item :index="localePath('application-u-creation-pipe')">我的应用</el-menu-item>

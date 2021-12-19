@@ -1,6 +1,6 @@
 <template>
-  <div class="pipe-id-container">
-    <div class="el-row el-row--flex is-align-middle p-20 info-header">
+  <layout-box>
+    <div slot="header" class="el-row el-row--flex is-align-middle p-20 info-header">
       <div class="el-col-auto px-20">
         <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px" />
         <i v-if="isWork" class="el-icon-reading" style="font-size: 36px" />
@@ -11,7 +11,7 @@
         <div class="el-row el-row--flex info-tip">
           <div class="el-col">
             <div class="title">类别</div>
-            <div>{{ item.type | pipeTypeTranslate | t }}</div>
+            <div>{{ item.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}</div>
           </div>
           <div class="el-col">
             <div class="title">版本</div>
@@ -42,7 +42,7 @@
     <div class="px-20 mt-5 pb-10 no-gutters">
       <nuxt-child />
     </div>
-  </div>
+  </layout-box>
 </template>
 
 <script lang="ts">
@@ -50,9 +50,10 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import CanExamine from '@/components/common/CanExamine.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
 import PipeMixin from '@/pages/application/pipe/_components/PipeMixin.vue'
+import LayoutBox from '@/pages/_components/LayoutBox.vue'
 
 @Component({
-  components: { ToggleEditInfo, CanExamine },
+  components: { LayoutBox, ToggleEditInfo, CanExamine },
 })
 export default class PipeIdEdit extends mixins<PipeMixin>(PipeMixin) {
   handleDelete() {

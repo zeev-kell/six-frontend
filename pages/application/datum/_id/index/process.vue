@@ -27,7 +27,7 @@
           </div>
           <div class="card-body">
             <div style="font-weight: 600; margin-bottom: 10px">
-              {{ graphItem.type | pipeTypeTranslate | t }}
+              {{ graphItem.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}
             </div>
             <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + jobItem.cwl)" :title="jobItem.cwl">
               {{ graphItem.name }}

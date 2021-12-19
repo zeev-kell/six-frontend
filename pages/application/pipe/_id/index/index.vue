@@ -6,11 +6,11 @@
           <h2>{{ item.name }}</h2>
         </div>
         <div v-if="item.readme">
-          <div v-if="readmeBySystem" class="card-body marked-content">
-            <div v-marked="readmeBySystem" />
+          <div v-if="readmeBySystem" class="card-body">
+            <mavon-editor-render-client v-model="readmeBySystem" />
           </div>
-          <div v-if="readmeByAuthor" class="card-body marked-content">
-            <div v-marked="readmeByAuthor" />
+          <div v-if="readmeByAuthor" class="card-body">
+            <mavon-editor-render-client v-model="readmeByAuthor" />
           </div>
         </div>
         <div v-else class="card-body">
@@ -42,13 +42,11 @@
 
 <script lang="ts">
 import { Component, Getter } from 'nuxt-property-decorator'
-import marked from '@/directives/marked/marked'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
+import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
 
 @Component({
-  directives: {
-    ...marked,
-  },
+  components: { MavonEditorRenderClient },
 })
 export default class PipeIndex extends PipeItemMixin {
   @Getter('user/username')

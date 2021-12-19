@@ -7,6 +7,7 @@ export default class ClientMixin extends Vue {
     default() {
       return ''
     },
+    required: true,
   })
   value!: any
   @Watch('value', { immediate: true })

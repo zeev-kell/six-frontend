@@ -12,7 +12,7 @@
         <div class="el-row el-row--flex info-tip">
           <div class="el-col">
             <div class="title">类别</div>
-            <div>{{ item.type | datumTypeTranslate | t }}</div>
+            <div>{{ item.type | datumTypeTranslate | t({ prefix: 'constant.' }) }}</div>
           </div>
           <div class="el-col">
             <div class="title">版本</div>

@@ -29,22 +29,6 @@ export default {
     toolkit: 'toolkit',
     label: 'Label',
   },
-  TYPE_TOOL: 'Tool',
-  TYPE_APP: 'Workflow',
-  TYPE_DOCKER: 'Dockerfile',
-  TYPE_WORK: 'Work',
-  TYPE_WORKFLOW: '工作流',
-  TYPE_FORMAT: 'Format',
-  TYPE_DATA: 'Datum',
-  TYPE_DATA_PACKAGE: 'Datum Package',
-  STATUS_READING: 'reading',
-  STATUS_PENDING: 'pending',
-  STATUS_UPLOADING: 'uploading',
-  STATUS_PROGRESS: 'progress',
-  STATUS_SUCCESS: 'success',
-  STATUS_ERROR: 'error',
-  STATUS_RETRY: 'retry',
-  STATUS_REFUSE: 'refuse',
   // 导航条
   nav: {
     index: '主页',
@@ -98,6 +82,20 @@ export default {
     TYPE_WIKI: 'wiki',
     TYPE_COURSE: 'Course',
     TYPE_ARTICLE: 'Article',
+    TYPE_CWLC: 'cwlc File', // cwlc文件
+    TYPE_JUPYTER: 'jupyter notebook', // jupyter notebook
+    TYPE_RSTUDIO: ' Rstudio notebook', // Rstudio notebook
+    TYPE_FORMAT: 'Format',
+    TYPE_DATA: 'Datum',
+    TYPE_DATA_PACKAGE: 'Datum Package',
+    STATUS_READING: 'reading',
+    STATUS_PENDING: 'pending',
+    STATUS_UPLOADING: 'uploading',
+    STATUS_PROGRESS: 'progress',
+    STATUS_SUCCESS: 'success',
+    STATUS_ERROR: 'error',
+    STATUS_RETRY: 'retry',
+    STATUS_REFUSE: 'refuse',
   },
   // 错误信息
   error: {

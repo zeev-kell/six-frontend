@@ -1,35 +1,32 @@
-import { BlogModel } from '@/types/model/Blog'
+import { CaseModel } from '@/types/model/Case'
 import { MESSAGE_ERROR, MESSAGE_SUCCESS } from '@/utils/reponse-helper'
 import { tableResponse } from '@/types/table'
 import BaseModule from '@/assets/api/BaseModule'
 
 export class Module extends BaseModule {
   create(data: any): Promise<any> {
-    return this.$axios.$post('/v1/blog', data)
+    return this.$axios.$post('/v1/case', data)
   }
   update(id: string, data: any): Promise<any> {
     return this.$axios
-      .$put('/v1/blog/' + id, data)
+      .$put('/v1/case/' + id, data)
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }
   remove(id: string): Promise<any> {
     return this.$axios
-      .$delete('/v1/blog/' + id)
+      .$delete('/v1/case/' + id)
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }
 
-  get(id: string): Promise<BlogModel> {
-    return this.$axios.$get<BlogModel>(`/v1/blog/${id}`)
-  }
-  getList(params?: any): Promise<BlogModel[]> {
-    return this.$axios.$get<BlogModel[]>('/v1/blogs', { params })
+  get(id: string): Promise<CaseModel> {
+    return this.$axios.$get<CaseModel>(`/v1/case/${id}`)
   }
 
-  search(params?: any): Promise<tableResponse<BlogModel>> {
+  search(params?: any): Promise<tableResponse<CaseModel>> {
     console.log(params)
-    return this.$axios.$get<tableResponse<BlogModel>>('/v1/search/doc', { params })
+    return this.$axios.$get<tableResponse<CaseModel>>('/v1/search/case', { params })
   }
 }
 

@@ -1,79 +1,38 @@
 <template>
-  <div class="container-fluid">
-    <div v-if="item.profile" class="el-row el-row--flex">
-      <div class="el-col el-col-18 pr-20">
-        <div class="card">
-          <div class="card-header el-row--flex is-align-middle">
-            <h2 class="mx-0 el-col-equal">双击图标查看案例参数</h2>
-          </div>
-          <div class="card-body">
-            <div class="page-graph-box">
-              <graph-index ref="graph" class="h-100" :item="item" config-type="run" tools="download|plus,minus,fit" @propagate-event="onPropagate" />
-            </div>
-          </div>
-        </div>
+  <layout-box class="py-10">
+    <div slot="header" class="el-row--flex is-justify-space-between">
+      <div class="search-box">
+        <el-form class="form-inline" :inline="true" size="small" :model="query" @submit.native.prevent="">
+          <el-form-item> <el-input v-model="query.name"></el-input></el-form-item>
+        </el-form>
       </div>
-      <div class="el-col- el-col-6">
-        <div class="card">
-          <div class="card-header el-row el-row--flex is-align-middle py-5">
-            <h4>引用自</h4>
-          </div>
-          <div class="card-body">
-            <div style="font-weight: 600; margin-bottom: 10px">
-              {{ profile.type | pipeTypeTranslate | t }}
-            </div>
-            <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + item.profile)" :title="item.profile">
-              {{ profile.name }}
-            </nuxt-link>
-          </div>
-        </div>
-      </div>
+      <div class="action-box"></div>
     </div>
-    <div v-else>暂无运行案例</div>
-  </div>
+    <el-table ref="multipleTable" :data="tableData" class="w-100">
+      <el-table-column label="案例名称" prop="name" sortable> </el-table-column>
+    </el-table>
+  </layout-box>
 </template>
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import { GraphEvent } from '@/constants/GraphEvent'
 import { pipeConstants } from '@/constants/PipeConstants'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
-import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
+import LayoutBox from '@/pages/_components/LayoutBox.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
+import CanCreate from '@/components/common/CanCreate.vue'
 
 @Component({
   filters: {
     pipeTypeTranslate: pipeConstants.get,
   },
-  components: { GraphIndex },
+  components: { CanCreate, LoadingButton, LayoutBox, GraphIndex },
 })
-export default class Case extends PipeItemMixin {
-  $refs!: {
-    graph: HTMLFormElement
+export default class CaseListIndex extends PipeItemMixin {
+  query = {
+    name: '',
   }
-  profile: any = {}
-
-  async onPropagate(eventName: string): Promise<void> {
-    // TODO 修改为事件
-    // 监听第一次实例化事件
-    if (GraphEvent.TriggerPageModalCreate === eventName) {
-      const profile = this.profile
-      if (profile?.content) {
-        this.updateGraphJob()
-      } else {
-        const profileId = this.item.profile
-        if (profileId) {
-          this.profile = await this.$axios.$get(`/v2/pipe/${profileId}`)
-          this.updateGraphJob()
-        }
-      }
-    }
-  }
-  updateGraphJob() {
-    const job = getObject(this.profile.content)
-    this.$nextTick(() => {
-      this.$refs.graph.dispatchAction('updateJob', job)
-    })
-  }
+  tableData = []
 }
 </script>

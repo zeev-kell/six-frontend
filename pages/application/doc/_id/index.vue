@@ -19,7 +19,7 @@
             <el-button type="primary" icon="el-icon-edit" @click="navigate" @keypress.enter="navigate"> 编辑 </el-button>
           </nuxt-link>
         </can-create>
-        <can-create v-if="blog.provider === username">
+        <can-create :is-user="blog.provider">
           <el-button type="danger" icon="el-icon-delete" @click="handleDelete"> 删除 </el-button>
         </can-create>
       </div>

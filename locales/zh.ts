@@ -29,22 +29,6 @@ export default {
     toolkit: '工具箱',
     label: '标签',
   },
-  TYPE_TOOL: '工具',
-  TYPE_APP: '流程',
-  TYPE_DOCKER: 'Dockerfile',
-  TYPE_WORK: '工作',
-  TYPE_WORKFLOW: '工作流',
-  TYPE_FORMAT: '格式',
-  TYPE_DATA: '数据',
-  TYPE_DATA_PACKAGE: '数据包',
-  STATUS_READING: '读取中',
-  STATUS_PENDING: '等待',
-  STATUS_UPLOADING: '上传中',
-  STATUS_PROGRESS: 'progress',
-  STATUS_SUCCESS: '成功',
-  STATUS_ERROR: '失败',
-  STATUS_RETRY: '重试',
-  STATUS_REFUSE: '禁止',
   // 导航条
   nav: {
     index: '主页',
@@ -98,6 +82,20 @@ export default {
     TYPE_WIKI: 'wiki',
     TYPE_COURSE: '教程',
     TYPE_ARTICLE: '文章',
+    TYPE_CWLC: 'cwlc文件', // cwlc文件
+    TYPE_JUPYTER: 'jupyter notebook', // jupyter notebook
+    TYPE_RSTUDIO: ' Rstudio notebook', // Rstudio notebook
+    TYPE_FORMAT: '格式',
+    TYPE_DATA: '数据',
+    TYPE_DATA_PACKAGE: '数据包',
+    STATUS_READING: '读取中',
+    STATUS_PENDING: '等待',
+    STATUS_UPLOADING: '上传中',
+    STATUS_PROGRESS: 'progress',
+    STATUS_SUCCESS: '成功',
+    STATUS_ERROR: '失败',
+    STATUS_RETRY: '重试',
+    STATUS_REFUSE: '禁止',
   },
   // 错误信息
   error: {

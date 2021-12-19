@@ -19,9 +19,9 @@ export class Module extends BaseModule {
       .catch(MESSAGE_ERROR)
   }
 
-  update(pipeId: string, data: any): Promise<any> {
+  update(id: string, data: any): Promise<any> {
     return this.$axios
-      .$put('/v2/pipe/repository/' + pipeId, data)
+      .$put('/v2/pipe/repository/' + id, data)
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }
@@ -32,8 +32,8 @@ export class Module extends BaseModule {
       .catch(MESSAGE_ERROR)
   }
 
-  get(pipeId: string): Promise<any> {
-    return this.$axios.$get('/v2/pipe/repository/' + pipeId)
+  get(id: string): Promise<any> {
+    return this.$axios.$get('/v2/pipe/repository/' + id)
   }
   getList(params?: any): Promise<PipeModel[]> {
     return this.$axios.$get<PipeModel[]>('/v2/pipes', { params }).then((response) => {

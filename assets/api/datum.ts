@@ -40,9 +40,9 @@ export class Module extends BaseModule {
     return this.$axios.$get(`/v2/data/${resourceId}/file/${fileId}`)
   }
 
-  update(dataId: string, data: any): Promise<any> {
+  update(id: string, data: any): Promise<any> {
     return this.$axios
-      .$put('/v2/data/repository/' + dataId, data)
+      .$put('/v2/data/repository/' + id, data)
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }

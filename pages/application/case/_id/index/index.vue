@@ -5,8 +5,16 @@
         <div class="card-header el-row el-row--flex is-align-middle py-5">
           <h2>{{ item.name }}</h2>
         </div>
-        <div class="card-body">
-          <mavon-editor-render-client v-model="item.readme" />
+        <div v-if="item.readme">
+          <div v-if="readmeBySystem" class="card-body">
+            <mavon-editor-render-client v-model="readmeBySystem" />
+          </div>
+          <div v-if="readmeByAuthor" class="card-body">
+            <mavon-editor-render-client v-model="readmeByAuthor" />
+          </div>
+        </div>
+        <div v-else class="card-body">
+          {{ item.description }}
         </div>
       </div>
     </div>
@@ -33,12 +41,23 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'nuxt-property-decorator'
-import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
+import { Component, Getter } from 'nuxt-property-decorator'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
+import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
 
 @Component({
   components: { MavonEditorRenderClient },
 })
-export default class DatumIndex extends DatumItemMixin {}
+export default class CaseIndex extends CaseItemMixin {
+  @Getter('user/username')
+  username!: number
+  get readmeByAuthor() {
+    // eslint-disable-next-line camelcase
+    return this.item?.readme.by_author
+  }
+  get readmeBySystem() {
+    // eslint-disable-next-line camelcase
+    return this.item?.readme.by_system
+  }
+}
 </script>
