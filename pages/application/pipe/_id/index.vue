@@ -1,6 +1,6 @@
 <template>
   <layout-box>
-    <div slot="header" class="el-row el-row--flex is-align-middle p-20 info-header">
+    <div class="el-row el-row--flex is-align-middle p-20 info-header">
       <div class="el-col-auto px-20">
         <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px" />
         <i v-if="isWork" class="el-icon-reading" style="font-size: 36px" />
@@ -60,7 +60,7 @@
           <toggle-edit-info type="primary" icon="el-icon-edit"> 编辑 </toggle-edit-info>
         </can-create>
         <can-create :is-user="item.provider">
-          <el-button type="danger" icon="el-icon-delete" class="mx-0" @click="handleDeletePipe"> 删除 </el-button>
+          <loading-button type="danger" icon="el-icon-delete" class="mx-0" :callback="handleDelete"> 删除 </loading-button>
         </can-create>
       </div>
     </div>
@@ -88,9 +88,10 @@ import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
 import PipeMixin from '@/pages/application/pipe/_components/PipeMixin.vue'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
-  components: { LayoutBox, ToggleEditInfo, CanExamine, CanCreate },
+  components: { LoadingButton, LayoutBox, ToggleEditInfo, CanExamine, CanCreate },
 })
 export default class PipeIdIndex extends mixins<PipeItemMixin>(PipeMixin) {
   handleDownload(format = 'yaml'): void {
@@ -99,20 +100,14 @@ export default class PipeIdIndex extends mixins<PipeItemMixin>(PipeMixin) {
     const name = this.item.name + `.${asYaml ? 'cwl' : format}`
     downloadStrLink(data, name)
   }
-  handleDeletePipe() {
-    this.$confirm('此操作将永久删除该软件, 是否继续?', '提示', {
+  handleDelete(): Promise<any> {
+    return this.$confirm('此操作将永久删除该软件, 是否继续?', '提示', {
       type: 'warning',
-    })
-      .then(() => {
-        return this.$$axios.delete('/v2/pipe/' + this.$route.params.id).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!',
-          })
-          this.$I18nRouter.push('/application/pipes')
-        })
+    }).then(() => {
+      return this.$api.pipe.removeVersion(this.$route.params.id).then(() => {
+        this.$I18nRouter.push('/application/pipes')
       })
-      .catch(() => {})
+    })
   }
 }
 </script>

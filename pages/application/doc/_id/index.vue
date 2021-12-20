@@ -12,15 +12,15 @@
       </div>
       <div class="el-col el-col-8 text-right">
         <nuxt-link v-slot="{ navigate }" :to="localePath('/doc/' + blog.id)" custom>
-          <el-button type="info" icon="el-icon-search" @click="navigate" @keypress.enter="navigate"> 查看 </el-button>
+          <el-button type="info" icon="el-icon-search" size="small" @click="navigate" @keypress.enter="navigate"> 查看 </el-button>
         </nuxt-link>
         <can-create>
           <nuxt-link v-slot="{ navigate }" :to="localePath('/application/doc/' + blog.id + '/edit')" custom>
-            <el-button type="primary" icon="el-icon-edit" @click="navigate" @keypress.enter="navigate"> 编辑 </el-button>
+            <el-button type="primary" icon="el-icon-edit" size="small" @click="navigate" @keypress.enter="navigate"> 编辑 </el-button>
           </nuxt-link>
         </can-create>
         <can-create :is-user="blog.provider">
-          <el-button type="danger" icon="el-icon-delete" @click="handleDelete"> 删除 </el-button>
+          <loading-button type="danger" icon="el-icon-delete" size="small" :callback="handleDelete"> 删除 </loading-button>
         </can-create>
       </div>
     </div>
@@ -44,7 +44,7 @@
       </p>
       <el-container>
         <el-main class="main-container">
-          <mavon-editor-render-client ref="MavonEditor" v-model="blog.content"></mavon-editor-render-client>
+          <mavon-editor-render-client ref="MavonEditor" :value="blog.content"></mavon-editor-render-client>
         </el-main>
         <el-aside width="240px" class="toc-aside overflow-v">
           <client-only>
@@ -83,22 +83,19 @@ import MavonEditorToc from '@/pages/application/_components/mavonEditor/MavonEdi
 import DocIndexPage from '@/pages/doc/_id/index.vue'
 import { blogConstants } from '@/constants/BlogConstants'
 import RecommendBlog from '@/pages/doc/_id/_components/RecommendBlog.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
   scrollToTop: true,
   meta: {
     layout: 'AppLayoutScroll',
   },
-  components: { RecommendBlog, MavonEditorToc, MavonEditorRenderClient, CanExamine, CanCreate },
+  components: { LoadingButton, RecommendBlog, MavonEditorToc, MavonEditorRenderClient, CanExamine, CanCreate },
   filters: {
     blogTypeTranslate: blogConstants.get,
   },
 })
 export default class DocIndex extends DocIndexPage {
-  get username() {
-    return this.$store.getters['user/username']
-  }
-
   handleDelete(): Promise<any> {
     return this.$confirm('此操作将永久删除该文档, 是否继续?', '提示', {
       type: 'warning',

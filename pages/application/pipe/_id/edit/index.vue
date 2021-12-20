@@ -10,7 +10,7 @@
             <template slot="title">
               <b>系统自动生成部分（只读）</b>
             </template>
-            <mavon-editor-render-client v-model="readmeBySystem" />
+            <mavon-editor-render-client :value="readmeBySystem" />
           </el-collapse-item>
         </el-collapse>
         <mavon-editor-client v-model="readmeByAuthor" />

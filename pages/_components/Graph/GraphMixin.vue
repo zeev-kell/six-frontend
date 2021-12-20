@@ -42,6 +42,7 @@ import { GraphPlugin } from '@/types/graph'
 import EditorJobInspector from '@/pages/_components/Graph/components/EditorJobInspector.vue'
 import { normalizeJob } from '@/pages/_components/Graph/helpers/JobHelper'
 import { Generator } from '@/pages/_components/Graph/Generator'
+import { PIPE_LOCAL } from '@/constants/PipeConstants'
 import ToolBox from './components/ToolBox.vue'
 
 @Component({
@@ -257,8 +258,8 @@ export default class GraphMixin extends GraphEdit {
     const { data: content } = this.exportCwl('json', true) as { data: any }
     const str = JSON.stringify(content)
     // 判断是否和本地存储一致，数据不一致才保存
-    if (!compareStore('graph-content', str)) {
-      setStore('graph-content', str)
+    if (!compareStore(PIPE_LOCAL, str)) {
+      setStore(PIPE_LOCAL, str)
       return true
     }
   }

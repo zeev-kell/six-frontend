@@ -5,7 +5,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
-import { pipeConstants } from '@/constants/PipeConstants'
+import { pipeConstants, PIPE_LOCAL } from '@/constants/PipeConstants'
 import { getStore } from '@/utils/local-storage'
 import { S4, uuid4 } from '@/utils/uuid'
 import { PipeModel } from '@/types/model/Pipe'
@@ -22,7 +22,7 @@ export default class setRunLocal extends Vue {
   } as PipeModel
 
   mounted(): void {
-    this.item.content = getStore('graph-content', true)
+    this.item.content = getStore(PIPE_LOCAL, true)
   }
 }
 </script>

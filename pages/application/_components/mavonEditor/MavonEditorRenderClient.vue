@@ -54,6 +54,7 @@ export default class MavonEditorRenderClient extends MavonEditorClient {
 .read-only.v-note-wrapper {
   z-index: 1;
   border: none;
+  min-height: 100px;
   .v-show-content {
     padding: 0 !important;
   }

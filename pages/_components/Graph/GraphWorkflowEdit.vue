@@ -11,7 +11,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { Generator } from '@/pages/_components/Graph/Generator'
-import { pipeConstants } from '@/constants/PipeConstants'
+import { pipeConstants, PIPE_LOCAL } from '@/constants/PipeConstants'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import DragListBox from '@/pages/_components/Graph/components/DragListBox.vue'
 import ValidationReport from '@/pages/_components/Graph/components/ValidationReport.vue'
@@ -59,7 +59,7 @@ export default class GraphWorkflowEdit extends Vue {
   }
 
   mounted(): void {
-    const content = getStore('graph-content', true)
+    const content = getStore(PIPE_LOCAL, true)
     this.item.content = content ?? Generator.generateWorkflow()
   }
   beforeDestroy(): void {

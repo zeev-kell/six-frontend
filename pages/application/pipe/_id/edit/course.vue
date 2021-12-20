@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid" style="overflow: inherit">
+  <div class="container-fluid">
     <div class="px-15 text-muted">使用教程为一个使用该应用进行计算的完整文档教程。</div>
     <div class="card-body">
       <div class="el-row el-row--flex">
@@ -8,7 +8,7 @@
             <el-button type="primary" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
           </nuxt-link>
           <span class="m-x-1">或</span>
-          <el-select v-model="value" filterable placeholder="引用知识库文档">
+          <el-select v-model="instruction" filterable placeholder="引用知识库文档">
             <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
           </el-select>
         </div>
@@ -36,16 +36,17 @@ import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vu
         label: d.title,
       }
     })
-    return { options, value: item.instruction }
+    const instruction = item.instruction ? Number(item.instruction) : null
+    return { options, instruction }
   },
 })
 export default class Course extends PipeItemMixin {
   options = []
-  value = ''
+  instruction = ''
   async onSubmit() {
-    const data = { instruction: this.value }
+    const data = { instruction: this.instruction }
     await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
-      this.$store.commit('pipe/UPDATE_CURRENT_STORE', { instruction: data.instruction })
+      this.$store.commit('pipe/UPDATE_CURRENT_STORE', data)
     })
   }
 }

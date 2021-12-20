@@ -63,7 +63,7 @@ export default class Case extends PipeItemMixin {
       } else {
         const profileId = this.item.profile
         if (profileId) {
-          this.profile = await this.$axios.$get(`/v2/pipe/${profileId}`)
+          this.profile = await this.$api.pipe.getVersion(profileId)
           this.updateGraphJob()
         }
       }

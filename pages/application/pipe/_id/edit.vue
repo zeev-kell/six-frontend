@@ -1,6 +1,6 @@
 <template>
   <layout-box>
-    <div slot="header" class="el-row el-row--flex is-align-middle p-20 info-header">
+    <div class="el-row el-row--flex is-align-middle p-20 info-header">
       <div class="el-col-auto px-20">
         <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px" />
         <i v-if="isWork" class="el-icon-reading" style="font-size: 36px" />
@@ -25,9 +25,9 @@
       </div>
       <div class="el-col el-col-8 text-right">
         <toggle-edit-info type="warning" icon="el-icon-back"> 详情 </toggle-edit-info>
-        <can-examine>
-          <el-button type="danger" icon="el-icon-delete" @click="handleDelete"> 删除 </el-button>
-        </can-examine>
+        <can-create :is-user="item.provider">
+          <loading-button type="danger" icon="el-icon-delete" class="mx-0" :callback="handleDelete"> 删除 </loading-button>
+        </can-create>
       </div>
     </div>
     <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">
@@ -51,12 +51,13 @@ import CanExamine from '@/components/common/CanExamine.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
 import PipeMixin from '@/pages/application/pipe/_components/PipeMixin.vue'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
-  components: { LayoutBox, ToggleEditInfo, CanExamine },
+  components: { LoadingButton, LayoutBox, ToggleEditInfo, CanExamine },
 })
 export default class PipeIdEdit extends mixins<PipeMixin>(PipeMixin) {
-  handleDelete() {
+  handleDelete(): Promise<any> {
     return this.$confirm('此操作将永久删除该应用版本, 是否继续?', '提示', {
       type: 'warning',
     }).then(() => {

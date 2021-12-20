@@ -8,12 +8,13 @@ export class Module extends BaseModule {
   create(data: any): Promise<any> {
     return this.$axios.$post('/v2/data', data)
   }
-  removeVersion(resourceId: string) {
+  remove(id: string): Promise<any> {
     return this.$axios
-      .$delete('/v2/data/' + resourceId)
+      .$delete('/v2/data/' + id)
       .then(MESSAGE_SUCCESS)
       .catch(MESSAGE_ERROR)
   }
+
   getOssToken(): Promise<any> {
     return this.$axios.$get('/v1/osstoken').then((response) => {
       const token = response.data

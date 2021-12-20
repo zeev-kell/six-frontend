@@ -19,7 +19,7 @@
       </p>
       <el-container>
         <el-main class="main-container">
-          <mavon-editor-render-client ref="MavonEditor" v-model="blog.content"></mavon-editor-render-client>
+          <mavon-editor-render-client ref="MavonEditor" :value="blog.content"></mavon-editor-render-client>
         </el-main>
         <el-aside width="240px" class="toc-aside overflow-v">
           <client-only>

@@ -1,5 +1,5 @@
 <template>
-  <div class="datum-container">
+  <div class="container-fluid">
     <div class="el-row el-row--flex is-align-middle info-header">
       <div class="el-col-auto px-20">
         <i v-if="isFormat" class="el-icon-notebook-1" style="font-size: 36px" />
@@ -27,7 +27,7 @@
       <div class="el-col el-col-8 text-right">
         <toggle-edit-info type="warning" icon="el-icon-back"> 详情 </toggle-edit-info>
         <can-examine>
-          <el-button type="danger" icon="el-icon-delete" @click="handleDeleteDatum"> 删除 </el-button>
+          <loading-button type="danger" icon="el-icon-delete" :callback="handleDelete"> 删除 </loading-button>
         </can-examine>
       </div>
     </div>
@@ -51,16 +51,17 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import CanExamine from '@/components/common/CanExamine.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
 import DatumMixin from '@/pages/application/datum/_components/DatumMixin.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
-  components: { ToggleEditInfo, CanExamine },
+  components: { LoadingButton, ToggleEditInfo, CanExamine },
 })
 export default class DatumIdEdit extends mixins<DatumMixin>(DatumMixin) {
-  handleDeleteDatum() {
-    this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+  handleDelete(): Promise<any> {
+    return this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
       type: 'warning',
     }).then(() => {
-      this.$api.datum.removeVersion(this.$route.params.id).then(() => {
+      this.$api.datum.remove(this.$route.params.id).then(() => {
         this.$I18nRouter.push('/application/data')
       })
     })

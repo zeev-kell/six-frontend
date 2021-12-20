@@ -71,3 +71,8 @@ export default class MavonEditorClient extends ClientMixin {
   }
 }
 </style>
+<style lang="scss">
+.v-note-wrapper {
+  min-height: 160px;
+}
+</style>

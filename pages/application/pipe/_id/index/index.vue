@@ -7,10 +7,10 @@
         </div>
         <div v-if="item.readme">
           <div v-if="readmeBySystem" class="card-body">
-            <mavon-editor-render-client v-model="readmeBySystem" />
+            <mavon-editor-render-client :value="readmeBySystem" />
           </div>
           <div v-if="readmeByAuthor" class="card-body">
-            <mavon-editor-render-client v-model="readmeByAuthor" />
+            <mavon-editor-render-client :value="readmeByAuthor" />
           </div>
         </div>
         <div v-else class="card-body">
@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Getter } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
 
@@ -49,15 +49,13 @@ import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor
   components: { MavonEditorRenderClient },
 })
 export default class PipeIndex extends PipeItemMixin {
-  @Getter('user/username')
-  username!: number
   get readmeByAuthor() {
     // eslint-disable-next-line camelcase
-    return this.item?.readme.by_author
+    return this.item?.readme?.by_author
   }
   get readmeBySystem() {
     // eslint-disable-next-line camelcase
-    return this.item?.readme.by_system
+    return this.item?.readme?.by_system
   }
 }
 </script>

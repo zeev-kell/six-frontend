@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid" style="overflow: inherit">
-    <el-row v-if="item.instruction" type="flex">
-      <el-col class="marked-content el-col-equal">
-        <div ref="markdown" v-html="markdown" />
+    <el-row v-if="blog" type="flex">
+      <el-col class="el-col el-col-equal pr-20">
+        <mavon-editor-render-client ref="MavonEditor" :value="blog.content" />
       </el-col>
       <el-col style="width: 260px">
         <div class="card">
@@ -15,36 +15,46 @@
           </div>
         </div>
         <client-only>
-          <markdown-toc :toc="toc" />
+          <div class="p-s" style="top: 0">
+            <el-scrollbar :native="false">
+              <mavon-editor-toc :toc="toc" style="height: calc(100vh - 60px)"></mavon-editor-toc>
+            </el-scrollbar>
+          </div>
         </client-only>
       </el-col>
     </el-row>
     <div v-else>暂无使用教程</div>
-    <el-image v-if="imageList.length !== 0" ref="elImage" style="width: 0; height: 0" :src="currentImage" :preview-src-list="imageList" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import MarkdownToc from '@/components/MarkdownToc.vue'
-import { resourceHelp } from '@/utils/resource-help'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
+import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
+import { BlogModel } from '@/types/model/Blog'
+import MavonEditorToc from '@/pages/application/_components/mavonEditor/MavonEditorToc.vue'
 
 @Component({
-  components: { MarkdownToc },
+  components: { MavonEditorToc, MavonEditorRenderClient, MarkdownToc },
   async asyncData({ app, store }) {
     const item = store.state.pipe
     if (item.instruction) {
-      const instruction = await app.$axios.$get(`/v1/blog/${item.instruction}`)
-      const { markdown, toc, imageList } = resourceHelp(instruction.content)
-      return { instruction, markdown, toc, imageList }
+      const blog = await app.$axios.$get(`/v1/blog/${item.instruction}`)
+      return { blog }
     }
   },
 })
 export default class Course extends PipeItemMixin {
-  markdown = null
-  toc = []
-  imageList = []
-  currentImage = null
+  $refs!: {
+    MavonEditor: MavonEditorRenderClient
+  }
+  blog: BlogModel | null = null
+  toc: any[] = []
+  mounted(): Promise<any> | void {
+    this.$nextTick(() => {
+      this.toc = this.$refs.MavonEditor?.getNavigation()
+    })
+  }
 }
 </script>

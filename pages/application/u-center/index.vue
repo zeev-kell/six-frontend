@@ -37,7 +37,7 @@ import LoadingButton from '@/components/LoadingButton.vue'
 @Component({
   components: { LoadingButton },
   computed: {
-    ...mapState('user', ['username', 'email', 'avatar_url']),
+    ...mapState('user', ['email', 'avatar_url']),
   },
 })
 export default class UCenterIndex extends Vue {

@@ -6,7 +6,7 @@
           <h2>{{ item.name }}</h2>
         </div>
         <div v-if="item.readme" class="card-body">
-          <mavon-editor-render-client v-model="item.readme" />
+          <mavon-editor-render-client :value="item.readme" />
         </div>
         <div v-else class="card-body">
           {{ item.description }}

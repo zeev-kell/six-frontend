@@ -1,6 +1,6 @@
 <template>
-  <layout-box>
-    <div slot="header" class="el-row el-row--flex is-align-middle p-20 info-header">
+  <div class="container-fluid">
+    <div class="el-row el-row--flex is-align-middle p-20 info-header">
       <div class="el-col-auto px-20">
         <i class="el-icon-reading" style="font-size: 36px" />
       </div>
@@ -34,7 +34,7 @@
           <toggle-edit-info type="primary" icon="el-icon-edit"> 编辑 </toggle-edit-info>
         </can-create>
         <can-create :is-user="item.provider">
-          <el-button type="danger" icon="el-icon-delete" class="mx-0" @click="handleDelete"> 删除 </el-button>
+          <loading-button type="danger" icon="el-icon-delete" class="mx-0" :callback="handleDelete"> 删除 </loading-button>
         </can-create>
       </div>
     </div>
@@ -46,7 +46,7 @@
     <div class="px-20 mt-5 pb-10 no-gutters">
       <nuxt-child />
     </div>
-  </layout-box>
+  </div>
 </template>
 
 <script lang="ts">
@@ -59,9 +59,10 @@ import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
 import CaseMixin from '@/pages/application/case/_components/CaseMixin.vue'
 import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
+import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
-  components: { LayoutBox, ToggleEditInfo, CanExamine, CanCreate },
+  components: { LoadingButton, LayoutBox, ToggleEditInfo, CanExamine, CanCreate },
 })
 export default class CaseIdIndex extends mixins<CaseItemMixin>(CaseMixin) {
   handleDownload(format = 'yaml'): void {
@@ -70,8 +71,8 @@ export default class CaseIdIndex extends mixins<CaseItemMixin>(CaseMixin) {
     const name = this.item.name + `.${asYaml ? 'cwl' : format}`
     downloadStrLink(data, name)
   }
-  handleDelete() {
-    this.$confirm('此操作将永久删除该案例, 是否继续?', '提示', {
+  handleDelete(): Promise<any> {
+    return this.$confirm('此操作将永久删除该案例, 是否继续?', '提示', {
       type: 'warning',
     }).then(() => {
       return this.$api.case.remove(this.$route.params.id).then(() => {

@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid" style="overflow: inherit">
-    <mavon-editor-render-client v-if="item.instruction" v-model="item.instruction" />
+    <mavon-editor-render-client v-if="item.instruction" :value="item.instruction" />
     <div v-else>暂无使用教程</div>
   </div>
 </template>

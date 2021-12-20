@@ -13,3 +13,4 @@ const items: Record = {
 }
 
 export const pipeConstants = new BaseConstants(items)
+export const PIPE_LOCAL = 'graph-content'
