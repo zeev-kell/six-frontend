@@ -21,7 +21,7 @@
     </div>
     <div class="card-body">
       <div class="codemirror-box">
-        <code-mirror-client v-model="formModel.input" />
+        <code-mirror-json-client v-model="formModel.input" />
       </div>
     </div>
   </div>
@@ -29,17 +29,17 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
+import { Context } from '@nuxt/types'
 import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
-import CodeMirrorClient from '@/pages/application/_components/codeMirror/CodeMirrorClient.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 import { getObject, stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { pipeConstants } from '@/constants/PipeConstants'
 import { CommandLineToolFactory, WorkflowFactory } from 'cwlts/models'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
-import { Context } from '@nuxt/types'
+import CodeMirrorJsonClient from '@/pages/application/_components/codeMirror/CodeMirrorJsonClient.vue'
 
 @Component({
-  components: { LoadingButton, CodeMirrorClient },
+  components: { CodeMirrorJsonClient, LoadingButton },
   async asyncData({ app }: Context): Promise<any> {
     const items = await app.$api.pipe.getList()
     const options = items.map((d: any) => {
@@ -91,7 +91,7 @@ export default class Work extends CaseItemMixin {
       content: JSON.stringify({
         workflow: this.formModel.workflow,
         version: this.formModel.version,
-        input: this.formModel.input,
+        input: JSON.parse(this.formModel.input),
         source: this.formModel.source,
       }),
     }
