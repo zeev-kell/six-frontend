@@ -68,7 +68,7 @@ export default class CaseIdIndex extends mixins<CaseItemMixin>(CaseMixin) {
   handleDownload(format = 'yaml'): void {
     const asYaml = format === 'yaml'
     const data = stringifyObject(getObject(this.item.content), asYaml)
-    const name = this.item.name + `.${asYaml ? 'cwl' : format}`
+    const name = this.item.name + `.${asYaml ? 'cwlc' : 'cwlc.json'}`
     downloadStrLink(data, name)
   }
   handleDelete(): Promise<any> {
