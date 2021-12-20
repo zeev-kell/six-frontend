@@ -7,7 +7,7 @@ import { CaseContent } from '@/types/model/Case'
 import { pipeConstants } from '@/constants/PipeConstants'
 
 export const state = (): NuxtState => ({
-  resource_id: undefined,
+  resource_id: null,
   type: undefined,
   name: '',
   description: '',

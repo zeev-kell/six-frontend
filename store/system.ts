@@ -16,7 +16,7 @@ export const mutations: MutationTree<SystemState> = {
   SET_BODY_CLASS(state, bodyClass): void {
     state.bodyClass = bodyClass
   },
-  SET_HELP_MENUS(state): void {
+  SET_MOBILE(state): void {
     state.isMobile = true
   },
   // 修改当前拖拽的对象

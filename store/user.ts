@@ -4,23 +4,21 @@ import type { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { RootState } from '@/store/index'
 import { Auth } from '@nuxtjs/auth-next/dist'
 
-export const state = (): NuxtState => {
-  return {
-    avatar_url: '',
-    coins: null,
-    creations: null,
-    description: '',
-    email: '',
-    id: null,
-    last_login_at: '',
-    nickname: '',
-    phone: '',
-    public_email: '',
-    registered_at: '',
-    status: null,
-    updated_at: '',
-  }
-}
+export const state = (): NuxtState => ({
+  avatar_url: '',
+  coins: null,
+  creations: null,
+  description: '',
+  email: '',
+  id: null,
+  last_login_at: '',
+  nickname: '',
+  phone: '',
+  public_email: '',
+  registered_at: '',
+  status: null,
+  updated_at: '',
+})
 
 export type UserModuleState = ReturnType<typeof state>
 

@@ -3,9 +3,7 @@ import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { NuxtState } from '@nuxt/types/app'
 import vue from 'vue'
 
-export const state = (): NuxtState => ({
-  helpMenus: [],
-})
+export const state = (): NuxtState => ({})
 
 export type RootState = ReturnType<typeof state>
 
@@ -16,9 +14,6 @@ export const mutations: MutationTree<RootState> = {
     if (state.auth !== null) {
       vue.set(state.auth, 'user', user)
     }
-  },
-  SET_HELP_MENUS(state, helpMenus) {
-    state.helpMenus = helpMenus
   },
 }
 
@@ -32,6 +27,11 @@ export const actions: ActionTree<RootState, RootState> = {
       if (user) {
         commit('SET_USER_INFO', JSON.parse(user))
       }
+      setTimeout(() => {
+        if (document.documentElement.clientWidth <= 991) {
+          commit('system/SET_MOBILE')
+        }
+      })
     }
   },
 }

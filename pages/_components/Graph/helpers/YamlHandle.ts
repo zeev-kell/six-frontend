@@ -1,6 +1,6 @@
 import * as Yaml from 'js-yaml'
 
-export function stringifyObject(object: any, asYaml = true): string {
+export function stringifyObject(object: any, asYaml = true, space = 0): string {
   if (asYaml) {
     // 转成 yaml 格式字符
     return Yaml.dump(object)
@@ -14,7 +14,8 @@ export function stringifyObject(object: any, asYaml = true): string {
         return value.replace(/\u2002/g, ' ')
       }
       return value
-    }
+    },
+    space
   )
 }
 
