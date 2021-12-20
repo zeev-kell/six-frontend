@@ -25,6 +25,9 @@
         </div>
       </div>
       <div class="card-footer">
+        <nuxt-link :to="localePath('application-cases')">
+          <el-button icon="el-icon-back"> 取消 </el-button>
+        </nuxt-link>
         <loading-button :callback="onSubmit" type="success" icon="el-icon-plus"> 保存 </loading-button>
       </div>
     </div>

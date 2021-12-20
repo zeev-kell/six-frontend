@@ -1,11 +1,20 @@
 <template>
   <div class="container-fluid" style="overflow: inherit">
-    <div class="card">
-      <div class="card-body">
-        <mavon-editor-client v-model="instruction" />
-      </div>
-      <div class="card-footer">
-        <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
+    <div class="px-15 text-muted">使用教程为一个使用该应用进行计算的完整文档教程。</div>
+    <div class="card-body">
+      <div class="el-row el-row--flex">
+        <div class="el-col-full">
+          <nuxt-link v-slot="{ navigate }" :to="localePath('application-doc-new')" custom>
+            <el-button type="primary" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
+          </nuxt-link>
+          <span class="m-x-1">或</span>
+          <el-select v-model="instruction" filterable placeholder="引用知识库文档">
+            <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
+          </el-select>
+        </div>
+        <div class="el-col-auto">
+          <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
+        </div>
       </div>
     </div>
   </div>
@@ -14,22 +23,30 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
-import MavonEditorClient from '@/pages/application/_components/mavonEditor/MavonEditorClient.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
-  components: { LoadingButton, MavonEditorClient },
+  components: { LoadingButton },
+  async asyncData({ app, store }) {
+    const item = store.state.pipe
+    const docs = await app.$axios.$get('/v1/blogs')
+    const options = docs.map((d: any) => {
+      return {
+        value: d.id,
+        label: d.title,
+      }
+    })
+    return { options, instruction: item.instruction }
+  },
 })
 export default class Course extends CaseItemMixin {
+  options = []
   instruction = ''
   async onSubmit() {
     const data = { instruction: this.instruction }
     await this.$api.case.update(this.item.resource_id, data).then(() => {
       this.$store.commit('case/UPDATE_CURRENT_STORE', data)
     })
-  }
-  mounted() {
-    this.instruction = this.item.instruction || ''
   }
 }
 </script>
