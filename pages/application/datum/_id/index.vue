@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid py-10">
     <div class="el-row el-row--flex is-align-middle info-header">
       <div class="el-col-auto px-20">
         <i v-if="isFormat" class="el-icon-notebook-1" style="font-size: 36px" />

@@ -3,6 +3,7 @@
     <div class="card">
       <div class="card-header is-align-middle" style="padding-left: 95px">
         <h2 class="mx-0">创建新的案例</h2>
+        <div class="sub--title">一个案例为一个无需额外配置即可直接运行的程序运行范例（如cwlc，jupyter notebook）</div>
       </div>
       <div class="card-body el-row">
         <div class="el-col-12">

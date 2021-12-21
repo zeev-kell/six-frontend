@@ -5,6 +5,7 @@ import { ElMessage } from 'element-ui/types/message'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import VueRouter from 'vue-router'
 import { NuxtI18nInstance } from 'nuxt-i18n'
+import { ApiType } from '@/types/plugin'
 
 interface $ElMessage extends ElMessage {}
 
@@ -21,6 +22,7 @@ interface VueMethod {
   $$axios: NuxtAxiosInstance
   $I18nRouter: VueRouter
   $i18n: NuxtI18nInstance
+  $api: ApiType
 }
 
 declare module 'nuxt-property-decorator' {

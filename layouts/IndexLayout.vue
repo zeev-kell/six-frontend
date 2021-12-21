@@ -7,16 +7,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import IndexFooter from '@/components/IndexFooter.vue'
 import IndexNavigation from '@/components/IndexNavigation.vue'
+import DefaultLayout from '@/layouts/default.vue'
 
 @Component({
   components: { IndexFooter, IndexNavigation },
 })
-export default class IndexLayout extends Vue {
-  get classes(): string {
-    return `body-${this.$store.state.system.bodyClass}`
-  }
-}
+export default class IndexLayout extends DefaultLayout {}
 </script>

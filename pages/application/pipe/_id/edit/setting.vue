@@ -12,7 +12,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="分类" prop="category">
-            <el-input v-model="formModel.category" placeholder="请输入分类" />
+            <category-select-multiple v-model="formModel.category" type="pipe" placeholder="请输入分类" />
           </el-form-item>
           <el-form-item label="地址" prop="description">
             <el-input v-model="formModel.website" placeholder="请输入地址" />
@@ -33,28 +33,33 @@
 import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
+import CategorySelectMultiple from '@/pages/_components/CategorySelectMultiple.vue'
+import { CategoryModel } from '@/types/model/Common'
 
 @Component({
-  components: { LoadingButton },
+  components: { CategorySelectMultiple, LoadingButton },
 })
 export default class Setting extends PipeItemMixin {
   $refs!: {
     formModel: HTMLFormElement
   }
-  formModel = {}
+  formModel: any = {
+    name: '',
+    version: '',
+    category: [],
+    website: '',
+    description: '',
+  }
   rules = {
     name: [
       { required: true, message: '请输入名称', trigger: 'blur' },
       { min: 2, max: 128, message: '长度在 2 到 128 个字符', trigger: 'blur' },
     ],
     // version: [{ required: true, message: '请选择默认版本', trigger: 'blur' }],
-    category: [
-      { required: true, message: '请输入分类', trigger: 'blue' },
-      { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-    ],
+    category: [{ required: true, message: '请选择分类', trigger: 'blue' }],
   }
 
-  get versions() {
+  get versions(): any[] {
     return this.item.versions.map((version: any) => {
       return {
         value: version.version,
@@ -62,13 +67,13 @@ export default class Setting extends PipeItemMixin {
       }
     })
   }
-  mounted() {
-    this.formModel = ['name', 'version', 'category', 'website', 'description'].reduce((obj: any, key: string) => {
-      obj[key] = (this.item as any)[key]
-      return obj
-    }, {})
+  mounted(): void {
+    ;['name', 'version', 'website', 'description'].forEach((key: string) => {
+      this.formModel[key] = (this.item as any)[key]
+    })
+    this.formModel.category = (this.item.category as unknown as string[]).map((c: CategoryModel) => c.name)
   }
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     await this.$refs.formModel.validate()
     await this.$api.pipe.update(this.item.pipe_id, this.formModel).then(() => {
       this.$store.commit('pipe/UPDATE_CURRENT_STORE', this.formModel)

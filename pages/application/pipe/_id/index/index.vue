@@ -33,7 +33,10 @@
         </div>
         <div class="card-body">
           <p>创建时间<br />{{ item.create_at }}</p>
-          <p>资源分类<br />{{ item.category }}</p>
+          <p>
+            资源分类<br />
+            <category-view :category="item.category" />
+          </p>
         </div>
       </div>
     </div>
@@ -44,9 +47,10 @@
 import { Component } from 'nuxt-property-decorator'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
+import CategoryView from '@/pages/_components/CategoryView.vue'
 
 @Component({
-  components: { MavonEditorRenderClient },
+  components: { CategoryView, MavonEditorRenderClient },
 })
 export default class PipeIndex extends PipeItemMixin {
   get readmeByAuthor() {

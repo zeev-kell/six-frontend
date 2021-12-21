@@ -1,6 +1,6 @@
 <template>
-  <layout-box>
-    <div class="el-row el-row--flex is-align-middle p-20 info-header">
+  <div class="container-fluid py-10">
+    <div class="el-row el-row--flex is-align-middle info-header">
       <div class="el-col-auto px-20">
         <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px" />
         <i v-if="isWork" class="el-icon-reading" style="font-size: 36px" />
@@ -75,7 +75,7 @@
     <div class="px-20 mt-5 pb-10 no-gutters">
       <nuxt-child />
     </div>
-  </layout-box>
+  </div>
 </template>
 
 <script lang="ts">

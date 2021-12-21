@@ -8,12 +8,12 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import IndexLayout from '@/layouts/IndexLayout.vue'
 import IndexFooter from '@/components/IndexFooter.vue'
 import IndexNavigation from '@/components/IndexNavigation.vue'
+import DefaultLayout from '@/layouts/default.vue'
 
 @Component({
   components: { IndexFooter, IndexNavigation },
 })
-export default class IndexLayoutScroll extends IndexLayout {}
+export default class IndexLayoutScroll extends DefaultLayout {}
 </script>

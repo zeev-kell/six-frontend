@@ -1,8 +1,9 @@
 import BaseModule from '@/assets/api/BaseModule'
+import { CategoryModel } from '@/types/model/Common'
 
 export class Module extends BaseModule {
-  getTags(params?: any): Promise<any> {
-    return this.$axios.$get<any>('/v1/tags', { params })
+  getTags(type: string): Promise<CategoryModel[]> {
+    return this.$axios.$get<CategoryModel[]>('/v1/tags', { params: { type } })
   }
 }
 

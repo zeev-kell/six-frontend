@@ -7,7 +7,7 @@ export interface PipeModel {
   provider: string
   create_at: number
   description: string
-  category: string
+  category: string | string[]
   download: string
   tutorial: string
   type: number

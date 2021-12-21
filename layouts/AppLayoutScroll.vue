@@ -12,12 +12,12 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import AppNavigation from '@/components/AppNavigation.vue'
-import AppLayout from '@/layouts/AppLayout.vue'
+import DefaultLayout from '@/layouts/default.vue'
 
 @Component({
   components: { AppNavigation },
   // 使用 auth 中间健作为登录的判断跳转
   middleware: 'auth',
 })
-export default class AppLayoutScroll extends AppLayout {}
+export default class AppLayoutScroll extends DefaultLayout {}
 </script>

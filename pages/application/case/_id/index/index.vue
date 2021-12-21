@@ -28,7 +28,10 @@
         </div>
         <div class="card-body">
           <p>创建时间<br />{{ item.create_at }}</p>
-          <p>资源分类<br />{{ item.category.map((c) => c.name).join(' ') }}</p>
+          <p>
+            资源分类<br />
+            <category-view :category="item.category" />
+          </p>
         </div>
       </div>
     </div>
@@ -39,9 +42,10 @@
 import { Component, Getter } from 'nuxt-property-decorator'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
 import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
+import CategoryView from '@/pages/_components/CategoryView.vue'
 
 @Component({
-  components: { MavonEditorRenderClient },
+  components: { CategoryView, MavonEditorRenderClient },
 })
 export default class CaseIndex extends CaseItemMixin {}
 </script>

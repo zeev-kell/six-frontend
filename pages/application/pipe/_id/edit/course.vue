@@ -29,7 +29,7 @@ import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vu
   components: { LoadingButton },
   async asyncData({ app, store }) {
     const item = store.state.pipe
-    const docs = await app.$axios.$get('/v1/blogs')
+    const docs = await app.$api.blog.getList()
     const options = docs.map((d: any) => {
       return {
         value: d.id,

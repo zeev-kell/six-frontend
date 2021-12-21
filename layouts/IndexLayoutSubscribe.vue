@@ -10,10 +10,10 @@
 import { Component } from 'nuxt-property-decorator'
 import IndexFooter from '@/components/IndexFooter.vue'
 import IndexNavigation from '@/components/IndexNavigation.vue'
-import IndexLayout from '@/layouts/IndexLayout.vue'
+import DefaultLayout from '@/layouts/default.vue'
 
 @Component({
   components: { IndexFooter, IndexNavigation },
 })
-export default class IndexLayoutSubscribe extends IndexLayout {}
+export default class IndexLayoutSubscribe extends DefaultLayout {}
 </script>

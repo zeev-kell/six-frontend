@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid">
-    <div class="el-row el-row--flex is-align-middle p-20 info-header">
+  <div class="container-fluid py-10">
+    <div class="el-row el-row--flex is-align-middle info-header">
       <div class="el-col-auto px-20">
         <i class="el-icon-reading" style="font-size: 36px" />
       </div>
