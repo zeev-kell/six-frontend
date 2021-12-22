@@ -10,7 +10,7 @@
     <div v-if="index !== -1 && input.type.type === 'map'">
       <span class="text-muted"> [{{ index }}] </span>
       <!--Delete button for array item if its a map-->
-      <el-tooltip v-if="!readonly" content="Delete map array">
+      <el-tooltip v-if="!readonly" :content="$t('graph.delete_map_array')">
         <i class="el-icon-delete clickable" @click="deleteFromArray()" />
       </el-tooltip>
     </div>
@@ -34,7 +34,6 @@
         <template v-else-if="isInputType('int')">
           <input v-model="actualValue" type="number" :disabled="readonly" class="form-control" />
         </template>
-
         <template v-else-if="isInputType('float')">
           <input v-model="actualValue" type="number" :readonly="readonly" class="form-control" />
         </template>
@@ -59,12 +58,12 @@
 
         <!--Files and array of Files-->
         <template v-else-if="isInputType('File')">
-          <span class="text-warning small"> Cannot set default values for type File and File[]. </span>
+          <span class="text-warning small"> {{ $t('graph.cannot_set_default_file') }} </span>
         </template>
 
         <!--Directories and array of Directories-->
         <template v-else-if="isInputType('Directory')">
-          <span class="small text-muted"> Cannot set default values for type Directory and Directory[]. </span>
+          <span class="small text-muted"> {{ $t('graph.cannot_set_default_directory') }} </span>
         </template>
 
         <!--Delete button for array item if its not a map-->

@@ -149,7 +149,6 @@ export default class WorkflowStepInspectorStep extends Vue {
         ;(this.step as any)[k] = value
       }, 500)
       this.$watch('ruleForm.' + k, function (value) {
-        // console.log('watch.ruleForm' + k, value)
         debounced(value)
       })
     })
