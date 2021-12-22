@@ -49,7 +49,7 @@
         <!--Files and array of Files-->
         <template v-else-if="isInputType('File')">
           <div class="el-row" style="width: 100%">
-            <native-file-browser-form-field :form-control="control.get('path')" @onUpdate="onUpdate($event, control.get('path'))" />
+            <native-file-browser-form-field :form-control="control.get('path')" @onUpdate="onControlUpdate($event, control.get('path'))" />
             <el-button v-if="control.get('path').value && control.get('path').enabled" size="mini" type="text" @click="promptFileMetadata()">
               <div v-if="metadataKeysCount > 0 || secondaryFilesCount > 0">
                 {{ secondaryFilesCount }} {{ $t('graph.SecondaryFiles') }}, {{ metadataKeysCount }} {{ $t('common.metadata') }}
@@ -87,6 +87,7 @@
             :input-array-items-type="entry.type.items"
             :input-enum-symbols="entry.type.symbols"
             :input-record-fields="entry.type.fields"
+            @on-update="onControlUpdate($event, control.get(entry.id))"
           />
         </div>
       </template>
@@ -111,11 +112,11 @@
               :readonly="readonly"
               :form-control="ctrl"
               class="el-col-full"
-              @on-child-update="onChildUpdate($event, ctrl)"
+              @on-update="onControlUpdate($event, ctrl)"
             />
 
             <!--Delete button if not array of maps-->
-            <el-tooltip v-if="inputArrayItemsType !== 'map' && !readonly" content="Delete">
+            <el-tooltip v-if="inputArrayItemsType !== 'map' && !readonly" content="删除">
               <i class="el-icon-delete-solid clickable remove-icon" @click="deleteFromArray(idx)" />
             </el-tooltip>
           </div>
@@ -123,9 +124,9 @@
         <div v-if="control.enabled">
           <!--Add array item button in case that element is not File or Directory-->
           <div v-if="inputArrayItemsType !== 'File' && inputArrayItemsType !== 'Directory'">
-            <button v-if="!readonly" type="button" class="btn pl-0 btn-link" @click="addArrayEntry()">
+            <el-button v-if="!readonly" type="text" class="p-0" @click="addArrayEntry()">
               <i class="el-icon-plus" /> New {{ inputArrayItemsType }}
-            </button>
+            </el-button>
           </div>
 
           <!--Add array item button in case that element is File or Directory-->
@@ -180,6 +181,7 @@ export default class InputValueEditor extends Vue {
   @Prop({ default: '' })
   relativePathRoot!: string
   @Prop({
+    required: true,
     default() {
       return new FormControl(null)
     },
@@ -200,9 +202,7 @@ export default class InputValueEditor extends Vue {
   set actualValue(value) {
     // 只对普通类型有效
     console.log('set actualValue', value)
-    // TODO 修改数据更新方式
-    this.formControl.setValue(value)
-    this.recalculateSecondaryFilesAndMetadataCounts()
+    this.$emit('on-update', value)
   }
 
   @Watch('changeInput', { immediate: true })
@@ -312,9 +312,11 @@ export default class InputValueEditor extends Vue {
     this.warning = undefined
     const control = this.makeControlForArray()
     this.control?.push(control)
+    this.$emit('on-update', this.control.value)
   }
   deleteFromArray(index: number, control = this.control): void {
     control.removeAt(index)
+    this.$emit('on-update', this.control.value)
   }
   focus(): void {
     if (this.$refs.input) {
@@ -325,6 +327,7 @@ export default class InputValueEditor extends Vue {
     const properties = ['multiSelections']
     properties.push(this.inputArrayItemsType === 'File' ? 'openFile' : 'openDirectory')
     this.control.push(new FormControl({ class: this.inputArrayItemsType, path: '' }))
+    this.$emit('on-update', this.control.value)
   }
   bindValuePropagationOnControlSetup(): void {
     // let typecheckedChange = change;
@@ -387,14 +390,14 @@ export default class InputValueEditor extends Vue {
       this.bindValuePropagationOnControlSetup()
     }
     this.control.setValue(update, options)
+    this.$emit('on-update', update)
   }
   promptFileMetadata(): void {
     this.$refs.fileMetadata.showDialog(this.control.value, this.relativePathRoot)
   }
   onUpdateFileMetadata(value: any): void {
     this.control.patchValue(value)
-    this.formControl.setValue(this.control.value)
-    this.$emit('on-child-update')
+    this.$emit('on-update', this.control.value)
   }
   makeControlForArray(): any {
     switch (this.inputArrayItemsType) {
@@ -433,18 +436,15 @@ export default class InputValueEditor extends Vue {
     // eslint-disable-next-line no-prototype-builtins
     this.metadataKeysCount = Object.prototype.isPrototypeOf(metadata) ? Object.keys(metadata).length : 0
   }
-  onUpdate(value: any, control: any): void {
-    console.log('on child update', value)
+  onControlUpdate(value: any, control: any): void {
     // 非普通类型的更新方式
+    console.log('onControlUpdate', value)
     control.setValue(value)
-    this.formControl.setValue(this.control.value)
-    this.$emit('on-child-update')
-  }
-  onChildUpdate() {
-    this.formControl.setValue(this.control.value)
+    this.$emit('on-update', this.control.value)
   }
 }
 </script>
+
 <style>
 .remove-icon {
   display: flex;

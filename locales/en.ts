@@ -146,5 +146,8 @@ export default {
     merge_flattened: 'Flattened',
     scatter_method: 'Scatter Method',
     no_entries_defined: 'No entries defined',
+    delete_map_array: 'Delete map array',
+    cannot_set_default_file: 'Cannot set default values for type File and File[]. ',
+    cannot_set_default_directory: 'Cannot set default values for type Directory and Directory[].',
   },
 }

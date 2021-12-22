@@ -43,6 +43,7 @@
                 :input-enum-symbols="input.type.symbols"
                 :input-record-fields="input.type.fields"
                 class="mb-0"
+                @on-update="onUpdate($event, input)"
               />
 
               <div v-else class="text-center m-b-1">
@@ -124,7 +125,7 @@ export default class JobStepInspector extends Vue {
     }
   }
 
-  resetJobGroup() {
+  resetJobGroup(): void {
     this.jobGroup.patchValue(this.jobValue, { emitEvent: false })
     for (const controlName of Object.keys(this.jobGroup.controls)) {
       const control = this.jobGroup.get(controlName)
@@ -145,11 +146,11 @@ export default class JobStepInspector extends Vue {
       return input.type.type === type || input.type.items === type
     })
   }
-  clear(control: any) {
+  clear(control: any): void {
     control.setValue(null)
     control.disable()
   }
-  getInputSource(input: any) {
+  getInputSource(input: any): string | void {
     if (input instanceof WorkflowStepInputModel) {
       const inputSource = input.source[0]
       // Remove # if it exists on the beginning
@@ -264,13 +265,15 @@ export default class JobStepInspector extends Vue {
     const fileValues = [''].map((p) => ({ class: type, path: p }))
     inputFormField.setValue(!isArray ? fileValues[0] : fileValues)
   }
-  isFileOrDirectory(input: any) {
+  isFileOrDirectory(input: any): boolean {
     const type = input.type.type
     const itemsType = input.type.items
     return type === 'File' || type === 'Directory' || itemsType === 'File' || itemsType === 'Directory'
   }
-
-  mounted() {
+  onUpdate(value: any, input: any): void {
+    this.jobGroup.controls[this.getInputSource(input) as unknown as string].setValue(value)
+  }
+  mounted(): void {
     this.$watch(
       'jobGroup.value',
       (changes) => {

@@ -21,7 +21,6 @@ export default class NativeFileBrowserFormField extends Vue {
     return this.formControl?.value
   }
   set actualValue(value) {
-    // TODO 修改数据更新方式
     this.$emit('onUpdate', value)
   }
 }

@@ -146,5 +146,8 @@ export default {
     merge_flattened: '展开',
     scatter_method: 'Scatter方法',
     no_entries_defined: '未定义任何元数据',
+    delete_map_array: '删除映射数组',
+    cannot_set_default_file: '无法设置文件类型的默认值。',
+    cannot_set_default_directory: '无法为类型目录设置默认值。',
   },
 }
