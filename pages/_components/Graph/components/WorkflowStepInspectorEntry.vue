@@ -111,8 +111,8 @@
           </div>
         </div>
 
-        <el-button type="text" :disabled="readonly" size="mini" @click="addArrayEntry(input)">
-          <i class="el-icon-circle-plus" /> New {{ input.type.items }}
+        <el-button type="text" :disabled="readonly" size="mini" icon="el-icon-plus" @click="addArrayEntry(input)">
+          New {{ input.type.items }}
         </el-button>
       </template>
 

@@ -214,7 +214,6 @@ export default class IndexFooter extends Vue {
   }
   .copyright {
     padding-top: 50px;
-    padding-bottom: 50px;
   }
 }
 </style>

@@ -15,7 +15,7 @@ import IndexEmpowerment from '@/pages/_components/IndexEmpowerment.vue'
 import IndexProduct from '@/pages/_components/IndexProduct.vue'
 
 @Component({
-  layout: 'IndexLayout',
+  layout: 'IndexLayoutSubscribe',
   scrollToTop: true,
   components: {
     IndexDownload,

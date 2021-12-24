@@ -1,6 +1,6 @@
-<template>
+﻿<template>
   <div :class="classes">
-    <index-navigation />
+    <index-navigation :with-scroll="true" />
     <Nuxt />
     <index-footer />
   </div>
@@ -15,5 +15,5 @@ import DefaultLayout from '@/layouts/default.vue'
 @Component({
   components: { IndexFooter, IndexNavigation },
 })
-export default class IndexLayout extends DefaultLayout {}
+export default class IndexLayoutScroll extends DefaultLayout {}
 </script>

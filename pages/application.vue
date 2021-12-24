@@ -10,9 +10,19 @@ const description =
   '你可以快速获取可靠的数据处理软件、流程，并通过在线的可视化参数配置界面完成软件参数的设置、软件的下载，' +
   '利用本地计算设备，完成一键下载，一键运行。'
 
+function reverseFind(meta: any[]): string | void {
+  for (let index = meta.length - 1; index >= 0; index--) {
+    if (typeof meta[index].layout !== 'undefined') {
+      return meta[index].layout
+    }
+  }
+}
+
 @Component({
   scrollToTop: true,
-  layout: 'AppLayout',
+  layout({ route }): string {
+    return reverseFind(route.meta as any[]) || 'AppLayout'
+  },
   head: {
     title: '六点了协作云',
     meta: [

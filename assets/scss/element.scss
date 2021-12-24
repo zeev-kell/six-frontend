@@ -33,6 +33,7 @@
     background: transparent !important;
     padding: 6px;
   }
+
   &.is-loading > span {
     display: none;
   }
@@ -55,6 +56,10 @@
 .el-button--block {
   width: 100%;
   display: block;
+}
+
+.el-button--small + .el-button--small {
+  margin-left: 5px;
 }
 
 .el-dialog__header {
@@ -128,6 +133,7 @@
       background-color: #434a50;
     }
   }
+
   .el-dropdown-menu__item--divided::before {
     background-color: transparent;
   }

@@ -1,8 +1,8 @@
-<template>
+﻿<template>
   <div :class="classes">
     <el-container class="app-container">
       <app-navigation />
-      <el-main style="padding: 0">
+      <el-main style="padding: 0; overflow: visible">
         <Nuxt />
       </el-main>
     </el-container>
@@ -19,5 +19,5 @@ import DefaultLayout from '@/layouts/default.vue'
   // 使用 auth 中间健作为登录的判断跳转
   middleware: 'auth',
 })
-export default class AppLayout extends DefaultLayout {}
+export default class AppLayoutScroll extends DefaultLayout {}
 </script>

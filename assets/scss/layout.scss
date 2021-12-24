@@ -157,7 +157,7 @@ section {
     font-size: 1em;
   }
 
-  .container {
+  > .container {
     padding-bottom: 50px;
   }
 
@@ -245,6 +245,25 @@ section {
 
     .el-table__header-wrapper {
       flex: 0 0 auto;
+    }
+  }
+}
+
+.workflow-box,
+.page-graph-box {
+  min-height: 450px;
+  height: calc(100vh - 60px);
+}
+
+.codemirror-box {
+  max-height: 340px;
+  height: calc(100vh - 130px);
+  > .vue-codemirror {
+    height: 100%;
+
+    > .CodeMirror {
+      height: 100%;
+      border: 1px solid #eeeeee;
     }
   }
 }

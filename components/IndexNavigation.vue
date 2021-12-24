@@ -1,5 +1,6 @@
 <template>
-  <el-header id="header" class="nav-fixed">
+  <el-header id="header" class="nav-fixed" :class="headerClass">
+    <!-- desktop -->
     <div class="navbar-header el-row--flex pr-20">
       <div class="navbar el-col-auto">
         <div class="navbar-logo">
@@ -13,7 +14,7 @@
           <el-menu-item :index="localePath('index')">
             {{ $t('nav.index') }}
           </el-menu-item>
-          <el-submenu index="null" popper-class="custom-menu-item" class="no-active">
+          <el-submenu index="null" popper-class="nav-menu-item" class="no-active">
             <template slot="title">
               {{ $t('nav.product') }}
             </template>
@@ -22,7 +23,7 @@
                 <a @click="navigate" @keypress.enter="navigate">云协作</a>
               </nuxt-link>
             </li>
-            <el-menu-item :index="localePath('/graph-info/new')"> 流程组合 </el-menu-item>
+            <el-menu-item :index="localePath('graph-info-new')"> 流程组合 </el-menu-item>
             <el-menu-item class="px-0">
               <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link px-10">数据库</a>
             </el-menu-item>
@@ -54,14 +55,24 @@
                 {{ $t('nav.login') }}
               </nuxt-link>
             </li>
-            <li v-else class="el-menu-item menu-link" role="menuitem">
-              <nuxt-link :to="localePath('application')">
-                {{ username }}
+            <el-dropdown v-else class="el-submenu" placement="bottom-end" @command="ACTION_LOGOUT()">
+              <nuxt-link v-slot="{ navigate }" :to="localePath('application')" custom>
+                <div class="el-submenu__title" @click="navigate">
+                  {{ username }}
+                  <i class="el-submenu__icon-arrow el-icon-arrow-down"></i>
+                </div>
               </nuxt-link>
-            </li>
+              <el-dropdown-menu slot="dropdown" :visible-arrow="false">
+                <el-dropdown-item>
+                  <span class="feather icon-log-out"></span>
+                  退出登录
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </el-menu>
         </client-only>
       </div>
+      <!-- mobile 切换开关 -->
       <div class="el-col-auto d-flex is-align-middle hidden-md-and-up">
         <ul class="el-menu--horizontal el-menu">
           <li class="el-menu-item menu-link" role="menuitem">
@@ -77,6 +88,7 @@
         </ul>
       </div>
     </div>
+    <!-- mobile -->
     <div class="nav-wrap" :class="{ active: showMobileMenu }">
       <div class="d-flex flex-justify-end border-bottom">
         <button type="button" class="el-dialog__headerbtn" @click="showMobileMenu = false">
@@ -87,14 +99,14 @@
         <el-menu-item :index="localePath('index')">
           {{ $t('nav.index') }}
         </el-menu-item>
-        <el-submenu index="null" popper-class="custom-menu-item" class="no-active">
+        <el-submenu index="null" popper-class="nav-menu-item" class="no-active">
           <template slot="title">
             {{ $t('nav.product') }}
           </template>
           <li role="menuitem" class="el-menu-item">
             <a :href="localePath('index') + '#section-product'" @click="showMobileMenu = false">云协作</a>
           </li>
-          <el-menu-item :index="localePath('/graph-info/new')"> 流程组合 </el-menu-item>
+          <el-menu-item :index="localePath('graph-info-new')"> 流程组合 </el-menu-item>
           <el-menu-item class="px-0">
             <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link pl-40 d-inline-b w-100">数据库</a>
           </el-menu-item>
@@ -124,11 +136,12 @@
         </li>
       </el-menu>
     </div>
+    <el-backtop :visibility-height="400" :bottom="100" />
   </el-header>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'nuxt-property-decorator'
+import { Component, Vue, Watch, Action, Prop } from 'nuxt-property-decorator'
 import LogoPng from '@/components/LogoPng.vue'
 import DocsLink from '@/components/common/DocsLink.vue'
 
@@ -139,27 +152,28 @@ import DocsLink from '@/components/common/DocsLink.vue'
   },
 })
 export default class IndexNavigation extends Vue {
+  @Prop({ default: false })
+  withScroll!: boolean
+
   showMobileMenu = false
   RESOURCES_URL = process.env.RESOURCES_URL
   SCROLL_TRANSPORT = 100
+  headerClass = ['nav-white']
   get username() {
     return this.$store.getters['user/username']
   }
+
   @Watch('$route.name')
   onWatchRouteName() {
-    this.$nextTick(this.onWindowScroll)
+    if (this.withScroll) {
+      this.$nextTick(this.onWindowScroll)
+    }
     this.showMobileMenu = false
   }
-  mounted() {
-    this.onWindowScroll()
-    window.addEventListener('scroll', this.onWindowScroll, true)
-    if (window.location.hash) {
-      this.goAnchor(window.location.hash)
-    }
-  }
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.onWindowScroll, true)
-  }
+
+  @Action('user/ACTION_LOGOUT')
+  ACTION_LOGOUT!: () => void
+
   onWindowScroll() {
     const header = document.querySelector('#header') as HTMLElement
     if (!header) {
@@ -167,21 +181,38 @@ export default class IndexNavigation extends Vue {
     }
     if (this.getRouteBaseName() === 'index') {
       header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)'
-      header.classList.add('nav-white')
+      this.headerClass = ['nav-white']
     } else {
       const scrollTop = document.documentElement.scrollTop
       const scrollPercent = scrollTop <= this.SCROLL_TRANSPORT ? scrollTop / 140 : 0.96
       header.style.backgroundColor = 'rgba(255, 255, 255,' + scrollPercent + ')'
-      scrollTop >= this.SCROLL_TRANSPORT ? header.classList.add('nav-white') : header.classList.remove('nav-white')
+      scrollTop >= this.SCROLL_TRANSPORT ? (this.headerClass = ['nav-white']) : (this.headerClass = [])
     }
   }
   goAnchor(selector: string) {
     // 最好加个定时器给页面缓冲时间
     setTimeout(() => {
       // 获取锚点元素
-      const anchor = document.querySelector(selector)
-      anchor?.scrollIntoView()
+      document.querySelector(selector)?.scrollIntoView()
     }, 300)
+  }
+  mounted() {
+    if (this.withScroll) {
+      this.onWindowScroll()
+      window.addEventListener('scroll', this.onWindowScroll, true)
+    }
+    if (window.location.hash) {
+      this.goAnchor(window.location.hash)
+    }
+  }
+  beforeDestroy() {
+    if (this.withScroll) {
+      try {
+        window.removeEventListener('scroll', this.onWindowScroll, true)
+      } catch (e) {
+        console.log(e)
+      }
+    }
   }
 }
 </script>
@@ -230,6 +261,7 @@ export default class IndexNavigation extends Vue {
     background-color: transparent;
   }
   .el-menu-item,
+  .el-dropdown,
   .el-submenu__title {
     color: inherit;
     background-color: transparent;
@@ -241,6 +273,7 @@ export default class IndexNavigation extends Vue {
 #header.nav-white ::v-deep {
   color: var(--s-theme-color--dark);
   box-shadow: 0 0 2px #e4e4e4;
+  background: #ffffff;
   .el-menu .el-menu-item:hover,
   .el-menu .el-menu-item:focus {
     color: var(--s-theme-color--dark);
@@ -248,12 +281,12 @@ export default class IndexNavigation extends Vue {
 }
 </style>
 <style>
-.custom-menu-item a {
+.nav-menu-item a {
   width: 100%;
   display: inline-block;
 }
-.custom-menu-item a,
-.custom-menu-item .el-menu-item {
+.nav-menu-item a,
+.nav-menu-item .el-menu-item {
   color: inherit;
   text-decoration: none;
 }

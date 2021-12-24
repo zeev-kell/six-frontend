@@ -6,7 +6,7 @@
         {{ warning }}
       </span>
     </div>
-    <div class="el-form-item m-b-1">
+    <div class="input-group">
       <!--Each leaf field will be wrapped as an input group-->
       <!--Nested fields below should not be wrapped into other container elements-->
       <!--because it will break size and positioning-->
@@ -35,7 +35,7 @@
 
         <!--Booleans-->
         <template v-else-if="isInputType('boolean')">
-          <label class="clickable">
+          <label class="clickable m-0">
             <span>{{ actualValue ? 'Yes' : 'No' }}</span>
             <el-switch v-model="actualValue" :disabled="readonly" />
           </label>
@@ -48,7 +48,7 @@
 
         <!--Files and array of Files-->
         <template v-else-if="isInputType('File')">
-          <div class="el-row" style="width: 100%">
+          <div class="el-row w-100">
             <native-file-browser-form-field :form-control="control.get('path')" @onUpdate="onControlUpdate($event, control.get('path'))" />
             <el-button v-if="control.get('path').value && control.get('path').enabled" size="mini" type="text" @click="promptFileMetadata()">
               <div v-if="metadataKeysCount > 0 || secondaryFilesCount > 0">
@@ -62,7 +62,9 @@
 
         <!--Directories and array of Directories-->
         <template v-else-if="isInputType('Directory')">
-          <div><!-- TODO --></div>
+          <div class="el-row w-100">
+            <native-file-browser-form-field :form-control="control.get('path')" @onUpdate="onControlUpdate($event, control.get('path'))" />
+          </div>
         </template>
       </div>
 
@@ -94,7 +96,7 @@
 
       <!--Arrays-->
       <template v-else-if="isInputType('array')">
-        <div v-for="(ctrl, idx) of control.controls" :key="idx" class="el-row el-row--flex is-column">
+        <div v-for="(ctrl, idx) of control.controls" :key="idx" class="el-row el-row--flex is-column m-b-1">
           <!--Delete button if array of maps-->
           <div v-if="inputArrayItemsType === 'map'" class="pb-1">
             <span class="text-muted"> [{{ idx }}] </span>
@@ -103,7 +105,7 @@
             </el-tooltip>
           </div>
 
-          <div class="el-row el-row--flex">
+          <div class="el-row el-row--flex is-align-middle">
             <input-value-editor
               ref="arrayItem"
               :input-type="inputArrayItemsType"
@@ -124,8 +126,8 @@
         <div v-if="control.enabled">
           <!--Add array item button in case that element is not File or Directory-->
           <div v-if="inputArrayItemsType !== 'File' && inputArrayItemsType !== 'Directory'">
-            <el-button v-if="!readonly" type="text" class="p-0" @click="addArrayEntry()">
-              <i class="el-icon-plus" /> New {{ inputArrayItemsType }}
+            <el-button v-if="!readonly" type="text" size="mini" icon="el-icon-plus" @click="addArrayEntry()">
+              New {{ inputArrayItemsType }}
             </el-button>
           </div>
 
@@ -448,7 +450,10 @@ export default class InputValueEditor extends Vue {
 <style>
 .remove-icon {
   display: flex;
-  height: 1rem;
-  margin: 1em 0.5em 0 1em;
+  height: calc(2.5rem - 2px);
+  line-height: calc(2.5rem - 2px);
+  margin-left: 0.5rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
 }
 </style>

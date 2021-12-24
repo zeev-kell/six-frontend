@@ -6,13 +6,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import Particle from '@/assets/js/particle'
 
-@Component({
-  data() {
-    return {
-      particle: undefined,
-    }
-  },
-})
+@Component
 export default class CanvasParticle extends Vue {
   particle!: Particle
 
@@ -20,7 +14,6 @@ export default class CanvasParticle extends Vue {
     this.particle.destroy()
     window.removeEventListener('resize', this.particle.resize.bind(this.particle))
   }
-
   mounted(): void {
     this.particle = new Particle(this.$el, {
       drawType: ['circle'],

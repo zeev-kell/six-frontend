@@ -93,7 +93,7 @@ const description =
 @Component({
   components: { DocsLink },
   scrollToTop: true,
-  layout: 'IndexLayoutBase',
+  layout: 'IndexLayoutScroll',
   head: {
     title: '下载中心-sixbox-本地客户端软件',
     meta: [
