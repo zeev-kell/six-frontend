@@ -14,6 +14,14 @@ const MockModule: Module = function () {
   // This sets the mock adapter on the default instance
   const mock = new MockAdapter(axios)
   // arguments for reply are (status, data, headers)
+  mock.onGet(/\/v1\/user\/info/).reply(() => {
+    return [
+      200,
+      {
+        data: { username: 'dd' },
+      },
+    ]
+  })
   mock.onGet(PipeUrl).reply(() => {
     const item = Mock.mock(Pipe)
     item.type = 0

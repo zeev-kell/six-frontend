@@ -15,7 +15,7 @@ export default class GraphWorkflow extends GraphMixin {
     this.dataModel = WorkflowFactory.from(json, 'document')
     // 要使用 SVGArrangePlugin 插件，必须要有 sbg 前缀，可以改地址
     if (!this.dataModel.namespaces.has('sbg')) {
-      this.dataModel.namespaces.set('sbg', 'https://www.sevenbridges.com/')
+      this.dataModel.namespaces.set('sbg', 'http://www.sixoclock.net/')
     }
     this.dataModel.setValidationCallback(this.afterModelValidation.bind(this))
     this.dataModel.validate().then(this.afterModelValidation.bind(this))

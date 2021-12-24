@@ -21,6 +21,9 @@ export default class GraphTool extends GraphMixin {
 
   recreateModel(json: CommandLineTool): void {
     this.dataModel = CommandLineToolFactory.from(json, 'document')
+    if (!this.dataModel.namespaces.has('sbg')) {
+      this.dataModel.namespaces.set('sbg', 'http://www.sixoclock.net/')
+    }
     this.dataModel.updateCommandLine()
     this.dataModel.setValidationCallback(this.afterModelValidation.bind(this))
     this.dataModel.validate().then(this.afterModelValidation.bind(this))

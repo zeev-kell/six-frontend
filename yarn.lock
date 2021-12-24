@@ -4382,9 +4382,9 @@ cwl-svg@^2.1.7:
     core-js "^2.5.1"
 
 cwlts@^1.15.30:
-  version "1.22.3"
-  resolved "https://registry.nlark.com/cwlts/download/cwlts-1.22.3.tgz#a9923425c96127814bb2f0e7349a9ac3dda07706"
-  integrity sha1-qZI0JclhJ4FLsvDnNJqaw92gdwY=
+  version "1.23.2"
+  resolved "https://registry.npmmirror.com/cwlts/download/cwlts-1.23.2.tgz#759d3319ff0a990d305fabde2cdb359694ca6859"
+  integrity sha1-dZ0zGf8KmQ0wX6veLNs1lpTKaFk=
   dependencies:
     ajv "^6.1.1"
     js-yaml "^3.10.0"
@@ -5340,7 +5340,7 @@ fast-glob@^3.1.1, fast-glob@^3.2.5:
 
 fast-json-stable-stringify@^2.0.0:
   version "2.1.0"
-  resolved "https://registry.nlark.com/fast-json-stable-stringify/download/fast-json-stable-stringify-2.1.0.tgz?cache=0&sync_timestamp=1624543041215&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ffast-json-stable-stringify%2Fdownload%2Ffast-json-stable-stringify-2.1.0.tgz#874bf69c6f404c2b5d99c481341399fd55892633"
+  resolved "https://registry.nlark.com/fast-json-stable-stringify/download/fast-json-stable-stringify-2.1.0.tgz#874bf69c6f404c2b5d99c481341399fd55892633"
   integrity sha1-h0v2nG9ATCtdmcSBNBOZ/VWJJjM=
 
 fast-levenshtein@^2.0.6:

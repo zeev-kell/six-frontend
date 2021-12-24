@@ -22,10 +22,10 @@
 
         <!--Numbers-->
         <template v-else-if="isInputType('int')">
-          <input v-model="actualValue" type="number" class="form-control" :disabled="readonly" />
+          <input v-model.number="actualValue" type="number" class="form-control" :disabled="readonly" />
         </template>
         <template v-else-if="isInputType('float')">
-          <input v-model="actualValue" type="number" class="form-control" :disabled="readonly" />
+          <input v-model.number="actualValue" type="number" class="form-control" :disabled="readonly" />
         </template>
 
         <!--Strings-->

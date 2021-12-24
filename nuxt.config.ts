@@ -175,10 +175,7 @@ const config = {
             propertyName: 'data.token',
           },
           logout: { url: '/v1/logout', method: 'get' },
-          user: {
-            url: '/v1/user/info',
-            method: 'get',
-          },
+          user: { url: '/v1/user/info', method: 'get' },
           refresh: { url: '/v1/token/refresh', method: 'post' },
         },
         user: {
