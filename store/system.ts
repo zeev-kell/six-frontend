@@ -5,7 +5,7 @@ import { NuxtState } from '@nuxt/types/app'
 export const state = (): NuxtState => ({
   bodyClass: '',
   isMobile: false,
-  dragToolItem: undefined,
+  dragToolItem: null,
   popoverTime: 0,
   tableTime: 0,
 })

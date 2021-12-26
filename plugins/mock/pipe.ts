@@ -37,7 +37,7 @@ export const Pipe = {
 export const pipeUrl = /\/v[12]\/pipe\/[0-9]*/
 export const pipeFun = function () {
   const item = Mock.mock(Pipe)
-  const _tool = require('./commandline.json')
+  const _tool = require('./commandline_.json')
   const _workflow = require('./workflow.json')
   item.type = 0
   item.content = item.type === 0 ? _tool : _workflow

@@ -32,10 +32,10 @@
 
         <!--Numbers-->
         <template v-else-if="isInputType('int')">
-          <input v-model="actualValue" type="number" :disabled="readonly" class="form-control" />
+          <input v-model.number="actualValue" type="number" :disabled="readonly" class="form-control" />
         </template>
         <template v-else-if="isInputType('float')">
-          <input v-model="actualValue" type="number" :readonly="readonly" class="form-control" />
+          <input v-model.number="actualValue" type="number" :readonly="readonly" class="form-control" />
         </template>
 
         <!--Strings-->
@@ -99,7 +99,7 @@
       <template v-else-if="isInputType('array')">
         <div v-for="(entry, i) of value" :key="i" class="array-row">
           <div class="array-entry">
-            <selection-input-entry
+            <selection-input-entry-map
               :prefix="prefix + '.[' + i + ']'"
               :index="i"
               :type="input.type"
@@ -111,8 +111,8 @@
           </div>
         </div>
 
-        <el-button type="text" :disabled="readonly" size="mini" @click="addArrayEntry(input)">
-          <i class="el-icon-circle-plus" /> New {{ input.type.items }}
+        <el-button type="text" :disabled="readonly" size="mini" icon="el-icon-plus" @click="addArrayEntry(input)">
+          新增 {{ input.type.items }}
         </el-button>
       </template>
 

@@ -1,0 +1,104 @@
+{
+  "class": "CommandLineTool",
+  "cwlVersion": "v1.0",
+  "$namespaces": {
+    "sbg": "https://www.sevenbridges.com/"
+  },
+  "id": "666",
+  "baseCommand": [],
+  "inputs": [
+    {
+      "id": "input",
+      "type": "File?",
+      "inputBinding": {
+        "position": 0
+      }
+    },
+    {
+      "id": "input_1",
+      "type": "string?",
+      "inputBinding": {
+        "position": 0
+      }
+    },
+    {
+      "id": "input_2",
+      "type": "int?",
+      "inputBinding": {
+        "position": 0
+      }
+    },
+    {
+      "id": "input_3",
+      "type": "float?",
+      "inputBinding": {
+        "position": 0
+      }
+    },
+    {
+      "id": "input_4",
+      "type": "boolean?",
+      "inputBinding": {
+        "position": 0
+      }
+    },
+    {
+      "id": "input_5",
+      "type": "map?"
+    },
+    {
+      "id": "input_6",
+      "type": "Directory?",
+      "inputBinding": {
+        "position": 0
+      }
+    },
+    {
+      "id": "input_7",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "fields": [],
+          "name": "input_7"
+        }
+      ],
+      "inputBinding": {
+        "position": 0
+      }
+    },
+    {
+      "id": "input_8",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "symbols": ["TT", "EE"],
+          "name": "input_8"
+        }
+      ],
+      "inputBinding": {
+        "position": 0
+      }
+    },
+    {
+      "id": "input_9",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "type": "enum",
+            "name": "input_9",
+            "symbols": ["TTT", "EEE"]
+          }
+        }
+      ],
+      "inputBinding": {
+        "position": 0
+      }
+    }
+  ],
+  "outputs": [],
+  "six:id": "d49fd535-38b7-4b64-b556-e96d450dbff0"
+}

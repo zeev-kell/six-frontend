@@ -1,0 +1,52 @@
+{
+  "class": "Workflow",
+  "cwlVersion": "v1.0",
+  "$namespaces": { "sbg": "http://www.sixoclock.net/" },
+  "inputs": [
+    { "id": "input_5", "type": "Directory[]", "sbg:x": 0, "sbg:y": 0 },
+    { "id": "input_4", "type": "map[]", "sbg:exposed": true },
+    { "id": "input_3", "type": "boolean[]", "sbg:x": 0, "sbg:y": 108 },
+    { "id": "input_1", "type": "int[]", "sbg:x": 0, "sbg:y": 324 },
+    { "id": "input_2", "type": "float[]", "sbg:x": 0, "sbg:y": 216 },
+    { "id": "input", "type": "string[]", "sbg:x": 0, "sbg:y": 432 },
+    { "id": "124", "type": ["null", { "type": "array", "items": { "type": "enum", "name": "123", "symbols": [] } }], "sbg:x": 0, "sbg:y": 540 }
+  ],
+  "outputs": [{ "id": "123", "outputSource": ["666/123"], "type": "File", "sbg:x": 359.02081298828125, "sbg:y": 270 }],
+  "steps": [
+    {
+      "id": "666",
+      "in": [
+        { "id": "123", "source": ["124"] },
+        { "id": "input", "source": ["input"] },
+        { "id": "input_1", "source": ["input_1"] },
+        { "id": "input_2", "source": ["input_2"] },
+        { "id": "input_3", "source": ["input_3"] },
+        { "id": "input_4", "source": ["input_4"] },
+        { "id": "input_5", "source": ["input_5"] }
+      ],
+      "out": [{ "id": "123" }],
+      "run": {
+        "class": "CommandLineTool",
+        "cwlVersion": "v1.0",
+        "$namespaces": { "sbg": "https://www.sevenbridges.com/" },
+        "id": "666",
+        "baseCommand": [],
+        "inputs": [
+          { "id": "123", "type": ["null", { "type": "array", "items": { "type": "enum", "name": "123", "symbols": [] } }], "default": "123" },
+          { "id": "123", "type": { "type": "array", "items": { "type": "record", "name": "123", "fields": [] } } },
+          { "id": "input", "type": "string[]", "inputBinding": { "shellQuote": true, "position": 0 } },
+          { "id": "input_1", "type": "int[]", "inputBinding": { "shellQuote": true, "position": 0 } },
+          { "id": "input_2", "type": "float[]", "inputBinding": { "shellQuote": true, "position": 0 } },
+          { "id": "input_3", "type": "boolean[]", "inputBinding": { "shellQuote": true, "position": 0 } },
+          { "id": "input_4", "type": "map[]" },
+          { "id": "input_5", "type": "Directory[]", "inputBinding": { "shellQuote": true, "position": 0 } }
+        ],
+        "outputs": [{ "id": "123", "type": "File" }],
+        "six:id": "d49fd535-38b7-4b64-b556-e96d450dbff0"
+      },
+      "sbg:x": 129.2708740234375,
+      "sbg:y": 235
+    }
+  ],
+  "requirements": [{ "class": "InlineJavascriptRequirement" }, { "class": "StepInputExpressionRequirement" }]
+}

@@ -81,7 +81,7 @@
       <div v-else class="text-warning small" style="line-height: 1">
         <i class="el-icon-warning" />
         Only one input per workflow can be configured as batch. Grouping criteria has already been set on #
-        {{ workflowModel['batchInput'] }}.
+        {{ model['batchInput'] }}.
       </div>
     </el-form-item>
     <!--Description-->
