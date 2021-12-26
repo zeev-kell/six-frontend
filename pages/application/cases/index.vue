@@ -79,7 +79,7 @@ import { caseConstants } from '@/constants/CaseConstants'
       }
       return `${key}:${value}`
     })
-    const { count, data } = await app.$api.case.getList(listQuery)
+    const { count, data } = await app.$api.case.search(listQuery)
     return {
       otherQuery,
       listQuery,

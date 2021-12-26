@@ -1,5 +1,6 @@
 <template>
   <div class="container-fluid">
+    <div class="px-15 text-muted">添加案例内容或通过可视化界面配置案例</div>
     <div class="card-body">
       <div class="el-row el-row--flex">
         <div class="el-col-full">

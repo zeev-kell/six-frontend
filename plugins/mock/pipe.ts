@@ -55,6 +55,21 @@ export const pipesFun = function () {
     return p
   })
 }
+export const pipesSearchUrl = /\/v[12]\/search\/pipe/
+export const pipesSearchFun = function () {
+  const items = Mock.mock(Pipes).items
+  const _tool = require('./commandline_.json')
+  const _workflow = require('./workflow.json')
+  return {
+    page: 1,
+    size: 20,
+    count: 100,
+    data: items.map((p: PipeModel) => {
+      p.content = p.type === 0 ? _tool : _workflow
+      return p
+    }),
+  }
+}
 export const pipeUserUrl = /\/v[12]\/user\/pipes/
 
 // NOTE 由 Node.js 发起请求需要同步修改 modules 至 mock
@@ -64,6 +79,7 @@ Mock.mock(pipeUrl, 'delete')
 export const MockList: any = [
   [pipeUrl, pipeFun],
   [pipesUrl, pipesFun],
+  [pipesSearchUrl, pipesSearchFun],
   [pipeUserUrl, pipesFun],
 ]
 

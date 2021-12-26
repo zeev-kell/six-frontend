@@ -8,9 +8,9 @@ function serialize(data: any): any {
   if (data.content && typeof data.content !== 'string') {
     data.content = JSON.stringify(data.content)
   }
-  if (Array.isArray(data.category)) {
-    data.category = data.category.map((c: any) => (typeof c === 'string' ? c : c.name)).join(',')
-  }
+  // if (Array.isArray(data.category)) {
+  //   data.category = data.category.map((c: any) => (typeof c === 'string' ? c : c.name)).join(',')
+  // }
   return data
 }
 

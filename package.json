@@ -78,6 +78,7 @@
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@types/ali-oss": "^6.0.11",
     "@types/js-cookie": "^3.0.0",
+    "@types/node": "^17.0.4",
     "@types/spark-md5": "^3.0.2",
     "axios-mock-adapter": "^1.19.0",
     "better-mock": "^0.2.8",

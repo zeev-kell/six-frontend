@@ -6,6 +6,9 @@
           <el-form-item label="名称" prop="name">
             <el-input v-model="formModel.name" placeholder="请输入名称" />
           </el-form-item>
+          <el-form-item label="版本" prop="description">
+            <el-input v-model="formModel.version" placeholder="输入版本"></el-input>
+          </el-form-item>
           <el-form-item label="分类" prop="category">
             <el-select v-model="formModel.category" multiple filterable allow-create placeholder="请输入分类" style="width: 100%">
               <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.name"> </el-option>
@@ -39,6 +42,7 @@ export default class CaseSetting extends CaseItemMixin {
     name: '',
     category: [],
     description: '',
+    version: '',
   }
   rules = {
     name: [
@@ -53,6 +57,7 @@ export default class CaseSetting extends CaseItemMixin {
     this.formModel.name = this.item.name
     this.formModel.category = this.item.category.map((c: any) => (typeof c === 'string' ? c : c.name))
     this.formModel.description = this.item.description
+    this.formModel.version = this.content.version
     this.categoryList = this.item.category
   }
   async onSubmit() {
@@ -60,8 +65,16 @@ export default class CaseSetting extends CaseItemMixin {
       this.$message.warning('请填写完整信息')
       throw e
     })
-    await this.$api.case.update(this.item.resource_id, this.formModel).then(() => {
-      this.$store.commit('case/UPDATE_CURRENT_STORE', this.formModel)
+    const content = this.$store.getters['case/content']
+    content.version = this.formModel.version
+    const data = {
+      content,
+      name: this.formModel.name,
+      category: this.formModel.category,
+      description: this.formModel.description,
+    }
+    await this.$api.case.update(this.item.resource_id, data).then(() => {
+      this.$store.commit('case/UPDATE_CURRENT_STORE', data)
     })
   }
 }

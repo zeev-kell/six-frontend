@@ -71,7 +71,7 @@ export default class Setting extends PipeItemMixin {
     ;['name', 'version', 'website', 'description'].forEach((key: string) => {
       this.formModel[key] = (this.item as any)[key]
     })
-    this.formModel.category = (this.item.category as unknown as string[]).map((c: CategoryModel) => c.name)
+    this.formModel.category = (this.item.category as unknown as CategoryModel[]).map((c: CategoryModel) => c.name)
   }
   async onSubmit(): Promise<void> {
     await this.$refs.formModel.validate()

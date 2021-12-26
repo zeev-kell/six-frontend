@@ -76,7 +76,7 @@ const config = {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    ...(process.env.NODE_ENV === 'development' ? ['~/modules/mockjs.ts'] : []),
+    // ...(process.env.NODE_ENV === 'development' ? ['~/modules/mockjs.ts'] : []),
     // ...['@/modules/mockjs.ts'],
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
@@ -138,7 +138,7 @@ const config = {
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
     progress: true,
-    // debug: process.env.NODE_ENV === 'development',
+    // debug: process.env.NODE_ENV === 'development',/v1/user/info
   },
   publicRuntimeConfig: {
     axios: {
