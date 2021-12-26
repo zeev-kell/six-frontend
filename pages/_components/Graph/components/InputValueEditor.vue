@@ -6,7 +6,7 @@
         {{ warning }}
       </span>
     </div>
-    <div class="input-group">
+    <div class="input-group m-b-1">
       <!--Each leaf field will be wrapped as an input group-->
       <!--Nested fields below should not be wrapped into other container elements-->
       <!--because it will break size and positioning-->
@@ -43,14 +43,14 @@
 
         <!--Maps-->
         <template v-else-if="isInputType('map')">
-          <map-list ref="MapList" v-model="actualValue" class="w-100" />
+          <map-list ref="mapList" v-model="actualValue" class="w-100" />
         </template>
 
         <!--Files and array of Files-->
         <template v-else-if="isInputType('File')">
           <div class="el-row w-100">
             <native-file-browser-form-field :form-control="control.get('path')" @onUpdate="onControlUpdate($event, control.get('path'))" />
-            <el-button v-if="control.get('path').value && control.get('path').enabled" size="mini" type="text" @click="promptFileMetadata()">
+            <el-button v-if="control.get('path').enabled" size="mini" type="text" @click="promptFileMetadata()">
               <div v-if="metadataKeysCount > 0 || secondaryFilesCount > 0">
                 {{ secondaryFilesCount }} {{ $t('graph.SecondaryFiles') }}, {{ metadataKeysCount }} {{ $t('common.metadata') }}
               </div>
@@ -70,7 +70,7 @@
 
       <!--Records-->
       <template v-else-if="isInputType('record')">
-        <div v-if="inputRecordFields.length === 0">此记录没有字段。</div>
+        <div v-if="inputRecordFields.length === 0" class="text-muted">此记录没有字段。</div>
         <div v-for="(entry, index) of inputRecordFields" :key="index" class="m-l-1">
           <label>
             {{ entry && (entry.label || entry.id) }}
@@ -126,14 +126,14 @@
         <div v-if="control.enabled">
           <!--Add array item button in case that element is not File or Directory-->
           <div v-if="inputArrayItemsType !== 'File' && inputArrayItemsType !== 'Directory'">
-            <el-button v-if="!readonly" type="text" size="mini" icon="el-icon-plus" @click="addArrayEntry()">
+            <el-button v-if="!readonly" type="text" size="mini" class="text-capitalize" icon="el-icon-plus" @click="addArrayEntry()">
               新增 {{ inputArrayItemsType }}
             </el-button>
           </div>
 
           <!--Add array item button in case that element is File or Directory-->
           <div v-else>
-            <el-button v-if="!readonly" type="text" size="mini" icon="el-icon-plus" @click="addArrayFileOrDirectory()">
+            <el-button v-if="!readonly" type="text" size="mini" class="text-capitalize" icon="el-icon-plus" @click="addArrayFileOrDirectory()">
               新增 {{ inputArrayItemsType }}
             </el-button>
           </div>
@@ -141,7 +141,7 @@
       </template>
 
       <!--Unknown-->
-      <template v-else> 未知类型: {{ inputType || 'null' }} </template>
+      <template v-else> {{ $t('graph.unknown_input_type') }}: {{ inputType || 'null' }} </template>
     </div>
   </div>
 </template>

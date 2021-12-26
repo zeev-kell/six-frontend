@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form-item label="Type" prop="type">
+    <el-form-item :label="$t('common.type')" prop="type">
       <select v-model="ruleForm.type" class="form-control" :disabled="readonly" @change="onFormChange">
         <option v-for="type of types" :key="type" :value="type">
           {{ type }}
