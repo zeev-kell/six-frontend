@@ -79,7 +79,7 @@
             :value="input.default"
             :type="input.type"
             :readonly="readonly"
-            @onUpdate="stepValueUpdate($event, input.id + '.default')"
+            @on-update="stepValueUpdate($event, input.id + '.default')"
           />
           <!--Link Merge Method Group-->
           <div class="el-form-item">

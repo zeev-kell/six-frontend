@@ -149,5 +149,6 @@ export default {
     delete_map_array: '删除映射数组',
     cannot_set_default_file: '无法设置文件类型的默认值。',
     cannot_set_default_directory: '无法为类型目录设置默认值。',
+    unknown_input_type: '未知类型',
   },
 }

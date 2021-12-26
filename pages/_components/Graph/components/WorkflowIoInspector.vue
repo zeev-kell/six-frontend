@@ -24,7 +24,7 @@
       </div>
     </div>
     <!--Label-->
-    <el-form-item label="Label" prop="label">
+    <el-form-item :label="$t('common.label')" prop="label">
       <input v-model="ruleForm.label" class="form-control" :disabled="readonly" @input="onLabelChange" />
     </el-form-item>
     <!--Input Type -->
@@ -40,11 +40,12 @@
         :disabled="readonly"
         no-data-text="无推荐数据"
         placeholder=""
+        :default-first-option="true"
         @change="onSymbolsChange"
       />
     </el-form-item>
     <!--File Types-->
-    <el-form-item v-if="isFileType" label="File types" prop="fileTypes">
+    <el-form-item v-if="isFileType" :label="$t('common.file_type')" prop="fileTypes">
       <el-select
         v-model="ruleForm.fileTypes"
         multiple
@@ -54,6 +55,7 @@
         :disabled="readonly"
         no-data-text="无推荐数据"
         placeholder=""
+        :default-first-option="true"
         @change="onFileTypeChange"
       />
     </el-form-item>
@@ -90,9 +92,9 @@
     </el-form-item>
     <!-- TODO -->
     <!--Secondary Files-->
-    <collapse-item :title="'graph.SecondaryFiles'">
-      <!--      <div>{{ ruleForm.secondaryFiles }}</div>-->
-    </collapse-item>
+    <!--    <collapse-item :title="'graph.SecondaryFiles'">-->
+    <!--      <div>{{ ruleForm.secondaryFiles }}</div>-->
+    <!--    </collapse-item>-->
   </el-form>
 </template>
 

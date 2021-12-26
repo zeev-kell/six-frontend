@@ -49,7 +49,7 @@ export const Pipes = { 'items|10': [Pipe] }
 export const pipesUrl = /\/v[12]\/pipes/
 export const pipesFun = function () {
   const items = Mock.mock(Pipes).items
-  const _tool = require('./commandline.json')
+  const _tool = require('./commandline_.json')
   const _workflow = require('./workflow.json')
   return items.map((p: PipeModel) => {
     p.content = p.type === 0 ? _tool : _workflow
