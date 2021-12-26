@@ -43,7 +43,7 @@
 
         <!--Maps-->
         <template v-else-if="isInputType('map')">
-          <div><!-- TODO --></div>
+          <map-list ref="MapList" v-model="actualValue" class="w-100" />
         </template>
 
         <!--Files and array of Files-->
@@ -70,10 +70,10 @@
 
       <!--Records-->
       <template v-else-if="isInputType('record')">
-        <div v-if="inputRecordFields.length === 0">This record has no fields.</div>
+        <div v-if="inputRecordFields.length === 0">此记录没有字段。</div>
         <div v-for="(entry, index) of inputRecordFields" :key="index" class="m-l-1">
           <label>
-            {{ entry ? entry.label : entry.id }}
+            {{ entry && (entry.label || entry.id) }}
             <span class="text-muted">({{ entry.type.type }})</span>
             <el-tooltip v-if="entry.description">
               <i class="el-icon-info text-muted" />
@@ -101,7 +101,7 @@
           <div v-if="inputArrayItemsType === 'map'" class="pb-1">
             <span class="text-muted"> [{{ idx }}] </span>
             <el-tooltip v-if="!readonly" content="Delete map array">
-              <i class="el-icon-delete-solid clickable remove-icon pull-right" @click="deleteFromArray(idx)" />
+              <i class="el-icon-delete-solid pointer remove-icon pull-right" @click="deleteFromArray(idx)" />
             </el-tooltip>
           </div>
 
@@ -127,21 +127,21 @@
           <!--Add array item button in case that element is not File or Directory-->
           <div v-if="inputArrayItemsType !== 'File' && inputArrayItemsType !== 'Directory'">
             <el-button v-if="!readonly" type="text" size="mini" icon="el-icon-plus" @click="addArrayEntry()">
-              New {{ inputArrayItemsType }}
+              新增 {{ inputArrayItemsType }}
             </el-button>
           </div>
 
           <!--Add array item button in case that element is File or Directory-->
           <div v-else>
             <el-button v-if="!readonly" type="text" size="mini" icon="el-icon-plus" @click="addArrayFileOrDirectory()">
-              New {{ inputArrayItemsType }}
+              新增 {{ inputArrayItemsType }}
             </el-button>
           </div>
         </div>
       </template>
 
       <!--Unknown-->
-      <template v-else> Unknown input type: {{ inputType || 'null' }} </template>
+      <template v-else> 未知类型: {{ inputType || 'null' }} </template>
     </div>
   </div>
 </template>
@@ -151,15 +151,18 @@ import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
 import InputValueEditorModal from '@/pages/_components/Graph/components/InputValueEditorModal.vue'
 import NativeFileBrowserFormField from '@/pages/_components/Graph/components/NativeFileBrowserFormField.vue'
 import { FormArray, FormControl, FormGroup } from '@/components/FormControl'
+import MapList from '@/pages/_components/Graph/components/MapList.vue'
+import { InputParameterModel } from 'cwlts/models/generic/InputParameterModel'
 
 @Component({
-  components: { InputValueEditorModal, NativeFileBrowserFormField, InputValueEditor: () => import('./InputValueEditor.vue') },
+  components: { MapList, InputValueEditorModal, NativeFileBrowserFormField, InputValueEditor: () => import('./InputValueEditor.vue') },
 })
 export default class InputValueEditor extends Vue {
   $refs!: {
     input: HTMLFormElement
     arrayItem: InputValueEditor
     fileMetadata: InputValueEditorModal
+    mapList: MapList
   }
 
   @Prop({ default: false })
@@ -173,13 +176,13 @@ export default class InputValueEditor extends Vue {
       return []
     },
   })
-  inputEnumSymbols!: any[]
+  inputEnumSymbols!: string[]
   @Prop({
     default() {
       return []
     },
   })
-  inputRecordFields!: any[]
+  inputRecordFields!: InputParameterModel[]
   @Prop({ default: '' })
   relativePathRoot!: string
   @Prop({
@@ -210,10 +213,6 @@ export default class InputValueEditor extends Vue {
   @Watch('changeInput', { immediate: true })
   onWatchChangeInput(): void {
     this.setupFormControls()
-  }
-  @Watch('inputType', { immediate: true })
-  onWatchInputType(): void {
-    this.bindValuePropagationOnControlSetup()
   }
   @Watch('readonly')
   onWatchReadonly(): void {
@@ -310,20 +309,16 @@ export default class InputValueEditor extends Vue {
   clear(): void {
     this.control?.setValue(null)
   }
+  focus(): void {
+    if (this.$refs.input) {
+      this.$refs.input.focus()
+    }
+  }
   addArrayEntry(): void {
     this.warning = undefined
     const control = this.makeControlForArray()
     this.control?.push(control)
     this.$emit('on-update', this.control.value)
-  }
-  deleteFromArray(index: number, control = this.control): void {
-    control.removeAt(index)
-    this.$emit('on-update', this.control.value)
-  }
-  focus(): void {
-    if (this.$refs.input) {
-      this.$refs.input.focus()
-    }
   }
   addArrayFileOrDirectory(): void {
     const properties = ['multiSelections']
@@ -331,14 +326,9 @@ export default class InputValueEditor extends Vue {
     this.control.push(new FormControl({ class: this.inputArrayItemsType, path: '' }))
     this.$emit('on-update', this.control.value)
   }
-  bindValuePropagationOnControlSetup(): void {
-    // let typecheckedChange = change;
-    // if (this.inputType === "int") {
-    //   typecheckedChange = parseInt(change, 10);
-    // } else if (this.inputType === "float") {
-    //   typecheckedChange = isNaN(change) ? 0 : parseFloat(change);
-    // }
-    // this.propagateChange(typecheckedChange);
+  deleteFromArray(index: number, control = this.control): void {
+    control.removeAt(index)
+    this.$emit('on-update', this.control.value)
   }
   setupFormControls(): void {
     const disabled = this.readonly
@@ -389,7 +379,6 @@ export default class InputValueEditor extends Vue {
       const ctrlArr = Array.apply(null, Array(update.length)).map(() => this.makeControlForArray())
       this.control = new FormArray(ctrlArr)
       this.readonly ? this.control.disable(options) : this.control.enable(options)
-      this.bindValuePropagationOnControlSetup()
     }
     this.control.setValue(update, options)
     this.$emit('on-update', update)
@@ -444,6 +433,11 @@ export default class InputValueEditor extends Vue {
     control.setValue(value)
     this.$emit('on-update', this.control.value)
   }
+  mounted(): void {
+    this.$nextTick(() => {
+      this.$refs.mapList?.setMetaDate(this.actualValue)
+    })
+  }
 }
 </script>
 
@@ -455,5 +449,6 @@ export default class InputValueEditor extends Vue {
   margin-left: 0.5rem;
   cursor: pointer;
   padding: 0 0.5rem;
+  color: #eee;
 }
 </style>

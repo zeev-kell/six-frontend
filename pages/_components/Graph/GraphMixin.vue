@@ -207,7 +207,7 @@ export default class GraphMixin extends GraphEdit {
       const drop = this.graph.getPlugin(DropPlugin)
       drop?.registerOnDropAfterChange((coords: SVGPoint) => {
         const task = this.$store.state.system.dragToolItem
-        this.addNodeToGraph(task, coords)
+        this.addNodeToGraph(JSON.parse(JSON.stringify(task)), coords)
       })
       // 注册双击事件，只处理 step 的类型
       const dblclick = this.graph.getPlugin(DblclickPlugin)

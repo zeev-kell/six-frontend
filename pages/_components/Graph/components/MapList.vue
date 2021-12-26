@@ -1,10 +1,9 @@
 <template>
   <div>
-    <label> {{ $t('common.metadata') }}</label>
-    <div v-for="(ctrl, i) of metadata" :key="i" class="el-row el-row--flex mt-10-a list-item is-align-middle">
-      <el-input v-model="ctrl.key" placeholder="key"></el-input>
+    <div v-for="(m, i) of metadata" :key="i" class="el-row el-row--flex mt-10-a list-item is-align-middle">
+      <el-input v-model="m.key" placeholder="key" @input="onChange"></el-input>
       <span class="add-on">:</span>
-      <el-input v-model="ctrl.value" placeholder="value"></el-input>
+      <el-input v-model="m.value" placeholder="value" @input="onChange"></el-input>
       <el-button
         v-if="!readonly"
         type="dark"
@@ -26,7 +25,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import debounce from '@/utils/debounce'
 interface meta {
   key: string
   value: string
@@ -37,6 +37,8 @@ interface meta {
 export default class MapList extends Vue {
   @Prop({ default: false })
   readonly!: boolean
+  @Prop({ required: true })
+  value!: any
 
   metadata: meta[] = []
 
@@ -49,9 +51,17 @@ export default class MapList extends Vue {
   }
   remove(i: number) {
     this.metadata.splice(i, 1)
+    this.onChange()
   }
+  onChange = debounce(() => {
+    this.$emit('input', this.getMetadata())
+  }, 500)
   setMetaDate(value: any): void {
-    this.metadata = value === null ? [] : this.convertToKVArray(value)
+    if (value === null) {
+      this.add()
+    } else {
+      this.metadata = this.convertToKVArray(value)
+    }
   }
   getMetadata(): any {
     return this.metadata.reduce((obj, m: meta) => {
@@ -73,8 +83,12 @@ export default class MapList extends Vue {
     }
     return patch
   }
+  mounted(): Promise<any> | void {
+    this.setMetaDate(this.value)
+  }
 }
 </script>
+
 <style scoped lang="scss">
 .add-on {
   flex-basis: 20px;

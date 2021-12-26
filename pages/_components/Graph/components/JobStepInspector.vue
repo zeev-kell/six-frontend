@@ -200,10 +200,10 @@ export default class JobStepInspector extends Vue {
     if (previousValue !== undefined && currentValue === undefined) {
       return false
     }
-    if (previousValue.length === 0 && currentValue.length === 0) {
+    if (previousValue.length === 0 && currentValue!.length === 0) {
       return true
     }
-    if (previousValue.length !== currentValue.length) {
+    if (previousValue.length !== currentValue!.length) {
       return false
     }
     for (let i = 0; i < previousValue.length; i++) {
@@ -274,6 +274,7 @@ export default class JobStepInspector extends Vue {
     this.jobGroup.controls[this.getInputSource(input) as unknown as string].setValue(value)
   }
   mounted(): void {
+    // 监听当前任务配置变化，更新 store
     this.$watch(
       'jobGroup.value',
       (changes) => {

@@ -112,7 +112,7 @@
         </div>
 
         <el-button type="text" :disabled="readonly" size="mini" icon="el-icon-plus" @click="addArrayEntry(input)">
-          New {{ input.type.items }}
+          新增 {{ input.type.items }}
         </el-button>
       </template>
 

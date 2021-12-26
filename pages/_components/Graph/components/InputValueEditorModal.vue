@@ -23,7 +23,8 @@
           </template>
         </div>
       </div>
-      <map-list ref="MapList" class="form-group m-b-1"></map-list>
+      <label> {{ $t('common.metadata') }}</label>
+      <map-list ref="mapList" class="form-group m-b-1"></map-list>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button type="dark" size="mini" @click="onClose"> 取 消 </el-button>
@@ -44,7 +45,7 @@ import MapList from '@/pages/_components/Graph/components/MapList.vue'
 })
 export default class InputValueEditorModal extends Vue {
   $refs!: {
-    MapList: MapList
+    mapList: MapList
   }
   @InjectReactive('model')
   model!: WorkflowModel
@@ -87,7 +88,7 @@ export default class InputValueEditorModal extends Vue {
     }
     this.dialogFormVisible = true
     this.$nextTick(() => {
-      this.$refs.MapList.setMetaDate(this.metadata)
+      this.$refs.mapList.setMetaDate(this.metadata)
     })
   }
   deleteSecondaryFile(index: number): void {
@@ -112,7 +113,7 @@ export default class InputValueEditorModal extends Vue {
   }
   onSubmit(): void {
     const fVal = this.form.value
-    fVal.metadata = this.$refs.MapList.getMetadata()
+    fVal.metadata = this.$refs.mapList.getMetadata()
     fVal.secondaryFiles = fVal.secondaryFiles.filter((entry: any) => entry.path.trim() !== '')
     this.$emit('on-update', fVal)
     this.dialogFormVisible = false

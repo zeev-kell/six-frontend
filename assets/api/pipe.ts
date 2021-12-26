@@ -4,6 +4,7 @@ import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import { Context } from '@nuxt/types'
 import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { PipeModel } from '@/types/model/Pipe'
+import { MESSAGE_SUCCESS, MESSAGE_ERROR } from '@/utils/reponse-helper'
 
 export class Module {
   private $axios: NuxtAxiosInstance
@@ -28,6 +29,13 @@ export class Module {
     return this.$axios.$get('/v2/pipes')
   }
 
+  update(id: string, data: any): Promise<any> {
+    return this.$axios
+      .$put('/v2/pipe/repository/' + id, data)
+      .then(MESSAGE_SUCCESS)
+      .catch(MESSAGE_ERROR)
+  }
+
   getListV2(params: any): Promise<PipeModel[]> {
     return this.$axios.$get<PipeModel[]>('/v2/pipes', { params }).then((response) => {
       response.forEach((r) => {
@@ -40,13 +48,6 @@ export class Module {
           }
         })
       })
-      return response
-    })
-  }
-
-  update(pipeId: string, data: any) {
-    return this.$axios.$put('/v2/pipe/repository/' + pipeId, data).then((response) => {
-      Element.Message.success('保存成功')
       return response
     })
   }
