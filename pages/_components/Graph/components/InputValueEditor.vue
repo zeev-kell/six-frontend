@@ -96,7 +96,7 @@
 
       <!--Arrays-->
       <template v-else-if="isInputType('array')">
-        <div v-for="(ctrl, idx) of control.controls" :key="idx" class="el-row el-row--flex is-column m-b-1">
+        <div v-for="(ctrl, idx) of control.controls" :key="idx" class="el-row el-row--flex is-column m-b-05">
           <!--Delete button if array of maps-->
           <div v-if="inputArrayItemsType === 'map'" class="pb-1">
             <span class="text-muted"> [{{ idx }}] </span>
@@ -107,13 +107,12 @@
 
           <div class="el-row el-row--flex is-align-middle">
             <input-value-editor
-              ref="arrayItem"
               :input-type="inputArrayItemsType"
               :input-enum-symbols="inputEnumSymbols"
               :input-record-fields="inputRecordFields"
               :readonly="readonly"
               :form-control="ctrl"
-              class="el-col-full"
+              class="el-col-full mb-0"
               @on-update="onControlUpdate($event, ctrl)"
             />
 
