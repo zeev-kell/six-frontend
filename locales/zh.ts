@@ -14,6 +14,7 @@ export default {
     operation: '操作',
     type: '类型',
     file_type: '文件类型',
+    items_type: '子类型',
     required: '是否必须',
     description: '描述',
     default: '默认值',
@@ -150,5 +151,6 @@ export default {
     cannot_set_default_file: '无法设置文件类型的默认值。',
     cannot_set_default_directory: '无法为类型目录设置默认值。',
     unknown_input_type: '未知类型',
+    type_mismatch: '类型不匹配：此输入的默认步长值为"{0}"类型，但该输入声明为"{1}"。您可以通过单击下方按钮为该输入生成一组新的测试数据。',
   },
 }
