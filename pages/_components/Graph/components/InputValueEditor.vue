@@ -13,7 +13,7 @@
       <div v-if="isSingleInputTypes()" class="el-row el-row--flex is-align-middle">
         <!--Enums-->
         <template v-if="isInputType('enum')">
-          <select v-model="actualValue" class="form-control">
+          <select v-model="actualValue" class="form-control" :disabled="readonly">
             <option v-for="val of inputEnumSymbols" :key="val" :value="val">
               {{ val }}
             </option>
@@ -35,7 +35,7 @@
 
         <!--Booleans-->
         <template v-else-if="isInputType('boolean')">
-          <label class="clickable m-0">
+          <label class="clickable" style="margin: 0 auto 0 0">
             <span>{{ actualValue ? 'Yes' : 'No' }}</span>
             <el-switch v-model="actualValue" :disabled="readonly" />
           </label>
@@ -43,7 +43,7 @@
 
         <!--Maps-->
         <template v-else-if="isInputType('map')">
-          <map-list ref="mapList" v-model="actualValue" class="w-100" />
+          <map-list ref="mapList" v-model="actualValue" :readonly="readonly" class="w-100" />
         </template>
 
         <!--Files and array of Files-->
@@ -96,7 +96,7 @@
 
       <!--Arrays-->
       <template v-else-if="isInputType('array')">
-        <div v-for="(ctrl, idx) of control.controls" :key="idx" class="el-row el-row--flex is-column m-b-1">
+        <div v-for="(ctrl, idx) of control.controls" :key="idx" class="el-row el-row--flex is-column m-b-05">
           <!--Delete button if array of maps-->
           <div v-if="inputArrayItemsType === 'map'" class="pb-1">
             <span class="text-muted"> [{{ idx }}] </span>
@@ -107,13 +107,12 @@
 
           <div class="el-row el-row--flex is-align-middle">
             <input-value-editor
-              ref="arrayItem"
               :input-type="inputArrayItemsType"
               :input-enum-symbols="inputEnumSymbols"
               :input-record-fields="inputRecordFields"
               :readonly="readonly"
               :form-control="ctrl"
-              class="el-col-full"
+              class="el-col-full mb-0"
               @on-update="onControlUpdate($event, ctrl)"
             />
 
@@ -160,14 +159,13 @@ import { InputParameterModel } from 'cwlts/models/generic/InputParameterModel'
 export default class InputValueEditor extends Vue {
   $refs!: {
     input: HTMLFormElement
-    arrayItem: InputValueEditor
     fileMetadata: InputValueEditorModal
     mapList: MapList
   }
 
   @Prop({ default: false })
   readonly!: boolean
-  @Prop({ default: '' })
+  @Prop({ required: true })
   inputType!: string
   @Prop({ default: '' })
   inputArrayItemsType!: string

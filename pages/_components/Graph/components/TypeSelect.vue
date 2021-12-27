@@ -16,7 +16,7 @@
       </div>
     </div>
     <!--Item type-->
-    <el-form-item v-show="!(paramType ? isParamTypeArray : undefined)" label="Items Type">
+    <el-form-item v-show="!(paramType ? isParamTypeArray : undefined)" :label="$t('common.items_type')">
       <select v-model="ruleForm.items" class="form-control" :disabled="readonly" @change="onFormChange">
         <option v-for="item of itemTypes" :key="item" :value="item">
           {{ item }}

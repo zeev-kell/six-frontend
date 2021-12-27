@@ -12,6 +12,7 @@ export default {
     operation: 'Operation',
     type: 'Type',
     file_type: 'File Type',
+    items_type: 'Items Type',
     required: 'Required',
     description: 'Description',
     default: 'Default',
@@ -167,5 +168,8 @@ export default {
     cannot_set_default_file: 'Cannot set default values for type File and File[]. ',
     cannot_set_default_directory: 'Cannot set default values for type Directory and Directory[].',
     unknown_input_type: 'Unknown input type',
+    type_mismatch:
+      'Type mismatch: the default step value for this input is of type "{0}", but the input is declared as "{1}".' +
+      ' You can generate a new set of test data for this input by clicking the button below.',
   },
 }

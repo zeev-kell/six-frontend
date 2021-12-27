@@ -6,15 +6,12 @@
         {{ warning }}
       </span>
     </div>
-
-    <div v-if="index !== -1 && input.type.type === 'map'">
+    <div v-if="index !== -1 && input.type.type === 'map'" class="inspector-tip">
       <span class="text-muted"> [{{ index }}] </span>
-      <!--Delete button for array item if its a map-->
       <el-tooltip v-if="!readonly" :content="$t('graph.delete_map_array')">
-        <i class="el-icon-delete clickable" @click="deleteFromArray()" />
+        <i class="el-icon-delete pointer remove-icon" @click="deleteFromArray()" />
       </el-tooltip>
     </div>
-
     <div class="el-form-item m-b-1">
       <!--Each leaf field will be wrapped as an input group-->
       <!--Nested fields below should not be wrapped into other container elements-->
@@ -32,10 +29,10 @@
 
         <!--Numbers-->
         <template v-else-if="isInputType('int')">
-          <input v-model.number="actualValue" type="number" :disabled="readonly" class="form-control" />
+          <input v-model.number="actualValue" type="number" class="form-control" :disabled="readonly" />
         </template>
         <template v-else-if="isInputType('float')">
-          <input v-model.number="actualValue" type="number" :readonly="readonly" class="form-control" />
+          <input v-model.number="actualValue" type="number" class="form-control" :disabled="readonly" />
         </template>
 
         <!--Strings-->
@@ -45,7 +42,7 @@
 
         <!--Booleans-->
         <template v-else-if="isInputType('boolean')">
-          <label class="clickable">
+          <label class="clickable" style="margin: 0 auto 0 0">
             <span>{{ actualValue ? 'Yes' : 'No' }}</span>
             <el-switch v-model="actualValue" :disabled="readonly" />
           </label>
@@ -58,17 +55,17 @@
 
         <!--Files and array of Files-->
         <template v-else-if="isInputType('File')">
-          <span class="text-warning small"> {{ $t('graph.cannot_set_default_file') }} </span>
+          <div class="text-warning small" style="margin: 0 auto 0 0">{{ $t('graph.cannot_set_default_file') }}</div>
         </template>
 
         <!--Directories and array of Directories-->
         <template v-else-if="isInputType('Directory')">
-          <span class="small text-muted"> {{ $t('graph.cannot_set_default_directory') }} </span>
+          <div class="text-muted small" style="margin: 0 auto 0 0">{{ $t('graph.cannot_set_default_directory') }}</div>
         </template>
 
         <!--Delete button for array item if its not a map-->
-        <el-tooltip v-if="index !== -1 && input.type.type !== 'map' && !readonly" content="Delete" class="m-l-05 p-5">
-          <i class="el-icon-delete" @click="deleteFromArray()" />
+        <el-tooltip v-if="index !== -1 && input.type.type !== 'map' && !readonly" :content="$t('btn.delete')" class="m-l-05 p-5">
+          <i class="el-icon-delete pointer remove-icon" @click="deleteFromArray()" />
         </el-tooltip>
       </div>
       <!--Records-->
@@ -139,19 +136,19 @@ export default class WorkflowStepInspectorEntry extends Vue {
   $refs!: {
     mapList: MapList
   }
-  @Prop({ required: true })
-  input!: WorkflowStepInputModel
-  @Prop({ default: '' })
-  prefix!: string
-  @Prop({ default: '' })
-  value!: any
   @Prop({ default: false })
   readonly!: boolean
+  @Prop({ required: true })
+  input!: WorkflowStepInputModel
+  @Prop({ required: true })
+  prefix!: string
+  @Prop({ required: true })
+  value!: any
   @Prop({ default: -1 })
   index!: number
   @Prop({ default: '' })
   type: string | any
-  warning: string | null = null
+  warning: any = null
 
   get inputType(): string {
     const inputType = this.input.type.type
@@ -164,9 +161,7 @@ export default class WorkflowStepInspectorEntry extends Vue {
   }
   get actualValue(): string | null | undefined | [] {
     if (this.inputType === 'array' && !Array.isArray(this.value) && this.value !== undefined) {
-      this.warning = `Type mismatch: the default step value for this input  is of type “${typeof this.value}”,
-      but the input is declared as “${this.inputType}”.
-      You can generate a new set of test data for this input by clicking on the “New ${this.input.type.items}” button.`
+      this.warning = this.$t('graph.type_mismatch', [typeof this.value, this.inputType]) as string
       return []
     } else if (this.inputType === 'string' && (this.value === null || this.value === undefined)) {
       return ''
@@ -227,7 +222,7 @@ export default class WorkflowStepInspectorEntry extends Vue {
     this.onUpdateJob(this.value.slice())
   }
   addArrayEntry(input: WorkflowStepInputModel): void {
-    ;(this.warning as unknown) = undefined
+    this.warning = null
     const generatedEntry = JobHelper.generateMockJobData(input)
     this.onUpdateJob((this.value || []).concat(generatedEntry.slice(0, 1)))
   }

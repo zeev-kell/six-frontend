@@ -30,8 +30,8 @@
                 ct-requirement-input
                 <!--Actions Column-->
                 <div v-if="!readonly" class="remove-icon">
-                  <el-tooltip content="Delete">
-                    <i class="el-icon-delete" @click="removeEntry(i)" />
+                  <el-tooltip :content="$t('btn.delete')">
+                    <i class="el-icon-delete pointer" @click="removeEntry(i)" />
                   </el-tooltip>
                 </div>
               </div>

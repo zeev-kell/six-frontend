@@ -4,15 +4,9 @@
       <el-input v-model="m.key" placeholder="key" @input="onChange"></el-input>
       <span class="add-on">:</span>
       <el-input v-model="m.value" placeholder="value" @input="onChange"></el-input>
-      <el-button
-        v-if="!readonly"
-        type="dark"
-        icon="el-icon-delete"
-        class="el-button--icon ml-5 el-auto"
-        :title="$t('btn.delete')"
-        size="mini"
-        @click="remove(i)"
-      ></el-button>
+      <el-tooltip v-if="!readonly" :content="$t('btn.delete')">
+        <i class="el-icon-delete pointer remove-icon" @click="remove(i)" />
+      </el-tooltip>
     </div>
     <div v-if="metadata.length === 0 && !readonly" class="text-center">
       <p>{{ $t('graph.no_entries_defined') }}</p>
