@@ -46,14 +46,18 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="类别" prop="type" sortable width="120">
+      <el-table-column label="应用类型" prop="type" sortable width="120">
         <template slot-scope="{ row }">
           {{ row.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}
         </template>
       </el-table-column>
-      <el-table-column label="分类" prop="category" sortable width="120" />
-      <el-table-column label="最近版本" prop="version" width="120" />
-      <el-table-column label="描述" prop="description">
+      <el-table-column label="分类标签" prop="category" sortable width="120">
+        <template slot-scope="{ row }">
+          {{ row.category[0].name }}
+        </template>
+      </el-table-column>
+      <el-table-column label="最近版本" prop="latest_rev" width="120" />
+      <el-table-column label="应用描述" prop="description">
         <template slot-scope="{ row }">
           {{ row.description | intercept }}
         </template>
@@ -67,7 +71,7 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import { PipeModel } from '@/types/model/Pipe'
+import { PipeModel, PipeRepositoryModel} from '@/types/model/Pipe'
 import { pipeConstants } from '@/constants/PipeConstants'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
@@ -106,7 +110,7 @@ import CategorySelect from '@/pages/_components/CategorySelect.vue'
     }
   },
 })
-export default class PipeListPage extends TableMixins<PipeModel> {
+export default class PipeListPage extends TableMixins<PipeRepositoryModel> {
   protected otherQuery!: {
     keywords: string
     tag: string

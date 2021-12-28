@@ -14,8 +14,28 @@ export interface PipeModel {
   cwl: string
   website: string
   profile: string
-  status: number
+  status: number  
   versions: PipeModel[]
   readme: any
   content: any
+}
+
+
+export interface PipeRepositoryModel {
+  pipe_id: string
+  resource_id: string
+
+  name: string
+  type: number
+  provider: string
+
+  latest_rev: string
+  create_at: number
+  description: string
+  category: string | string[]
+
+  website: string
+  status: number  
+  versions: PipeModel[]
+  readme: any
 }

@@ -81,7 +81,7 @@ export default class PipeNewPage extends Vue {
 
   async onSubmit() {
     await this.$refs.formModel.validate()
-    await this.$api.pipe.create(this.formModel).then((data) => {
+    await this.$api.pipe.createRepository(this.formModel).then((data) => {
       const id = data?.data?.id
       this.$I18nRouter.push(`/application/pipe/${id}/edit`)
     })

@@ -58,6 +58,66 @@ export class Module extends BaseModule {
     console.log(params)
     return this.$axios.$get<tableResponse<PipeModel>>('/v1/search/pipe', { params })
   }
+
+  // 应用版本处理api
+  getRevision(pipeId: string, resourceId: string): Promise<any> {
+    return this.$axios
+      .$get('/v2/pipe/repository/' + pipeId + '/revision/' + resourceId)
+      .then(MESSAGE_SUCCESS)
+      .catch(MESSAGE_ERROR)
+  }
+  createRevision(pipeId: string, data: any): Promise<any> {
+    return this.$axios
+      .$post('/v2/pipe/repository/' + pipeId + '/revision', data)
+      .then(MESSAGE_SUCCESS)
+      .catch(MESSAGE_ERROR)
+  }
+  updateRevision(pipeId: string, resourceId: string, data: any): Promise<any> {
+    return this.$axios
+      .$put('/v2/pipe/repository/' + pipeId + '/revision/' + resourceId, data)
+      .then(MESSAGE_SUCCESS)
+      .catch(MESSAGE_ERROR)
+  }
+  deleteRevision(pipeId: string, resourceId: string): Promise<any> {
+    return this.$axios
+      .$delete('/v2/pipe/repository/' + pipeId + '/revision/' + resourceId)
+      .then(MESSAGE_SUCCESS)
+      .catch(MESSAGE_ERROR)
+  }
+
+  // 应用仓库处理api
+  getRepository(pipeId: string): Promise<any> {
+    return this.$axios
+      .$get('/v2/pipe/repository/' + pipeId)
+      .then(MESSAGE_SUCCESS)
+      .catch(MESSAGE_ERROR)
+  }
+  createRepository(data: any): Promise<any> {
+    return this.$axios
+      .$post('/v2/pipe/repository', data)
+      .then(MESSAGE_SUCCESS)
+      .catch(MESSAGE_ERROR)
+  }
+  updateRepository(pipeId: string, data: any): Promise<any> {
+    return this.$axios
+      .$put('/v2/pipe/repository/' + pipeId, data)
+      .then(MESSAGE_SUCCESS)
+      .catch(MESSAGE_ERROR)
+  }
+  deleteRepository(pipeId: string): Promise<any> {
+    return this.$axios
+      .$delete('/v2/pipe/repository/' + pipeId)
+      .then(MESSAGE_SUCCESS)
+      .catch(MESSAGE_ERROR)
+  }
+
+  // 获取应用详情
+  getPipe(resourceId: string): Promise<any> {
+    return this.$axios
+      .$delete('/v2/pipe/' + resourceId)
+      .then(MESSAGE_SUCCESS)
+      .catch(MESSAGE_ERROR)
+  }
 }
 
 export type ModuleType = InstanceType<typeof Module>
