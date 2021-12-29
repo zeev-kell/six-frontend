@@ -8,7 +8,14 @@
           </div>
           <div class="card-body">
             <div class="page-graph-box">
-              <graph-index ref="graph" class="h-100" :item="item" config-type="run" tools="download|plus,minus,fit" @propagate-event="onPropagate" />
+              <graph-index
+                ref="graph"
+                class="h-100"
+                :item="item"
+                config-type="run"
+                tools="import|download|plus,minus,fit"
+                @propagate-event="onPropagate"
+              />
             </div>
           </div>
         </div>

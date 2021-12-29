@@ -1,5 +1,5 @@
 import { Component, Vue } from 'nuxt-property-decorator'
-import { tableQuery, tableResponse } from '@/types/table'
+import { tableQuery, tableResponse } from '@/types/response'
 
 @Component
 export default class TableMixinsDeprecated<T> extends Vue {

@@ -22,6 +22,11 @@ const BUTTON_LIST: graphTools = {
     eventName: GraphEvent.TriggerGraphWarning,
     type: 'warning',
   },
+  import: {
+    icon: 'el-icon-upload2',
+    title: '导入配置',
+    action: 'actionImport',
+  },
   download: {
     icon: 'el-icon-download',
     title: '下载',
@@ -52,11 +57,13 @@ const BUTTON_LIST: graphTools = {
 @Component({
   components: {
     ToolDownload: () => import('@/pages/_components/Graph/components/ToolBoxHelper/ToolDownload.vue'),
+    toolImport: () => import('@/pages/_components/Graph/components/ToolBoxHelper/ToolImport.vue'),
   },
 })
 export default class ToolBox extends Vue {
   $refs!: {
     toolDownload: HTMLFormElement
+    toolImport: HTMLFormElement
   }
 
   @InjectReactive('graph')
@@ -106,9 +113,12 @@ export default class ToolBox extends Vue {
   actionToRun(): void {
     this.$I18nRouter.push(`/graph-info/${this.$route.params.id}/set-run`)
   }
+  actionImport(): void {
+    this.$refs.toolImport.dialogVisible = true
+  }
   // 下载
   actionDownload(): void {
-    this.$refs.toolDownload.downloadVisible = true
+    this.$refs.toolDownload.dialogVisible = true
   }
   // 清空
   actionToEmpty(): void {
@@ -176,6 +186,16 @@ export default class ToolBox extends Vue {
             [GraphEvent.ToolEvent]: this.toolEvent,
           },
           ref: 'toolDownload',
+        })
+        return [createBtn(btn), dom] as VNode[]
+      }
+      if (btn.name === 'import') {
+        const create = this.$createElement
+        const dom = create('tool-import', {
+          on: {
+            [GraphEvent.ToolEvent]: this.toolEvent,
+          },
+          ref: 'toolImport',
         })
         return [createBtn(btn), dom] as VNode[]
       }

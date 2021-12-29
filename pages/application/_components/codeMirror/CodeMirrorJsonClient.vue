@@ -9,7 +9,7 @@ export default class CodeMirrorJsonClient extends CodeMirrorClient {
     styleActiveLine: true,
     lineNumbers: true,
     line: true,
-    mode: 'text/json',
+    mode: 'application/json',
     lineWrapping: true,
     theme: 'default',
   }

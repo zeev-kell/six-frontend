@@ -1,5 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator'
-import { tableQuery } from '@/types/table'
+import { tableQuery } from '@/types/response'
 import { ElTable } from 'element-ui/types/table'
 import { Route } from 'vue-router'
 import './TableMixins.scss'

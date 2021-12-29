@@ -47,7 +47,7 @@
 import { Component } from 'nuxt-property-decorator'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
-import CategoryView from '@/pages/_components/CategoryView.vue'
+import CategoryView from '@/pages/application/_components/CategoryView.vue'
 
 @Component({
   components: { CategoryView, MavonEditorRenderClient },

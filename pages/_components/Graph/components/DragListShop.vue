@@ -23,7 +23,7 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import TableMixins from '@/components/TableMixinsDeprecated'
-import { tableQuery } from '@/types/table'
+import { tableQuery } from '@/types/response'
 import { PipeModel } from '@/types/model/Pipe'
 import { pipeConstants } from '@/constants/PipeConstants'
 import DragItemCollapse from '@/pages/_components/Graph/components/DragItemCollapse.vue'

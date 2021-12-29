@@ -38,7 +38,7 @@ import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vu
   async asyncData({ app, store }) {
     const item = store.state.pipe
     const type = store.getters['pipe/isWork'] ? pipeConstants.items.TYPE_TOOL : pipeConstants.items.TYPE_APP
-    const items = await app.$axios.$get('/v2/pipes', {
+    const items = await app.$api.pipe.getList({
       params: {
         type,
       },

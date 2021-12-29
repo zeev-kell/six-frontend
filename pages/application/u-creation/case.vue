@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import { TableMixinsHelper } from '@/pages/_components/Table/TableMixins'
+import { TableMixinsHelper } from '@/pages/application/_components/Table/TableMixins'
 import { Context } from '@nuxt/types'
 import CaseListPage from '@/pages/application/cases/index.vue'
 

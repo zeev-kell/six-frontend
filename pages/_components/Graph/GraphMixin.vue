@@ -149,7 +149,7 @@ export default class GraphMixin extends GraphEdit {
     Object.assign(task.content, {
       'sbg:x': coords.x,
       'sbg:y': coords.y,
-      'six:id': task.resource_id,
+      'six:id': task.resource_id || '',
     })
     try {
       this.addStepToGraph(task)

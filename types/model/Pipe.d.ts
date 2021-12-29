@@ -1,3 +1,5 @@
+import { CategoryModel } from '@/types/model/Common'
+
 export interface PipeModel {
   pipe_id: string
   resource_id: string
@@ -7,19 +9,18 @@ export interface PipeModel {
   provider: string
   create_at: number
   description: string
-  category: string | string[]
+  category: CategoryModel[]
   download: string
   tutorial: string
   type: number
   cwl: string
   website: string
   profile: string
-  status: number  
+  status: number
   versions: PipeModel[]
   readme: any
   content: any
 }
-
 
 export interface PipeRepositoryModel {
   pipe_id: string
@@ -32,10 +33,10 @@ export interface PipeRepositoryModel {
   latest_rev: string
   create_at: number
   description: string
-  category: string | string[]
+  category: CategoryModel[]
 
   website: string
-  status: number  
+  status: number
   versions: PipeModel[]
   readme: any
 }

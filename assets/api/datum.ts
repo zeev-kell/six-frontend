@@ -1,7 +1,7 @@
 import { MESSAGE_SUCCESS, MESSAGE_ERROR } from '@/utils/reponse-helper'
 import { datumConstants } from '@/constants/DatumConstants'
 import BaseModule from '@/assets/api/BaseModule'
-import { tableResponse } from '@/types/table'
+import { tableResponse } from '@/types/response'
 import { DatumModel } from '@/types/model/Datum'
 
 export class Module extends BaseModule {

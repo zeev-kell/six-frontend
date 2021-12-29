@@ -39,10 +39,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Getter } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
 import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
-import CategoryView from '@/pages/_components/CategoryView.vue'
+import CategoryView from '@/pages/application/_components/CategoryView.vue'
 
 @Component({
   components: { CategoryView, MavonEditorRenderClient },

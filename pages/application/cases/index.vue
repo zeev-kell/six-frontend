@@ -12,6 +12,9 @@
             </el-select>
           </el-form-item>
           <el-form-item>
+            <category-select v-model="otherQuery.tag" type="case" @change="searchQuery"></category-select>
+          </el-form-item>
+          <el-form-item>
             <el-button type="primary" icon="el-icon-refresh" class="el-button--icon" native-type="button" @click="resetQuery"></el-button>
             <el-button type="primary" icon="el-icon-search" class="el-button--icon" native-type="button" @click="searchQuery"></el-button>
           </el-form-item>
@@ -36,6 +39,11 @@
           {{ row.type | caseTypeTranslate | t({ prefix: 'constant.' }) }}
         </template>
       </el-table-column>
+      <el-table-column label="分类" prop="category" width="150">
+        <template slot-scope="{ row }">
+          <category-view :category="row.category" />
+        </template>
+      </el-table-column>
       <el-table-column label="描述" prop="description">
         <template slot-scope="{ row }">
           {{ row.description | intercept }}
@@ -54,14 +62,15 @@ import { CaseModel } from '@/types/model/Case'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
-import TableMixins, { TableMixinsHelper } from '@/pages/_components/Table/TableMixins'
-import TablePagination from '@/pages/_components/Table/TablePagination.vue'
+import TableMixins, { TableMixinsHelper } from '@/pages/application/_components/Table/TableMixins'
+import TablePagination from '@/pages/application/_components/Table/TablePagination.vue'
 import { Context } from '@nuxt/types'
-import CategorySelect from '@/pages/_components/CategorySelect.vue'
+import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
 import { caseConstants } from '@/constants/CaseConstants'
+import CategoryView from '@/pages/application/_components/CategoryView.vue'
 
 @Component({
-  components: { CategorySelect, TablePagination, LayoutBox, CanCreate },
+  components: { CategoryView, CategorySelect, TablePagination, LayoutBox, CanCreate },
   filters: {
     ...intercept,
     caseTypeTranslate: caseConstants.get,
@@ -91,6 +100,7 @@ import { caseConstants } from '@/constants/CaseConstants'
 export default class CaseListPage extends TableMixins<CaseModel> {
   protected otherQuery!: {
     keywords: string
+    tag: string
     type: number
   }
   typeList = caseConstants.getItemsList('TYPE_')

@@ -12,7 +12,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <category-select v-model="otherQuery.tag" type="pipe" @change="searchQuery"></category-select>
+            <category-select v-model="otherQuery.tag" type="pipe" placeholder="按分类筛选" @change="searchQuery"></category-select>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" icon="el-icon-refresh" class="el-button--icon" native-type="button" @click="resetQuery"></el-button>
@@ -51,9 +51,9 @@
           {{ row.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}
         </template>
       </el-table-column>
-      <el-table-column label="分类标签" prop="category" sortable width="120">
+      <el-table-column label="分类标签" prop="category" width="120">
         <template slot-scope="{ row }">
-          {{ row.category[0].name }}
+          <category-view :category="row.category" />
         </template>
       </el-table-column>
       <el-table-column label="最近版本" prop="latest_rev" width="120" />
@@ -71,18 +71,19 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import { PipeModel, PipeRepositoryModel} from '@/types/model/Pipe'
+import { PipeModel, PipeRepositoryModel } from '@/types/model/Pipe'
 import { pipeConstants } from '@/constants/PipeConstants'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
-import TableMixins, { TableMixinsHelper } from '@/pages/_components/Table/TableMixins'
-import TablePagination from '@/pages/_components/Table/TablePagination.vue'
+import TableMixins, { TableMixinsHelper } from '@/pages/application/_components/Table/TableMixins'
+import TablePagination from '@/pages/application/_components/Table/TablePagination.vue'
 import { Context } from '@nuxt/types'
-import CategorySelect from '@/pages/_components/CategorySelect.vue'
+import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
+import CategoryView from '@/pages/application/_components/CategoryView.vue'
 
 @Component({
-  components: { CategorySelect, TablePagination, LayoutBox, CanCreate },
+  components: { CategoryView, CategorySelect, TablePagination, LayoutBox, CanCreate },
   filters: {
     ...intercept,
     pipeTypeTranslate: pipeConstants.get,

@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="category-view">
     <span v-for="c of category" :key="c.id">{{ c.name }}</span>
   </span>
 </template>
@@ -19,3 +19,11 @@ export default class CategoryView extends Vue {
   category!: CategoryModel[]
 }
 </script>
+
+<style lang="scss">
+.category-view {
+  span + span {
+    margin-left: 5px;
+  }
+}
+</style>

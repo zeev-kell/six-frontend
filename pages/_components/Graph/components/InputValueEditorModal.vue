@@ -24,7 +24,7 @@
         </div>
       </div>
       <label> {{ $t('common.metadata') }}</label>
-      <map-list ref="mapList" class="form-group m-b-1"></map-list>
+      <map-list ref="mapList" v-model="metadata" class="form-group m-b-1"></map-list>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button type="dark" size="mini" @click="onClose"> 取 消 </el-button>

@@ -31,18 +31,22 @@
 import { Component } from 'nuxt-property-decorator'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
 import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
-import { resourceHelp } from '@/utils/resource-help'
 import { CaseModel } from '@/types/model/Case'
 import { BlogModel } from '@/types/model/Blog'
 import MavonEditorToc from '@/pages/application/_components/mavonEditor/MavonEditorToc.vue'
+import { Context } from '@nuxt/types'
 
 @Component({
   components: { MavonEditorToc, MavonEditorRenderClient },
-  async asyncData({ app, store }) {
+  async asyncData({ app, store }: Context) {
     const item: CaseModel = store.state.case
     if (item.instruction) {
-      const blog: BlogModel = await app.$api.blog.get(item.instruction)
-      return { blog }
+      try {
+        const blog: BlogModel = await app.$api.blog.get(item.instruction)
+        return { blog }
+      } catch (error) {
+        return { error }
+      }
     }
   },
 })
@@ -52,7 +56,7 @@ export default class Course extends CaseItemMixin {
   }
   blog: BlogModel | null = null
   toc: any[] = []
-  mounted(): Promise<any> | void {
+  mounted(): void {
     this.$nextTick(() => {
       this.toc = this.$refs.MavonEditor?.getNavigation()
     })

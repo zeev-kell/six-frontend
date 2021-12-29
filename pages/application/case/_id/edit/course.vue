@@ -8,9 +8,7 @@
             <el-button type="primary" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
           </nuxt-link>
           <span class="m-x-1">或</span>
-          <el-select v-model="instruction" filterable placeholder="引用知识库文档">
-            <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
-          </el-select>
+          <blog-select v-model="instruction"></blog-select>
         </div>
         <div class="el-col-auto">
           <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
@@ -24,23 +22,16 @@
 import { Component } from 'nuxt-property-decorator'
 import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
+import BlogSelect from '@/pages/application/_components/BlogSelect.vue'
 
 @Component({
-  components: { LoadingButton },
-  async asyncData({ app, store }) {
+  components: { BlogSelect, LoadingButton },
+  asyncData({ store }) {
     const item = store.state.pipe
-    const docs = await app.$api.blog.getList()
-    const options = docs.map((d: any) => {
-      return {
-        value: d.id,
-        label: d.title,
-      }
-    })
-    return { options, instruction: item.instruction }
+    return { instruction: item.instruction }
   },
 })
 export default class Course extends CaseItemMixin {
-  options = []
   instruction = ''
   async onSubmit() {
     const data = { instruction: this.instruction }

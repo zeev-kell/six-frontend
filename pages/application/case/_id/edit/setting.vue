@@ -10,9 +10,14 @@
             <el-input v-model="formModel.version" placeholder="输入版本"></el-input>
           </el-form-item>
           <el-form-item label="分类" prop="category">
-            <el-select v-model="formModel.category" multiple filterable allow-create placeholder="请输入分类" style="width: 100%">
-              <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.name"> </el-option>
-            </el-select>
+            <category-select
+              v-model="formModel.category"
+              type="case"
+              multiple
+              allow-create
+              placeholder="请输入分类"
+              style="width: 100%"
+            ></category-select>
           </el-form-item>
           <el-form-item label="描述" prop="description">
             <el-input v-model="formModel.description" type="textarea" :rows="4" placeholder="请输入描述" />
@@ -30,9 +35,10 @@
 import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
 import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
+import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
 
 @Component({
-  components: { LoadingButton },
+  components: { CategorySelect, LoadingButton },
 })
 export default class CaseSetting extends CaseItemMixin {
   $refs!: {
@@ -51,14 +57,12 @@ export default class CaseSetting extends CaseItemMixin {
     ],
     category: [{ required: true, message: '请输入分类', trigger: 'blue' }],
   }
-  categoryList: any[] = []
 
   mounted(): void {
     this.formModel.name = this.item.name
     this.formModel.category = this.item.category.map((c: any) => (typeof c === 'string' ? c : c.name))
     this.formModel.description = this.item.description
     this.formModel.version = this.content.version
-    this.categoryList = this.item.category
   }
   async onSubmit() {
     await this.$refs.formModel.validate().catch((e: Error) => {
@@ -74,6 +78,7 @@ export default class CaseSetting extends CaseItemMixin {
       description: this.formModel.description,
     }
     await this.$api.case.update(this.item.resource_id, data).then(() => {
+      data.content = JSON.stringify(data.content)
       this.$store.commit('case/UPDATE_CURRENT_STORE', data)
     })
   }

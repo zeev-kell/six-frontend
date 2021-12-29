@@ -1,6 +1,6 @@
 import { CaseModel } from '@/types/model/Case'
 import { MESSAGE_ERROR, MESSAGE_SUCCESS } from '@/utils/reponse-helper'
-import { tableResponse } from '@/types/table'
+import { tableResponse } from '@/types/response'
 import BaseModule from '@/assets/api/BaseModule'
 
 function serialize(data: any): any {

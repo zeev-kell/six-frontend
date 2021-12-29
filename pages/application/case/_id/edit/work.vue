@@ -2,28 +2,29 @@
   <div class="container-fluid">
     <div class="px-15 text-muted">添加案例内容或通过可视化界面配置案例</div>
     <div class="card-body">
-      <div class="el-row el-row--flex">
-        <div class="el-col-full">
-          <el-form :inline="true">
-            <el-form-item class="mb-0">
-              <el-select ref="pipeSelect" v-model="formModel.source" filterable placeholder="选择应用" @change="onValueChange">
-                <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item class="mb-0">
-              <el-input v-model="formModel.version" placeholder="输入版本"></el-input>
-            </el-form-item>
-          </el-form>
-        </div>
-        <div class="el-col-auto">
-          <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
-        </div>
-      </div>
+      <el-tabs v-model="activeName" type="card" :before-leave="onBeforeLeave">
+        <el-tab-pane label="编辑内容" name="1">
+          <div class="codemirror-box">
+            <code-mirror-json-client v-model="formModel.content" />
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="可视化界面" name="2">
+          <div class="mb-10">从公共仓库查找应用：<pipe-select v-model="formModel.source" @on-change="onValueChange"></pipe-select></div>
+          <div v-if="activeName === '2'" class="page-graph-box workflow-box">
+            <graph-index
+              ref="graphIndex"
+              config-type="run"
+              :item="graph"
+              class="h-100"
+              tools="import|download|plus,minus,fit|auto"
+              @propagate-event="onPropagate"
+            />
+          </div>
+        </el-tab-pane>
+      </el-tabs>
     </div>
-    <div class="card-body">
-      <div class="codemirror-box">
-        <code-mirror-json-client v-model="formModel.input" />
-      </div>
+    <div class="card-footer">
+      <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
     </div>
   </div>
 </template>
@@ -38,9 +39,15 @@ import { pipeConstants } from '@/constants/PipeConstants'
 import { CommandLineToolFactory, WorkflowFactory } from 'cwlts/models'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 import CodeMirrorJsonClient from '@/pages/application/_components/codeMirror/CodeMirrorJsonClient.vue'
+import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
+import PipeSelect from '@/pages/application/_components/PipeSelect.vue'
+import { CommandLineTool } from 'cwlts/mappings/v1.0/CommandLineTool'
+import { Workflow } from 'cwlts/mappings/v1.0'
+import { PipeModel } from '@/types/model/Pipe'
+import { GraphEvent } from '@/constants/GraphEvent'
 
 @Component({
-  components: { CodeMirrorJsonClient, LoadingButton },
+  components: { PipeSelect, GraphIndex, CodeMirrorJsonClient, LoadingButton },
   async asyncData({ app }: Context): Promise<any> {
     const items = await app.$api.pipe.getList()
     const options = items.map((d: any) => {
@@ -55,43 +62,48 @@ import CodeMirrorJsonClient from '@/pages/application/_components/codeMirror/Cod
 export default class Work extends CaseItemMixin {
   $refs!: {
     pipeSelect: HTMLFormElement
+    graphIndex: GraphIndex
   }
+  activeName = '1'
   options: any[] = []
   formModel: any = {
+    content: '',
     workflow: '',
-    input: '',
     source: '',
-    version: '',
+    input: '',
   }
 
-  async onValueChange(resourceId: string): Promise<void> {
-    await this.$api.pipe.getVersion(resourceId).then(async (pipe) => {
-      let content = pipe?.content
-      if (!content) {
-        return this.$message.warning('该软件信息不完整')
-      }
-      // TODO 修改成新的类
-      content = getObject(content)
-      this.formModel.workflow = content
-      if (this.formModel.source && this.formModel.source !== '') {
-        await this.$confirm('是否替换新的软件运行模板？').finally(() => {
-          this.$refs.pipeSelect.blur()
-        })
-      }
-      const model = pipe.type === pipeConstants.items.TYPE_TOOL ? CommandLineToolFactory.from(content, 'document') : WorkflowFactory.from(content)
-      let nullJob = JobHelper.getNullJobInputs(model)
-      if (Object.keys(nullJob).length === 0) {
-        return this.$message.warning('该软件没有输入项或者软件输入不完整')
-      }
-      nullJob = stringifyObject(nullJob, false, 2)
-      this.formModel.input = nullJob
+  get graph() {
+    return {
+      content: this.formModel.workflow,
+    }
+  }
+
+  // eslint-disable-next-line camelcase
+  onValueChange({ pipe_id, value }: any): void {
+    this.$confirm('是否替换新的软件运行模板？').then(async () => {
+      await this.$api.pipe.getRevision(pipe_id, value).then((pipe: PipeModel) => {
+        let content = pipe?.content
+        if (!content) {
+          return this.$message.warning('该软件信息不完整')
+        }
+        content = getObject(content)
+        // 多次选择需要手动实例化  Graph
+        this.formModel.workflow = content
+        const model = pipe.type === pipeConstants.items.TYPE_TOOL ? CommandLineToolFactory.from(content, 'document') : WorkflowFactory.from(content)
+        const nullJob = JobHelper.getNullJobInputs(model)
+        if (Object.keys(nullJob).length === 0) {
+          return this.$message.warning('该软件没有输入项或者软件输入不完整')
+        }
+        this.formModel.input = nullJob
+      })
     })
   }
   async onSubmit(): Promise<void> {
     const data = {
       content: JSON.stringify({
         workflow: this.formModel.workflow,
-        version: this.formModel.version,
+        version: this.content?.version,
         input: JSON.parse(this.formModel.input),
         source: this.formModel.source,
       }),
@@ -100,11 +112,41 @@ export default class Work extends CaseItemMixin {
       this.$store.commit('case/UPDATE_CURRENT_STORE', data)
     })
   }
+  onBeforeLeave(activeName: string) {
+    let model = null
+    if (activeName === '1') {
+      model = JSON.parse(this.formModel.content)
+      model.source = this.formModel.source
+      model.input = this.$store.state.graph.jobValue
+      model.workflow = this.formModel.workflow
+      this.formModel.content = JSON.stringify(model, null, 4)
+      this.isChanged = false
+    } else {
+      try {
+        model = JSON.parse(this.formModel.content)
+      } catch (e) {
+        console.log(e)
+        this.$message.error('内容格式有误，请检查')
+        return false
+      }
+      this.formModel.input = model.input
+      this.formModel.workflow = model.workflow
+      this.formModel.source = model.source
+    }
+  }
+  onPropagate(eventName: string): void {
+    // TODO 修改为事件
+    //  监听第一次实例化事件
+    if (GraphEvent.TriggerPageModalCreate === eventName) {
+      this.$nextTick(() => {
+        this.$refs.graphIndex.dispatchAction('updateJob', this.formModel.input)
+      })
+    }
+  }
+
   mounted(): void {
-    this.formModel.workflow = this.content?.workflow
-    this.formModel.input = JSON.stringify(this.content?.input, null, 2)
-    this.formModel.source = this.content?.source
-    this.formModel.version = this.content?.version
+    this.formModel.content = this.item.content
+    this.formModel.source = this.content.source
   }
 }
 </script>

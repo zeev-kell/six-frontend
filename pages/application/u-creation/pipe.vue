@@ -2,7 +2,7 @@
 import { Component } from 'nuxt-property-decorator'
 import PipeListPage from '@/pages/application/pipes/index.vue'
 import { Context } from '@nuxt/types'
-import { TableMixinsHelper } from '@/pages/_components/Table/TableMixins'
+import { TableMixinsHelper } from '@/pages/application/_components/Table/TableMixins'
 
 @Component({
   async asyncData({ app, query, store }: Context): Promise<any> {

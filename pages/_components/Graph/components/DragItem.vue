@@ -22,7 +22,11 @@
             {{ row.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}
           </template>
         </el-table-column>
-        <el-table-column label="分类" prop="category" width="100" />
+        <el-table-column label="分类" prop="category" width="100">
+          <template slot-scope="{ row }">
+            <category-view :category="row.category" />
+          </template>
+        </el-table-column>
         <el-table-column label="最近版本" prop="version" width="120" />
         <el-table-column label="描述" prop="description" width="300">
           <template slot-scope="{ row }">
@@ -39,8 +43,10 @@ import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
 import { PipeModel } from '@/types/model/Pipe'
 import { pipeConstants } from '@/constants/PipeConstants'
 import intercept from '@/filters/intercept'
+import CategoryView from '@/pages/application/_components/CategoryView.vue'
 
 @Component({
+  components: { CategoryView },
   filters: {
     ...intercept,
     pipeTypeTranslate: pipeConstants.get,

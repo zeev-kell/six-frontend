@@ -55,7 +55,11 @@
               {{ row.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}
             </template>
           </el-table-column>
-          <el-table-column label="分类" prop="category" sortable width="120" />
+          <el-table-column label="分类" prop="category" width="120">
+            <template slot-scope="{ row }">
+              <category-view :category="row.category" />
+            </template>
+          </el-table-column>
           <el-table-column label="最近版本" prop="version" width="120" />
           <el-table-column label="描述" prop="description">
             <template slot-scope="{ row }">
@@ -74,9 +78,10 @@ import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
 import { pipeConstants } from '@/constants/PipeConstants'
 import { ElTable } from 'element-ui/types/table'
+import CategoryView from '@/pages/application/_components/CategoryView.vue'
 
 @Component({
-  components: { CanCreate },
+  components: { CategoryView, CanCreate },
   filters: {
     ...intercept,
     pipeTypeTranslate: pipeConstants.get,

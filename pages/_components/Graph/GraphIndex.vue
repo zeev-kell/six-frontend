@@ -34,13 +34,15 @@ export default class GraphIndex extends Vue {
   })
   item!: PipeModel
 
-  // 根据当前类型实例化不同的组件
-  get graphComponent(): string {
-    const isTool = this.item.type === pipeConstants.items.TYPE_TOOL
-    return isTool ? 'graph-tool' : 'graph-workflow'
-  }
   get content(): V1Workflow | CommandLineTool {
     return this.item.content
+  }
+  // 根据当前类型实例化不同的组件
+  get graphComponent(): string {
+    if ((this.item.type as unknown) !== undefined) {
+      return this.item.type === pipeConstants.items.TYPE_TOOL ? 'graph-tool' : 'graph-workflow'
+    }
+    return this.item.content?.class === 'CommandLineTool' ? 'graph-tool' : 'graph-workflow'
   }
 
   // 执行 子组件 方法

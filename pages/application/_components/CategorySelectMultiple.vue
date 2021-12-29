@@ -19,15 +19,14 @@ export default class CategorySelectMultiple extends Vue {
     },
   })
   value!: string[]
-  options: CategoryModel[] = []
   loading = false
+  options: CategoryModel[] = []
 
   get actualValue(): string[] {
     return this.value
   }
   set actualValue(value: string[]) {
     this.$emit('input', value)
-    this.$emit('change', value)
   }
 
   async mounted(): Promise<any> {

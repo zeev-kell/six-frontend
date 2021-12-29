@@ -17,3 +17,8 @@ export interface tableData<T> {
   rows: T[]
   totalPage: number
 }
+
+export interface responseError {
+  code: number
+  msg: string
+}

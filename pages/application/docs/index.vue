@@ -51,7 +51,9 @@
         </template>
       </el-table-column>
       <el-table-column label="分类" prop="category" width="150">
-        <template slot-scope="{ row }">{{ row.category.map((c) => c.name).join(' ') }}</template>
+        <template slot-scope="{ row }">
+          <category-view :category="row.category" />
+        </template>
       </el-table-column>
       <el-table-column label="描述" prop="description">
         <template slot-scope="{ row }">
@@ -72,12 +74,13 @@ import { blogConstants } from '@/constants/BlogConstants'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
-import TableMixins, { TableMixinsHelper } from '@/pages/_components/Table/TableMixins'
-import TablePagination from '@/pages/_components/Table/TablePagination.vue'
-import CategorySelect from '@/pages/_components/CategorySelect.vue'
+import TableMixins, { TableMixinsHelper } from '@/pages/application/_components/Table/TableMixins'
+import TablePagination from '@/pages/application/_components/Table/TablePagination.vue'
+import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
+import CategoryView from '@/pages/application/_components/CategoryView.vue'
 
 @Component({
-  components: { CategorySelect, TablePagination, LayoutBox, CanCreate },
+  components: { CategoryView, CategorySelect, TablePagination, LayoutBox, CanCreate },
   filters: {
     ...intercept,
     blogTypeTranslate: blogConstants.get,

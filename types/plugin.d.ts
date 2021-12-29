@@ -24,3 +24,9 @@ declare module 'vue/types/vue' {
     $api: ApiType
   }
 }
+
+declare module '@nuxt/types' {
+  interface NuxtAppOptions {
+    $api: ApiType
+  }
+}

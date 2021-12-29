@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="下载文件" :append-to-body="true" :visible.sync="downloadVisible" center class="el-dialog-dark">
+  <el-dialog title="下载文件" :append-to-body="true" :visible.sync="dialogVisible" center class="el-dialog-dark">
     <div>
       <p>选择需要下载的内容</p>
       <el-checkbox v-model="dMain"> 主文件 </el-checkbox>
@@ -11,7 +11,7 @@
       <el-radio v-model="dType" label="yaml"> YAML 格式 </el-radio>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button size="mini" @click="downloadVisible = false">取 消</el-button>
+      <el-button size="mini" @click="dialogVisible = false">取 消</el-button>
       <el-button size="mini" type="primary" @click="onDownload">确 定</el-button>
     </span>
   </el-dialog>
@@ -24,7 +24,7 @@ import { GraphEvent } from '@/constants/GraphEvent'
 
 @Component
 export default class ToolDownload extends ToolBoxHelper {
-  downloadVisible = false
+  dialogVisible = false
   dMain = true
   dJob = true
   dType = 'yaml'
@@ -34,7 +34,7 @@ export default class ToolDownload extends ToolBoxHelper {
       return
     }
     this.toolEvent(GraphEvent.TriggerGraphDownload, this.dType, this.dMain, this.dJob)
-    this.downloadVisible = false
+    this.dialogVisible = false
   }
 }
 </script>

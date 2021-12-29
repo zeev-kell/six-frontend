@@ -8,6 +8,7 @@
 <script>
 import _CodeMirror from 'codemirror'
 import 'codemirror/mode/yaml/yaml'
+import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/lib/codemirror.css'
 // theme css
 import 'codemirror/theme/mbo.css'

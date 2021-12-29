@@ -33,7 +33,7 @@
 import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
-import CategorySelectMultiple from '@/pages/_components/CategorySelectMultiple.vue'
+import CategorySelectMultiple from '@/pages/application/_components/CategorySelectMultiple.vue'
 import { CategoryModel } from '@/types/model/Common'
 
 @Component({

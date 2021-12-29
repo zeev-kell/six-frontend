@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { tableQuery } from '@/types/table'
+import { tableQuery } from '@/types/response'
 
 @Component
 export default class TablePagination extends Vue {

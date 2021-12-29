@@ -1,4 +1,9 @@
+export interface SelectModel {
+  id: string | number
+  value: string | number
+  label: string
+}
 export interface CategoryModel {
-  is: string
+  id: string | number
   name: string
 }

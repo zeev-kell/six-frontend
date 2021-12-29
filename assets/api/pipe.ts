@@ -1,7 +1,7 @@
 import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { PipeModel } from '@/types/model/Pipe'
 import { MESSAGE_SUCCESS, MESSAGE_ERROR } from '@/utils/reponse-helper'
-import { tableResponse } from '@/types/table'
+import { tableResponse } from '@/types/response'
 import BaseModule from '@/assets/api/BaseModule'
 
 export class Module extends BaseModule {
@@ -36,19 +36,25 @@ export class Module extends BaseModule {
     return this.$axios.$get('/v2/pipe/repository/' + id)
   }
   getList(params?: any): Promise<PipeModel[]> {
-    return this.$axios.$get<PipeModel[]>('/v2/pipes', { params }).then((response) => {
-      response.forEach((r) => {
-        if (r.content) {
-          r.content = getObject(r.content)
-        }
-        r.versions?.forEach((v) => {
-          if (v.content) {
-            v.content = getObject(v.content)
+    return this.$axios
+      .$get<PipeModel[]>('/v2/pipes', { params })
+      .then((response) => {
+        response.forEach((r) => {
+          if (r.content) {
+            r.content = getObject(r.content)
           }
+          r.versions?.forEach((v) => {
+            if (v.content) {
+              v.content = getObject(v.content)
+            }
+          })
         })
+        return response
       })
-      return response
-    })
+      .catch(() => [])
+  }
+  getSummary(params?: any): Promise<PipeModel[]> {
+    return this.$axios.$get<PipeModel[]>('/v2/pipes/summary', { params })
   }
   getVersion(resourceId: string): Promise<PipeModel> {
     return this.$axios.$get('/v2/pipe/' + resourceId)
@@ -93,10 +99,7 @@ export class Module extends BaseModule {
       .catch(MESSAGE_ERROR)
   }
   createRepository(data: any): Promise<any> {
-    return this.$axios
-      .$post('/v2/pipe/repository', data)
-      .then(MESSAGE_SUCCESS)
-      .catch(MESSAGE_ERROR)
+    return this.$axios.$post('/v2/pipe/repository', data).then(MESSAGE_SUCCESS).catch(MESSAGE_ERROR)
   }
   updateRepository(pipeId: string, data: any): Promise<any> {
     return this.$axios

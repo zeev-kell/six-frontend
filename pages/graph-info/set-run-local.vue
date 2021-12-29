@@ -1,5 +1,5 @@
 <template>
-  <graph-index class="h-100v" :item="item" config-type="run" tools="download|plus,minus,fit" />
+  <graph-index class="h-100v" :item="item" config-type="run" tools="import|download|plus,minus,fit" />
 </template>
 
 <script lang="ts">
