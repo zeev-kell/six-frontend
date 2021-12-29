@@ -7,7 +7,7 @@
       </div>
       <div class="el-col el-col-16 text-truncate mx-0">
         <h2 v-truncate="item['name']" class="my-0"></h2>
-        <p class="m-y-05">ID: {{ item.resource_id }}</p>
+        <p class="m-y-05">ID: {{ item.pipe_id }}</p>
         <div class="el-row el-row--flex info-tip">
           <div class="el-col">
             <div class="title">类别</div>
@@ -65,12 +65,12 @@
       </div>
     </div>
     <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">
-      <el-tab-pane label="资源介绍" name="application-pipe-id-index" />
-      <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-index-work" />
-      <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-index-structure" />
-      <el-tab-pane label="使用教程" name="application-pipe-id-index-course" />
-      <el-tab-pane v-if="isApp" label="运行案例" name="application-pipe-id-index-case" />
-      <el-tab-pane v-if="isApp" label="应用版本" name="application-pipe-id-index-version" />
+      <el-tab-pane label="资源介绍" name="application-pipe-repository-id-index" />
+      <!-- <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-index-work" /> -->
+      <!-- <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-index-structure" /> -->
+      <!-- <el-tab-pane label="使用教程" name="application-pipe-id-index-course" /> -->
+      <!-- <el-tab-pane v-if="isApp" label="运行案例" name="application-pipe-id-index-case" /> -->
+      <el-tab-pane v-if="isApp" label="应用版本" name="application-pipe-repository-id-index-version" />
     </el-tabs>
     <div class="px-20 mt-5 pb-10 no-gutters">
       <nuxt-child />
@@ -85,8 +85,8 @@ import { downloadStrLink } from '@/utils/download-link'
 import CanCreate from '@/components/common/CanCreate.vue'
 import CanExamine from '@/components/common/CanExamine.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
-import PipeMixin from '@/pages/application/pipe/_components/PipeMixin.vue'
-import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
+import PipeMixin from '@/pages/application/pipe/repository/_components/PipeMixin.vue'
+import PipeItemMixin from '@/pages/application/pipe/repository/_components/PipeItemMixin.vue'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 

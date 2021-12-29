@@ -40,7 +40,10 @@
                 </a>
               </nuxt-link>
             </el-tooltip>
-            <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + row['resource_id'])" :title="row.name">
+            <nuxt-link v-if="row['resource_id'] !=null" class="text-truncate" :to="localePath('/application/pipe/' + row['resource_id'])" :title="row.name">
+              {{ row.provider + '/' + row.name }}
+            </nuxt-link>
+            <nuxt-link v-else class="text-truncate" :to="localePath('/application/pipe/repository/' + row['pipe_id'])" :title="row.name">
               {{ row.provider + '/' + row.name }}
             </nuxt-link>
           </div>

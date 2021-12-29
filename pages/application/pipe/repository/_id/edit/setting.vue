@@ -3,21 +3,21 @@
     <div class="card-body el-row">
       <div class="el-col-12">
         <el-form ref="formModel" label-width="80px" :model="formModel" :rules="rules" size="medium">
-          <el-form-item label="名称" prop="name">
+          <el-form-item label="应用名称" prop="name">
             <el-input v-model="formModel.name" placeholder="请输入名称" />
           </el-form-item>
-          <el-form-item label="版本" prop="version">
-            <el-select v-model="formModel.version" class="w-100" placeholder="请输入版本" disabled>
+          <el-form-item label="默认版本" prop="version">
+            <el-select v-model="formModel.resource_id" class="w-100" placeholder="请输入版本">
               <el-option v-for="version in versions" :key="version.value" :label="version.label" :value="version.value" />
             </el-select>
           </el-form-item>
-          <el-form-item label="分类" prop="category">
+          <el-form-item label="分类标签" prop="category">
             <category-select-multiple v-model="formModel.category" type="pipe" placeholder="请输入分类" />
           </el-form-item>
-          <el-form-item label="地址" prop="description">
+          <el-form-item label="应用来源" prop="description">
             <el-input v-model="formModel.website" placeholder="请输入地址" />
           </el-form-item>
-          <el-form-item label="描述" prop="description">
+          <el-form-item label="功能描述" prop="description">
             <el-input v-model="formModel.description" type="textarea" :rows="4" placeholder="请输入描述" />
           </el-form-item>
         </el-form>
@@ -32,7 +32,7 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
-import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
+import PipeItemMixin from '@/pages/application/pipe/repository/_components/PipeItemMixin.vue'
 import CategorySelectMultiple from '@/pages/application/_components/CategorySelectMultiple.vue'
 import { CategoryModel } from '@/types/model/Common'
 
@@ -45,7 +45,7 @@ export default class Setting extends PipeItemMixin {
   }
   formModel: any = {
     name: '',
-    version: '',
+    resource_id: '',
     category: [],
     website: '',
     description: '',
@@ -62,21 +62,21 @@ export default class Setting extends PipeItemMixin {
   get versions(): any[] {
     return this.item.versions.map((version: any) => {
       return {
-        value: version.version,
+        value: version.resource_id,
         label: version.version,
       }
     })
   }
   mounted(): void {
-    ;['name', 'version', 'website', 'description'].forEach((key: string) => {
+    ;['name', 'resource_id', 'website', 'description'].forEach((key: string) => {
       this.formModel[key] = (this.item as any)[key]
     })
     this.formModel.category = (this.item.category as unknown as CategoryModel[]).map((c: CategoryModel) => c.name)
   }
   async onSubmit(): Promise<void> {
     await this.$refs.formModel.validate()
-    await this.$api.pipe.update(this.item.pipe_id, this.formModel).then(() => {
-      this.$store.commit('pipe/UPDATE_CURRENT_STORE', this.formModel)
+    await this.$api.pipe.updateRepository(this.item.pipe_id, this.formModel).then(() => {
+      this.$store.commit('pipeRepository/UPDATE_CURRENT_STORE', this.formModel)
     })
   }
 }
