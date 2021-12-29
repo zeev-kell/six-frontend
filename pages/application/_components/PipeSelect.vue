@@ -2,6 +2,7 @@
 import { Component } from 'nuxt-property-decorator'
 import BaseSelect from '@/pages/application/_components/BaseSelect.vue'
 import { SelectModel } from '@/types/model/Common'
+import { PipeModel } from '@/types/model/Pipe'
 
 @Component
 export default class PipeSelect extends BaseSelect {
@@ -22,9 +23,9 @@ export default class PipeSelect extends BaseSelect {
     }
   }
 
-  async getOptions(): SelectModel[] {
+  async getOptions(): Promise<SelectModel[]> {
     const list = await this.$api.pipe.getSummary()
-    return list.map((d: any): SelectModel => {
+    return list.map((d: PipeModel): SelectModel => {
       return {
         id: d.pipe_id,
         pipe_id: d.pipe_id,
