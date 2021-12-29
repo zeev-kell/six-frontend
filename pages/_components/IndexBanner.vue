@@ -65,7 +65,7 @@ export default class IndexBanner extends Vue {
 @import './assets/element-ui-build/mixins';
 
 .index-banner {
-  background: url('/images/banner-3.webp') no-repeat;
+  background: url('/images/banner-3.jpg') no-repeat;
   background-size: cover;
   min-height: 100vh;
   height: 600px;

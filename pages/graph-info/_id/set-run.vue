@@ -1,5 +1,13 @@
 <template>
-  <graph-index ref="graphIndex" class="h-100v" :item="item" config-type="run" tools="import|download|plus,minus,fit" @propagate-event="onPropagate" />
+  <graph-index
+    ref="graphIndex"
+    class="h-100v"
+    :is-wheel="true"
+    :item="item"
+    config-type="run"
+    tools="import|download|plus,minus,fit"
+    @propagate-event="onPropagate"
+  />
 </template>
 
 <script lang="ts">

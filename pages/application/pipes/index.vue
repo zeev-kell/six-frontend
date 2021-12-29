@@ -40,7 +40,12 @@
                 </a>
               </nuxt-link>
             </el-tooltip>
-            <nuxt-link v-if="row['resource_id'] !=null" class="text-truncate" :to="localePath('/application/pipe/' + row['resource_id'])" :title="row.name">
+            <nuxt-link
+              v-if="row['resource_id'] != null"
+              class="text-truncate"
+              :to="localePath('/application/pipe/' + row['resource_id'])"
+              :title="row.name"
+            >
               {{ row.provider + '/' + row.name }}
             </nuxt-link>
             <nuxt-link v-else class="text-truncate" :to="localePath('/application/pipe/repository/' + row['pipe_id'])" :title="row.name">
@@ -74,7 +79,7 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import { PipeModel, PipeRepositoryModel } from '@/types/model/Pipe'
+import { PipeRepositoryModel } from '@/types/model/Pipe'
 import { pipeConstants } from '@/constants/PipeConstants'
 import CanCreate from '@/components/common/CanCreate.vue'
 import intercept from '@/filters/intercept'

@@ -30,6 +30,10 @@ export default class InspectorMixins extends Vue {
       selection.registerOnDblClick(this.onDblClick, this.onDblClickType)
     }
   }
+  @Watch('$store.state.graph.cleanSelection')
+  onWatchCleanSelection(): void {
+    this.showPanel = false
+  }
 
   get typeOfSelectionNode(): string {
     if (this.selectionNode instanceof StepModel) {

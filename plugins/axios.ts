@@ -25,17 +25,18 @@ const AxiosPlugin: Plugin = ({ $axios, store, app, redirect }) => {
   })
   $axios.onResponseError(async (error) => {
     // eslint-disable-next-line no-console
-    console.log(error)
     console.log('onResponseError', error.response?.data || error)
-    if (error.config) {
-      console.log('onResponseError', `${error.config.baseURL}${error.config.url}`)
-    }
+    console.log('onResponseError', `${error.config?.baseURL}${error.config?.url} ${error.response?.status}`)
     if (!error.response || !error.response.status) {
       return Promise.reject(error)
     }
     // 登录失效，主动退出
     if (error.response.status === 401) {
-      if (!error.response.config?.url?.includes('/logout')) {
+      const url = error.response.config.url || ''
+      // 刷新 token 异常，主动清空退出
+      if (url.includes('/token/refresh')) {
+        await store.dispatch('user/ACTION_CLEAN_LOGIN')
+      } else if (!url.includes('/logout')) {
         await store.dispatch('user/ACTION_LOGOUT')
       }
     }

@@ -9,6 +9,7 @@ export const state = (): NuxtState => ({
     warnings: [],
   },
   jobValue: {},
+  cleanSelection: 0,
 })
 
 export type GraphState = ReturnType<typeof state>
@@ -19,5 +20,8 @@ export const mutations: MutationTree<GraphState> = {
   },
   SET_JOB_VALUE(state, jobValue): void {
     state.jobValue = jobValue
+  },
+  CLEAN_SELECTION(state): void {
+    state.cleanSelection++
   },
 }

@@ -24,7 +24,7 @@ export type UserModuleState = ReturnType<typeof state>
 
 export const mutations: MutationTree<NuxtState> = {
   // 更新当前用户的信息
-  UPDATE_USERINFO(state, item: any) {
+  UPDATE_USERINFO(state, item: any): void {
     Object.keys(item).forEach((key) => {
       ;(state as any)[key] = item[key]
     })
@@ -60,7 +60,14 @@ export const actions: ActionTree<UserModuleState, RootState> = {
   },
   // 登出，无论是否异常，清空自身保存的 user 信息
   async ACTION_LOGOUT(): Promise<any> {
-    return await (this.$auth as Auth).logout()
+    return await (this.$auth as Auth).logout().catch(() => {
+      ;(this.$auth as Auth).setUser(false)
+    })
+  },
+  ACTION_CLEAN_LOGIN(): void {
+    const $auth = this.$auth as Auth
+    $auth.setUser(false)
+    $auth.$storage.setLocalStorage('user', null)
   },
   // 更新当前用户的信息
   async ACTION_GET_INFO({ commit }): Promise<any> {

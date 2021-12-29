@@ -70,8 +70,6 @@ export default class GraphMixin extends GraphEdit {
 
   @Prop({ required: true })
   content!: V1Workflow
-  @Prop({ default: 'download' })
-  name!: string
   @Prop({ default: false })
   readonly!: boolean
   @Prop({ default: undefined })
@@ -84,6 +82,10 @@ export default class GraphMixin extends GraphEdit {
   plugins!: GraphPlugin[]
   @Prop({ default: 'params' })
   configType!: string
+  @Prop({ default: 'download' })
+  name!: string
+  @Prop({ default: false })
+  isWheel!: boolean
 
   get isRunJob(): boolean {
     return this.configType === 'run'
@@ -114,8 +116,10 @@ export default class GraphMixin extends GraphEdit {
     // 默认可以放缩，选择节点，线条悬浮，自动放缩，双击选择，默认插件
     const plugins: GraphPlugin[] = [new SVGArrangePlugin(), new SVGEdgeHoverPlugin(), new SelectionPlugin(), new DblclickPlugin(), ...this.plugins]
     if (!this.readonly) {
+      if (this.isWheel) {
+        plugins.push(new ZoomPlugin())
+      }
       plugins.push(
-        new ZoomPlugin(),
         new SVGPortDragPlugin(),
         new SVGNodeMovePlugin(),
         new SVGValidatePlugin(),
@@ -221,7 +225,9 @@ export default class GraphMixin extends GraphEdit {
           dblclick?.onDblClick(event)
         }
       })
-      this.fixWheel()
+      if (this.isWheel) {
+        this.fixWheel()
+      }
     }
     this.$nextTick(() => {
       // 初次进入调整视野
@@ -229,6 +235,11 @@ export default class GraphMixin extends GraphEdit {
       // 初次进入自动放缩 并且 调整排版
       // this.graph.getPlugin(SVGArrangePlugin)?.arrange()
     })
+  }
+  reCreateGraph(content?: V1Workflow): void {
+    this.graph.destroy()
+    this.createGraph(content)
+    this.$store.commit('graph/CLEAN_SELECTION')
   }
 
   // 工具事件

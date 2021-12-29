@@ -3,6 +3,7 @@ import { Component } from 'nuxt-property-decorator'
 import BaseSelect from '@/pages/application/_components/BaseSelect.vue'
 import { SelectModel } from '@/types/model/Common'
 import { PipeModel } from '@/types/model/Pipe'
+import { pipeConstants } from '@/constants/PipeConstants'
 
 @Component
 export default class PipeSelect extends BaseSelect {
@@ -13,6 +14,10 @@ export default class PipeSelect extends BaseSelect {
   }
   set actualValue(value) {
     this.$emit('input', value)
+    // 清空或者选择无效
+    if (!value) {
+      return
+    }
     try {
       this.$emit(
         'on-change',
@@ -24,15 +29,21 @@ export default class PipeSelect extends BaseSelect {
   }
 
   async getOptions(): Promise<SelectModel[]> {
-    const list = await this.$api.pipe.getSummary()
-    return list.map((d: PipeModel): SelectModel => {
-      return {
-        id: d.pipe_id,
-        pipe_id: d.pipe_id,
-        value: d.resource_id || '5847e32d-127e-469b-9f7a-3e1b97f4625b',
-        label: d.name,
-      }
+    const { data } = await this.$api.pipe.search({
+      page: 1,
+      size: 1000,
+      term: `type:${pipeConstants.items.TYPE_TOOL} OR type:${pipeConstants.items.TYPE_APP}`,
     })
+    return data
+      .filter((d) => (d.resource_id as unknown) !== null)
+      .map((d: PipeModel): SelectModel => {
+        return {
+          id: d.pipe_id,
+          pipe_id: d.pipe_id,
+          value: d.resource_id,
+          label: d.name,
+        }
+      })
   }
 }
 </script>

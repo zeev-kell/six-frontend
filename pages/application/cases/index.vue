@@ -79,6 +79,7 @@ import CategoryView from '@/pages/application/_components/CategoryView.vue'
     const term = TableMixinsHelper.getTermObj(query.term)
     const otherQuery = {
       keywords: term.keywords || '',
+      tag: term.tag || '',
       type: term.type ? Number(term.type) : '',
     }
     const listQuery = TableMixinsHelper.getPageSize(query)

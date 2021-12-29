@@ -11,8 +11,8 @@ export default class BlogSelect extends BaseSelect {
     const list = await this.$api.blog.getList()
     return list.map((d: any): SelectModel => {
       return {
-        id: d.id,
-        value: d.resource_id || d.id,
+        id: d.resource_id,
+        value: d.resource_id,
         label: d.title,
       }
     })
