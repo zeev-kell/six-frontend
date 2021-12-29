@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <nuxt-link v-if="isApp" v-slot="{ href }" :to="localePath('/graph-info/' + item['resource_id'] + '/set-run')" custom>
+        <!-- <nuxt-link v-if="isApp" v-slot="{ href }" :to="localePath('/graph-info/' + item['resource_id'] + '/set-run')" custom>
           <a :href="href" target="_blank">
             <el-button type="primary" icon="el-icon-caret-right">设置运行</el-button>
           </a>
@@ -55,13 +55,17 @@
             <el-dropdown-item command="json"> JSON 格式 </el-dropdown-item>
             <el-dropdown-item command="yaml"> YAML 格式 </el-dropdown-item>
           </el-dropdown-menu>
-        </el-dropdown>
+        </el-dropdown> -->
         <can-create :is-user="item.provider">
-          <toggle-edit-info type="primary" icon="el-icon-edit"> 编辑 </toggle-edit-info>
+          <!-- <loading-button type="default" icon="el-icon-plus" class="mx-0" :callback="handleDelete"> 添加版本 </loading-button> -->
+          <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-new')" custom>
+            <el-button type="primary" size="small" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 添加版本 </el-button>
+          </nuxt-link>
         </can-create>
         <can-create :is-user="item.provider">
-          <loading-button type="danger" icon="el-icon-delete" class="mx-0" :callback="handleDelete"> 删除 </loading-button>
+          <toggle-edit-info type="primary" size="small" icon="el-icon-edit"> 管理应用 </toggle-edit-info>
         </can-create>
+
       </div>
     </div>
     <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">
@@ -94,12 +98,12 @@ import LoadingButton from '@/components/LoadingButton.vue'
   components: { LoadingButton, LayoutBox, ToggleEditInfo, CanExamine, CanCreate },
 })
 export default class PipeIdIndex extends mixins<PipeItemMixin>(PipeMixin) {
-  handleDownload(format = 'yaml'): void {
-    const asYaml = format === 'yaml'
-    const data = stringifyObject(getObject(this.item.content), asYaml)
-    const name = this.item.name + `.${asYaml ? 'cwl' : format}`
-    downloadStrLink(data, name)
-  }
+  // handleDownload(format = 'yaml'): void {
+  //   const asYaml = format === 'yaml'
+  //   const data = stringifyObject(getObject(this.item.content), asYaml)
+  //   const name = this.item.name + `.${asYaml ? 'cwl' : format}`
+  //   downloadStrLink(data, name)
+  // }
   handleDelete(): Promise<any> {
     return this.$confirm('此操作将永久删除该软件, 是否继续?', '提示', {
       type: 'warning',

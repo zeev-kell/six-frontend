@@ -24,19 +24,13 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <toggle-edit-info type="warning" icon="el-icon-back"> 详情 </toggle-edit-info>
-        <can-create :is-user="item.provider">
-          <loading-button type="danger" icon="el-icon-delete" class="mx-0" :callback="handleDelete"> 删除 </loading-button>
-        </can-create>
+        <toggle-edit-info type="warning" icon="el-icon-back"> 返回详情 </toggle-edit-info>
+   
       </div>
     </div>
     <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">
       <el-tab-pane label="资源介绍" name="application-pipe-repository-id-edit" />
-      <!-- <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-edit-work" />
-      <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-edit-structure" />
-      <el-tab-pane label="使用教程" name="application-pipe-id-edit-course" />
-      <el-tab-pane v-if="isApp" label="运行案例" name="application-pipe-repository-id-edit-case" /> -->
-      <el-tab-pane v-if="isApp" label="历史版本" name="application-pipe-repository-id-edit-version" />
+      <el-tab-pane v-if="isApp" label="应用版本" name="application-pipe-repository-id-edit-version" />
       <el-tab-pane label="管理" name="application-pipe-repository-id-edit-setting" />
     </el-tabs>
     <div class="px-20 mt-5 pb-10 no-gutters">
