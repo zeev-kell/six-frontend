@@ -31,33 +31,20 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import { Context } from '@nuxt/types'
 import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
-import { getObject, stringifyObject } from '@/pages/_components/Graph/helpers/YamlHandle'
+import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { pipeConstants } from '@/constants/PipeConstants'
 import { CommandLineToolFactory, WorkflowFactory } from 'cwlts/models'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 import CodeMirrorJsonClient from '@/pages/application/_components/codeMirror/CodeMirrorJsonClient.vue'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import PipeSelect from '@/pages/application/_components/PipeSelect.vue'
-import { CommandLineTool } from 'cwlts/mappings/v1.0/CommandLineTool'
-import { Workflow } from 'cwlts/mappings/v1.0'
 import { PipeModel } from '@/types/model/Pipe'
 import { GraphEvent } from '@/constants/GraphEvent'
 
 @Component({
   components: { PipeSelect, GraphIndex, CodeMirrorJsonClient, LoadingButton },
-  async asyncData({ app }: Context): Promise<any> {
-    const items = await app.$api.pipe.getList()
-    const options = items.map((d: any) => {
-      return {
-        value: d.resource_id,
-        label: d.name,
-      }
-    })
-    return { options }
-  },
 })
 export default class Work extends CaseItemMixin {
   $refs!: {
@@ -65,7 +52,6 @@ export default class Work extends CaseItemMixin {
     graphIndex: GraphIndex
   }
   activeName = '1'
-  options: any[] = []
   formModel: any = {
     content: '',
     workflow: '',
@@ -120,7 +106,6 @@ export default class Work extends CaseItemMixin {
       model.input = this.$store.state.graph.jobValue
       model.workflow = this.formModel.workflow
       this.formModel.content = JSON.stringify(model, null, 4)
-      this.isChanged = false
     } else {
       try {
         model = JSON.parse(this.formModel.content)
