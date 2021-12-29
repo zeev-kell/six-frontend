@@ -1,10 +1,10 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { Repository } from '@/types/model/Pipe'
+import { PipeRepositoryModel } from '@/types/model/Pipe'
 
 @Component
 export default class PipeItemMixin extends Vue {
-  get item(): Repository {
+  get item(): PipeRepositoryModel {
     return this.$store.state.pipeRepository
   }
 }

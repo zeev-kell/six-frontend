@@ -26,6 +26,17 @@
     <div class="card-footer">
       <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
     </div>
+    <div class="card-header el-row--flex">
+      <h3 class="card-title mt-10 el-col-full">删除仓库</h3>
+    </div>
+    <div class="card-body">
+      <div class="text-muted mb-10">删除应用仓库将销毁存储在其中的所有应用版本！此操作不可逆。</div>
+
+      <can-create :is-user="item.provider">
+        <loading-button type="danger" icon="el-icon-delete" class="mx-0" :callback="handleDelete"> 删除仓库 </loading-button>
+      </can-create>
+    </div>
+
   </div>
 </template>
 
@@ -35,9 +46,12 @@ import LoadingButton from '@/components/LoadingButton.vue'
 import PipeItemMixin from '@/pages/application/pipe/repository/_components/PipeItemMixin.vue'
 import CategorySelectMultiple from '@/pages/application/_components/CategorySelectMultiple.vue'
 import { CategoryModel } from '@/types/model/Common'
+import CanCreate from '@/components/common/CanCreate.vue'
+import CanExamine from '@/components/common/CanExamine.vue'
+
 
 @Component({
-  components: { CategorySelectMultiple, LoadingButton },
+  components: { CategorySelectMultiple, LoadingButton , CanExamine, CanCreate},
 })
 export default class Setting extends PipeItemMixin {
   $refs!: {
@@ -77,6 +91,16 @@ export default class Setting extends PipeItemMixin {
     await this.$refs.formModel.validate()
     await this.$api.pipe.updateRepository(this.item.pipe_id, this.formModel).then(() => {
       this.$store.commit('pipeRepository/UPDATE_CURRENT_STORE', this.formModel)
+    })
+  }
+
+  handleDelete(): Promise<any> {
+    return this.$confirm('此操作将永久删除该应用仓库并同时删除所有应用版本, 是否继续?', '提示', {
+      type: 'warning',
+    }).then(() => {
+      return this.$api.pipe.deleteRepository(this.$route.params.id).then(() => {
+        this.$I18nRouter.push('/application/pipes')
+      })
     })
   }
 }
