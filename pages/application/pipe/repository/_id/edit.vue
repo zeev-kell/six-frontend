@@ -24,7 +24,13 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <toggle-edit-info type="warning" icon="el-icon-back"> 返回详情 </toggle-edit-info>
+        <can-create :is-user="item.provider">
+          <!-- <loading-button type="default" icon="el-icon-plus" class="mx-0" :callback="handleDelete"> 添加版本 </loading-button> -->
+          <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-new')" custom>
+            <el-button type="primary" size="small" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 添加版本 </el-button>
+          </nuxt-link>
+        </can-create>
+        <toggle-edit-info type="warning" size="small" icon="el-icon-back"> 返回详情 </toggle-edit-info>
    
       </div>
     </div>

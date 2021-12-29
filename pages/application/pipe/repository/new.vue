@@ -11,11 +11,11 @@
             <el-form-item label="应用名称" prop="name">
               <el-input v-model="formModel.name" placeholder="请输入应用名称，例如：bwa" />
             </el-form-item>
-            <el-form-item label="应用版本" prop="version">
+            <!-- <el-form-item label="应用版本" prop="version">
               <el-input v-model="formModel.version" placeholder="请输入版本，例如：v1.0" />
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="分类标签" prop="category">
-              <el-input v-model="formModel.category" placeholder="请输入分类标签，例如：序列比对" />
+              <category-select-multiple v-model="formModel.category" type="pipe" placeholder="请输入分类" />
             </el-form-item>
             <el-form-item label="应用类型" prop="type">
               <el-select v-model="formModel.type" placeholder="请选择应用类型" clearable style="width: 100%" :disabled="disabledType">
@@ -42,9 +42,12 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { pipeConstants } from '@/constants/PipeConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
+import CategorySelectMultiple from '@/pages/application/_components/CategorySelectMultiple.vue'
+import { CategoryModel } from '@/types/model/Common'
+
 
 @Component({
-  components: { LoadingButton },
+  components: { CategorySelectMultiple, LoadingButton },
 })
 export default class PipeNewPage extends Vue {
   $refs!: {
@@ -53,37 +56,33 @@ export default class PipeNewPage extends Vue {
 
   formModel: any = {
     name: '',
-    version: '',
     description: '',
-    category: '',
+    category: [],
     website: '',
-    tutorial: '',
-    type: '',
-    content: '',
+    type: ''
   }
   rules = {
     name: [
       { required: true, message: '请输入名称', trigger: 'blur' },
       { min: 2, max: 128, message: '长度在 2 到 128 个字符', trigger: 'blur' },
     ],
-    version: [
-      { required: true, message: '请输入版本', trigger: 'blur' },
-      { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
-    ],
+    // version: [
+    //   { required: true, message: '请输入版本', trigger: 'blur' },
+    //   { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
+    // ],
     type: [{ required: true, message: '请选择类型', trigger: 'change' }],
-    category: [
-      { required: true, message: '请输入分类', trigger: 'blue' },
-      { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-    ],
+    category: [{ required: true, message: '请选择分类', trigger: 'blue' }],
   }
   disabledType = false
   typeList = pipeConstants.getItemsList('TYPE_')
-
+  mounted(): void {
+    this.formModel.category = (this.formModel.category as unknown as CategoryModel[]).map((c: CategoryModel) => c.name)
+  }
   async onSubmit() {
     await this.$refs.formModel.validate()
     await this.$api.pipe.createRepository(this.formModel).then((data) => {
       const id = data?.data?.id
-      this.$I18nRouter.push(`/application/pipe/${id}/edit`)
+      this.$I18nRouter.push(`/application/pipe/repository/${id}/edit`)
     })
   }
 }

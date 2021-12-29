@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <toggle-edit-info type="warning" icon="el-icon-back"> 详情 </toggle-edit-info>
+        <toggle-edit-info type="warning" icon="el-icon-back"> 返回详情 </toggle-edit-info>
         <can-create :is-user="item.provider">
           <loading-button type="danger" icon="el-icon-delete" class="mx-0" :callback="handleDelete"> 删除 </loading-button>
         </can-create>
@@ -36,7 +36,7 @@
       <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-edit-structure" />
       <el-tab-pane label="使用教程" name="application-pipe-id-edit-course" />
       <el-tab-pane v-if="isApp" label="运行案例" name="application-pipe-id-edit-case" />
-      <el-tab-pane v-if="isApp" label="历史版本" name="application-pipe-id-edit-version" />
+      <el-tab-pane v-if="isApp" label="应用版本" name="application-pipe-id-edit-version" />
       <el-tab-pane label="管理" name="application-pipe-id-edit-setting" />
     </el-tabs>
     <div class="px-20 mt-5 pb-10 no-gutters">
@@ -61,8 +61,8 @@ export default class PipeIdEdit extends mixins<PipeMixin>(PipeMixin) {
     return this.$confirm('此操作将永久删除该应用版本, 是否继续?', '提示', {
       type: 'warning',
     }).then(() => {
-      this.$api.pipe.removeVersion(this.$route.params.id).then(() => {
-        this.$I18nRouter.push('/application/pipes')
+      this.$api.pipe.deleteRevision(this.item.pipe_id, this.$route.params.id).then(() => {
+        this.$I18nRouter.push('/application/pipe/repository/'+ this.item.pipe_id)
       })
     })
   }

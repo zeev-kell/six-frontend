@@ -22,7 +22,7 @@
       </div>
       <div class="action-box">
         <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-new')" custom>
-          <el-button type="primary" size="small" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
+          <el-button type="primary" size="small" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建应用 </el-button>
         </nuxt-link>
         <nuxt-link v-slot="{ navigate }" :to="localePath('graph-info-new')" custom>
           <el-button type="default" size="small" role="link" icon="el-icon-share" @click="navigate" @keypress.enter="navigate"> 流程组合 </el-button>
