@@ -61,7 +61,7 @@ export default class PipeIdEdit extends mixins<PipeMixin>(PipeMixin) {
     return this.$confirm('此操作将永久删除该应用版本, 是否继续?', '提示', {
       type: 'warning',
     }).then(() => {
-      this.$api.pipe.removeVersion(this.$route.params.id).then(() => {
+      this.$api.pipe.deleteRepository(this.$route.params.id).then(() => {
         this.$I18nRouter.push('/application/pipes')
       })
     })

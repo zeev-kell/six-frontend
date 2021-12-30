@@ -85,7 +85,7 @@ export default class Setting extends PipeItemMixin {
   }
   async onSubmit(): Promise<void> {
     await this.$refs.formModel.validate()
-    await this.$api.pipe.update(this.item.pipe_id, this.formModel).then(() => {
+    await this.$api.pipe.updateRepository(this.item.pipe_id, this.formModel).then(() => {
       this.$store.commit('pipe/UPDATE_CURRENT_STORE', this.formModel)
     })
   }

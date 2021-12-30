@@ -12,12 +12,12 @@ export class Module extends BaseModule {
     return this.$axios.$post('/v2/pipe', data)
   }
 
-  removeVersion(resourceId: string): Promise<any> {
-    return this.$axios
-      .$delete('/v2/pipe/' + resourceId)
-      .then(MESSAGE_SUCCESS)
-      .catch(MESSAGE_ERROR)
-  }
+  // removeVersion(resourceId: string): Promise<any> {
+  //   return this.$axios
+  //     .$delete('/v2/pipe/' + resourceId)
+  //     .then(MESSAGE_SUCCESS)
+  //     .catch(MESSAGE_ERROR)
+  // }
 
   update(id: string, data: any): Promise<any> {
     return this.$axios

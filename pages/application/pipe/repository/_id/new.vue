@@ -66,14 +66,18 @@ import { pipeConstants } from '@/constants/PipeConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import CodeMirrorClient from '@/pages/application/_components/codeMirror/CodeMirrorClient.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
-  components: { CodeMirrorClient, LoadingButton, GraphIndex },
+  components: {PipeItemMixin, CodeMirrorClient, LoadingButton, GraphIndex },
 })
+
+
 export default class PipeNewPage extends Vue {
   activeName = '1'
   content = ''
-
+  title = '应用参数结构CWL'
+  version = '1.0'
   $refs!: {
     formModel: HTMLFormElement
   }
@@ -81,48 +85,53 @@ export default class PipeNewPage extends Vue {
   formModel: any = {
     name: '',
     version: '',
-    description: '',
-    category: '',
-    website: '',
-    tutorial: '',
-    type: '',
+    type: 1,
     content: '',
   }
 
+  // get item(): PipeModel {
+  //   return this.$store.state.pipe
+  // }
 
-
-  get title() {
-    if (this.$store.getters['pipe/isSoftware']) {
-      // 选择新建类型为”工具”或“工具流”时标题显示为“应用参数结构CWL”
-      return '应用参数结构CWL'
-    } else if (this.$store.getters['pipe/isOperation']) {
-      // “工作”或“工作流”时标题显示为“应用参数配置YML”
-      return '应用参数配置YML'
-    } else if (this.$store.getters['pipe/isDocker']) {
-      // 为“docker”时，标题显示为“应用Dockerfile”
-      return '应用Dockerfile'
-    } else {
-      return ''
-    }
-  }
+  // get title() {
+  //   if (this.$store.getters['pipe/isSoftware']) {
+  //     // 选择新建类型为”工具”或“工具流”时标题显示为“应用参数结构CWL”
+  //     return '应用参数结构CWL'
+  //   } else if (this.$store.getters['pipe/isOperation']) {
+  //     // “工作”或“工作流”时标题显示为“应用参数配置YML”
+  //     return '应用参数配置YML'
+  //   } else if (this.$store.getters['pipe/isDocker']) {
+  //     // 为“docker”时，标题显示为“应用Dockerfile”
+  //     return '应用Dockerfile'
+  //   } else {
+  //     return ''
+  //   }
+  // }
+  // get graph() {
+  //   return {
+  //     content: this.content,
+  //     type: this.formModel.type,
+  //     resource_id: this.formModel.resource_id,
+  //   }
+  // }
   get graph() {
     return {
       content: this.content,
-      type: this.item.type,
-      resource_id: this.item.resource_id,
+      type: 0,
+      resource_id: 'dwewee',
     }
   }
 
   onBeforeLeave(activeName: string) {
     if (activeName === '3') {
-      window.open(`/graph-info/${this.item.resource_id}/edit`, '_blank')
+      window.open(`/graph-info/${this.formModel.resource_id}/edit`, '_blank')
       return false
     }
     return true
   }
 
   mounted() {
-    this.content = this.item.content.toString()
+    this.content = this.formModel.content.toString()
   }
 
 

@@ -54,7 +54,7 @@ export default class Case extends PipeItemMixin {
   }
   async onSubmit() {
     const data = { profile: this.value }
-    await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
+    await this.$api.pipe.updateRevision(this.item.pipe_id, this.item.resource_id, data).then(() => {
       this.$store.commit('pipe/UPDATE_CURRENT_STORE', { profile: data.profile })
     })
   }

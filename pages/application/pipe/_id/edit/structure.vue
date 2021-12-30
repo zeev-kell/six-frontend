@@ -68,7 +68,7 @@ export default class Structure extends PipeItemMixin {
 
   async onSubmit() {
     const data = { content: this.content }
-    await this.$api.pipe.updateVersion(this.item.resource_id, data).then(() => {
+    await this.$api.pipe.updateRevision(this.item.pipe_id, this.item.resource_id, data).then(() => {
       this.$store.commit('pipe/UPDATE_CURRENT_STORE', { content: data.content })
     })
   }
