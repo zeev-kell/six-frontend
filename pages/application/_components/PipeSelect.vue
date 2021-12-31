@@ -32,6 +32,8 @@ export default class PipeSelect extends BaseSelect {
     const { data } = await this.$api.pipe.search({
       page: 1,
       size: 1000,
+      // 查询 工具 和 流程，TODO 接口有问题
+      // term: '',
       term: `type:${pipeConstants.items.TYPE_TOOL} OR type:${pipeConstants.items.TYPE_APP}`,
     })
     return data

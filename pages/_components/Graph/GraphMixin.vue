@@ -118,15 +118,9 @@ export default class GraphMixin extends GraphEdit {
     if (!this.readonly) {
       if (this.isWheel) {
         plugins.push(new ZoomPlugin())
+        plugins.push(new EmptyPlugin())
       }
-      plugins.push(
-        new SVGPortDragPlugin(),
-        new SVGNodeMovePlugin(),
-        new SVGValidatePlugin(),
-        new DeletionPlugin(),
-        new DropPlugin(),
-        new EmptyPlugin()
-      )
+      plugins.push(new SVGPortDragPlugin(), new SVGNodeMovePlugin(), new SVGValidatePlugin(), new DeletionPlugin(), new DropPlugin())
       if (this.isRunJob) {
         plugins.push(new SVGJobFileDropPlugin(), new SVGRequiredInputMarkup())
       } else {
@@ -275,10 +269,8 @@ export default class GraphMixin extends GraphEdit {
     }
   }
   [GraphEvent.TriggerGraphEmpty](): void {
-    // 清空画布，目前只有流程编辑，所以替换一个新的 workflow 即可
     const content = Generator.generateWorkflow()
-    this.graph.destroy()
-    this.createGraph(content)
+    this.reCreateGraph(content)
   }
 
   mounted(): void {

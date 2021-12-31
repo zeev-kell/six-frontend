@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid" style="overflow: inherit">
     <el-row v-if="blog" type="flex">
-      <el-col class="marked-content el-col-equal pr-20">
+      <el-col class="el-col-equal pr-20">
         <mavon-editor-render-client v-if="blog.content" ref="MavonEditor" :value="blog.content" />
       </el-col>
       <el-col style="width: 260px">

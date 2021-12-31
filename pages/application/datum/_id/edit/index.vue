@@ -4,7 +4,7 @@
       <div class="card-header el-row el-row--flex is-align-middle py-5">
         <h2>{{ item.name }}</h2>
       </div>
-      <div class="card-body marked-content">
+      <div class="card-body">
         <mavon-editor-client v-model="readme" />
       </div>
       <div class="card-footer">

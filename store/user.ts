@@ -2,7 +2,6 @@ import Element from 'element-ui'
 import { NuxtState } from '@nuxt/types/app'
 import type { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { RootState } from '@/store/index'
-import { Auth } from '@nuxtjs/auth-next/dist'
 
 export const state = (): NuxtState => ({
   avatar_url: '',
@@ -43,15 +42,14 @@ export const getters: GetterTree<UserModuleState, RootState> = {
 export const actions: ActionTree<UserModuleState, RootState> = {
   // 登录，目前需要手动保存 user 信息
   async ACTION_LOGIN(store, data) {
-    const $auth = this.$auth as Auth
-    return await $auth
+    return await this.$auth
       .loginWith('local', { data })
       .then((response: any) => {
         const data = response.data.data
-        const user = $auth.user as any
+        const user = this.$auth.user as any
         // eslint-disable-next-line camelcase
         user.refreshToken = data.refresh_token
-        $auth.$storage.setLocalStorage('user', user)
+        this.$auth.$storage.setLocalStorage('user', user)
       })
       .catch((e: any) => {
         Element.Message.error(e.msg || e)
@@ -60,14 +58,13 @@ export const actions: ActionTree<UserModuleState, RootState> = {
   },
   // 登出，无论是否异常，清空自身保存的 user 信息
   async ACTION_LOGOUT(): Promise<any> {
-    return await (this.$auth as Auth).logout().catch(() => {
-      ;(this.$auth as Auth).setUser(false)
+    return await this.$auth.logout().catch(() => {
+      this.$auth.setUser(false)
     })
   },
   ACTION_CLEAN_LOGIN(): void {
-    const $auth = this.$auth as Auth
-    $auth.setUser(false)
-    $auth.$storage.setLocalStorage('user', null)
+    this.$auth.setUser(false)
+    this.$auth.$storage.setLocalStorage('user', null)
   },
   // 更新当前用户的信息
   async ACTION_GET_INFO({ commit }): Promise<any> {

@@ -8,7 +8,7 @@
         <el-input v-model="ruleForm.mediatype"></el-input>
       </el-form-item>
       <el-form-item label="大小" prop="bytes">
-        <el-input v-model="ruleForm.bytes" type="number"></el-input>
+        <el-input v-model.number="ruleForm.bytes" type="number"></el-input>
       </el-form-item>
       <el-form-item v-if="isOssObject" label="MD5校验码" prop="hash">
         <div class="el-row el-row--flex">

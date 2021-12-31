@@ -13,7 +13,14 @@
             从公共仓库查找应用：<pipe-select ref="pipeSelect" v-model="formModel.source" :clearable="false" @on-change="onValueChange"></pipe-select>
           </div>
           <div v-if="activeName === '2'" class="page-graph-box workflow-box">
-            <graph-index ref="graphIndex" config-type="run" :item="graph" class="h-100" tools="import|download|plus,minus,fit|auto" />
+            <graph-index
+              ref="graphIndex"
+              config-type="run"
+              :item="graph"
+              class="h-100"
+              tools="import|download|plus,minus,fit|auto"
+              @propagate-event="onPropagate"
+            />
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -29,13 +36,13 @@ import { Component } from 'nuxt-property-decorator'
 import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
-import { pipeConstants } from '@/constants/PipeConstants'
 import { CommandLineToolFactory, WorkflowFactory } from 'cwlts/models'
 import { JobHelper } from 'cwlts/models/helpers/JobHelper'
 import CodeMirrorJsonClient from '@/pages/application/_components/codeMirror/CodeMirrorJsonClient.vue'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import PipeSelect from '@/pages/application/_components/PipeSelect.vue'
 import { PipeModel } from '@/types/model/Pipe'
+import { GraphEvent } from '@/constants/GraphEvent'
 
 @Component({
   components: { PipeSelect, GraphIndex, CodeMirrorJsonClient, LoadingButton },
@@ -64,16 +71,23 @@ export default class Work extends CaseItemMixin {
     this.$confirm('是否替换新的软件运行模板？')
       .then(() => {
         this.$api.pipe.getRevision(pipe_id, value).then((pipe: PipeModel) => {
-          let content = pipe?.content
-          if (!content) {
+          if (!pipe.content) {
             return this.$message.warning('该软件信息不完整')
           }
-          content = getObject(content)
-          const model = pipe.type === pipeConstants.items.TYPE_TOOL ? CommandLineToolFactory.from(content, 'document') : WorkflowFactory.from(content)
+          const content = getObject(pipe.content)
+          if (!content.class) {
+            return this.$message.warning('该软件信息不正确')
+          }
+          // TODO 接口没有返回 type
+          const model = content.class === 'CommandLineTool' ? CommandLineToolFactory.from(content, 'document') : WorkflowFactory.from(content)
+          if (this.formModel.workflow?.class === content.class) {
+            this.formModel.workflow = content
+            this.$refs.graphIndex.dispatchAction('reCreateGraph', content)
+          } else {
+            this.formModel.workflow = content
+          }
           const nullJob = JobHelper.getNullJobInputs(model)
-          this.formModel.workflow = content
           this.formModel.input = nullJob
-          this.$refs.graphIndex.dispatchAction('reCreateGraph', content)
           this.$store.commit('graph/SET_JOB_VALUE', nullJob)
           if (Object.keys(nullJob).length === 0) {
             this.$message.warning('该软件没有输入项或者软件输入不完整')
@@ -111,6 +125,13 @@ export default class Work extends CaseItemMixin {
         reject(e)
       }
     })
+  }
+  onPropagate(eventName: string): void {
+    if (GraphEvent.TriggerPageModalCreate === eventName) {
+      this.$nextTick(() => {
+        this.$refs.graphIndex.dispatchAction('updateJob', this.formModel.input)
+      })
+    }
   }
   async onSubmit(): Promise<void> {
     const content =

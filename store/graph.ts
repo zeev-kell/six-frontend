@@ -18,7 +18,7 @@ export const mutations: MutationTree<GraphState> = {
   SET_VALIDATION_STATE(state, validationState): void {
     state.validationState = validationState
   },
-  SET_JOB_VALUE(state, jobValue): void {
+  SET_JOB_VALUE(state, jobValue = {}): void {
     state.jobValue = jobValue
   },
   CLEAN_SELECTION(state): void {

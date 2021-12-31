@@ -26,10 +26,6 @@ import BlogSelect from '@/pages/application/_components/BlogSelect.vue'
 
 @Component({
   components: { BlogSelect, LoadingButton },
-  asyncData({ store }) {
-    const item = store.state.pipe
-    return { instruction: item.instruction }
-  },
 })
 export default class Course extends CaseItemMixin {
   instruction = ''
@@ -38,6 +34,9 @@ export default class Course extends CaseItemMixin {
     await this.$api.case.update(this.item.resource_id, data).then(() => {
       this.$store.commit('case/UPDATE_CURRENT_STORE', data)
     })
+  }
+  mounted() {
+    this.instruction = this.$store.state.case.instruction
   }
 }
 </script>
