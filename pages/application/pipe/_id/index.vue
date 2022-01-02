@@ -59,9 +59,6 @@
         <can-create :is-user="item.provider">
           <toggle-edit-info type="primary" icon="el-icon-edit"> 管理应用 </toggle-edit-info>
         </can-create>
-        <!-- <can-create :is-user="item.provider">
-          <loading-button type="danger" icon="el-icon-delete" class="mx-0" :callback="handleDelete"> 删除 </loading-button>
-        </can-create> -->
       </div>
     </div>
     <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">

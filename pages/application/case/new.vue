@@ -12,7 +12,7 @@
               <el-input v-model="formModel.name" placeholder="请输入名称" />
             </el-form-item>
             <el-form-item label="分类" prop="category">
-              <category-select v-model="formModel.category" multiple type="case" allow-create placeholder="请输入分类" />
+              <category-select v-model="formModel.category" multiple type="case" allow-create placeholder="请输入分类" class="w-100" />
             </el-form-item>
             <el-form-item label="类别" prop="type">
               <case-type-select v-model="formModel.type" placeholder="请选择类别" :disabled="true" />

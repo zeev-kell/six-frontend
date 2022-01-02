@@ -24,7 +24,7 @@ export default class BaseSelect extends Vue {
     elSelect: ElSelect
   }
   @Prop({ required: true })
-  value!: string
+  value!: any
   loading = true
   options: SelectModel[] = []
   defaultPlaceholder = ''

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import DocNewPage from '@/pages/application/blog/new.vue'
+import BlogNewPage from '@/pages/application/blog/new.vue'
 
 @Component({
   async asyncData({ app, params }) {
@@ -9,14 +9,13 @@ import DocNewPage from '@/pages/application/blog/new.vue'
     return { formModel: item }
   },
 })
-export default class DocEditPage extends DocNewPage {
+export default class BlogEditPage extends BlogNewPage {
   async onSubmit() {
     await this.$refs.formModel.validate().catch((e: Error) => {
       this.$message.warning('请填写完整信息')
       throw e
     })
-    const data = Object.assign({}, this.formModel, { category: this.formModel.category.join(',') })
-    await this.$api.blog.update(this.formModel.id, data).then(() => {
+    await this.$api.blog.update(this.formModel.id, this.formModel).then(() => {
       this.$I18nRouter.push('/application/blogs')
     })
   }

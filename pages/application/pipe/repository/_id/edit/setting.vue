@@ -80,10 +80,9 @@ export default class PipeRepositorySetting extends PipeItemMixin {
     })
   }
   mounted(): void {
-    ;['name', 'resource_id', 'website', 'description'].forEach((key: string) => {
+    ;['name', 'resource_id', 'category', 'website', 'description'].forEach((key: string) => {
       this.formModel[key] = (this.item as any)[key]
     })
-    this.formModel.category = (this.item.category as unknown as CategoryModel[]).map((c: CategoryModel) => c.name)
   }
   async onSubmit(): Promise<void> {
     await this.$refs.formModel.validate()

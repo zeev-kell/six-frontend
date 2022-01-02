@@ -9,6 +9,20 @@ export default class CategorySelect extends BaseSelect {
   type!: string
   defaultPlaceholder = '按分类筛选'
 
+  get actualValue() {
+    if (!this.value) {
+      return []
+    }
+    if (typeof this.value === 'string') {
+      console.log(this.value)
+      return [this.value]
+    }
+    return this.value.map((c: any) => (typeof c === 'string' ? c : c.name))
+  }
+  set actualValue(value) {
+    this.$emit('input', value)
+  }
+
   async getOptions(): Promise<SelectModel[]> {
     const list = await this.$api.common.getTags(this.type)
     return list.map((d: any): SelectModel => {

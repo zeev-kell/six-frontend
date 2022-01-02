@@ -17,7 +17,7 @@
               <el-input v-model="formModel.version" placeholder="请输入版本，例如：v1.0" />
             </el-form-item>
             <el-form-item label="分类标签" prop="category">
-              <category-select v-model="formModel.category" multiple type="pipe" placeholder="请输入分类" />
+              <category-select v-model="formModel.category" multiple type="pipe" placeholder="请输入分类" class="w-100" />
             </el-form-item>
             <el-form-item label="应用类型" prop="type">
               <pipe-type-select v-model="formModel.type" placeholder="请选择应用类型" />

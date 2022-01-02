@@ -37,6 +37,7 @@ export default class CaseSetting extends CaseItemMixin {
   $refs!: {
     formModel: HTMLFormElement
   }
+
   formModel: any = {
     name: '',
     category: [],
@@ -52,9 +53,9 @@ export default class CaseSetting extends CaseItemMixin {
   }
 
   mounted(): void {
-    this.formModel.name = this.item.name
-    this.formModel.category = this.item.category.map((c: any) => (typeof c === 'string' ? c : c.name))
-    this.formModel.description = this.item.description
+    ;['name', 'category', 'description'].forEach((key: string) => {
+      this.formModel[key] = (this.item as any)[key]
+    })
     this.formModel.version = this.content.version
   }
   async onSubmit() {

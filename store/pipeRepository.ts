@@ -22,9 +22,9 @@ export const state = (): NuxtState => ({
   versions: [],
 })
 
-export type PipeModuleState = ReturnType<typeof state>
+export type PipeRepositoryModuleState = ReturnType<typeof state>
 
-export const getters: GetterTree<PipeModuleState, RootState> = {
+export const getters: GetterTree<PipeRepositoryModuleState, RootState> = {
   isTool: (state) => state.type === pipeConstants.items.TYPE_TOOL,
   isApp: (state) => state.type === pipeConstants.items.TYPE_APP,
   isDocker: (state) => state.type === pipeConstants.items.TYPE_DOCKER,
