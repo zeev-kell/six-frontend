@@ -160,7 +160,7 @@ export default class JobStepInspector extends Vue {
       return input.id
     }
   }
-  recreateForms() {
+  recreateForms(): void {
     for (const controlName of Object.keys(this.jobGroup.controls)) {
       this.jobGroup.removeControl(controlName)
     }

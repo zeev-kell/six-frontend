@@ -6,14 +6,11 @@ import { pipeConstants, PIPE_LOCAL } from '@/constants/PipeConstants'
 
 @Component
 export default class newLocal extends PipeNewPage {
-  disabledType = true
-
   mounted(): void {
     this.formModel.content = getStore(PIPE_LOCAL, true)
     this.formModel.type = pipeConstants.items.TYPE_APP
   }
-
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     await this.$refs.formModel.validate()
     await this.$api.pipe.create(this.formModel).then((data) => {
       removeStore(PIPE_LOCAL)

@@ -7,6 +7,7 @@ export function MESSAGE_SUCCESS(response: any) {
 }
 
 export function MESSAGE_ERROR(error: any) {
-  Element.Message.error(error?.msg || '操作失败')
+  const msg = typeof error?.msg === 'string' ? error?.msg : '操作失败'
+  Element.Message.error(msg)
   return Promise.reject(error)
 }

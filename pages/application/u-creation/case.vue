@@ -29,5 +29,5 @@ import CaseListPage from '@/pages/application/cases/index.vue'
     }
   },
 })
-export default class DocsPage extends CaseListPage {}
+export default class BlogsPage extends CaseListPage {}
 </script>

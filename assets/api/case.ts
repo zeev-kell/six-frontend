@@ -2,6 +2,7 @@ import { CaseModel } from '@/types/model/Case'
 import { MESSAGE_ERROR, MESSAGE_SUCCESS } from '@/utils/reponse-helper'
 import { tableResponse } from '@/types/response'
 import BaseModule from '@/assets/api/BaseModule'
+import { pipeConstants } from '@/constants/PipeConstants'
 
 function serialize(data: any): any {
   data = Object.assign({}, data)
@@ -36,9 +37,10 @@ export class Module extends BaseModule {
   get(id: string): Promise<CaseModel> {
     return this.$axios.$get<CaseModel>(`/v1/case/${id}`)
   }
-  getList(params?: any): Promise<tableResponse<CaseModel>> {
-    console.log(params)
-    return this.$axios.$get<tableResponse<CaseModel>>('/v1/cases', { params })
+  async getList(params?: any): Promise<CaseModel[]> {
+    params = Object.assign({ page: 1, size: 1000, term: '' }, params)
+    const response = await this.$axios.$get<tableResponse<CaseModel>>('/v1/search/case', { params })
+    return response.data
   }
 
   search(params?: any): Promise<tableResponse<CaseModel>> {

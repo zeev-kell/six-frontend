@@ -4,11 +4,11 @@
     <div class="card-body">
       <div class="el-row el-row--flex">
         <div class="el-col-full">
-          <nuxt-link v-slot="{ navigate }" :to="localePath('application-doc-new')" custom>
+          <nuxt-link v-slot="{ navigate }" :to="localePath('application-blog-new')" custom>
             <el-button type="primary" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
           </nuxt-link>
           <span class="m-x-1">或</span>
-          <blog-select v-model="instruction"></blog-select>
+          <blog-select v-model="instruction" />
         </div>
         <div class="el-col-auto">
           <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>

@@ -1,12 +1,9 @@
 <template>
-  <el-table :data="versions" style="width: 100%">
+  <el-table :data="versions" class="w-100">
     <el-table-column prop="resource_id" label="ID">
-      <template slot-scope="scope">
-        <!-- <span v-if="scope.row['resource_id'] === $route.params.id" class="text-muted p-r el-row--flex is-align-middle">
-          {{ scope.row.resource_id }}
-        </span> -->
-        <nuxt-link :to="localePath('/application/pipe/' + scope.row['resource_id'])">
-          {{ scope.row.resource_id }}
+      <template slot-scope="{ row }">
+        <nuxt-link :to="localePath('/application/pipe/' + row['resource_id'])">
+          {{ row.resource_id }}
         </nuxt-link>
       </template>
     </el-table-column>
@@ -18,10 +15,10 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import PipeItemMixin from '@/pages/application/pipe/repository/_components/PipeItemMixin.vue'
+import PipeRepositoryItemMixin from '@/pages/application/pipe/repository/_components/PipeRepositoryItemMixin.vue'
 
 @Component
-export default class PipeVersion extends PipeItemMixin {
+export default class PipeVersion extends PipeRepositoryItemMixin {
   get versions() {
     return this.item?.versions || []
   }

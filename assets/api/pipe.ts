@@ -12,13 +12,6 @@ export class Module extends BaseModule {
     return this.$axios.$post('/v2/pipe', data)
   }
 
-  // removeVersion(resourceId: string): Promise<any> {
-  //   return this.$axios
-  //     .$delete('/v2/pipe/' + resourceId)
-  //     .then(MESSAGE_SUCCESS)
-  //     .catch(MESSAGE_ERROR)
-  // }
-
   update(id: string, data: any): Promise<any> {
     return this.$axios
       .$put('/v2/pipe/repository/' + id, data)
@@ -67,10 +60,7 @@ export class Module extends BaseModule {
 
   // 应用版本处理api
   getRevision(pipeId: string, resourceId: string): Promise<any> {
-    return this.$axios
-      .$get('/v2/pipe/repository/' + pipeId + '/revision/' + resourceId)
-      .then(MESSAGE_SUCCESS)
-      .catch(MESSAGE_ERROR)
+    return this.$axios.$get('/v2/pipe/repository/' + pipeId + '/revision/' + resourceId)
   }
   createRevision(pipeId: string, data: any): Promise<any> {
     return this.$axios
@@ -85,21 +75,15 @@ export class Module extends BaseModule {
       .catch(MESSAGE_ERROR)
   }
   deleteRevision(pipeId: string, resourceId: string): Promise<any> {
-    return this.$axios
-      .$delete('/v2/pipe/repository/' + pipeId + '/revision/' + resourceId)
-      .then(MESSAGE_SUCCESS)
-      .catch(MESSAGE_ERROR)
+    return this.$axios.$delete('/v2/pipe/repository/' + pipeId + '/revision/' + resourceId)
   }
 
   // 应用仓库处理api
   getRepository(pipeId: string): Promise<any> {
-    return this.$axios
-      .$get('/v2/pipe/repository/' + pipeId)
-      .then(MESSAGE_SUCCESS)
-      .catch(MESSAGE_ERROR)
+    return this.$axios.$get('/v2/pipe/repository/' + pipeId)
   }
   createRepository(data: any): Promise<any> {
-    return this.$axios.$post('/v2/pipe/repository', data).then(MESSAGE_SUCCESS).catch(MESSAGE_ERROR)
+    return this.$axios.$post('/v2/pipe/repository', data)
   }
   updateRepository(pipeId: string, data: any): Promise<any> {
     return this.$axios
@@ -108,18 +92,7 @@ export class Module extends BaseModule {
       .catch(MESSAGE_ERROR)
   }
   deleteRepository(pipeId: string): Promise<any> {
-    return this.$axios
-      .$delete('/v2/pipe/repository/' + pipeId)
-      .then(MESSAGE_SUCCESS)
-      .catch(MESSAGE_ERROR)
-  }
-
-  // 获取应用详情
-  getPipe(resourceId: string): Promise<any> {
-    return this.$axios
-      .$delete('/v2/pipe/' + resourceId)
-      .then(MESSAGE_SUCCESS)
-      .catch(MESSAGE_ERROR)
+    return this.$axios.$delete('/v2/pipe/repository/' + pipeId)
   }
 }
 

@@ -27,7 +27,7 @@
             <el-menu-item class="px-0">
               <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link px-10">数据库</a>
             </el-menu-item>
-            <el-menu-item :index="localePath('application-docs')"> 知识库 </el-menu-item>
+            <el-menu-item :index="localePath('application-blogs')"> 知识库 </el-menu-item>
           </el-submenu>
           <el-menu-item :index="localePath('download-center')">
             {{ $t('nav.download') }}
@@ -110,7 +110,7 @@
           <el-menu-item class="px-0">
             <a :href="RESOURCES_URL + '/data/'" target="_blank" class="a-link pl-40 d-inline-b w-100">数据库</a>
           </el-menu-item>
-          <el-menu-item :index="localePath('application-docs')"> 知识库 </el-menu-item>
+          <el-menu-item :index="localePath('application-blogs')"> 知识库 </el-menu-item>
         </el-submenu>
         <el-menu-item :index="localePath('download-center')">
           {{ $t('nav.download') }}
@@ -164,7 +164,7 @@ export default class IndexNavigation extends Vue {
   }
 
   @Watch('$route.name')
-  onWatchRouteName() {
+  onWatchRouteName(): void {
     if (this.withScroll) {
       this.$nextTick(this.onWindowScroll)
     }
@@ -174,7 +174,7 @@ export default class IndexNavigation extends Vue {
   @Action('user/ACTION_LOGOUT')
   ACTION_LOGOUT!: () => void
 
-  onWindowScroll() {
+  onWindowScroll(): void {
     const header = document.querySelector('#header') as HTMLElement
     if (!header) {
       return
@@ -196,7 +196,7 @@ export default class IndexNavigation extends Vue {
       document.querySelector(selector)?.scrollIntoView()
     }, 300)
   }
-  mounted() {
+  mounted(): void {
     if (this.withScroll) {
       this.onWindowScroll()
       window.addEventListener('scroll', this.onWindowScroll, true)
@@ -205,7 +205,7 @@ export default class IndexNavigation extends Vue {
       this.goAnchor(window.location.hash)
     }
   }
-  beforeDestroy() {
+  beforeDestroy(): void {
     if (this.withScroll) {
       try {
         window.removeEventListener('scroll', this.onWindowScroll, true)

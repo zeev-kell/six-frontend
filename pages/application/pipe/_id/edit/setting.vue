@@ -12,7 +12,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="分类标签" prop="category">
-            <category-select-multiple v-model="formModel.category" type="pipe" placeholder="请输入分类" />
+            <category-select v-model="formModel.category" multiple type="pipe" placeholder="请输入分类" class="w-100" />
           </el-form-item>
           <el-form-item label="应用来源" prop="description">
             <el-input v-model="formModel.website" placeholder="请输入地址" />
@@ -31,9 +31,8 @@
     </div>
     <div class="card-body">
       <div class="text-muted mb-10">删除应用仓库将销毁存储在其中的所有应用版本！此操作不可逆。</div>
-
       <can-create :is-user="item.provider">
-        <loading-button type="danger" icon="el-icon-delete" class="mx-0" :callback="handleDelete"> 删除仓库 </loading-button>
+        <loading-button type="danger" icon="el-icon-delete" :callback="handleDelete"> 删除仓库 </loading-button>
       </can-create>
     </div>
   </div>
@@ -43,13 +42,13 @@
 import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
-import CategorySelectMultiple from '@/pages/application/_components/CategorySelectMultiple.vue'
 import { CategoryModel } from '@/types/model/Common'
+import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
 
 @Component({
-  components: { CategorySelectMultiple, LoadingButton },
+  components: { CategorySelect, LoadingButton },
 })
-export default class Setting extends PipeItemMixin {
+export default class PipeSetting extends PipeItemMixin {
   $refs!: {
     formModel: HTMLFormElement
   }

@@ -37,7 +37,7 @@ import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin
 @Component({
   components: { LoadingButton },
 })
-export default class Setting extends DatumItemMixin {
+export default class DatumSetting extends DatumItemMixin {
   $refs!: {
     formModel: HTMLFormElement
   }

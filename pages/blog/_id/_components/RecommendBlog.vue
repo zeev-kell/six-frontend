@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link v-slot="{ navigate }" :to="localePath('/doc/' + blog.id)" custom>
+  <nuxt-link v-slot="{ navigate }" :to="localePath('/blog/' + blog.id)" custom>
     <el-card shadow="hover" style="background: transparent">
       <div class="el-row el-row--flex pointer" @click="navigate">
         <div class="el-col el-col-6">

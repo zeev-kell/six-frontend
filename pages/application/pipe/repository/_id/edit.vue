@@ -2,8 +2,7 @@
   <div class="container-fluid py-10">
     <div class="el-row el-row--flex is-align-middle info-header">
       <div class="el-col-auto px-20">
-        <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px" />
-        <i v-if="isWork" class="el-icon-reading" style="font-size: 36px" />
+        <i class="el-icon-s-tools" style="font-size: 36px" />
       </div>
       <div class="el-col el-col-16 text-truncate mx-0">
         <h2 v-truncate="item['name']" class="my-0"></h2>
@@ -13,9 +12,9 @@
             <div class="title">类别</div>
             <div>{{ item.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}</div>
           </div>
-          <div class="el-col">
-            <div class="title">版本</div>
-            <div>{{ item.version }}</div>
+          <div v-if="item.latest_rev" class="el-col">
+            <div class="title">默认版本</div>
+            <div>{{ item.latest_rev }}</div>
           </div>
           <div class="el-col">
             <div class="title">最近更新</div>
@@ -31,7 +30,6 @@
           </nuxt-link>
         </can-create>
         <toggle-edit-info type="warning" size="small" icon="el-icon-back"> 返回详情 </toggle-edit-info>
-   
       </div>
     </div>
     <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">
@@ -49,22 +47,12 @@
 import { Component, mixins } from 'nuxt-property-decorator'
 import CanExamine from '@/components/common/CanExamine.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
-import PipeMixin from '@/pages/application/pipe/repository/_components/PipeMixin.vue'
+import PipeMixin from '@/pages/application/pipe/repository/_components/PipeRepositoryMixin.vue'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
   components: { LoadingButton, LayoutBox, ToggleEditInfo, CanExamine },
 })
-export default class PipeIdEdit extends mixins<PipeMixin>(PipeMixin) {
-  handleDelete(): Promise<any> {
-    return this.$confirm('此操作将永久删除该应用版本, 是否继续?', '提示', {
-      type: 'warning',
-    }).then(() => {
-      this.$api.pipe.deleteRepository(this.$route.params.id).then(() => {
-        this.$I18nRouter.push('/application/pipes')
-      })
-    })
-  }
-}
+export default class PipeIdEdit extends mixins<PipeMixin>(PipeMixin) {}
 </script>

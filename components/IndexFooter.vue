@@ -39,7 +39,7 @@
                 <a :href="RESOURCES_URL + '/data/'" target="_blank">数据集</a>
               </li>
               <li>
-                <nuxt-link :to="localePath('application-docs')">知识库</nuxt-link>
+                <nuxt-link :to="localePath('application-blogs')">知识库</nuxt-link>
               </li>
             </ul>
           </div>

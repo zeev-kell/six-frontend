@@ -7,9 +7,7 @@
             <el-input v-model="otherQuery.keywords" placeholder="按关键字筛选" clearable @keyup.enter.native="searchQuery"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="otherQuery.type" placeholder="按类别筛选" clearable @change="searchQuery">
-              <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
-            </el-select>
+            <blog-type-select v-model="otherQuery.type" placeholder="按类别筛选" @change="searchQuery" />
           </el-form-item>
           <el-form-item>
             <category-select v-model="otherQuery.tag" type="blog" @change="searchQuery"></category-select>
@@ -22,7 +20,7 @@
       </div>
       <div class="action-box">
         <can-create>
-          <nuxt-link v-slot="{ navigate }" :to="localePath('application-doc-new')" custom>
+          <nuxt-link v-slot="{ navigate }" :to="localePath('application-blog-new')" custom>
             <el-button type="primary" size="small" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
           </nuxt-link>
         </can-create>
@@ -32,14 +30,14 @@
       <el-table-column label="名称" prop="name" sortable width="280">
         <template slot-scope="{ row }">
           <div class="el-row--flex is-align-middle">
-            <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
-              <nuxt-link v-slot="{ href }" :to="localePath('/doc/' + row['id'])" custom>
+            <el-tooltip class="item" effect="dark" content="查看详情" placement="top-start">
+              <nuxt-link v-slot="{ href }" :to="localePath('/blog/' + row['resource_id'])" custom>
                 <a target="_blank" class="pointer mr-5" :href="href">
                   <i class="el-icon-search"></i>
                 </a>
               </nuxt-link>
             </el-tooltip>
-            <nuxt-link class="text-truncate" :to="localePath('/application/doc/' + row['id'])" :title="row.name">
+            <nuxt-link class="text-truncate" :to="localePath('/application/blog/' + row['resource_id'])" :title="row.name">
               {{ row.title }}
             </nuxt-link>
           </div>
@@ -78,9 +76,10 @@ import TableMixins, { TableMixinsHelper } from '@/pages/application/_components/
 import TablePagination from '@/pages/application/_components/Table/TablePagination.vue'
 import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
 import CategoryView from '@/pages/application/_components/CategoryView.vue'
+import BlogTypeSelect from '@/pages/application/_components/BlogTypeSelect.vue'
 
 @Component({
-  components: { CategoryView, CategorySelect, TablePagination, LayoutBox, CanCreate },
+  components: { BlogTypeSelect, CategoryView, CategorySelect, TablePagination, LayoutBox, CanCreate },
   filters: {
     ...intercept,
     blogTypeTranslate: blogConstants.get,
@@ -108,12 +107,11 @@ import CategoryView from '@/pages/application/_components/CategoryView.vue'
     }
   },
 })
-export default class DocListPage extends TableMixins<BlogModel> {
+export default class BlogListPage extends TableMixins<BlogModel> {
   protected otherQuery!: {
     keywords: string
     tag: string
     type: number
   }
-  typeList = blogConstants.getItemsList('TYPE_')
 }
 </script>

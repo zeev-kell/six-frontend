@@ -11,11 +11,11 @@
         </p>
       </div>
       <div class="el-col el-col-8 text-right">
-        <nuxt-link v-slot="{ navigate }" :to="localePath('/doc/' + blog.id)" custom>
+        <nuxt-link v-slot="{ navigate }" :to="localePath('/blog/' + blog.resource_id)" custom>
           <el-button type="info" icon="el-icon-search" size="small" @click="navigate" @keypress.enter="navigate"> 查看 </el-button>
         </nuxt-link>
         <can-create>
-          <nuxt-link v-slot="{ navigate }" :to="localePath('/application/doc/' + blog.id + '/edit')" custom>
+          <nuxt-link v-slot="{ navigate }" :to="localePath('/application/blog/' + blog.resource_id + '/edit')" custom>
             <el-button type="primary" icon="el-icon-edit" size="small" @click="navigate" @keypress.enter="navigate"> 编辑 </el-button>
           </nuxt-link>
         </can-create>
@@ -37,7 +37,7 @@
         <span class="mr-10">发布于 {{ blog.created_at }} {{ blog.provider }}</span>
         <a class="pointer mr-10" @click="onCopyUrl">分享</a>
         <can-create>
-          <nuxt-link :to="localePath('application-doc-new')">
+          <nuxt-link :to="localePath('application-blog-new')">
             <el-button type="primary" plain>写文章<i class="feather icon-feather ml-5"></i> </el-button>
           </nuxt-link>
         </can-create>
@@ -80,9 +80,9 @@ import CanCreate from '@/components/common/CanCreate.vue'
 import CanExamine from '@/components/common/CanExamine.vue'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
 import MavonEditorToc from '@/pages/application/_components/mavonEditor/MavonEditorToc.vue'
-import DocIndexPage from '@/pages/doc/_id/index.vue'
+import DocIndexPage from '@/pages/blog/_id/index.vue'
 import { blogConstants } from '@/constants/BlogConstants'
-import RecommendBlog from '@/pages/doc/_id/_components/RecommendBlog.vue'
+import RecommendBlog from '@/pages/blog/_id/_components/RecommendBlog.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
@@ -101,7 +101,7 @@ export default class DocIndex extends DocIndexPage {
       type: 'warning',
     }).then(() => {
       this.$api.blog.remove(this.$route.params.id).then(() => {
-        this.$I18nRouter.push('/application/docs')
+        this.$I18nRouter.push('/application/blogs')
       })
     })
   }

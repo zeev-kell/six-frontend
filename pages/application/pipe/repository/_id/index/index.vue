@@ -5,11 +5,8 @@
         <div class="card-header el-row el-row--flex is-align-middle py-5">
           <h2>{{ item.name }}</h2>
         </div>
-        <div v-if="item.readme">
-
-          <div v-if="readmeByAuthor" class="card-body">
-            <mavon-editor-render-client :value="readmeByAuthor" />
-          </div>
+        <div v-if="item.readme" class="card-body">
+          <mavon-editor-render-client :value="item.readme" />
         </div>
         <div v-else class="card-body">
           {{ item.description }}
@@ -43,21 +40,12 @@
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import PipeItemMixin from '@/pages/application/pipe/repository/_components/PipeItemMixin.vue'
+import PipeRepositoryItemMixin from '@/pages/application/pipe/repository/_components/PipeRepositoryItemMixin.vue'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
 import CategoryView from '@/pages/application/_components/CategoryView.vue'
 
 @Component({
   components: { CategoryView, MavonEditorRenderClient },
 })
-export default class PipeIndex extends PipeItemMixin {
-  get readmeByAuthor() {
-    // eslint-disable-next-line camelcase
-    return this.item?.readme
-  }
-  get readmeBySystem() {
-    // eslint-disable-next-line camelcase
-    return this.item?.readme?.by_system
-  }
-}
+export default class PipeIndex extends PipeRepositoryItemMixin {}
 </script>

@@ -7,9 +7,7 @@
             <el-input v-model="otherQuery.keywords" placeholder="按关键字筛选" clearable @keyup.enter.native="searchQuery"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="otherQuery.type" placeholder="按类别筛选" clearable>
-              <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
-            </el-select>
+            <datum-type-select v-model="otherQuery.type" placeholder="按类别筛选" @change="searchQuery" />
           </el-form-item>
           <el-form-item>
             <category-select v-model="otherQuery.tag" type="data" @change="searchQuery"></category-select>
@@ -31,11 +29,9 @@
     <el-table ref="multipleTable" :data="tableData" class="w-100" height="200px">
       <el-table-column label="名称" prop="name" sortable width="280">
         <template slot-scope="{ row }">
-          <div class="el-row--flex is-align-middle">
-            <nuxt-link class="text-truncate" :to="localePath('/application/datum/' + row['resource_id'])" :title="row.name">
-              {{ row.provider + '/' + row.name }}
-            </nuxt-link>
-          </div>
+          <nuxt-link class="text-truncate" :to="localePath('/application/datum/' + row['resource_id'])" :title="row.name">
+            {{ row.provider + '/' + row.name }}
+          </nuxt-link>
         </template>
       </el-table-column>
       <el-table-column label="类别" prop="type" sortable width="120">
@@ -71,9 +67,10 @@ import { BlogModel } from '@/types/model/Blog'
 import TablePagination from '@/pages/application/_components/Table/TablePagination.vue'
 import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
 import CategoryView from '@/pages/application/_components/CategoryView.vue'
+import DatumTypeSelect from '@/pages/application/_components/DatumTypeSelect.vue'
 
 @Component({
-  components: { CategoryView, CategorySelect, TablePagination, LayoutBox },
+  components: { DatumTypeSelect, CategoryView, CategorySelect, TablePagination, LayoutBox },
   filters: {
     ...intercept,
     dateTypeTranslate: datumConstants.get,
@@ -107,6 +104,5 @@ export default class IndexPage extends TableMixins<BlogModel> {
     tag: string
     type: number
   }
-  typeList = datumConstants.getItemsList('TYPE_')
 }
 </script>

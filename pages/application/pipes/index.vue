@@ -7,9 +7,7 @@
             <el-input v-model="otherQuery.keywords" placeholder="按关键字筛选" clearable @keyup.enter.native="searchQuery"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="otherQuery.type" placeholder="按类别筛选" clearable @change="searchQuery">
-              <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
-            </el-select>
+            <pipe-type-select v-model="otherQuery.type" placeholder="按类别筛选" @change="searchQuery" />
           </el-form-item>
           <el-form-item>
             <category-select v-model="otherQuery.tag" type="pipe" placeholder="按分类筛选" @change="searchQuery"></category-select>
@@ -33,21 +31,18 @@
       <el-table-column label="名称" prop="name" sortable width="280">
         <template slot-scope="{ row }">
           <div class="el-row--flex is-align-middle">
-            <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
-              <nuxt-link v-slot="{ href }" :to="localePath('/graph-info/' + row['resource_id'])" custom>
-                <a target="_blank" class="pointer mr-5" :href="href">
-                  <i class="el-icon-search"></i>
-                </a>
+            <template v-if="row['resource_id']">
+              <el-tooltip class="item" effect="dark" content="查看可视化" placement="top-start">
+                <nuxt-link v-slot="{ href }" :to="localePath('/graph-info/' + row['resource_id'])" custom>
+                  <a target="_blank" class="pointer mr-5" :href="href">
+                    <i class="el-icon-search"></i>
+                  </a>
+                </nuxt-link>
+              </el-tooltip>
+              <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + row['resource_id'])" :title="row.name">
+                {{ row.provider + '/' + row.name }}
               </nuxt-link>
-            </el-tooltip>
-            <nuxt-link
-              v-if="row['resource_id'] != null"
-              class="text-truncate"
-              :to="localePath('/application/pipe/' + row['resource_id'])"
-              :title="row.name"
-            >
-              {{ row.provider + '/' + row.name }}
-            </nuxt-link>
+            </template>
             <nuxt-link v-else class="text-truncate" :to="localePath('/application/pipe/repository/' + row['pipe_id'])" :title="row.name">
               {{ row.provider + '/' + row.name }}
             </nuxt-link>
@@ -89,9 +84,10 @@ import TablePagination from '@/pages/application/_components/Table/TablePaginati
 import { Context } from '@nuxt/types'
 import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
 import CategoryView from '@/pages/application/_components/CategoryView.vue'
+import PipeTypeSelect from '@/pages/application/_components/PipeTypeSelect.vue'
 
 @Component({
-  components: { CategoryView, CategorySelect, TablePagination, LayoutBox, CanCreate },
+  components: { PipeTypeSelect, CategoryView, CategorySelect, TablePagination, LayoutBox, CanCreate },
   filters: {
     ...intercept,
     pipeTypeTranslate: pipeConstants.get,
@@ -125,6 +121,5 @@ export default class PipeListPage extends TableMixins<PipeRepositoryModel> {
     tag: string
     type: number
   }
-  typeList = pipeConstants.getItemsList('TYPE_')
 }
 </script>

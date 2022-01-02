@@ -9,7 +9,6 @@ import { PipeRepositoryModel } from '@/types/model/Pipe'
     // ID 不同，需要重新请求数据
     if (params.id !== pipe.pipe_id) {
       const item = await app.$api.pipe.getRepository(params.id)
-
       item.readme = item.readme?.replace(/[↵ ]{2,}/g, '  \n')
       store.commit('pipeRepository/UPDATE_CURRENT_STORE', item)
     }

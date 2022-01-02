@@ -71,12 +71,14 @@ export default class SelectionStepHints extends Vue {
     }
   }
 
-  addEntry() {
+  addEntry(): void {
     this.step.addHint({ class: '', value: '' })
   }
-  setHints() {
+  setHints(): void {
     this.dialogVisible = true
   }
-  removeEntry() {}
+  removeEntry(): void {
+    console.log()
+  }
 }
 </script>

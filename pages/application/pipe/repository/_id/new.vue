@@ -31,27 +31,25 @@
           </el-form>
         </div>
       </div>
-      
+
       <div class="card-header el-row--flex is-align-middle">
-      <h2 class="mx-0 el-col-equal">
-        {{ title }}
-      </h2>
-    </div>
-    <div class="card-body">
-      <el-tabs v-model="activeName" type="card" :before-leave="onBeforeLeave">
-        <el-tab-pane label="编辑内容" name="1">
-          <div class="codemirror-box">
-            <code-mirror-client v-model="formModel" />
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="预览内容" name="2">
-          <div v-if="activeName === '2'" class="page-graph-box workflow-box">
-            <graph-index :item="graph" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
-          </div>
-        </el-tab-pane>
-        <!--        <el-tab-pane label="可视化编辑" name="3"></el-tab-pane>-->
-      </el-tabs>
-    </div>
+        <h2 class="mx-0 el-col-equal">应用参数结构CWL</h2>
+      </div>
+      <div class="card-body">
+        <el-tabs v-model="activeName" type="card" :before-leave="onBeforeLeave">
+          <el-tab-pane label="编辑内容" name="1">
+            <div class="codemirror-box">
+              <code-mirror-client v-model="formModel" />
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="预览内容" name="2">
+            <div v-if="activeName === '2'" class="page-graph-box workflow-box">
+              <graph-index :item="graph" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
+            </div>
+          </el-tab-pane>
+          <!--        <el-tab-pane label="可视化编辑" name="3"></el-tab-pane>-->
+        </el-tabs>
+      </div>
 
       <div class="card-footer">
         <loading-button :callback="onSubmit" type="success" icon="el-icon-plus"> 保存 </loading-button>
@@ -62,21 +60,17 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { pipeConstants } from '@/constants/PipeConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
 import CodeMirrorClient from '@/pages/application/_components/codeMirror/CodeMirrorClient.vue'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
-  components: {PipeItemMixin, CodeMirrorClient, LoadingButton, GraphIndex },
+  components: { PipeItemMixin, CodeMirrorClient, LoadingButton, GraphIndex },
 })
-
-
 export default class PipeNewPage extends Vue {
   activeName = '1'
   content = ''
-  title = '应用参数结构CWL'
   version = '1.0'
   $refs!: {
     formModel: HTMLFormElement
@@ -89,31 +83,6 @@ export default class PipeNewPage extends Vue {
     content: '',
   }
 
-  // get item(): PipeModel {
-  //   return this.$store.state.pipe
-  // }
-
-  // get title() {
-  //   if (this.$store.getters['pipe/isSoftware']) {
-  //     // 选择新建类型为”工具”或“工具流”时标题显示为“应用参数结构CWL”
-  //     return '应用参数结构CWL'
-  //   } else if (this.$store.getters['pipe/isOperation']) {
-  //     // “工作”或“工作流”时标题显示为“应用参数配置YML”
-  //     return '应用参数配置YML'
-  //   } else if (this.$store.getters['pipe/isDocker']) {
-  //     // 为“docker”时，标题显示为“应用Dockerfile”
-  //     return '应用Dockerfile'
-  //   } else {
-  //     return ''
-  //   }
-  // }
-  // get graph() {
-  //   return {
-  //     content: this.content,
-  //     type: this.formModel.type,
-  //     resource_id: this.formModel.resource_id,
-  //   }
-  // }
   get graph() {
     return {
       content: this.content,
@@ -134,7 +103,6 @@ export default class PipeNewPage extends Vue {
     this.content = this.formModel.content.toString()
   }
 
-
   rules = {
     // name: [
     //   { required: true, message: '请输入名称', trigger: 'blur' },
@@ -150,10 +118,8 @@ export default class PipeNewPage extends Vue {
     //   { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
     // ],
   }
-  disabledType = false
-  typeList = pipeConstants.getItemsList('TYPE_')
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     await this.$refs.formModel.validate()
     await this.$api.pipe.createRepository(this.formModel).then((data) => {
       const id = data?.data?.id

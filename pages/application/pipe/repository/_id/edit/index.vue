@@ -25,7 +25,7 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
-import PipeItemMixin from '@/pages/application/pipe/repository/_components/PipeItemMixin.vue'
+import PipeItemMixin from '@/pages/application/pipe/repository/_components/PipeRepositoryItemMixin.vue'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
 import MavonEditorClient from '@/pages/application/_components/mavonEditor/MavonEditorClient.vue'
 
@@ -37,16 +37,16 @@ import MavonEditorClient from '@/pages/application/_components/mavonEditor/Mavon
   },
 })
 export default class PipeEditIndex extends PipeItemMixin {
-  
   readme = ''
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     const data = { readme: this.readme }
     await this.$api.pipe.updateRepository(this.item.pipe_id, data).then(() => {
       this.$store.commit('pipeRepository/UPDATE_CURRENT_STORE', {
-        readme:  this.readme})
-    })  
+        readme: this.readme,
+      })
+    })
   }
-  mounted() {
+  mounted(): void {
     this.readme = this.item.readme || ''
   }
 }

@@ -30,13 +30,13 @@
     </div>
     <div class="table-box">
       <el-table ref="multipleTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="40"> </el-table-column>
+        <el-table-column type="selection" width="40" />
         <el-table-column label="文件名称" prop="name" sortable width="250">
           <template slot-scope="{ row }">
             <span :class="['mr-2 ', isOssObject(row) ? 'el-icon-document' : 'el-icon-link']"></span>{{ row.name }}
           </template>
         </el-table-column>
-        <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>
+        <el-table-column label="媒介类型" prop="mediatype" sortable width="120" />
         <el-table-column label="大小" prop="bytes" sortable width="80">
           <template slot-scope="{ row }">
             <div>{{ row.bytes | formatbytes }}</div>
@@ -49,7 +49,7 @@
         </el-table-column>
         <el-table-column label="格式规范" width="120">
           <template slot-scope="{ row }">
-            <schema-name :schema="row.schema"></schema-name>
+            <schema-name :schema="row.schema" />
           </template>
         </el-table-column>
         <el-table-column label="说明" prop="description">
@@ -62,8 +62,8 @@
         </el-table-column>
       </el-table>
     </div>
-    <file-upload-dialog ref="FileUploadDialog" :is-multiple="isMultiple" @change="refresh"></file-upload-dialog>
-    <datum-edit-dialog ref="DatumEditDialog"></datum-edit-dialog>
+    <file-upload-dialog ref="FileUploadDialog" :is-multiple="isMultiple" @change="refresh" />
+    <datum-edit-dialog ref="DatumEditDialog" />
   </div>
 </template>
 
@@ -78,13 +78,14 @@ import SchemaName from '@/pages/application/datum/_components/SchemaName.vue'
 import { ElTable } from 'element-ui/types/table'
 import LoadingButton from '@/components/LoadingButton.vue'
 import DatumEditDialog from '@/pages/application/datum/_components/DatumEditDialog.vue'
+import { DatumItemModel } from '@/types/model/Datum'
 
 @Component({
   directives: {
     ...clipboard,
   },
   asyncData({ store }) {
-    const items = store.getters['datum/items']
+    const items: DatumItemModel[] = store.getters['datum/items']
     return { items }
   },
   filters: {
@@ -122,7 +123,7 @@ export default class DatumEditFile extends BaseTable {
     this.$refs.FileUploadDialog.onShowDialog()
   }
   onDeleteSelect(): void {
-    this.$confirm('此操作将永久删除选择的文件, 是否继续?', '提示', {
+    this.$confirm(`此操作将永久删除选择的${this.multipleSelection.length}文件, 是否继续?`, '提示', {
       type: 'warning',
     }).then(async () => {
       await this.$api.datum.deleteFile(

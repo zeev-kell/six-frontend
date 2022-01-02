@@ -2,14 +2,21 @@ import Vue from 'vue'
 import { Plugin } from '@nuxt/types'
 import type { DirectiveFunction } from 'vue/types/options'
 import { userConstants } from '@/constants/UserConstants'
+import { DirectiveBinding } from 'vue/types/options'
 
 const DirectivePlugin: Plugin = ({ store }) => {
   const pluginFunction = function (value: number): DirectiveFunction {
-    return function (el) {
+    return function (el, binding: DirectiveBinding) {
       const permissions = store.getters && store.getters['user/permissions']
       const hadPermissive = permissions & value
       if (!hadPermissive) {
         el.parentNode && el.parentNode.removeChild(el)
+      }
+      if (binding.value) {
+        const username = store.getters && store.getters['user/username']
+        if (username && binding.value && username !== binding.value) {
+          el.parentNode && el.parentNode.removeChild(el)
+        }
       }
     }
   }

@@ -36,7 +36,7 @@ export function getObject(str: string | object): any {
   }
 }
 
-function parseObj(str: string) {
+export function parseObj(str: string) {
   try {
     return JSON.parse(str)
   } catch (e) {
@@ -50,4 +50,22 @@ export function yamlToJson(str: string | object): any {
     return str
   }
   return Yaml.load(str, { json: true })
+}
+
+export function getParseObject(str: any): Promise<any> {
+  return new Promise((resolve, reject) => {
+    if (typeof str !== 'string' && str) {
+      return resolve(str)
+    }
+    try {
+      const obj = parseObj(str)
+      if (obj) {
+        return resolve(obj)
+      }
+      const yaml = Yaml.load(str, { json: true })
+      return resolve(yaml)
+    } catch (e: unknown) {
+      reject(e)
+    }
+  })
 }

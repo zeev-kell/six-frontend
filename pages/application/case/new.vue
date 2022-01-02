@@ -12,12 +12,10 @@
               <el-input v-model="formModel.name" placeholder="请输入名称" />
             </el-form-item>
             <el-form-item label="分类" prop="category">
-              <el-input v-model="formModel.category" placeholder="请输入分类" />
+              <category-select v-model="formModel.category" multiple type="case" allow-create placeholder="请输入分类" />
             </el-form-item>
             <el-form-item label="类别" prop="type">
-              <el-select v-model="formModel.type" placeholder="请选择类别" clearable style="width: 100%" :disabled="disabledType">
-                <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
-              </el-select>
+              <case-type-select v-model="formModel.type" placeholder="请选择类别" :disabled="true" />
             </el-form-item>
             <el-form-item label="描述" prop="description">
               <el-input v-model="formModel.description" type="textarea" :rows="4" placeholder="请输入描述" />
@@ -39,9 +37,11 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
 import { caseConstants } from '@/constants/CaseConstants'
+import CaseTypeSelect from '@/pages/application/_components/CaseTypeSelect.vue'
+import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
 
 @Component({
-  components: { LoadingButton },
+  components: { CategorySelect, CaseTypeSelect, LoadingButton },
 })
 export default class CaseNewPage extends Vue {
   $refs!: {
@@ -62,13 +62,8 @@ export default class CaseNewPage extends Vue {
       { required: true, message: '请输入名称', trigger: 'blur' },
       { min: 2, max: 128, message: '长度在 2 到 128 个字符', trigger: 'blur' },
     ],
-    category: [
-      { required: true, message: '请输入分类', trigger: 'blue' },
-      { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-    ],
+    category: [{ required: true, message: '请输入分类', trigger: 'blue' }],
   }
-  disabledType = true
-  typeList = caseConstants.getItemsList('TYPE_')
 
   async onSubmit() {
     await this.$refs.formModel.validate()

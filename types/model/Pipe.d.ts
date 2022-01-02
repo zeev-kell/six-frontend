@@ -20,6 +20,7 @@ export interface PipeModel {
   versions: PipeModel[]
   readme: any
   content: any
+  instruction: string
 }
 
 export interface PipeRepositoryModel {

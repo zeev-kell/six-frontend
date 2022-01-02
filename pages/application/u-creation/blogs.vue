@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import DocListPage from '@/pages/application/docs/index.vue'
+import BlogListPage from '@/pages/application/blogs/index.vue'
 import { TableMixinsHelper } from '@/pages/application/_components/Table/TableMixins'
 import { Context } from '@nuxt/types'
 
@@ -29,5 +29,5 @@ import { Context } from '@nuxt/types'
     }
   },
 })
-export default class DocsPage extends DocListPage {}
+export default class BlogsPage extends BlogListPage {}
 </script>

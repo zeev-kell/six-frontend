@@ -7,9 +7,7 @@
             <el-input v-model="otherQuery.keywords" placeholder="按关键字筛选" clearable @keyup.enter.native="searchQuery"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="otherQuery.type" placeholder="按类别筛选" clearable @change="searchQuery">
-              <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
-            </el-select>
+            <case-type-select v-model="otherQuery.type" placeholder="按类别筛选" @change="searchQuery" />
           </el-form-item>
           <el-form-item>
             <category-select v-model="otherQuery.tag" type="case" @change="searchQuery"></category-select>
@@ -68,9 +66,10 @@ import { Context } from '@nuxt/types'
 import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
 import { caseConstants } from '@/constants/CaseConstants'
 import CategoryView from '@/pages/application/_components/CategoryView.vue'
+import CaseTypeSelect from '@/pages/application/_components/CaseTypeSelect.vue'
 
 @Component({
-  components: { CategoryView, CategorySelect, TablePagination, LayoutBox, CanCreate },
+  components: { CaseTypeSelect, CategoryView, CategorySelect, TablePagination, LayoutBox, CanCreate },
   filters: {
     ...intercept,
     caseTypeTranslate: caseConstants.get,
@@ -104,6 +103,5 @@ export default class CaseListPage extends TableMixins<CaseModel> {
     tag: string
     type: number
   }
-  typeList = caseConstants.getItemsList('TYPE_')
 }
 </script>

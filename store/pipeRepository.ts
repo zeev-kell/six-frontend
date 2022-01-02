@@ -13,7 +13,6 @@ export const state = (): NuxtState => ({
   website: '',
   description: '',
   readme: '',
-  
   latest_rev: '',
   profile: '',
   content: null,

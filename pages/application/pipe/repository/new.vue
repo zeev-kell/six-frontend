@@ -3,7 +3,9 @@
     <div class="card">
       <div class="card-header is-align-middle" style="padding-left: 95px">
         <h2 class="mx-0">创建新的应用</h2>
-        <div class="sub--title">一个应用一般包含元信息，核心内容和关联资源以及该应用的子版本。稍后您可在应用详情界面为该应用创建一个版本并填入CWL源码。</div>
+        <div class="sub--title">
+          一个应用一般包含元信息，核心内容和关联资源以及该应用的子版本。稍后您可在应用详情界面为该应用创建一个版本并填入CWL源码。
+        </div>
       </div>
       <div class="card-body el-row">
         <div class="el-col-12">
@@ -11,22 +13,22 @@
             <el-form-item label="应用名称" prop="name">
               <el-input v-model="formModel.name" placeholder="请输入应用名称，例如：bwa" />
             </el-form-item>
-            <!-- <el-form-item label="应用版本" prop="version">
-              <el-input v-model="formModel.version" placeholder="请输入版本，例如：v1.0" />
-            </el-form-item> -->
             <el-form-item label="分类标签" prop="category">
-              <category-select-multiple v-model="formModel.category" type="pipe" placeholder="请输入分类" />
+              <category-select v-model="formModel.category" multiple type="pipe" placeholder="请输入分类" />
             </el-form-item>
             <el-form-item label="应用类型" prop="type">
-              <el-select v-model="formModel.type" placeholder="请选择应用类型" clearable style="width: 100%" :disabled="disabledType">
-                <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
-              </el-select>
+              <pipe-type-select v-model="formModel.type" />
             </el-form-item>
             <el-form-item label="应用来源" prop="description">
               <el-input v-model="formModel.website" placeholder="请输入网址，例如：https://www.sixoclock.net" />
             </el-form-item>
             <el-form-item label="功能描述" prop="description">
-              <el-input v-model="formModel.description" type="textarea" :rows="4" placeholder="请输入应用功能描述，例如：使用bwa对NGS下机数据进行比对" />
+              <el-input
+                v-model="formModel.description"
+                type="textarea"
+                :rows="4"
+                placeholder="请输入应用功能描述，例如：使用bwa对NGS下机数据进行比对"
+              />
             </el-form-item>
           </el-form>
         </div>
@@ -40,16 +42,15 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { pipeConstants } from '@/constants/PipeConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
-import CategorySelectMultiple from '@/pages/application/_components/CategorySelectMultiple.vue'
-import { CategoryModel } from '@/types/model/Common'
-
+import PipeTypeSelect from '@/pages/application/_components/PipeTypeSelect.vue'
+import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
+import { PipeRepositoryModel } from '@/types/model/Pipe'
 
 @Component({
-  components: { CategorySelectMultiple, LoadingButton },
+  components: { CategorySelect, PipeTypeSelect, LoadingButton },
 })
-export default class PipeNewPage extends Vue {
+export default class PipeRepositoryNewPage extends Vue {
   $refs!: {
     formModel: HTMLFormElement
   }
@@ -59,26 +60,17 @@ export default class PipeNewPage extends Vue {
     description: '',
     category: [],
     website: '',
-    type: ''
+    type: '',
   }
   rules = {
     name: [
       { required: true, message: '请输入名称', trigger: 'blur' },
       { min: 2, max: 128, message: '长度在 2 到 128 个字符', trigger: 'blur' },
     ],
-    // version: [
-    //   { required: true, message: '请输入版本', trigger: 'blur' },
-    //   { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
-    // ],
     type: [{ required: true, message: '请选择类型', trigger: 'change' }],
     category: [{ required: true, message: '请选择分类', trigger: 'blue' }],
   }
-  disabledType = false
-  typeList = pipeConstants.getItemsList('TYPE_')
-  mounted(): void {
-    this.formModel.category = (this.formModel.category as unknown as CategoryModel[]).map((c: CategoryModel) => c.name)
-  }
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     await this.$refs.formModel.validate()
     await this.$api.pipe.createRepository(this.formModel).then((data) => {
       const id = data?.data?.id

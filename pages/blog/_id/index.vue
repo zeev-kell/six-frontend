@@ -12,7 +12,7 @@
         <span class="mr-10">发布于 {{ blog.created_at }} {{ blog.provider }}</span>
         <a class="pointer mr-10" @click="onCopyUrl">分享</a>
         <can-create>
-          <nuxt-link :to="localePath('application-doc-new')">
+          <nuxt-link :to="localePath('application-blog-new')">
             <el-button type="primary" plain>写文章<i class="feather icon-feather ml-5"></i> </el-button>
           </nuxt-link>
         </can-create>
@@ -55,7 +55,7 @@ import { BlogModel } from '@/types/model/Blog'
 import { Context } from '@nuxt/types'
 import { copyText } from '@/directives/clipboard'
 import { blogConstants } from '@/constants/BlogConstants'
-import RecommendBlog from '@/pages/doc/_id/_components/RecommendBlog.vue'
+import RecommendBlog from '@/pages/blog/_id/_components/RecommendBlog.vue'
 import MavonEditorRenderClient from '@/pages/application/_components/mavonEditor/MavonEditorRenderClient.vue'
 import MavonEditorToc from '@/pages/application/_components/mavonEditor/MavonEditorToc.vue'
 import CanCreate from '@/components/common/CanCreate.vue'

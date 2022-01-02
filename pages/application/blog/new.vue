@@ -26,14 +26,10 @@
             </el-upload>
           </el-form-item>
           <el-form-item label="类别" prop="type">
-            <el-select v-model="formModel.type" placeholder="请选择类别" clearable style="width: 100%">
-              <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
-            </el-select>
+            <blog-type-select v-model="formModel.type" placeholder="请选择类别" />
           </el-form-item>
           <el-form-item label="分类" prop="category">
-            <el-select v-model="formModel.category" multiple filterable allow-create placeholder="请输入分类" style="width: 100%">
-              <el-option v-for="item in categoryList" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-            </el-select>
+            <category-select v-model="formModel.category" multiple type="blog" allow-create placeholder="请输入分类" />
           </el-form-item>
           <el-form-item label="描述" prop="description">
             <el-input v-model="formModel.description" type="textarea" :rows="4" placeholder="请输入描述" />
@@ -67,12 +63,16 @@ import MavonEditorClient from '@/pages/application/_components/mavonEditor/Mavon
 import OssUploadMixin from '@/pages/application/datum/_components/OssUploadMixin.vue'
 import { uploadChunkOption } from '@/types/ElUpload'
 import UFile from '@/pages/_components/FileUploader/components/UFile'
+import BlogTypeSelect from '@/pages/application/_components/BlogTypeSelect.vue'
+import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
 
 const cubic = (value: number) => Math.pow(value, 3)
 const easeInOutCubic = (value: number) => (value < 0.5 ? cubic(value * 2) / 2 : 1 - cubic((1 - value) * 2) / 2)
 
 @Component({
   components: {
+    CategorySelect,
+    BlogTypeSelect,
     MavonEditorClient,
     LoadingButton,
   },
@@ -96,30 +96,22 @@ export default class DocNewPage extends OssUploadMixin {
     type: [{ required: true, message: '请输入类别', trigger: 'blue' }],
     category: [{ required: true, message: '请输入分类', trigger: 'blue' }],
   }
-  typeList = blogConstants.getItemsList('TYPE_')
-  categoryList = [
-    {
-      value: 'CWL',
-      label: 'CWL',
-    },
-  ]
   fullScreen = false
   loading = false
   isSetting = false
   el!: HTMLElement
   publicSettingHead = 700
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     await this.$refs.formModel.validate().catch((e: Error) => {
       this.$message.warning('请填写完整信息')
       throw e
     })
-    const data = Object.assign({}, this.formModel, { category: this.formModel.category.join(',') })
-    await this.$api.blog.create(data).then(() => {
-      this.$I18nRouter.push('/application/docs')
+    await this.$api.blog.create(this.formModel).then(() => {
+      this.$I18nRouter.push('/application/blogs')
     })
   }
-  onFullScreen(fullScreen: boolean) {
+  onFullScreen(fullScreen: boolean): void {
     this.fullScreen = fullScreen
   }
   beforeUpload(file: File): boolean {
@@ -161,7 +153,7 @@ export default class DocNewPage extends OssUploadMixin {
   onWindowScroll(): void {
     this.isSetting = this.el.scrollTop + this.publicSettingHead > this.el.scrollHeight
   }
-  scrollTo(negative = 0) {
+  scrollTo(negative = 0): void {
     const el = this.el
     const scrollHeight = el.scrollHeight
     const start = el.scrollTop

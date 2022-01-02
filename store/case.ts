@@ -25,6 +25,9 @@ export type CaseModuleState = ReturnType<typeof state>
 
 export const getters: GetterTree<CaseModuleState, RootState> = {
   content(state): CaseContent | {} {
+    if (state.content === '') {
+      return {}
+    }
     try {
       return JSON.parse(state.content)
     } catch (e) {

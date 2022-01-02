@@ -26,7 +26,7 @@
       <div class="el-col el-col-8 text-right">
         <toggle-edit-info type="warning" icon="el-icon-back"> 返回详情 </toggle-edit-info>
         <can-create :is-user="item.provider">
-          <loading-button type="danger" icon="el-icon-delete" class="mx-0" :callback="handleDelete"> 删除 </loading-button>
+          <loading-button type="danger" icon="el-icon-delete" class="mx-0" :callback="handleDelete"> 删除版本 </loading-button>
         </can-create>
       </div>
     </div>
@@ -52,17 +52,18 @@ import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
 import PipeMixin from '@/pages/application/pipe/_components/PipeMixin.vue'
 import LayoutBox from '@/pages/_components/LayoutBox.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 
 @Component({
   components: { LoadingButton, LayoutBox, ToggleEditInfo, CanExamine },
 })
-export default class PipeIdEdit extends mixins<PipeMixin>(PipeMixin) {
+export default class PipeIdEdit extends mixins<PipeItemMixin>(PipeMixin) {
   handleDelete(): Promise<any> {
     return this.$confirm('此操作将永久删除该应用版本, 是否继续?', '提示', {
       type: 'warning',
     }).then(() => {
       this.$api.pipe.deleteRevision(this.item.pipe_id, this.$route.params.id).then(() => {
-        this.$I18nRouter.push('/application/pipe/repository/'+ this.item.pipe_id)
+        this.$I18nRouter.push('/application/pipe/repository/' + this.item.pipe_id)
       })
     })
   }

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
-import DocNewPage from '@/pages/application/doc/new.vue'
+import DocNewPage from '@/pages/application/blog/new.vue'
 
 @Component({
   async asyncData({ app, params }) {
@@ -17,7 +17,7 @@ export default class DocEditPage extends DocNewPage {
     })
     const data = Object.assign({}, this.formModel, { category: this.formModel.category.join(',') })
     await this.$api.blog.update(this.formModel.id, data).then(() => {
-      this.$I18nRouter.push('/application/docs')
+      this.$I18nRouter.push('/application/blogs')
     })
   }
 }

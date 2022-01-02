@@ -21,7 +21,7 @@
           <el-submenu v-create :index="localePath('application-u-creation')">
             <template slot="title">我的创作</template>
             <el-menu-item :index="localePath('application-u-creation-pipe')">我的应用</el-menu-item>
-            <el-menu-item :index="localePath('application-u-creation-docs')">我的文档</el-menu-item>
+            <el-menu-item :index="localePath('application-u-creation-blogs')">我的文档</el-menu-item>
             <el-menu-item :index="localePath('application-u-creation-case')">我的案例</el-menu-item>
           </el-submenu>
         </el-menu>

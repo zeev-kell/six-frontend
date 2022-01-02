@@ -19,13 +19,13 @@
       </div>
     </div>
     <el-table ref="multipleTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="40"> </el-table-column>
+      <el-table-column type="selection" width="40" />
       <el-table-column label="文件名称" prop="name" sortable width="250">
         <template slot-scope="{ row }">
           <span :class="['mr-2 ', isOssObject(row) ? 'el-icon-document' : 'el-icon-link']"></span>{{ row.name }}
         </template>
       </el-table-column>
-      <el-table-column label="媒介类型" prop="mediatype" sortable width="120"></el-table-column>
+      <el-table-column label="媒介类型" prop="mediatype" sortable width="120" />
       <el-table-column label="大小" prop="bytes" sortable width="80">
         <template slot-scope="{ row }">
           <div>{{ row.bytes | formatbytes }}</div>
@@ -38,7 +38,7 @@
       </el-table-column>
       <el-table-column label="格式规范" width="120">
         <template slot-scope="{ row }">
-          <schema-name :schema="row.schema"></schema-name>
+          <schema-name :schema="row.schema" />
         </template>
       </el-table-column>
       <el-table-column label="说明" prop="description">
@@ -88,7 +88,6 @@ import LayoutBox from '@/pages/_components/LayoutBox.vue'
   },
 })
 export default class DatumFile extends BaseTable {
-  typeList = []
   get nameList() {
     return []
   }

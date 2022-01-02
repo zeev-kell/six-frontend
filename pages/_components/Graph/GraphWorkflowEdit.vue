@@ -35,7 +35,7 @@ export default class GraphWorkflowEdit extends Vue {
   toolEvent(eventName: string, ...args: any[]): void {
     this.$refs.graphIndex.dispatchAction(eventName, ...args)
   }
-  saveContent() {
+  saveContent(): void {
     this.timeout = setTimeout(() => {
       const isSave = this.$refs.graphIndex.dispatchAction(GraphEvent.TriggerGraphSaveContent)
       if (isSave) {

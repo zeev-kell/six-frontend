@@ -75,7 +75,7 @@
           </a>
         </div>
         <div class="el-col-auto m-b-2 text-center pro-panel el-col-sm-12">
-          <nuxt-link v-slot="{ navigate }" :to="localePath('/application/docs')" custom>
+          <nuxt-link v-slot="{ navigate }" :to="localePath('/application/blogs')" custom>
             <div class="pointer" @click="navigate" @keypress.enter="navigate">
               <el-card shadow="hover" class="pro-card">
                 <div class="pro-icon">

@@ -32,7 +32,7 @@ export default class EditorJobInspector extends InspectorMixins {
   inspectedInputs: any = []
   pipeId = ''
 
-  get relativePathRoot() {
+  get relativePathRoot(): any {
     return AppHelper.isLocal(this.pipeId) ? AppHelper.getDirname(this.pipeId) : undefined
   }
 
