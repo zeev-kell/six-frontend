@@ -13,8 +13,8 @@ import { pipeConstants } from '@/constants/PipeConstants'
   },
   computed: {
     ...mapGetters({
-      isApp: 'pipeRepository/isSoftware',
-      isWork: 'pipeRepository/isOperation',
+      // isApp: 'pipeRepository/isSoftware',
+      // isWork: 'pipeRepository/isOperation',
       username: 'user/username',
     }),
   },

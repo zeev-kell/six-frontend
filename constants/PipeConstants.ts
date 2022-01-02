@@ -7,9 +7,9 @@ const items: Record = {
 
   TYPE_TOOL: 0, // 工具
   TYPE_APP: 1, // 流程
-  TYPE_DOCKER: 2, // docker
-  TYPE_WORK: 3, // 工作
-  TYPE_WORKFLOW: 4, // 工作流
+  // TYPE_DOCKER: 2, // docker
+  // TYPE_WORK: 3, // 工作
+  // TYPE_WORKFLOW: 4, // 工作流
 }
 
 export const pipeConstants = new BaseConstants(items)

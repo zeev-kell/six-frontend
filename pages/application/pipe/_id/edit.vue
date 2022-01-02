@@ -2,8 +2,7 @@
   <div class="container-fluid py-10">
     <div class="el-row el-row--flex is-align-middle info-header">
       <div class="el-col-auto px-20">
-        <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px" />
-        <i v-if="isWork" class="el-icon-reading" style="font-size: 36px" />
+        <i class="el-icon-s-tools" style="font-size: 36px" />
       </div>
       <div class="el-col el-col-16 text-truncate mx-0">
         <h2 v-truncate="item['name']" class="my-0"></h2>
@@ -32,11 +31,11 @@
     </div>
     <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">
       <el-tab-pane label="资源介绍" name="application-pipe-id-edit" />
-      <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-edit-work" />
-      <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-edit-structure" />
+      <!--      <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-edit-work" />-->
+      <el-tab-pane label="工具结构" name="application-pipe-id-edit-structure" />
       <el-tab-pane label="使用教程" name="application-pipe-id-edit-course" />
-      <el-tab-pane v-if="isApp" label="运行案例" name="application-pipe-id-edit-case" />
-      <el-tab-pane v-if="isApp" label="应用版本" name="application-pipe-id-edit-version" />
+      <el-tab-pane label="运行案例" name="application-pipe-id-edit-case" />
+      <el-tab-pane label="应用版本" name="application-pipe-id-edit-version" />
       <el-tab-pane label="管理" name="application-pipe-id-edit-setting" />
     </el-tabs>
     <div class="px-20 mt-5 pb-10 no-gutters">

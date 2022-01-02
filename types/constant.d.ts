@@ -6,11 +6,11 @@ export interface Record {
   STATUS_OFF?: MapKey
   STATUS_ON?: MapKey
 
-  TYPE_APP?: MapKey
-  TYPE_DOCKER?: MapKey
   TYPE_TOOL?: MapKey
-  TYPE_WORK?: MapKey
-  TYPE_WORKFLOW?: MapKey
+  TYPE_APP?: MapKey
+  // TYPE_DOCKER?: MapKey
+  // TYPE_WORK?: MapKey
+  // TYPE_WORKFLOW?: MapKey
 
   TYPE_FORMAT?: MapKey
   TYPE_DATA?: MapKey

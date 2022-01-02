@@ -26,7 +26,6 @@ import { pipeConstants } from '@/constants/PipeConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
 import { DatumModel } from '@/types/model/Datum'
 import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
-import { PipeModel } from '@/types/model/Pipe'
 
 @Component({
   components: { LoadingButton },

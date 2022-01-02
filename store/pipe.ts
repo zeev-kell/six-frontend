@@ -30,12 +30,11 @@ export type PipeModuleState = ReturnType<typeof state>
 export const getters: GetterTree<PipeModuleState, RootState> = {
   isTool: (state) => state.type === pipeConstants.items.TYPE_TOOL,
   isApp: (state) => state.type === pipeConstants.items.TYPE_APP,
-  isDocker: (state) => state.type === pipeConstants.items.TYPE_DOCKER,
-  isWork: (state) => state.type === pipeConstants.items.TYPE_WORK,
-  isWorkflow: (state) => state.type === pipeConstants.items.TYPE_WORKFLOW,
-  // 是否是软件应用
-  isSoftware: (state) => [pipeConstants.items.TYPE_TOOL, pipeConstants.items.TYPE_APP].includes(state.type),
-  isOperation: (state) => [pipeConstants.items.TYPE_WORK, pipeConstants.items.TYPE_WORKFLOW].includes(state.type),
+  // isDocker: (state) => state.type === pipeConstants.items.TYPE_DOCKER,
+  // isWork: (state) => state.type === pipeConstants.items.TYPE_WORK,
+  // isWorkflow: (state) => state.type === pipeConstants.items.TYPE_WORKFLOW,
+  // isSoftware: (state) => [pipeConstants.items.TYPE_TOOL, pipeConstants.items.TYPE_APP].includes(state.type),
+  // isOperation: (state) => [pipeConstants.items.TYPE_WORK, pipeConstants.items.TYPE_WORKFLOW].includes(state.type),
 }
 
 export const mutations: MutationTree<NuxtState> = {

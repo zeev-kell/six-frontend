@@ -2,8 +2,7 @@
   <div class="container-fluid py-10">
     <div class="el-row el-row--flex is-align-middle info-header">
       <div class="el-col-auto px-20">
-        <i v-if="isApp" class="el-icon-s-tools" style="font-size: 36px" />
-        <i v-if="isWork" class="el-icon-reading" style="font-size: 36px" />
+        <i class="el-icon-s-tools" style="font-size: 36px" />
       </div>
       <div class="el-col el-col-16 text-truncate mx-0">
         <h2 v-truncate="item['name']" class="my-0"></h2>
@@ -24,31 +23,31 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <nuxt-link v-if="isApp" v-slot="{ href }" :to="localePath('/graph-info/' + item['resource_id'] + '/set-run')" custom>
+        <nuxt-link v-slot="{ href }" :to="localePath('/graph-info/' + item['resource_id'] + '/set-run')" custom>
           <a :href="href" target="_blank">
             <el-button type="primary" icon="el-icon-caret-right">设置运行</el-button>
           </a>
         </nuxt-link>
-        <nuxt-link
-          v-else-if="isWork && item['cwl']"
-          v-slot="{ href }"
-          :to="
-            localePath({
-              name: 'graph-info-id-set-run',
-              params: {
-                id: item['cwl'],
-              },
-              query: {
-                profile: item['resource_id'],
-              },
-            })
-          "
-          custom
-        >
-          <a :href="href" target="_blank">
-            <el-button type="primary" icon="el-icon-caret-right">设置运行</el-button>
-          </a>
-        </nuxt-link>
+        <!--        <nuxt-link-->
+        <!--          v-else-if="isWork && item['cwl']"-->
+        <!--          v-slot="{ href }"-->
+        <!--          :to="-->
+        <!--            localePath({-->
+        <!--              name: 'graph-info-id-set-run',-->
+        <!--              params: {-->
+        <!--                id: item['cwl'],-->
+        <!--              },-->
+        <!--              query: {-->
+        <!--                profile: item['resource_id'],-->
+        <!--              },-->
+        <!--            })-->
+        <!--          "-->
+        <!--          custom-->
+        <!--        >-->
+        <!--          <a :href="href" target="_blank">-->
+        <!--            <el-button type="primary" icon="el-icon-caret-right">设置运行</el-button>-->
+        <!--          </a>-->
+        <!--        </nuxt-link>-->
         <el-dropdown trigger="click" size="medium" @command="handleDownload">
           <el-button type="info" icon="el-icon-download"> 下载 </el-button>
           <el-dropdown-menu slot="dropdown" class="el-dropdown-info">
@@ -63,11 +62,11 @@
     </div>
     <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">
       <el-tab-pane label="资源介绍" name="application-pipe-id-index" />
-      <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-index-work" />
-      <el-tab-pane v-if="isApp" label="工具结构" name="application-pipe-id-index-structure" />
+      <!--      <el-tab-pane v-if="isWork" label="工作结构" name="application-pipe-id-index-work" />-->
+      <el-tab-pane label="工具结构" name="application-pipe-id-index-structure" />
       <el-tab-pane label="使用教程" name="application-pipe-id-index-course" />
-      <el-tab-pane v-if="isApp" label="运行案例" name="application-pipe-id-index-case" />
-      <el-tab-pane v-if="isApp" label="应用版本" name="application-pipe-id-index-version" />
+      <el-tab-pane label="运行案例" name="application-pipe-id-index-case" />
+      <el-tab-pane label="应用版本" name="application-pipe-id-index-version" />
     </el-tabs>
     <div class="px-20 mt-5 pb-10 no-gutters">
       <nuxt-child />

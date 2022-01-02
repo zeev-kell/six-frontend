@@ -34,7 +34,7 @@
     </div>
     <el-tabs v-model="activeTab" class="info-el-tabs" :before-leave="onBeforeLeave">
       <el-tab-pane label="资源介绍" name="application-pipe-repository-id-edit" />
-      <el-tab-pane v-if="isApp" label="应用版本" name="application-pipe-repository-id-edit-version" />
+      <el-tab-pane label="应用版本" name="application-pipe-repository-id-edit-version" />
       <el-tab-pane label="管理" name="application-pipe-repository-id-edit-setting" />
     </el-tabs>
     <div class="px-20 mt-5 pb-10 no-gutters">
