@@ -24,7 +24,7 @@
       </div>
       <div class="el-col el-col-8 text-right">
         <can-create :is-user="item.provider">
-          <nuxt-link v-slot="{ navigate }" :to="localePath({ path: 'new' })" custom>
+          <nuxt-link v-slot="{ navigate }" :to="localePath({ path: 'new', append: true })" custom>
             <el-button type="primary" size="small" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 添加版本 </el-button>
           </nuxt-link>
         </can-create>

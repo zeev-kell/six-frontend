@@ -24,8 +24,7 @@
       </div>
       <div class="el-col el-col-8 text-right">
         <can-create :is-user="item.provider">
-          <!-- <loading-button type="default" icon="el-icon-plus" class="mx-0" :callback="handleDelete"> 添加版本 </loading-button> -->
-          <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-new')" custom>
+          <nuxt-link v-slot="{ navigate }" :to="localePath({ name: 'application-pipe-repository-id-new', params: { id: item.pipe_id } })" custom>
             <el-button type="primary" size="small" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 添加版本 </el-button>
           </nuxt-link>
         </can-create>
