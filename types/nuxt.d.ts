@@ -11,4 +11,7 @@ declare module '@nuxt/types' {
     $auth: Auth
     $api: ApiType
   }
+  interface NuxtAppOptions {
+    $api: ApiType
+  }
 }

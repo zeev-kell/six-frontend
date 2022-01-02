@@ -11,7 +11,7 @@
               <graph-index
                 ref="graph"
                 class="h-100"
-                :item="item"
+                :item="graphItem"
                 config-type="run"
                 tools="import|download|plus,minus,fit"
                 @propagate-event="onPropagate"
@@ -27,10 +27,10 @@
           </div>
           <div class="card-body">
             <div style="font-weight: 600; margin-bottom: 10px">
-              {{ profile.type | pipeTypeTranslate | t({ prefix: 'constant.' }) }}
+              {{ caseItem.type | caseTypeTranslate | t({ prefix: 'constant.' }) }}
             </div>
-            <nuxt-link class="text-truncate" :to="localePath('/application/pipe/' + item.profile)" :title="item.profile">
-              {{ profile.name }}
+            <nuxt-link class="text-truncate" :to="localePath('/application/case/' + item.profile)" :title="caseItem.name">
+              {{ caseItem.name }}
             </nuxt-link>
           </div>
         </div>
@@ -43,44 +43,54 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
-import { pipeConstants } from '@/constants/PipeConstants'
 import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
-import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
+import { Context } from '@nuxt/types'
+import { CaseContent } from '@/types/model/Case'
+import { caseConstants } from '@/constants/CaseConstants'
 
 @Component({
   filters: {
-    pipeTypeTranslate: pipeConstants.get,
+    caseTypeTranslate: caseConstants.get,
   },
   components: { GraphIndex },
+  async asyncData({ app, store }: Context): Promise<void> {
+    const item: PipeModel = store.state.pipe
+    let caseItem = {}
+    if (item.profile) {
+      caseItem = await app.$api.case.get(item.profile)
+    }
+    return { caseItem }
+  },
 })
 export default class Case extends PipeItemMixin {
   $refs!: {
     graph: HTMLFormElement
   }
-  profile: any = {}
-
-  async onPropagate(eventName: string): Promise<void> {
-    // TODO 修改为事件
-    // 监听第一次实例化事件
-    if (GraphEvent.TriggerPageModalCreate === eventName) {
-      const profile = this.profile
-      if (profile?.content) {
-        this.updateGraphJob()
-      } else {
-        const profileId = this.item.profile
-        if (profileId) {
-          this.profile = await this.$api.pipe.getVersion(profileId)
-          this.updateGraphJob()
-        }
-      }
+  caseItem: any = {}
+  get content(): CaseContent {
+    if (this.caseItem.content === '') {
+      return {}
+    }
+    try {
+      return JSON.parse(this.caseItem.content)
+    } catch (e) {
+      console.log(e)
+      return {}
     }
   }
-  updateGraphJob() {
-    const job = getObject(this.profile.content)
-    this.$nextTick(() => {
-      this.$refs.graph.dispatchAction('updateJob', job)
-    })
+  get graphItem() {
+    return {
+      content: this.content.workflow,
+    }
+  }
+  onPropagate(eventName: string): Promise<void> {
+    // 监听第一次实例化事件
+    if (GraphEvent.TriggerPageModalCreate === eventName) {
+      this.$nextTick(() => {
+        this.$refs.graph.dispatchAction('updateJob', this.content.input)
+      })
+    }
   }
 }
 </script>

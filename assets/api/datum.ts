@@ -70,6 +70,7 @@ export class Module extends BaseModule {
   }
   search(params?: any): Promise<any> {
     console.log(params)
+    params = Object.assign({ term: ``, page: 1, size: 20 }, params)
     return this.$axios.$get<tableResponse<DatumModel>>('/v1/search/data', { params })
   }
 }

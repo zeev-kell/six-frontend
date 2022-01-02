@@ -2,16 +2,12 @@ import { CaseModel } from '@/types/model/Case'
 import { MESSAGE_ERROR, MESSAGE_SUCCESS } from '@/utils/reponse-helper'
 import { tableResponse } from '@/types/response'
 import BaseModule from '@/assets/api/BaseModule'
-import { pipeConstants } from '@/constants/PipeConstants'
 
 function serialize(data: any): any {
   data = Object.assign({}, data)
   if (data.content && typeof data.content !== 'string') {
     data.content = JSON.stringify(data.content)
   }
-  // if (Array.isArray(data.category)) {
-  //   data.category = data.category.map((c: any) => (typeof c === 'string' ? c : c.name)).join(',')
-  // }
   return data
 }
 
@@ -45,6 +41,7 @@ export class Module extends BaseModule {
 
   search(params?: any): Promise<tableResponse<CaseModel>> {
     console.log(params)
+    params = Object.assign({ term: ``, page: 1, size: 20 }, params)
     return this.$axios.$get<tableResponse<CaseModel>>('/v1/search/case', { params })
   }
 }

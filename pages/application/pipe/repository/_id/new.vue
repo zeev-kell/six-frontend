@@ -8,49 +8,31 @@
       <div class="card-body el-row">
         <div class="el-col-12">
           <el-form ref="formModel" label-width="80px" :model="formModel" :rules="rules" size="medium">
-            <!-- <el-form-item label="应用名称" prop="name">
-              <el-input v-model="formModel.name" placeholder="请输入应用名称，例如：bwa" />
-            </el-form-item> -->
             <el-form-item label="应用版本" prop="version">
               <el-input v-model="formModel.version" placeholder="请输入版本，例如：v1.0" />
             </el-form-item>
-            <!-- <el-form-item label="分类标签" prop="category">
-              <el-input v-model="formModel.category" placeholder="请输入分类标签，例如：序列比对" />
-            </el-form-item>
-            <el-form-item label="应用类型" prop="type">
-              <el-select v-model="formModel.type" placeholder="请选择应用类型" clearable style="width: 100%" :disabled="disabledType">
-                <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="应用来源" prop="description">
-              <el-input v-model="formModel.website" placeholder="请输入网址，例如：https://www.sixoclock.net" />
-            </el-form-item>
-            <el-form-item label="功能描述" prop="description">
-              <el-input v-model="formModel.description" type="textarea" :rows="4" placeholder="请输入应用功能描述，例如：使用bwa对NGS下机数据进行比对" />
-            </el-form-item> -->
           </el-form>
         </div>
       </div>
-
+    </div>
+    <div class="card">
       <div class="card-header el-row--flex is-align-middle">
         <h2 class="mx-0 el-col-equal">应用参数结构CWL</h2>
       </div>
       <div class="card-body">
-        <el-tabs v-model="activeName" type="card" :before-leave="onBeforeLeave">
+        <el-tabs v-model="activeName" type="card">
           <el-tab-pane label="编辑内容" name="1">
             <div class="codemirror-box">
-              <code-mirror-client v-model="formModel" />
+              <code-mirror-client v-model="formModel.content" />
             </div>
           </el-tab-pane>
           <el-tab-pane label="预览内容" name="2">
             <div v-if="activeName === '2'" class="page-graph-box workflow-box">
-              <graph-index :item="graph" :readonly="true" class="h-100" tools="run|plus,minus,fit|auto" />
+              <graph-index :item="graph" :readonly="true" class="h-100" tools="plus,minus,fit|auto" />
             </div>
           </el-tab-pane>
-          <!--        <el-tab-pane label="可视化编辑" name="3"></el-tab-pane>-->
         </el-tabs>
       </div>
-
       <div class="card-footer">
         <loading-button :callback="onSubmit" type="success" icon="el-icon-plus"> 保存 </loading-button>
       </div>
@@ -69,59 +51,30 @@ import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vu
   components: { PipeItemMixin, CodeMirrorClient, LoadingButton, GraphIndex },
 })
 export default class PipeNewPage extends Vue {
-  activeName = '1'
-  content = ''
-  version = '1.0'
   $refs!: {
     formModel: HTMLFormElement
   }
+  activeName = '1'
 
   formModel: any = {
-    name: '',
     version: '',
-    type: 1,
     content: '',
   }
-
-  get graph() {
-    return {
-      content: this.content,
-      type: 0,
-      resource_id: 'dwewee',
-    }
-  }
-
-  onBeforeLeave(activeName: string) {
-    if (activeName === '3') {
-      window.open(`/graph-info/${this.formModel.resource_id}/edit`, '_blank')
-      return false
-    }
-    return true
-  }
-
-  mounted() {
-    this.content = this.formModel.content.toString()
-  }
-
   rules = {
-    // name: [
-    //   { required: true, message: '请输入名称', trigger: 'blur' },
-    //   { min: 2, max: 128, message: '长度在 2 到 128 个字符', trigger: 'blur' },
-    // ],
     version: [
       { required: true, message: '请输入版本', trigger: 'blur' },
       { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
     ],
-    // type: [{ required: true, message: '请选择类型', trigger: 'change' }],
-    // category: [
-    //   { required: true, message: '请输入分类', trigger: 'blue' },
-    //   { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-    // ],
+  }
+  get graph() {
+    return {
+      content: this.formModel.content,
+    }
   }
 
   async onSubmit(): Promise<void> {
     await this.$refs.formModel.validate()
-    await this.$api.pipe.createRepository(this.formModel).then((data) => {
+    await this.$api.pipe.createRevision(this.$route.params.id, this.formModel).then((data) => {
       const id = data?.data?.id
       this.$I18nRouter.push(`/application/pipe/${id}/edit`)
     })

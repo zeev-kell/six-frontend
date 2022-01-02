@@ -24,7 +24,7 @@
       </div>
       <div class="el-col el-col-8 text-right">
         <can-create :is-user="item.provider">
-          <nuxt-link v-slot="{ navigate }" :to="localePath({ name: 'application-pipe-new', query: {} })" custom>
+          <nuxt-link v-slot="{ navigate }" :to="localePath({ path: 'new' })" custom>
             <el-button type="primary" size="small" role="link" icon="el-icon-plus" @click="navigate" @keypress.enter="navigate"> 添加版本 </el-button>
           </nuxt-link>
         </can-create>
@@ -47,12 +47,12 @@
 import { Component, mixins } from 'nuxt-property-decorator'
 import CanCreate from '@/components/common/CanCreate.vue'
 import ToggleEditInfo from '@/pages/application/_components/ToggleEditInfo.vue'
-import PipeMixin from '@/pages/application/pipe/repository/_components/PipeRepositoryMixin.vue'
-import PipeItemMixin from '@/pages/application/pipe/repository/_components/PipeRepositoryItemMixin.vue'
+import PipeRepositoryMixin from '@/pages/application/pipe/repository/_components/PipeRepositoryMixin.vue'
+import PipeRepositoryItemMixin from '@/pages/application/pipe/repository/_components/PipeRepositoryItemMixin.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 
 @Component({
   components: { LoadingButton, ToggleEditInfo, CanCreate },
 })
-export default class PipeIdIndex extends mixins<PipeItemMixin>(PipeMixin) {}
+export default class PipeIdIndex extends mixins<PipeRepositoryItemMixin>(PipeRepositoryMixin) {}
 </script>

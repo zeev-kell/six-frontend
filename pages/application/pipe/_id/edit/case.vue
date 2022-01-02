@@ -4,13 +4,11 @@
     <div class="card-body">
       <div class="el-row el-row--flex">
         <div class="el-col-full">
-          <nuxt-link v-slot="{ navigate }" :to="localePath('application-pipe-new')" custom>
+          <nuxt-link v-slot="{ navigate }" :to="localePath('application-case-new')" custom>
             <el-button type="primary" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
           </nuxt-link>
           <span class="m-x-1">或</span>
-          <el-select v-model="value" filterable :placeholder="placeholder">
-            <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
-          </el-select>
+          <case-select v-model="caseId" />
         </div>
         <div class="el-col-auto">
           <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
@@ -25,38 +23,22 @@ import { Component } from 'nuxt-property-decorator'
 import { pipeConstants } from '@/constants/PipeConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
+import CaseSelect from '@/pages/application/_components/CaseSelect.vue'
 
 @Component({
-  components: { LoadingButton },
-  async asyncData({ app, store }) {
-    const item = store.state.pipe
-    const type = store.getters['pipe/isTool'] ? pipeConstants.items.TYPE_WORK : pipeConstants.items.TYPE_WORKFLOW
-    const items = await app.$axios.$get('/v2/pipes', {
-      params: {
-        type,
-      },
-    })
-    const options = items.map((d: any) => {
-      return {
-        value: d.pipe_id,
-        label: d.name,
-      }
-    })
-    return { options, value: item.profile }
-  },
+  components: { CaseSelect, LoadingButton },
 })
 export default class Case extends PipeItemMixin {
   profile = {}
-  options = []
-  value = ''
-  get placeholder() {
-    return '引用工作' + (this.$store.getters['pipe/isTool'] ? '' : '流')
-  }
-  async onSubmit() {
-    const data = { profile: this.value }
+  caseId = ''
+  async onSubmit(): Promise<void> {
+    const data = { profile: this.caseId }
     await this.$api.pipe.updateRevision(this.item.pipe_id, this.item.resource_id, data).then(() => {
-      this.$store.commit('pipe/UPDATE_CURRENT_STORE', { profile: data.profile })
+      this.$store.commit('pipe/UPDATE_CURRENT_STORE', data)
     })
+  }
+  mounted(): void {
+    this.caseId = this.item.profile
   }
 }
 </script>

@@ -10,7 +10,7 @@
             <el-input v-model="formModel.version" placeholder="输入版本"></el-input>
           </el-form-item>
           <el-form-item label="分类" prop="category">
-            <category-select v-model="formModel.category" type="case" multiple allow-create placeholder="请输入分类" class="w-100"></category-select>
+            <category-select v-model="formModel.category" type="case" multiple allow-create placeholder="请输入分类" class="w-100" />
           </el-form-item>
           <el-form-item label="描述" prop="description">
             <el-input v-model="formModel.description" type="textarea" :rows="4" placeholder="请输入描述" />

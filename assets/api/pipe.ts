@@ -3,6 +3,7 @@ import { PipeModel } from '@/types/model/Pipe'
 import { MESSAGE_SUCCESS, MESSAGE_ERROR } from '@/utils/reponse-helper'
 import { tableResponse } from '@/types/response'
 import BaseModule from '@/assets/api/BaseModule'
+import { pipeConstants } from '@/constants/PipeConstants'
 
 export class Module extends BaseModule {
   create(data: any): Promise<any> {
@@ -55,6 +56,7 @@ export class Module extends BaseModule {
 
   search(params?: any): Promise<tableResponse<PipeModel>> {
     console.log(params)
+    params = Object.assign({ term: ``, page: 1, size: 20 }, params)
     return this.$axios.$get<tableResponse<PipeModel>>('/v1/search/pipe', { params })
   }
 
@@ -63,10 +65,7 @@ export class Module extends BaseModule {
     return this.$axios.$get('/v2/pipe/repository/' + pipeId + '/revision/' + resourceId)
   }
   createRevision(pipeId: string, data: any): Promise<any> {
-    return this.$axios
-      .$post('/v2/pipe/repository/' + pipeId + '/revision', data)
-      .then(MESSAGE_SUCCESS)
-      .catch(MESSAGE_ERROR)
+    return this.$axios.$post('/v2/pipe/repository/' + pipeId + '/revision', data)
   }
   updateRevision(pipeId: string, resourceId: string, data: any): Promise<any> {
     return this.$axios

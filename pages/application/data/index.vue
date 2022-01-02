@@ -10,7 +10,7 @@
             <datum-type-select v-model="otherQuery.type" placeholder="按类别筛选" @change="searchQuery" />
           </el-form-item>
           <el-form-item>
-            <category-select v-model="otherQuery.tag" type="data" @change="searchQuery"></category-select>
+            <category-select v-model="otherQuery.tag" type="data" @change="searchQuery" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" class="el-button--icon" native-type="button" icon="el-icon-refresh" @click="resetQuery"></el-button>

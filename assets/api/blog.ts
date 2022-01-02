@@ -29,6 +29,7 @@ export class Module extends BaseModule {
 
   search(params?: any): Promise<tableResponse<BlogModel>> {
     console.log(params)
+    params = Object.assign({ term: ``, page: 1, size: 20 }, params)
     return this.$axios.$get<tableResponse<BlogModel>>('/v1/search/doc', { params })
   }
 }

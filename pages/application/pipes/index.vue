@@ -10,11 +10,11 @@
             <pipe-type-select v-model="otherQuery.type" placeholder="按类别筛选" @change="searchQuery" />
           </el-form-item>
           <el-form-item>
-            <category-select v-model="otherQuery.tag" type="pipe" placeholder="按分类筛选" @change="searchQuery"></category-select>
+            <category-select v-model="otherQuery.tag" type="pipe" placeholder="按分类筛选" @change="searchQuery" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-refresh" class="el-button--icon" native-type="button" @click="resetQuery"></el-button>
-            <el-button type="primary" icon="el-icon-search" class="el-button--icon" native-type="button" @click="searchQuery"></el-button>
+            <el-button type="primary" icon="el-icon-refresh" class="el-button--icon" native-type="button" @click="resetQuery" />
+            <el-button type="primary" icon="el-icon-search" class="el-button--icon" native-type="button" @click="searchQuery" />
           </el-form-item>
         </el-form>
       </div>

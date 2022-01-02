@@ -26,10 +26,11 @@ import { pipeConstants } from '@/constants/PipeConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
 import { DatumModel } from '@/types/model/Datum'
 import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
+import { Context } from '@nuxt/types'
 
 @Component({
   components: { LoadingButton },
-  async asyncData({ app, store }) {
+  async asyncData({ app, store }: Context) {
     const item: DatumModel = store.state.datum
     const items = await app.$api.pipe.search({
       term: `type:${pipeConstants.items.TYPE_WORK} OR type:${pipeConstants.items.TYPE_WORKFLOW}`,
