@@ -30,7 +30,7 @@ import { Context } from '@nuxt/types'
 
 @Component({
   components: { LoadingButton },
-  async asyncData({ app, store }: Context) {
+  async asyncData({ app, store }: Context): Promise<any> {
     const item: DatumModel = store.state.datum
     const items = await app.$api.pipe.search({
       term: `type:${pipeConstants.items.TYPE_WORK} OR type:${pipeConstants.items.TYPE_WORKFLOW}`,

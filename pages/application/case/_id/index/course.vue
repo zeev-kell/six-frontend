@@ -38,7 +38,7 @@ import { Context } from '@nuxt/types'
 
 @Component({
   components: { MavonEditorToc, MavonEditorRenderClient },
-  async asyncData({ app, store }: Context) {
+  async asyncData({ app, store }: Context): Promise<any> {
     const item: CaseModel = store.state.case
     if (item.instruction) {
       try {

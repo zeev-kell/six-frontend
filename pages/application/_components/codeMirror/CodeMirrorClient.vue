@@ -1,6 +1,6 @@
 <template>
   <client-only placeholder="Loading...">
-    <codemirror v-model="content" :options="cmOptions" @input="$emit('input', $event)" />
+    <codemirror ref="codemirror" v-model="content" :options="cmOptions" @input="$emit('input', $event)" />
   </client-only>
 </template>
 
@@ -18,6 +18,9 @@ import ClientMixin from '@/pages/application/_components/ClientMixin.vue'
   },
 })
 export default class CodeMirrorClient extends ClientMixin {
+  $refs!: {
+    codemirror: HTMLFormElement
+  }
   @Prop({
     default() {
       return {}
@@ -35,6 +38,11 @@ export default class CodeMirrorClient extends ClientMixin {
   }
   get cmOptions(): any {
     return Object.assign({}, this.options, this.defaultOptions)
+  }
+  refresh(): void {
+    this.$nextTick(() => {
+      this.$refs.codemirror.refresh()
+    })
   }
 }
 </script>

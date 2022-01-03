@@ -5,7 +5,7 @@
     :is-wheel="true"
     :item="item"
     config-type="run"
-    tools="import|download|plus,minus,fit"
+    tools="import-case|download|plus,minus,fit"
     @propagate-event="onPropagate"
   />
 </template>

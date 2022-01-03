@@ -194,6 +194,17 @@ export default class GraphMixin extends GraphEdit {
     }
     downloadStrLink(data, name)
   }
+  exportCwlt(): void {
+    const input = this.jobValue
+    const workflow = this.dataModel instanceof WorkflowModel ? this.dataModel.serializeEmbedded() : this.dataModel.serialize()
+    const data = {
+      workflow,
+      input,
+      source: this.$route.params.id,
+    }
+    const name = this.name + `.cwlt`
+    downloadStrLink(data, name)
+  }
   // 创建图形
   createGraph(content?: V1Workflow): void {
     // 处理 yaml 格式为 json 格式
@@ -240,9 +251,12 @@ export default class GraphMixin extends GraphEdit {
   toolEvent(eventName: string, ...args: any[]): void {
     ;(this as any)[eventName](...args)
   }
-  async [GraphEvent.TriggerGraphDownload](dType: string, dMain: boolean, dJob: boolean): Promise<void> {
+  async [GraphEvent.TriggerGraphDownload](dType: string, dMain: boolean, dJob: boolean, dCwlt: boolean): Promise<void> {
+    if (dCwlt) {
+      this.exportCwlt()
+      return
+    }
     if (dMain && !dJob) {
-      // 只导出 cwl文件
       this.exportCwl(dType)
     } else if (!dMain && dJob) {
       this.exportJob(dType)

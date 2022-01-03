@@ -7,12 +7,12 @@
             <el-input v-model="formModel.name" placeholder="请输入名称" />
           </el-form-item>
           <el-form-item label="版本" prop="version">
-            <el-select v-model="formModel.version" placeholder="请输入版本" disabled>
+            <el-select v-model="formModel.version" placeholder="请输入版本" disabled class="w-100">
               <el-option v-for="version in versions" :key="version.value" :label="version.label" :value="version.value" />
             </el-select>
           </el-form-item>
           <el-form-item label="分类" prop="category">
-            <el-input v-model="formModel.category" placeholder="请输入分类" />
+            <category-select v-model="formModel.category" multiple type="data" placeholder="请输入分类" class="w-100" />
           </el-form-item>
           <el-form-item label="地址" prop="description">
             <el-input v-model="formModel.website" placeholder="请输入地址" />
@@ -33,25 +33,28 @@
 import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
 import DatumItemMixin from '@/pages/application/datum/_components/DatumItemMixin.vue'
+import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
 
 @Component({
-  components: { LoadingButton },
+  components: { CategorySelect, LoadingButton },
 })
 export default class DatumSetting extends DatumItemMixin {
   $refs!: {
     formModel: HTMLFormElement
   }
-  formModel = {}
+  formModel = {
+    name: '',
+    version: '',
+    category: [],
+    website: '',
+    description: '',
+  }
   rules = {
     name: [
       { required: true, message: '请输入名称', trigger: 'blur' },
       { min: 2, max: 128, message: '长度在 2 到 128 个字符', trigger: 'blur' },
     ],
-    // version: [{ required: true, message: '请选择默认版本', trigger: 'blur' }],
-    category: [
-      { required: true, message: '请输入分类', trigger: 'blue' },
-      { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-    ],
+    category: [{ required: true, message: '请输入分类', trigger: 'blue' }],
   }
 
   get versions() {
@@ -64,10 +67,9 @@ export default class DatumSetting extends DatumItemMixin {
   }
 
   mounted() {
-    this.formModel = ['name', 'version', 'category', 'website', 'description'].reduce((obj: any, key: string) => {
-      obj[key] = (this.item as any)[key]
-      return obj
-    }, {})
+    ;['name', 'version', 'category', 'website', 'description'].forEach((key: string) => {
+      ;(this.formModel as any)[key] = (this.item as any)[key]
+    })
   }
   async onSubmit() {
     await this.$refs.formModel.validate()

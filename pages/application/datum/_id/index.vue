@@ -25,7 +25,6 @@
         </div>
       </div>
       <div class="el-col el-col-8 text-right">
-        <!--        <el-button type="primary" icon="el-icon-caret-right"> 校验数据 </el-button>-->
         <can-create :is-user="item.provider">
           <toggle-edit-info type="primary" icon="el-icon-edit"> 编辑 </toggle-edit-info>
         </can-create>

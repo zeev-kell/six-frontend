@@ -1,0 +1,91 @@
+@import './_var';
+.el-dialog-dark {
+  color: #eee;
+
+  .el-dialog {
+    background: $black2;
+  }
+
+  .el-dialog__header {
+    background: $black1;
+    border-bottom: none;
+  }
+
+  .el-dialog__title,
+  .el-dialog__body,
+  .el-upload__text,
+  .el-dialog__headerbtn .el-dialog__close {
+    color: #eee;
+  }
+
+  .el-dialog__title {
+    font-size: 14px;
+  }
+
+  .el-checkbox,
+  .el-radio {
+    color: white;
+  }
+
+  .el-upload-dragger {
+    background: transparent;
+  }
+
+  .el-tabs__item {
+    color: #999;
+
+    &.is-active {
+      color: #eeeeee;
+    }
+  }
+  .el-tabs__active-bar {
+    height: 1px;
+    z-index: 5;
+  }
+  .el-tabs__nav-wrap::after {
+    background: #232323;
+    height: 1px;
+    z-index: 4;
+  }
+  .el-tabs__nav {
+    z-index: 5;
+  }
+
+  .CodeMirror {
+    background: #323232;
+  }
+  .CodeMirror-cursor {
+    border-left-color: #eeeeee;
+  }
+  .CodeMirror-gutters {
+    background: #3b3b3b;
+    color: rgb(153, 153, 153);
+    border-right: none;
+  }
+  .CodeMirror pre.CodeMirror-line,
+  .CodeMirror pre.CodeMirror-line-like {
+    color: #eeeeee;
+  }
+  .CodeMirror-line::selection,
+  .CodeMirror-line > span::selection,
+  .CodeMirror-line > span > span::selection {
+    background: #666 !important;
+  }
+  .CodeMirror-line::-moz-selection,
+  .CodeMirror-line > span::-moz-selection,
+  .CodeMirror-line > span > span::-moz-selection {
+    background: #666 !important;
+  }
+  .CodeMirror-selected {
+    background: #666 !important;
+  }
+  .CodeMirror-focused .CodeMirror-selected {
+    background: #666 !important;
+  }
+
+  .el-input__inner {
+    height: 33px;
+    background: $black2;
+    border-color: $black1;
+  }
+}

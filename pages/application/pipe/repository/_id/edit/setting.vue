@@ -56,7 +56,7 @@ export default class PipeRepositorySetting extends PipeItemMixin {
   $refs!: {
     formModel: HTMLFormElement
   }
-  formModel: any = {
+  formModel = {
     name: '',
     resource_id: '',
     category: [],
@@ -81,7 +81,7 @@ export default class PipeRepositorySetting extends PipeItemMixin {
   }
   mounted(): void {
     ;['name', 'resource_id', 'category', 'website', 'description'].forEach((key: string) => {
-      this.formModel[key] = (this.item as any)[key]
+      ;(this.formModel as any)[key][key] = (this.item as any)[key]
     })
   }
   async onSubmit(): Promise<void> {

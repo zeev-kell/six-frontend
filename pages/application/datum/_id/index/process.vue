@@ -13,7 +13,7 @@
                 class="h-100"
                 :item="graphItem"
                 config-type="run"
-                tools="import|download|plus,minus,fit"
+                tools="import-case|download|plus,minus,fit"
                 @propagate-event="onPropagate"
               />
             </div>

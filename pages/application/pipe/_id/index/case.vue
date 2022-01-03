@@ -13,7 +13,7 @@
                 class="h-100"
                 :item="graphItem"
                 config-type="run"
-                tools="import|download|plus,minus,fit"
+                tools="import-case|download|plus,minus,fit"
                 @propagate-event="onPropagate"
               />
             </div>
@@ -48,13 +48,14 @@ import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vu
 import { Context } from '@nuxt/types'
 import { CaseContent } from '@/types/model/Case'
 import { caseConstants } from '@/constants/CaseConstants'
+import { PipeModel } from '@/types/model/Pipe'
 
 @Component({
   filters: {
     caseTypeTranslate: caseConstants.get,
   },
   components: { GraphIndex },
-  async asyncData({ app, store }: Context): Promise<void> {
+  async asyncData({ app, store }: Context): Promise<any> {
     const item: PipeModel = store.state.pipe
     let caseItem = {}
     if (item.profile) {
@@ -70,13 +71,13 @@ export default class Case extends PipeItemMixin {
   caseItem: any = {}
   get content(): CaseContent {
     if (this.caseItem.content === '') {
-      return {}
+      return {} as CaseContent
     }
     try {
       return JSON.parse(this.caseItem.content)
     } catch (e) {
       console.log(e)
-      return {}
+      return {} as CaseContent
     }
   }
   get graphItem() {
@@ -84,7 +85,7 @@ export default class Case extends PipeItemMixin {
       content: this.content.workflow,
     }
   }
-  onPropagate(eventName: string): Promise<void> {
+  onPropagate(eventName: string): void {
     // 监听第一次实例化事件
     if (GraphEvent.TriggerPageModalCreate === eventName) {
       this.$nextTick(() => {

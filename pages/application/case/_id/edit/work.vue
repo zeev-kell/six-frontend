@@ -3,16 +3,16 @@
     <div class="px-15 text-muted">添加案例内容或通过可视化界面配置案例</div>
     <div class="card-body">
       <el-tabs v-model="activeName" type="card" :before-leave="onBeforeLeave">
-        <el-tab-pane label="编辑内容" name="1">
+        <el-tab-pane label="编辑内容" name="edit">
           <div class="codemirror-box">
-            <code-mirror-json-client v-model="formModel.content" />
+            <code-mirror-json-client ref="codeMirror" v-model="formModel.content" />
           </div>
         </el-tab-pane>
-        <el-tab-pane label="可视化界面" name="2">
+        <el-tab-pane label="可视化界面" name="view">
           <div class="mb-10">
             从公共仓库查找应用：<pipe-select ref="pipeSelect" v-model="formModel.source" :clearable="false" @on-change="onValueChange"></pipe-select>
           </div>
-          <div v-if="activeName === '2'" class="page-graph-box workflow-box">
+          <div v-if="activeName === 'view'" class="page-graph-box workflow-box">
             <graph-index
               ref="graphIndex"
               config-type="run"
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'nuxt-property-decorator'
+import { Component, Watch } from 'nuxt-property-decorator'
 import CaseItemMixin from '@/pages/application/case/_components/CaseItemMixin.vue'
 import LoadingButton from '@/components/LoadingButton.vue'
 import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
@@ -51,13 +51,40 @@ export default class Work extends CaseItemMixin {
   $refs!: {
     pipeSelect: PipeSelect
     graphIndex: GraphIndex
+    codeMirror: CodeMirrorJsonClient
   }
-  activeName = '1'
+  activeName = 'edit'
+  changed = false
   formModel: any = {
     content: '',
     workflow: '',
     source: '',
     input: '',
+  }
+
+  @Watch('activeName')
+  async onWatchActiveName(value: string): Promise<void> {
+    if (value === 'edit') {
+      // 判断脏值更新
+      if (this.changed) {
+        const model = await this.parseContent()
+        model.source = this.formModel.source
+        model.input = this.$store.state.graph.jobValue
+        model.workflow = this.formModel.workflow
+        this.formModel.content = JSON.stringify(model, null, 4)
+        this.$refs.codeMirror.refresh()
+        this.changed = false
+      }
+    } else {
+      const model = await this.parseContent()
+      this.formModel.input = model.input
+      this.formModel.source = model.source
+      this.formModel.workflow = model.workflow
+    }
+  }
+  @Watch('$store.state.graph.jobValue', { deep: true })
+  onWatchJobValue(value: any): void {
+    this.changed = Object.keys(value).length > 0
   }
 
   get graph() {
@@ -78,6 +105,7 @@ export default class Work extends CaseItemMixin {
           if (!content.class) {
             return this.$message.warning('该软件信息不正确')
           }
+          this.changed = true
           // TODO 接口没有返回 type
           const model = content.class === 'CommandLineTool' ? CommandLineToolFactory.from(content, 'document') : WorkflowFactory.from(content)
           if (this.formModel.workflow?.class === content.class) {
@@ -100,22 +128,16 @@ export default class Work extends CaseItemMixin {
         })
       })
   }
-  async onBeforeLeave(activeName: string) {
-    if (activeName === '1') {
-      const model = await this.parseContent()
-      model.source = this.formModel.source
-      model.input = this.$store.state.graph.jobValue
-      model.workflow = this.formModel.workflow
-      this.formModel.content = JSON.stringify(model, null, 4)
-    } else {
-      const model = await this.parseContent()
-      this.formModel.input = model.input
-      this.formModel.source = model.source
-      this.formModel.workflow = model.workflow
+  async onBeforeLeave(activeName: string): Promise<void> {
+    if (activeName !== 'edit') {
+      await this.parseContent()
     }
   }
   parseContent(): Promise<any> {
     return new Promise((resolve, reject) => {
+      if (this.formModel.content.trim() === '') {
+        return resolve({})
+      }
       try {
         const model = JSON.parse(this.formModel.content)
         resolve(model)
@@ -135,7 +157,7 @@ export default class Work extends CaseItemMixin {
   }
   async onSubmit(): Promise<void> {
     const content =
-      this.activeName === '1'
+      this.activeName === 'edit'
         ? this.formModel.content
         : JSON.stringify({
             workflow: this.formModel.workflow,

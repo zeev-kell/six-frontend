@@ -38,7 +38,7 @@ export default class CaseSetting extends CaseItemMixin {
     formModel: HTMLFormElement
   }
 
-  formModel: any = {
+  formModel = {
     name: '',
     category: [],
     description: '',
@@ -54,7 +54,7 @@ export default class CaseSetting extends CaseItemMixin {
 
   mounted(): void {
     ;['name', 'category', 'description'].forEach((key: string) => {
-      this.formModel[key] = (this.item as any)[key]
+      ;(this.formModel as any)[key][key] = (this.item as any)[key]
     })
     this.formModel.version = this.content.version
   }

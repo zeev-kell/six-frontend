@@ -15,12 +15,10 @@
               <el-input v-model="formModel.version" placeholder="请输入版本" />
             </el-form-item>
             <el-form-item label="分类" prop="category">
-              <el-input v-model="formModel.category" placeholder="请输入分类" />
+              <category-select v-model="formModel.category" multiple type="data" placeholder="请输入分类" class="w-100" />
             </el-form-item>
             <el-form-item label="类别" prop="type">
-              <el-select v-model="formModel.type" placeholder="请选择类别" clearable style="width: 100%" :disabled="disabledType">
-                <el-option v-for="item in typeList" :key="item.value" :label="$t('constant.' + item.label)" :value="item.value" />
-              </el-select>
+              <datum-type-select v-model="formModel.type" placeholder="请选择类别" class="w-100" />
             </el-form-item>
             <el-form-item label="描述" prop="description">
               <el-input v-model="formModel.description" type="textarea" :rows="4" placeholder="请输入描述" />
@@ -39,9 +37,11 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { datumConstants } from '@/constants/DatumConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
+import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
+import DatumTypeSelect from '@/pages/application/_components/DatumTypeSelect.vue'
 
 @Component({
-  components: { LoadingButton },
+  components: { DatumTypeSelect, CategorySelect, LoadingButton },
 })
 export default class DatumNewPage extends Vue {
   $refs!: {
@@ -68,14 +68,8 @@ export default class DatumNewPage extends Vue {
       { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
     ],
     type: [{ required: true, message: '请选择类型', trigger: 'change' }],
-    category: [
-      { required: true, message: '请输入分类', trigger: 'blue' },
-      { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-    ],
+    category: [{ required: true, message: '请输入分类', trigger: 'blue' }],
   }
-  loading = false
-  disabledType = false
-  typeList = datumConstants.getItemsList('TYPE_')
 
   async onSubmit() {
     await this.$refs.formModel.validate()

@@ -27,6 +27,11 @@ const BUTTON_LIST: graphTools = {
     title: '导入配置',
     action: 'actionImport',
   },
+  'import-case': {
+    icon: 'el-icon-upload2',
+    title: '导入配置',
+    action: 'actionImport',
+  },
   download: {
     icon: 'el-icon-download',
     title: '下载',
@@ -57,7 +62,7 @@ const BUTTON_LIST: graphTools = {
 @Component({
   components: {
     ToolDownload: () => import('@/pages/_components/Graph/components/ToolBoxHelper/ToolDownload.vue'),
-    toolImport: () => import('@/pages/_components/Graph/components/ToolBoxHelper/ToolImport.vue'),
+    ToolImport: () => import('@/pages/_components/Graph/components/ToolBoxHelper/ToolImport.vue'),
   },
 })
 export default class ToolBox extends Vue {
@@ -113,12 +118,15 @@ export default class ToolBox extends Vue {
   actionToRun(): void {
     this.$I18nRouter.push(`/graph-info/${this.$route.params.id}/set-run`)
   }
+  // 导入
   actionImport(): void {
     this.$refs.toolImport.dialogVisible = true
+    this.$store.commit('graph/CLEAN_SELECTION')
   }
   // 下载
   actionDownload(): void {
     this.$refs.toolDownload.dialogVisible = true
+    this.$store.commit('graph/CLEAN_SELECTION')
   }
   // 清空
   actionToEmpty(): void {
@@ -180,8 +188,7 @@ export default class ToolBox extends Vue {
       }
       // 添加 download 的下载窗口
       if (btn.name === 'download') {
-        const create = this.$createElement
-        const dom = create('tool-download', {
+        const dom = this.$createElement('tool-download', {
           on: {
             [GraphEvent.ToolEvent]: this.toolEvent,
           },
@@ -189,13 +196,16 @@ export default class ToolBox extends Vue {
         })
         return [createBtn(btn), dom] as VNode[]
       }
-      if (btn.name === 'import') {
-        const create = this.$createElement
-        const dom = create('tool-import', {
+      if (btn.name === 'import' || btn.name === 'import-case') {
+        console.log(btn.name)
+        const dom = this.$createElement('tool-import', {
           on: {
             [GraphEvent.ToolEvent]: this.toolEvent,
           },
           ref: 'toolImport',
+          props: {
+            withCase: btn.name === 'import-case',
+          },
         })
         return [createBtn(btn), dom] as VNode[]
       }

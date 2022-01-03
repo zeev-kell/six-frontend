@@ -1,8 +1,12 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import { ElTable } from 'element-ui/types/table'
 
 @Component
 export default class BaseTable extends Vue {
+  $refs!: {
+    multipleTable: ElTable
+  }
   watchRefresh = true
   items: any[] = []
   multipleSelection: any[] = []

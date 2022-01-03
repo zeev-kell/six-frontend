@@ -35,3 +35,5 @@ export const actions: ActionTree<RootState, RootState> = {
     }
   },
 }
+
+// TODO 过多的 store 对象，优化成父子级数据结构

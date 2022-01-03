@@ -1,15 +1,26 @@
 <template>
-  <el-dialog title="导入参数配置" custom-class="el-dialog-dark tool-import-dialog" :append-to-body="true" :visible.sync="dialogVisible" center>
-    <el-tabs v-model="activeName">
-      <el-tab-pane label="从案例中导入" name="1">
-        <div class="el-row">
+  <el-dialog
+    title="导入参数配置"
+    class="el-dialog-dark"
+    custom-class="tool-import-dialog"
+    :append-to-body="true"
+    :close-on-click-modal="false"
+    :visible.sync="dialogVisible"
+    center
+    top="10vh"
+  >
+    <el-tabs v-model="activeName" size="small">
+      <el-tab-pane v-if="withCase" name="1">
+        <div slot="label" class="px-20">从案例中导入</div>
+        <div class="el-row p-20">
           <div class="el-col-12">
             <p>从公共仓库查找案例以导入参数配置</p>
             <case-select v-model="caseId" @change="onChangeCase" />
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="导入文件" name="2">
+      <el-tab-pane name="2">
+        <div slot="label" class="px-20">导入文件</div>
         <div class="text-center p-20">
           <p>选择要导入的JSON或YAML文件</p>
           <el-upload drag action="" :auto-upload="false" :on-change="onChangeFile" :show-file-list="false">
@@ -19,11 +30,12 @@
           <p v-if="importError" class="import-error text-danger m-1">Error: {{ importError }}</p>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="填写代码" name="3">
-        <code-mirror-client v-model="code" />
-        <div class="">
-          <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button @click="onSubmitCode">确定</el-button>
+      <el-tab-pane name="3">
+        <div slot="label" class="px-20">填写参数源码</div>
+        <code-mirror-client ref="codeMirror" v-model="code" />
+        <div class="text-right p-10">
+          <el-button size="mini" @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" size="mini" @click="onSubmitCode">确定</el-button>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -33,15 +45,21 @@
 <script lang="ts">
 import { Component, Watch } from 'nuxt-property-decorator'
 import ToolBoxHelper from '@/pages/_components/Graph/components/ToolBoxHelper/ToolBoxHelper'
-import { getParseObject, parseObj } from '@/pages/_components/Graph/helpers/YamlHandle'
+import { getObject, getParseObject, parseObj } from '@/pages/_components/Graph/helpers/YamlHandle'
 import CaseSelect from '@/pages/application/_components/CaseSelect.vue'
 import CodeMirrorClient from '@/pages/application/_components/codeMirror/CodeMirrorClient.vue'
+import { Prop } from 'vue-property-decorator'
 @Component({
   components: { CodeMirrorClient, CaseSelect },
 })
 export default class ToolDownload extends ToolBoxHelper {
+  $refs!: {
+    codeMirror: CodeMirrorClient
+  }
+  @Prop({ default: true })
+  withCase!: boolean
   dialogVisible = false
-  activeName = '1'
+  activeName = this.withCase ? '1' : '2'
   importError = ''
   caseId = ''
   code = ''
@@ -52,7 +70,13 @@ export default class ToolDownload extends ToolBoxHelper {
       this.code = ''
       this.caseId = ''
       this.importError = ''
-      this.activeName = '1'
+      this.activeName = this.withCase ? '1' : '2'
+    }
+  }
+  @Watch('activeName')
+  onWatchActiveName(value: string): void {
+    if (value === '3') {
+      this.$refs.codeMirror.refresh()
     }
   }
 
@@ -69,7 +93,7 @@ export default class ToolDownload extends ToolBoxHelper {
     this.readFile(file.raw as File)
   }
   onSubmitCode(): void {
-    const code = parseObj(this.code)
+    const code = getObject(this.code)
     this.$store.commit('graph/SET_JOB_VALUE', code)
     this.dialogVisible = false
   }
@@ -92,7 +116,18 @@ export default class ToolDownload extends ToolBoxHelper {
 </script>
 
 <style lang="scss">
-.tool-import-dialog .el-dialog__body {
-  padding-top: 0;
+.tool-import-dialog {
+  .el-tabs__header {
+    margin: 0;
+  }
+  .el-dialog__body {
+    padding: 0;
+  }
+  .el-tabs__content {
+    min-height: 300px;
+  }
+  .el-tabs__item {
+    padding: 0;
+  }
 }
 </style>
