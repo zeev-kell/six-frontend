@@ -15,7 +15,7 @@
               <category-select v-model="formModel.category" multiple type="case" allow-create placeholder="请输入分类" class="w-100" />
             </el-form-item>
             <el-form-item label="类别" prop="type">
-              <case-type-select v-model="formModel.type" placeholder="请选择类别" :disabled="true" />
+              <case-type-select v-model="formModel.type" placeholder="请选择类别" :disabled="true" class="w-100" />
             </el-form-item>
             <el-form-item label="描述" prop="description">
               <el-input v-model="formModel.description" type="textarea" :rows="4" placeholder="请输入描述" />
@@ -39,6 +39,8 @@ import LoadingButton from '@/components/LoadingButton.vue'
 import { caseConstants } from '@/constants/CaseConstants'
 import CaseTypeSelect from '@/pages/application/_components/CaseTypeSelect.vue'
 import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
+import { CASE_LOCAL } from '@/constants/PipeConstants'
+import { getStore } from '@/utils/local-storage'
 
 @Component({
   components: { CategorySelect, CaseTypeSelect, LoadingButton },
@@ -71,6 +73,11 @@ export default class CaseNewPage extends Vue {
       const id = data?.data?.id
       this.$I18nRouter.push(`/application/case/${id}/edit`)
     })
+  }
+  mounted(): void {
+    if (this.$route.query.local) {
+      this.formModel.content = getStore(CASE_LOCAL)
+    }
   }
 }
 </script>

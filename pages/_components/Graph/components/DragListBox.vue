@@ -1,6 +1,6 @@
 <template>
   <div class="drag-list-box h-100v">
-    <div class="tool-box left">
+    <div class="tool-box left-out">
       <div class="tool-group">
         <el-button type="dark" icon="el-icon-s-home" size="mini" title="返回主页" @click="actionGoBack"></el-button>
       </div>

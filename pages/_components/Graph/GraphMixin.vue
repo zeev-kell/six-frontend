@@ -2,6 +2,7 @@
   <div class="graph h-100 el-row el-row--flex">
     <div class="h-100 el-col-full p-r">
       <svg ref="svg" class="cwl-workflow h-100" />
+      <tool-box-left v-if="leftTools" :tools="leftTools" @tool-event="toolEvent" />
       <tool-box :tools="tools" :validation-state="validationState" @tool-event="toolEvent" />
     </div>
     <editor-job-inspector v-if="isRunJob" />
@@ -43,10 +44,12 @@ import EditorJobInspector from '@/pages/_components/Graph/components/EditorJobIn
 import { normalizeJob } from '@/pages/_components/Graph/helpers/JobHelper'
 import { Generator } from '@/pages/_components/Graph/Generator'
 import { PIPE_LOCAL } from '@/constants/PipeConstants'
+import ToolBoxLeft from '@/pages/_components/Graph/components/ToolBoxLeft.vue'
 import ToolBox from './components/ToolBox.vue'
 
 @Component({
   components: {
+    ToolBoxLeft,
     EditorJobInspector,
     WorkflowStepInspector,
     ToolBox,
@@ -72,6 +75,8 @@ export default class GraphMixin extends GraphEdit {
   content!: V1Workflow
   @Prop({ default: false })
   readonly!: boolean
+  @Prop({ default: undefined })
+  leftTools!: string
   @Prop({ default: undefined })
   tools!: string
   @Prop({
@@ -174,7 +179,6 @@ export default class GraphMixin extends GraphEdit {
       return this.dataModel.serializeEmbedded(false)
     }
   }
-  // 导出数据
   exportCwl(format = 'yaml', isOnlyData = false): void | { data: any; name: string } {
     const asYaml = format === 'yaml'
     const serialize = this.dataModel instanceof WorkflowModel ? this.dataModel.serializeEmbedded() : this.dataModel.serialize()
@@ -185,7 +189,6 @@ export default class GraphMixin extends GraphEdit {
     }
     downloadStrLink(data, name)
   }
-  // 导出任务数据
   exportJob(format = 'yaml', isOnlyData = false): void | { data: any; name: string } {
     const data = stringifyObject(this.jobValue, format === 'yaml')
     const name = this.name + `.job.${format}`
@@ -194,7 +197,7 @@ export default class GraphMixin extends GraphEdit {
     }
     downloadStrLink(data, name)
   }
-  exportCwlt(): void {
+  exportCwlt(format = 'json', isOnlyData = false): void {
     const input = this.jobValue
     const workflow = this.dataModel instanceof WorkflowModel ? this.dataModel.serializeEmbedded() : this.dataModel.serialize()
     const data = {
@@ -203,6 +206,9 @@ export default class GraphMixin extends GraphEdit {
       source: this.$route.params.id,
     }
     const name = this.name + `.cwlt`
+    if (isOnlyData) {
+      return { data, name }
+    }
     downloadStrLink(data, name)
   }
   // 创建图形
@@ -215,9 +221,11 @@ export default class GraphMixin extends GraphEdit {
     if (!this.readonly) {
       // 注册拖拽放置事件
       const drop = this.graph.getPlugin(DropPlugin)
-      drop?.registerOnDropAfterChange((coords: SVGPoint) => {
+      drop?.registerOnDropAfterChange(async (coords: SVGPoint) => {
         const task = this.$store.state.system.dragToolItem
-        this.addNodeToGraph(JSON.parse(JSON.stringify(task)), coords)
+        const item = await this.$api.pipe.getRevision(task.pipe_id, task.resource_id)
+        item.content = getObject(item.content)
+        this.addNodeToGraph(item, coords)
       })
       // 注册双击事件，只处理 step 的类型
       const dblclick = this.graph.getPlugin(DblclickPlugin)

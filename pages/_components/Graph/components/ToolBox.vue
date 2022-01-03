@@ -3,61 +3,8 @@ import { SVGArrangePlugin, Workflow } from 'cwl-svg'
 import { Component, InjectReactive, Prop, Vue } from 'nuxt-property-decorator'
 import { GraphEvent } from '@/constants/GraphEvent'
 import type { CreateElement, VNode } from 'vue'
-import { AppValidityState, graphTool, graphTools } from '@/types/graph'
-const BUTTON_LIST: graphTools = {
-  empty: {
-    icon: 'iconfont icon-eraser',
-    title: '清空',
-    action: 'actionToEmpty',
-  },
-  run: {
-    icon: 'el-icon-video-play',
-    title: '运行',
-    action: 'actionToRun',
-  },
-  validate: {
-    icon: 'el-icon-warning-outline f-16',
-    title: '异常',
-    action: 'toolEvent',
-    eventName: GraphEvent.TriggerGraphWarning,
-    type: 'warning',
-  },
-  import: {
-    icon: 'el-icon-upload2',
-    title: '导入配置',
-    action: 'actionImport',
-  },
-  'import-case': {
-    icon: 'el-icon-upload2',
-    title: '导入配置',
-    action: 'actionImport',
-  },
-  download: {
-    icon: 'el-icon-download',
-    title: '下载',
-    action: 'actionDownload',
-  },
-  auto: {
-    icon: 'el-icon-magic-stick',
-    title: '自动排版',
-    action: 'actionAutoLayout',
-  },
-  plus: {
-    icon: 'el-icon-zoom-in',
-    title: '放大',
-    action: 'actionUpscale',
-  },
-  minus: {
-    icon: 'el-icon-zoom-out',
-    title: '缩小',
-    action: 'actionDownscale',
-  },
-  fit: {
-    icon: 'feather icon-maximize-2',
-    title: '适应窗口',
-    action: 'actionFitToViewport',
-  },
-}
+import { AppValidityState, graphTool } from '@/types/graph'
+import { BUTTON_LIST } from '@/pages/_components/Graph/components/ToolBoxHelper/ToolBoxHelper'
 
 @Component({
   components: {
@@ -197,7 +144,6 @@ export default class ToolBox extends Vue {
         return [createBtn(btn), dom] as VNode[]
       }
       if (btn.name === 'import' || btn.name === 'import-case') {
-        console.log(btn.name)
         const dom = this.$createElement('tool-import', {
           on: {
             [GraphEvent.ToolEvent]: this.toolEvent,

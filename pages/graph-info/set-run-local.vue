@@ -1,5 +1,5 @@
 <template>
-  <graph-index class="h-100v" :is-wheel="true" :item="item" config-type="run" tools="import-case|download|plus,minus,fit" />
+  <graph-index class="h-100v" :is-wheel="true" :item="item" config-type="run" left-tools="saveCase" tools="import-case|download|plus,minus,fit" />
 </template>
 
 <script lang="ts">

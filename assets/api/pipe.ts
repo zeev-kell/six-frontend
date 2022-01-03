@@ -1,9 +1,7 @@
-import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { PipeModel } from '@/types/model/Pipe'
 import { MESSAGE_SUCCESS, MESSAGE_ERROR } from '@/utils/reponse-helper'
 import { tableResponse } from '@/types/response'
 import BaseModule from '@/assets/api/BaseModule'
-import { pipeConstants } from '@/constants/PipeConstants'
 
 export class Module extends BaseModule {
   create(data: any): Promise<any> {
@@ -29,23 +27,10 @@ export class Module extends BaseModule {
   get(id: string): Promise<any> {
     return this.$axios.$get('/v2/pipe/repository/' + id)
   }
-  getList(params?: any): Promise<PipeModel[]> {
-    return this.$axios
-      .$get<PipeModel[]>('/v2/pipes', { params })
-      .then((response) => {
-        response.forEach((r) => {
-          if (r.content) {
-            r.content = getObject(r.content)
-          }
-          r.versions?.forEach((v) => {
-            if (v.content) {
-              v.content = getObject(v.content)
-            }
-          })
-        })
-        return response
-      })
-      .catch(() => [])
+  async getList(params?: any): Promise<PipeModel[]> {
+    params = Object.assign({ page: 1, size: 1000, term: '' }, params)
+    const response = await this.$axios.$get<tableResponse<PipeModel>>('/v2/pipes/search', { params })
+    return response.data
   }
   getSummary(params?: any): Promise<PipeModel[]> {
     return this.$axios.$get<PipeModel[]>('/v2/pipes/summary', { params })

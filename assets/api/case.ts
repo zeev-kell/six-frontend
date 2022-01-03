@@ -14,7 +14,7 @@ function serialize(data: any): any {
 export class Module extends BaseModule {
   create(data: any): Promise<any> {
     data = serialize(data)
-    return this.$axios.$post('/v1/case', data)
+    return this.$axios.$post('/v1/case', data).catch(MESSAGE_ERROR)
   }
   update(id: string, data: any): Promise<any> {
     data = serialize(data)
