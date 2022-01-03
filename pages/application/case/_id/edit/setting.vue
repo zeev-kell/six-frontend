@@ -54,7 +54,7 @@ export default class CaseSetting extends CaseItemMixin {
 
   mounted(): void {
     ;['name', 'category', 'description'].forEach((key: string) => {
-      ;(this.formModel as any)[key][key] = (this.item as any)[key]
+      ;(this.formModel as any)[key] = (this.item as any)[key]
     })
     this.formModel.version = this.content.version
   }

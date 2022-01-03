@@ -1,19 +1,22 @@
 <template>
-  <div class="container-fluid">
-    <div class="px-15 text-muted">运行案例为一个使用该应用进行计算的示例。</div>
-    <div class="card-body">
-      <div class="el-row el-row--flex">
-        <div class="el-col-full">
-          <nuxt-link v-slot="{ navigate }" :to="localePath('application-case-new')" custom>
-            <el-button type="primary" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
-          </nuxt-link>
-          <span class="m-x-1">或</span>
-          <case-select v-model="caseId" />
-        </div>
-        <div class="el-col-auto">
-          <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
-        </div>
+  <div class="container-fluid card">
+    <div class="card-header el-row el-row--flex">
+      <div class="el-col-full">
+        <h2 class="mx-0 el-col-equal">双击图标为应用配置参数范例，或者导入配置</h2>
       </div>
+      <div class="el-col-auto">
+        <loading-button :callback="onSubmit" type="success" icon="el-icon-check"> 保存 </loading-button>
+      </div>
+    </div>
+    <div class="card-body">
+      <graph-index
+        ref="graphIndex"
+        class="h-100v"
+        :item="item"
+        config-type="run"
+        tools="import-case|download|plus,minus,fit"
+        @propagate-event="onPropagate"
+      />
     </div>
   </div>
 </template>
@@ -24,21 +27,34 @@ import { pipeConstants } from '@/constants/PipeConstants'
 import LoadingButton from '@/components/LoadingButton.vue'
 import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
 import CaseSelect from '@/pages/application/_components/CaseSelect.vue'
+import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
+import { GraphEvent } from '@/constants/GraphEvent'
+import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 
 @Component({
-  components: { CaseSelect, LoadingButton },
+  components: { GraphIndex, CaseSelect, LoadingButton },
 })
 export default class Case extends PipeItemMixin {
-  profile = {}
-  caseId = ''
+  $refs!: {
+    graphIndex: GraphIndex
+  }
+  get jobValue(): any {
+    return this.$store.state.graph.jobValue
+  }
+  onPropagate(eventName: string): void {
+    if (GraphEvent.TriggerPageModalCreate === eventName) {
+      const profile = this.item.profile
+      const job = profile && profile.length === 36 ? {} : getObject(profile)
+      this.$nextTick(() => {
+        this.$refs.graphIndex.dispatchAction('updateJob', job)
+      })
+    }
+  }
   async onSubmit(): Promise<void> {
-    const data = { profile: this.caseId }
+    const data = { profile: JSON.stringify(this.jobValue) }
     await this.$api.pipe.updateRevision(this.item.pipe_id, this.item.resource_id, data).then(() => {
       this.$store.commit('pipe/UPDATE_CURRENT_STORE', data)
     })
-  }
-  mounted(): void {
-    this.caseId = this.item.profile
   }
 }
 </script>

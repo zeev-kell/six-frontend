@@ -81,7 +81,7 @@ export default class PipeRepositorySetting extends PipeItemMixin {
   }
   mounted(): void {
     ;['name', 'resource_id', 'category', 'website', 'description'].forEach((key: string) => {
-      ;(this.formModel as any)[key][key] = (this.item as any)[key]
+      ;(this.formModel as any)[key] = (this.item as any)[key]
     })
   }
   async onSubmit(): Promise<void> {
