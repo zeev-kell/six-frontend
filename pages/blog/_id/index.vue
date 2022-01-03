@@ -71,6 +71,23 @@ import CanCreate from '@/components/common/CanCreate.vue'
     const blog: BlogModel = await app.$api.blog.get(params.id)
     return { blog }
   },
+  head(this: any): any {
+    return {
+      title: this.header.title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.header.description,
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: this.header.keywords,
+        },
+      ],
+    }
+  },
 })
 export default class DocIndexPage extends Vue {
   $refs!: {
@@ -87,6 +104,13 @@ export default class DocIndexPage extends Vue {
   }
   get bannerImage(): string {
     return this.blog.image || '/images/banner.jpg'
+  }
+  get header(): any {
+    return {
+      title: this.blog?.title,
+      description: this.blog?.description,
+      keywords: this.blog.category.map((c: any) => c.name).join(','),
+    }
   }
 
   mounted(): Promise<any> | void {
