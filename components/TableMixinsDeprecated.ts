@@ -4,7 +4,7 @@ import { tableQuery, tableResponse } from '@/types/response'
 @Component
 export default class TableMixinsDeprecated<T> extends Vue {
   // 查询参数
-  protected listQuery: tableQuery = {
+  protected listQuery: any = {
     page: 1,
     size: 20,
     name: undefined,

@@ -19,10 +19,10 @@ export default class ToolBoxLeft extends ToolBox {
     toolImport: HTMLFormElement
   }
   actionSaveCase(): void {
-    const data = this.$parent.exportCwlt('json', true)
+    const data = (this.$parent as any).exportCwlt('json', true)
     data.version = 'v1.0.0'
     setStore(CASE_LOCAL, data.data)
-    this.$I18nRouter.push({ name: 'application-case-new', query: { local: true, resource_id: this.$route.params.id } })
+    this.$I18nRouter.push({ name: 'application-case-new', query: { local: 'true', resource_id: this.$route.params.id } })
   }
 
   render(h: CreateElement): VNode {

@@ -197,7 +197,7 @@ export default class GraphMixin extends GraphEdit {
     }
     downloadStrLink(data, name)
   }
-  exportCwlt(format = 'json', isOnlyData = false): void {
+  exportCwlt(format = 'json', isOnlyData = false): void | { data: any; name: string } {
     const input = this.jobValue
     const workflow = this.dataModel instanceof WorkflowModel ? this.dataModel.serializeEmbedded() : this.dataModel.serialize()
     const data = {

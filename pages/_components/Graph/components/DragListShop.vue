@@ -35,12 +35,12 @@ import DragItemCollapse from '@/pages/_components/Graph/components/DragItemColla
   },
 })
 export default class DragListShop extends TableMixins<PipeModel> {
-  protected listQuery: tableQuery = {
+  protected listQuery: any = {
     name: undefined,
   }
   protected listQueryKeys: string[] = ['name']
   protected filterPipe(p: PipeModel): boolean {
-    return (p.type === 0 || p.type === 1) && p.resource_id
+    return (p.type === 0 || p.type === 1) && !!p.resource_id
   }
 
   async refreshTable(): Promise<void> {
