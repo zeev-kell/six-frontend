@@ -40,11 +40,36 @@
               {{ $t('nav.about') }}
             </a>
           </li>
+
         </el-menu>
       </div>
       <div class="el-col-auto hidden-sm-and-down">
+        
         <client-only>
           <el-menu mode="horizontal">
+            <li role="menuitem" tabindex="0" class="el-menu-item el-menu-item-blank">
+                  <a class="chat" href="https://gitter.im/6-oclock/community" rel="me">加入聊天室</a>
+                  
+                  <script>
+                    ((window.gitter = {}).chat = {}).options = {
+                      room: '6-oclock/community',
+                      <!-- activationElement: '.js-gitter-toggle-chat-button', -->
+                      <!-- activationElement: 'a.chat', -->
+                      <!-- targetElement:  -->
+                      <!-- preload: true, -->
+                    };
+                    
+                    document.addEventListener('gitter-sidecar-instance-started', function(e) {
+                      var chat = e.detail.chat;
+                      chat.options.targetElement.forEach(function(targetElement) {
+                        var actionBarElement = targetElement.querySelector('.gitter-chat-embed-action-bar');
+                        actionBarElement.insertAdjacentHTML('afterbegin', '<div class="chat-embed-title">' + 'sixoclock用户讨论组' + '</div>');
+                      });
+                    });
+                  </script>
+                  
+                  <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+            </li>
             <li v-if="!username" class="el-menu-item menu-link" role="menuitem">
               <nuxt-link :to="localePath('access-register')">
                 {{ $t('nav.register') }}
@@ -290,4 +315,33 @@ export default class IndexNavigation extends Vue {
   color: inherit;
   text-decoration: none;
 }
+</style>
+
+<style>
+.gitter-chat-embed {
+  /* right: 250px; */
+  z-index:9999999;
+  top:20;
+}
+.gitter-open-chat-button {
+  right: 100px;
+  bottom: 100px;
+}
+
+.chat-embed-title {
+  flex: 1;
+  align-self:center;
+  padding-left:1rem;
+  font-size:12px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+@media (max-width: 600px) {
+  .gitter-open-chat-button,
+  .gitter-chat-embed {
+    display: none;
+  }
+}
+
 </style>
