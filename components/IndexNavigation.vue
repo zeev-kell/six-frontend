@@ -48,7 +48,7 @@
         <client-only>
           <el-menu mode="horizontal">
             <li role="menuitem" tabindex="0" class="el-menu-item el-menu-item-blank">
-                  <a class="chat" href="https://gitter.im/6-oclock/community" rel="me">加入聊天室</a>
+                  <a class="chat" href="https://gitter.im/6-oclock/community" rel="me">加入讨论组</a>
                   
                   <script>
                     ((window.gitter = {}).chat = {}).options = {
