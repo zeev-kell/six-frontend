@@ -25,7 +25,6 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import TableMixins from '@/components/TableMixinsDeprecated'
-import { tableQuery } from '@/types/response'
 import { PipeModel } from '@/types/model/Pipe'
 import DragItemCollapse from '@/pages/_components/Graph/components/DragItemCollapse.vue'
 
@@ -44,8 +43,13 @@ export default class DragListShop extends TableMixins<PipeModel> {
   }
 
   async refreshTable(): Promise<void> {
+    const name = this.listQuery.name
+    if (name && name.length < 3) {
+      this.$message.error('至少输入三个字符进行搜索')
+      return
+    }
     this.loading = true
-    const term = this.listQuery.name ? `name:${this.listQuery.name}` : ''
+    const term = name ? `name:${name}` : ''
     let response = await this.$api.pipe.getList({ term })
     response = response.filter(this.filterPipe)
     response.forEach((p: PipeModel) => {

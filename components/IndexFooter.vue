@@ -120,9 +120,7 @@
                 <a href="https://github.com/6-oclock" target="_blank">GitHub 仓库</a>
               </div>
             </div>
-
           </div>
-          
         </div>
         <div v-if="showUA">
           <user-agreement v-model="showUA"></user-agreement>

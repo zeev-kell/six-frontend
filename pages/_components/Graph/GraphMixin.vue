@@ -148,13 +148,13 @@ export default class GraphMixin extends GraphEdit {
   }
   // 往图形添加 Node
   addNodeToGraph(task: PipeModel, coords: { x: number; y: number }): void {
-    // sbg 前缀是必须的
-    Object.assign(task.content, {
-      'sbg:x': coords.x,
-      'sbg:y': coords.y,
-      'six:id': task.resource_id || '',
-    })
     try {
+      // sbg 前缀是必须的
+      Object.assign(task.content, {
+        'sbg:x': coords.x,
+        'sbg:y': coords.y,
+        'six:id': task.resource_id || '',
+      })
       this.addStepToGraph(task)
     } catch (e: unknown) {
       this.$message.error('软件内容不规范')

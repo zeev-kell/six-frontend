@@ -29,10 +29,7 @@
         <div class="down-btn" />
       </div>
     </div>
-
-
   </section>
-  
 </template>
 
 <script lang="ts">
