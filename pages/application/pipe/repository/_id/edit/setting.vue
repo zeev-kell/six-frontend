@@ -44,7 +44,7 @@
 import { Component } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
 import PipeItemMixin from '@/pages/application/pipe/repository/_components/PipeRepositoryItemMixin.vue'
-import { CategoryModel } from '@/types/model/Common'
+// import { CategoryModel } from '@/types/model/Common'
 import CanCreate from '@/components/common/CanCreate.vue'
 import CanExamine from '@/components/common/CanExamine.vue'
 import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
