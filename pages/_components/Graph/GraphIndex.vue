@@ -14,6 +14,7 @@ import { Workflow as V1Workflow } from 'cwlts/mappings/v1.0/Workflow'
 import { CommandLineTool } from 'cwlts/mappings/v1.0/CommandLineTool'
 import { PipeModel } from '@/types/model/Pipe'
 import { pipeConstants } from '@/constants/PipeConstants'
+import { getObject } from '@/pages/_components/Graph/helpers/YamlHandle'
 
 @Component({
   components: {
@@ -42,7 +43,8 @@ export default class GraphIndex extends Vue {
     if ((this.item.type as unknown) !== undefined) {
       return this.item.type === pipeConstants.items.TYPE_TOOL ? 'graph-tool' : 'graph-workflow'
     }
-    return this.item.content?.class === 'CommandLineTool' ? 'graph-tool' : 'graph-workflow'
+    const content = getObject(this.item.content)
+    return content?.class === 'CommandLineTool' ? 'graph-tool' : 'graph-workflow'
   }
 
   // 执行 子组件 方法

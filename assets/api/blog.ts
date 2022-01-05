@@ -23,10 +23,12 @@ export class Module extends BaseModule {
   get(id: string): Promise<BlogModel> {
     return this.$axios.$get<BlogModel>(`/v1/blog/${id}`)
   }
-  getList(params?: any): Promise<BlogModel[]> {
-    return this.$axios.$get<BlogModel[]>('/v1/blogs', { params })
+  async getList(params?: any): Promise<BlogModel[]> {
+    console.log(params)
+    params = Object.assign({ term: ``, page: 1, size: 1000 }, params)
+    const response = await this.$axios.$get<tableResponse<BlogModel>>('/v1/search/doc', { params })
+    return response.data
   }
-
   search(params?: any): Promise<tableResponse<BlogModel>> {
     console.log(params)
     params = Object.assign({ term: ``, page: 1, size: 20 }, params)

@@ -107,8 +107,17 @@ export default class DocNewPage extends OssUploadMixin {
       this.$message.warning('请填写完整信息')
       throw e
     })
-    await this.$api.blog.create(this.formModel).then(() => {
-      this.$I18nRouter.push('/application/blogs')
+    await this.$api.blog.create(this.formModel).then(async (blog) => {
+      const { pipeId, resourceId } = this.$route.query
+      if (pipeId && resourceId) {
+        const data = { instruction: blog.data.blog_id }
+        await this.$api.pipe.updateRevision(pipeId as string, resourceId as string, data).then(async () => {
+          this.$store.commit('pipe/UPDATE_CURRENT_STORE', data)
+          await this.$I18nRouter.push('/application/pipe/' + resourceId + '/edit/course')
+        })
+      } else {
+        await this.$I18nRouter.push('/application/blogs')
+      }
     })
   }
   onFullScreen(fullScreen: boolean): void {

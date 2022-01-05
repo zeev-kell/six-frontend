@@ -4,7 +4,19 @@
     <div class="card-body">
       <div class="el-row el-row--flex">
         <div class="el-col-full">
-          <nuxt-link v-slot="{ navigate }" :to="localePath('application-blog-new')" custom>
+          <nuxt-link
+            v-slot="{ navigate }"
+            :to="
+              localePath({
+                name: 'application-blog-new',
+                query: {
+                  pipeId: item.pipe_id,
+                  resourceId: item.resource_id,
+                },
+              })
+            "
+            custom
+          >
             <el-button type="primary" @click="navigate" @keypress.enter="navigate"> 新建 </el-button>
           </nuxt-link>
           <span class="m-x-1">或</span>
