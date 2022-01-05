@@ -36,6 +36,26 @@
           </el-form>
         </div>
       </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header el-row--flex is-align-middle">
+        <h2 class="mx-0 el-col-equal">应用参数结构CWL</h2>
+      </div>
+      <div class="card-body">
+        <el-tabs v-model="activeName" type="card">
+          <el-tab-pane label="编辑内容" name="1">
+            <div class="codemirror-box">
+              <code-mirror-client v-model="formModel.content" />
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="预览内容" name="2">
+            <div v-if="activeName === '2'" class="page-graph-box workflow-box">
+              <graph-index :item="graph" :readonly="true" class="h-100" tools="plus,minus,fit|auto" />
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+      </div>
       <div class="card-footer">
         <loading-button :callback="onSubmit" type="success" icon="el-icon-plus"> 保存 </loading-button>
       </div>
@@ -48,16 +68,23 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import LoadingButton from '@/components/LoadingButton.vue'
 import PipeTypeSelect from '@/pages/application/_components/PipeTypeSelect.vue'
 import CategorySelect from '@/pages/application/_components/CategorySelect.vue'
+import GraphIndex from '@/pages/_components/Graph/GraphIndex.vue'
+import CodeMirrorClient from '@/pages/application/_components/codeMirror/CodeMirrorClient.vue'
+import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vue'
+
 import { PipeRepositoryModel } from '@/types/model/Pipe'
 
 @Component({
-  components: { CategorySelect, PipeTypeSelect, LoadingButton },
+  components: { PipeItemMixin, CodeMirrorClient, CategorySelect, PipeTypeSelect, LoadingButton, GraphIndex},
 })
+
+
 export default class PipeRepositoryNewPage extends Vue {
   $refs!: {
     formModel: HTMLFormElement
   }
-
+  
+  activeName = '1'
   formModel: any = {
     name: '',
     type: '',
@@ -81,6 +108,14 @@ export default class PipeRepositoryNewPage extends Vue {
     type: [{ required: true, message: '请选择类型', trigger: 'change' }],
     category: [{ required: true, message: '请选择分类', trigger: 'blue' }],
   }
+
+
+  get graph() {
+    return {
+      content: this.formModel.content,
+    }
+  }
+
   async onSubmit(): Promise<void> {
     await this.$refs.formModel.validate()
     await this.$api.pipe.create(this.formModel).then((data) => {
@@ -90,3 +125,18 @@ export default class PipeRepositoryNewPage extends Vue {
   }
 }
 </script>
+
+
+<style lang="scss" scoped>
+.workflow-box,
+.codemirror-box {
+  min-height: 450px;
+  height: calc(100vh - 130px);
+}
+.codemirror-box ::v-deep > .vue-codemirror {
+  height: 100%;
+  > .CodeMirror {
+    height: 100%;
+  }
+}
+</style>

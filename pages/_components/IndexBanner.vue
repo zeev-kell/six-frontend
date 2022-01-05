@@ -11,7 +11,7 @@
         </docs-link>
       </div>
       <div class="search-wrap mb-50">
-        <el-input v-model="searchInput" style="max-width: 450px" placeholder="提供1000+种工具和知识" @keyup.enter.native="toSearch">
+        <el-input v-model="searchInput" style="max-width: 450px" placeholder="输入名字或关键字描述查找，如bwa，序列比对" @keyup.enter.native="toSearch">
           <el-select slot="prepend" v-model="searchType" style="width: 80px">
             <el-option label="软件" value="pipes" />
             <el-option label="文档" value="blogs" />
