@@ -48,6 +48,7 @@ function translateMark(el, binding) {
   el.innerHTML = safe ? sanitizeHtml(html) : html
 }
 
+/** @deprecated */
 export default {
   marked: {
     update: translateMark,

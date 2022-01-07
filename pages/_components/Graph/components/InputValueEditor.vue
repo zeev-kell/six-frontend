@@ -203,6 +203,7 @@ export default class InputValueEditor extends Vue {
     return this.control?.value
   }
   set actualValue(value) {
+    // TODO 优化数据传递方式
     // 只对普通类型有效
     console.log('set actualValue', value)
     this.$emit('on-update', value)
@@ -427,6 +428,7 @@ export default class InputValueEditor extends Vue {
   }
   onControlUpdate(value: any, control: any): void {
     // 非普通类型的更新方式
+    // TODO 优化数据传递方式
     console.log('onControlUpdate', value)
     control.setValue(value)
     this.$emit('on-update', this.control.value)

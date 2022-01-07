@@ -169,6 +169,7 @@ export default class WorkflowStepInspectorEntry extends Vue {
     return this.value
   }
   set actualValue(value: string | null | undefined | []) {
+    // TODO 优化数据传递方式
     this.$emit('on-update', value)
   }
   get arrayModifiedInput(): any {

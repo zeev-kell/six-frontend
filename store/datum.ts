@@ -5,7 +5,7 @@ import { NuxtState } from '@nuxt/types/app'
 import { RootState } from '@/store/index'
 import { yamlToJson } from '@/pages/_components/Graph/helpers/YamlHandle'
 import { ApiType } from '@/types/plugin'
-
+// TODO 优化成父子级数据结构，使用 @Inject 和 @Provide
 export const state = (): NuxtState => ({
   data_id: null,
   name: null,

@@ -95,6 +95,7 @@ export default class GraphMixin extends GraphEdit {
   get isRunJob(): boolean {
     return this.configType === 'run'
   }
+  // TODO 修改为自身对象，脱离 $store
   get jobValue(): any {
     return this.$store.state.graph.jobValue
   }
@@ -223,6 +224,7 @@ export default class GraphMixin extends GraphEdit {
       const drop = this.graph.getPlugin(DropPlugin)
       drop?.registerOnDropAfterChange(async (coords: SVGPoint) => {
         const task = this.$store.state.system.dragToolItem
+        // TODO 优化代码耦合
         const item = await this.$api.pipe.getRevision(task.pipe_id, task.resource_id)
         item.content = getObject(item.content)
         this.addNodeToGraph(item, coords)

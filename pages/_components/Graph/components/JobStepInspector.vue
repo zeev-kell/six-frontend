@@ -285,6 +285,7 @@ export default class JobStepInspector extends Vue {
           }
         }
         const jobValue = normalizeJob(out, this.model)
+        // TODO 优化数据传递方式
         this.$store.commit('graph/SET_JOB_VALUE', jobValue)
       },
       {

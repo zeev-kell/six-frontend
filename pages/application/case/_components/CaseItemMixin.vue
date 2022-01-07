@@ -6,6 +6,7 @@ import { responseError } from '@/types/response'
 @Component
 export default class CaseItemMixin extends Vue {
   error: responseError | null = null
+  // TODO 优化成父子级数据结构，使用 @Inject 和 @Provide，减少 $store 的依赖
   get item(): CaseModel {
     return this.$store.state.case
   }

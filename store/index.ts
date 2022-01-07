@@ -3,6 +3,7 @@ import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { NuxtState } from '@nuxt/types/app'
 import vue from 'vue'
 
+// TODO 优化成父子级数据结构，使用 @Inject 和 @Provide
 export const state = (): NuxtState => ({})
 
 export type RootState = ReturnType<typeof state>

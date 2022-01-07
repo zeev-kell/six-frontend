@@ -48,6 +48,7 @@
             <li role="menuitem" tabindex="0" class="el-menu-item el-menu-item-blank">
               <a class="chat" href="https://gitter.im/6-oclock/community" rel="me">加入讨论组</a>
 
+              <!-- TODO 修改为组件，监听路由只在特定的页面显示 -->
               <script>
                 ((window.gitter = {}).chat = {}).options = {
                   room: '6-oclock/community',
@@ -66,6 +67,7 @@
                 });
               </script>
 
+              <!-- TODO 修改为 nuxt.config.ts 中 head script -->
               <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
             </li>
             <li v-if="!username" class="el-menu-item menu-link" role="menuitem">
