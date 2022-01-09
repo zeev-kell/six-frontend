@@ -47,8 +47,8 @@ export default class access extends Vue {
     form: HTMLFormElement
   }
   form = {
-    username: '',
-    password: '',
+    username: 'admin',
+    password: 'admin',
   }
   rules = {
     username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],

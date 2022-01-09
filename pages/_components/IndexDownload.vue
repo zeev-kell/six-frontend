@@ -2,7 +2,7 @@
   <section v-once>
     <div class="section-title">
       <h1>数据处理从未如此简单</h1>
-      <div class="sub-title">你可以在Windows电脑、Linux系统、以及六点了网站上使用sixOClock</div>
+      <div class="sub-title">你可以在Windows电脑、Linux系统、以及网站上使用</div>
     </div>
     <div class="container">
       <div class="el-row">

@@ -5,7 +5,7 @@ export class Generator {
   static generateWorkflow(id?: string, label?: string): Workflow {
     return {
       $namespaces: {
-        sbg: 'http://www.sixoclock.net/',
+        sbg: 'https://www.sevenbridges.com/',
       },
       id,
       label,
@@ -21,7 +21,7 @@ export class Generator {
   static generateTool(id?: string, label?: string): CommandLineTool {
     return {
       $namespaces: {
-        sbg: 'http://www.sixoclock.net/',
+        sbg: 'https://www.sevenbridges.com/',
       },
       id,
       label,

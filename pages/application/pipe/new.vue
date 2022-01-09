@@ -75,15 +75,13 @@ import PipeItemMixin from '@/pages/application/pipe/_components/PipeItemMixin.vu
 import { PipeRepositoryModel } from '@/types/model/Pipe'
 
 @Component({
-  components: { PipeItemMixin, CodeMirrorClient, CategorySelect, PipeTypeSelect, LoadingButton, GraphIndex},
+  components: { PipeItemMixin, CodeMirrorClient, CategorySelect, PipeTypeSelect, LoadingButton, GraphIndex },
 })
-
-
 export default class PipeRepositoryNewPage extends Vue {
   $refs!: {
     formModel: HTMLFormElement
   }
-  
+
   activeName = '1'
   formModel: any = {
     name: '',
@@ -109,7 +107,6 @@ export default class PipeRepositoryNewPage extends Vue {
     category: [{ required: true, message: '请选择分类', trigger: 'blue' }],
   }
 
-
   get graph() {
     return {
       content: this.formModel.content,
@@ -125,7 +122,6 @@ export default class PipeRepositoryNewPage extends Vue {
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 .workflow-box,

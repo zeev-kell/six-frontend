@@ -8,14 +8,14 @@
     </section>
     <section>
       <div class="section-border">
-        <h1>Sixoclock 客户端软件</h1>
-        <h3 class="sub-title">一键配置sixoclock平台软件运行环境的安装程序</h3>
+        <h1>客户端软件</h1>
+        <h3 class="sub-title">一键配置平台软件运行环境的安装程序</h3>
         <div class="download-btn">
           <el-dropdown @command="openMsg">
-            <el-button type="primary" size="download"> 免费下载 Sixbox 安装程序 </el-button>
+            <el-button type="primary" size="download"> 免费下载安装程序 </el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="installer"> windows 版安装程序 </el-dropdown-item>
-              <el-dropdown-item command="sixbox_linux"> linux 版安装程序 </el-dropdown-item>
+              <el-dropdown-item command="_linux"> linux 版安装程序 </el-dropdown-item>
               <el-dropdown-item command="installer-offline"> windows版安装程序离线包 </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -24,7 +24,7 @@
     </section>
     <section class="bg">
       <div class="section-title" style="padding: 20px 0">
-        <h2>开始体验 sixoclock</h2>
+        <h2>开始体验</h2>
       </div>
       <div class="container" style="width: 840px; padding-bottom: 60px">
         <el-row :gutter="30">
@@ -33,8 +33,8 @@
               <div slot="header">
                 <img class="img-fluid" src="/images/clients_02-1.webp" alt="" />
               </div>
-              <h3 class="text-center">Sixoclock python包</h3>
-              <p class="text-justify">在python中运行下载自sixoclock软件仓库的软件与流程</p>
+              <h3 class="text-center">python包</h3>
+              <p class="text-justify">在python中运行下载自软件仓库的软件与流程</p>
               <a href="https://pypi.org/project/sixrunr/" target="_blank" class="no-underline">
                 <el-button type="primary" class="el-button--block">去下载</el-button>
               </a>
@@ -45,7 +45,7 @@
               <div slot="header">
                 <img class="img-fluid" src="/images/appstore_03-1.webp" alt="" />
               </div>
-              <h3 class="text-center">Sixoclock软件仓库</h3>
+              <h3 class="text-center">软件仓库</h3>
               <p class="text-justify">查找并下载需要的数据处理软件<br />&nbsp;</p>
               <nuxt-link v-slot="{ navigate }" :to="localePath('/application/pipes')" custom>
                 <el-button type="primary" class="el-button--block" @click="navigate" @keypress.enter="navigate"> 登录系统 </el-button>
@@ -57,8 +57,8 @@
               <div slot="header">
                 <img class="img-fluid" src="/images/pipline_03-1.webp" alt="" />
               </div>
-              <h3 class="text-center">使用sixoclock处理数据</h3>
-              <p class="text-justify">运行下载自sixoclock软件仓库的流程处理本地数据</p>
+              <h3 class="text-center">使用处理数据</h3>
+              <p class="text-justify">运行下载自软件仓库的流程处理本地数据</p>
               <docs-link to="/">
                 <el-button type="primary" class="el-button--block">阅读教程 </el-button>
               </docs-link>
@@ -77,27 +77,25 @@ import DocsLink from '@/components/common/DocsLink.vue'
 const MSG: any = {
   installer: [
     '<div><p>链接：<a href="https://pan.baidu.com/s/1NccGp4VEr8YBoXcYUg73kQ" target="_blank">https://pan.baidu.com/s/1NccGp4VEr8YBoXcYUg73kQ</a></p><p>提取码：6666</p></div>',
-    'sixoclock运行环境安装器installer.exe',
+    '运行环境安装器installer.exe',
   ],
   'installer-offline': [
     '<div><p>运行cwl必须的windows环境离线安装包</p><p>链接：<a href="https://pan.baidu.com/s/1QKelE0BfQF53ySFtfnD32A" target="_blank">https://pan.baidu.com/s/1QKelE0BfQF53ySFtfnD32A</a></p><p>提取码：6666</p></div>',
-    'sixoclock运行环境安装器installer.exe',
+    '运行环境安装器installer.exe',
   ],
   sixrunr: [],
 }
 
-const description =
-  'sixbox是sixoclock平台的客户端软件，支持本地创建、运行、管理sixoclock各类资源' +
-  '（CWL格式软件，数据以及数据格式描述等）并与sixoclock平台进行在线交互。'
+const description = '是平台的客户端软件，支持本地创建、运行、管理各类资源' + '（CWL格式软件，数据以及数据格式描述等）并与平台进行在线交互。'
 
 @Component({
   components: { DocsLink },
   scrollToTop: true,
   layout: 'IndexLayoutScroll',
   head: {
-    title: '下载中心-sixbox-本地客户端软件',
+    title: '下载中心--本地客户端软件',
     meta: [
-      { hid: 'keywords', name: 'keywords', content: 'sixbox,sixbox下载,sixoclock平台软件运行环境,sixoclock,CWL' },
+      { hid: 'keywords', name: 'keywords', content: ',下载,平台软件运行环境,CWL' },
       { hid: 'description', name: 'description', content: description },
       { hid: 'og:description', name: 'og:description', content: description },
     ],
@@ -106,11 +104,9 @@ const description =
 export default class DownloadCenterPage extends Vue {
   openMsg(type: string) {
     if (type === 'installer') {
-      window.open(process.env.RESOURCES_URL + '/dist/latest/installer.exe')
       return
     }
-    if (type === 'sixbox_linux') {
-      window.open(process.env.RESOURCES_URL + '/dist/latest/Sixbox_linux64_latest.sh')
+    if (type === '_linux') {
       return
     }
     ;(this.$alert as any)(...MSG[type], { dangerouslyUseHTMLString: true })

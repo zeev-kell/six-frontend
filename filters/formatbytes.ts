@@ -1,6 +1,6 @@
 /**
  * 字节转换为kb、Gb
- * Created by keziyuan on 2021/2/13 20:20.
+ * Created by zeev on 2021/2/13 20:20.
  */
 
 export function formatBytes(bytes: number | string, decimals = 2) {

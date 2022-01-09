@@ -1,5 +1,5 @@
 /**
- * Created by keziyuan on 2021/2/8 17:23.
+ * Created by zeev on 2021/2/8 17:23.
  */
 function convertTime(time) {
   const [amt, t = 'ms'] = String(time).split(/(ms|s)/i)

@@ -125,7 +125,7 @@
   "hints": [
     {
       "class": "DockerRequirement",
-      "dockerPull": "6oclock/bowtie2-light:v2.2.9"
+      "dockerPull": "bowtie2-light:v2.2.9"
     }
   ],
   "stderr": "$(inputs.fastq1.nameroot).bowtie2_stderr"

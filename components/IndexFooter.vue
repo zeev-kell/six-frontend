@@ -19,11 +19,11 @@
           <div class="el-col-md-4 hidden-sm-and-down">
             <div class="title">六点了</div>
             <ul class="list-unstyled">
-              <li><a href="https://github.com/6-oclock" target="_blank">我们是谁</a></li>
-              <li><a href="https://github.com/6-oclock" target="_blank">历程</a></li>
-              <li><a href="https://github.com/6-oclock" target="_blank">关注我们</a></li>
-              <li><a href="https://github.com/6-oclock" target="_blank">联系我们</a></li>
-              <li><a href="https://github.com/6-oclock" target="_blank">加入我们</a></li>
+              <li><a href="https://github.com/" target="_blank">我们是谁</a></li>
+              <li><a href="https://github.com/" target="_blank">历程</a></li>
+              <li><a href="https://github.com/" target="_blank">关注我们</a></li>
+              <li><a href="https://github.com/" target="_blank">联系我们</a></li>
+              <li><a href="https://github.com/" target="_blank">加入我们</a></li>
             </ul>
           </div>
           <div class="el-col-md-4 hidden-sm-and-down">
@@ -50,9 +50,6 @@
                 <nuxt-link :to="localePath('download-center')">客户端下载</nuxt-link>
               </li>
               <li>
-                <a :href="RESOURCES_URL + '/data/'" target="_blank">数据下载</a>
-              </li>
-              <li>
                 <nuxt-link :to="localePath('application-pipes')">软件仓库</nuxt-link>
               </li>
             </ul>
@@ -72,8 +69,8 @@
               <li>
                 <docs-link to="/guide/">使用指南</docs-link>
               </li>
-              <li><a href="https://github.com/6-oclock" target="_blank">更新日志</a></li>
-              <li><a href="https://github.com/6-oclock" target="_blank">NewSroom</a></li>
+              <li><a href="https://github.com/" target="_blank">更新日志</a></li>
+              <li><a href="https://github.com/" target="_blank">NewSroom</a></li>
             </ul>
           </div>
           <div class="el-col-12 hidden-md-and-up">
@@ -85,7 +82,7 @@
                 <docs-link to="/">资源</docs-link>
               </div>
               <div class="el-col-12">
-                <a href="https://github.com/6-oclock" target="_blank">关于我们</a>
+                <a href="https://github.com/" target="_blank">关于我们</a>
               </div>
               <div class="el-col-12">
                 <nuxt-link :to="localePath('index') + '#section-product'">产品</nuxt-link>
@@ -102,22 +99,11 @@
               </div>
             </div>
             <div class="el-col-8">
-              <el-popover placement="bottom" trigger="hover">
-                <img style="width: 126px" src="/images/qrcode.webp" alt="官方微博" />
-                <div slot="reference" class="pointer">
-                  <div class="icon">
-                    <fa :icon="['fab', 'weixin']" class="fa-2x" />
-                  </div>
-                  <div class="hidden-sm-and-down">官方微信</div>
-                </div>
-              </el-popover>
-            </div>
-            <div class="el-col-8">
               <div class="icon">
                 <fa :icon="['fab', 'github']" class="fa-2x" />
               </div>
               <div class="hidden-sm-and-down">
-                <a href="https://github.com/6-oclock" target="_blank">GitHub 仓库</a>
+                <a href="https://github.com/" target="_blank">GitHub 仓库</a>
               </div>
             </div>
           </div>

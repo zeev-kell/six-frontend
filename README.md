@@ -1,11 +1,5 @@
 # six-frontend
 
-## TODO
-
-- [ ] pipe详情页编辑界面右上角新增删除按钮用于删除版本。
-- [ ] 流程组合后以及流程运行界面，如果流程节点有参数配置则显示为不同颜色（而不是现在的都显示为绿色）以告知用户当前节点有参数可以进行配置。
-- [ ] 流程可以进行增减模块（就像流程拖拽里一样，可以删除节点）
-- [ ] 流程拖拽界面，如果拖进画布的是一个流程，支持点击流程图标，选择展开流程（展开成类似流程组合时的结构）
 ## Build Setup
 
 ```bash
@@ -84,4 +78,3 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 #### CWL 说明 #### 
 依赖库 [cwl-svg](href=https://github.com/rabix/cwl-svg) 
 
-所有组件在 /pages/application/graph ，主入口在 GraphIndex.vue 中

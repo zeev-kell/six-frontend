@@ -212,7 +212,7 @@
                 "hints": [
                     {
                         "class": "DockerRequirement",
-                        "dockerPull": "6oclock/bcftools:v1.11"
+                        "dockerPull": "bcftools:v1.11"
                     }
                 ],
                 "stdout": "$(inputs.inputBAM.nameroot).vcf"
@@ -451,7 +451,7 @@
                 "hints": [
                     {
                         "class": "DockerRequirement",
-                        "dockerPull": "6oclock/bowtie2-light:v2.2.9"
+                        "dockerPull": "bowtie2-light:v2.2.9"
                     }
                 ]
             },
@@ -575,7 +575,7 @@
                 "hints": [
                     {
                         "class": "DockerRequirement",
-                        "dockerPull": "6oclock/bcftools:v1.11"
+                        "dockerPull": "bcftools:v1.11"
                     }
                 ],
                 "stdout": "$(inputs.inputVCF.nameroot).vcf"
@@ -690,7 +690,7 @@
                 "hints": [
                     {
                         "class": "DockerRequirement",
-                        "dockerPull": "6oclock/samtools:1.8-dev"
+                        "dockerPull": "samtools:1.8-dev"
                     }
                 ],
                 "stdout": "$(inputs.bam_sorted.nameroot).depth.txt"
@@ -769,7 +769,7 @@
                 "hints": [
                     {
                         "class": "DockerRequirement",
-                        "dockerPull": "6oclock/samtools:1.8-dev"
+                        "dockerPull": "samtools:1.8-dev"
                     }
                 ]
             },
@@ -960,7 +960,7 @@
                 "hints": [
                     {
                         "class": "DockerRequirement",
-                        "dockerPull": "6oclock/soapnuke:v2.1.0"
+                        "dockerPull": "soapnuke:v2.1.0"
                     }
                 ]
             },
@@ -1033,7 +1033,7 @@
                 "hints": [
                     {
                         "class": "DockerRequirement",
-                        "dockerPull": "6oclock/samtools:1.8-dev"
+                        "dockerPull": "samtools:1.8-dev"
                     }
                 ]
             },
@@ -1206,7 +1206,7 @@
                 "hints": [
                     {
                         "class": "DockerRequirement",
-                        "dockerPull": "6oclock/bowtie2-light:v2.2.9"
+                        "dockerPull": "bowtie2-light:v2.2.9"
                     }
                 ],
                 "stderr": "$(inputs.fastq1.nameroot).bowtie2_stderr"
@@ -1290,7 +1290,7 @@
                 "hints": [
                     {
                         "class": "DockerRequirement",
-                        "dockerPull": "6oclock/samtools:1.8-dev"
+                        "dockerPull": "samtools:1.8-dev"
                     }
                 ],
                 "stdout": "$(inputs.bam_unsorted.nameroot).sort.bam"

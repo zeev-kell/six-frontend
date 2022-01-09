@@ -8,12 +8,25 @@ export const Datum = {
   name: 'chrM.fasta',
   version: '1.4',
   'type|1': [0, 1],
-  provider: 'keziyuan',
+  provider: 'admin',
   website: 'http://39.100.115.170:5000/resources/data/NGS/Homo_sapiens/Reference/hg19.chrM.fasta',
   description: 'chrM\u53F7\u67D3\u8272\u4F53\u53C2\u8003\u57FA\u56E0\u7EC4\u5E8F\u5217',
   readme: '## chrM\u53F7\u67D3\u8272\u4F53\u53C2\u8003\u57FA\u56E0\u7EC4\u5E8F\u5217',
   create_at: '2021-10-05 10:50:41',
-  category: '\u53C2\u8003\u5E8F\u5217',
+  'category|1-3': [
+    {
+      'id|1-1000': 1000,
+      name: '序列比对',
+    },
+    {
+      'id|1-1000': 1000,
+      name: '去重',
+    },
+    {
+      'id|1-1000': 1000,
+      name: '分割',
+    },
+  ],
   status: 2,
   versions: [
     {

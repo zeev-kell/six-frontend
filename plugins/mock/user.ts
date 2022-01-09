@@ -11,7 +11,7 @@ export const refreshFun = function () {
       refresh_token: Mock.Random.string('lower', 32),
       token: Mock.Random.string('lower', 32),
       uid: Mock.Random.string('lower', 32),
-      uname: 'keziyuan',
+      uname: 'admin',
     },
     msg: '登陆成功',
   })
@@ -20,8 +20,8 @@ export const userFun = function () {
   return Mock.mock({
     admin: false,
     uid: Mock.Random.string('lower', 32),
-    uname: 'keziyuan',
-    username: 'keziyuan',
+    uname: 'admin',
+    username: 'admin',
     permissions: 23,
   })
 }
